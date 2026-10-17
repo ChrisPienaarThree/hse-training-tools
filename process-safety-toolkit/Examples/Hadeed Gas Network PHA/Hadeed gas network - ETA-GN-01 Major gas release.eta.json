@@ -1,0 +1,590 @@
+{
+ "app": "Event Tree Analysis",
+ "schema": 1,
+ "title": "ETA-GN-01 – Major natural gas release from the HP / MP system (Hadeed gas network example)",
+ "description": "Initiating event = top event of bow tie BT-GN-01 (loss of containment of the HP / MP gas system), frequency 5.8E-3 /yr. H2 is linked to fault tree FT-GN-02 (gas detection & ESD). End-state frequencies are reproduced by the bow-tie consequences 'prolonged jet fire', 'large flash fire' and 'VCE'. HAZOP N01-05, N02-05, N08-01. Illustrative probabilities.",
+ "modified": "2026-10-14T16:00:00.000Z",
+ "ie": {
+  "name": "Significant natural gas release from the HP / MP gas system (GRMS, PRS-1, MP header)",
+  "freq": 0.005768081,
+  "ef": 3,
+  "notes": "= bow tie BT-GN-01 top-event frequency (sum of threats x conditional probability x barrier PFDs)"
+ },
+ "headings": [
+  {
+   "id": "h000049",
+   "code": "H1",
+   "name": "No immediate ignition",
+   "sLabel": "No immediate ignition",
+   "fLabel": "Immediate ignition",
+   "pFail": 0.05,
+   "ef": 3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "notes": "High-pressure release, ignition at the source – illustrative; BT-GN-01 consequence 'prolonged jet fire' condition"
+  },
+  {
+   "id": "h000050",
+   "code": "H2",
+   "name": "Gas detected and release isolated by ESD",
+   "sLabel": "Isolated",
+   "fLabel": "Not isolated",
+   "pFail": 0.026409,
+   "ef": 3,
+   "source": "ft",
+   "ftId": "f000048",
+   "gateId": "g000017",
+   "notes": "PFDavg from fault tree FT-GN-02 gate G-001 = BT-GN-01 ESD barrier"
+  },
+  {
+   "id": "h000051",
+   "code": "H3",
+   "name": "No delayed ignition (ignition source control)",
+   "sLabel": "No ignition",
+   "fLabel": "Delayed ignition",
+   "pFail": 0.1,
+   "ef": 3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "notes": "= BT-GN-01 barrier 'Ignition source control'"
+  },
+  {
+   "id": "h000052",
+   "code": "H4",
+   "name": "No vapour cloud explosion (low congestion)",
+   "sLabel": "Flash fire only",
+   "fLabel": "VCE",
+   "pFail": 0.3,
+   "ef": 3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "notes": "Fraction of delayed ignitions in congested / confined areas (PRS shelter, racks) – illustrative"
+  }
+ ],
+ "root": {
+  "id": "n000077",
+  "h": 0,
+  "mode": "split",
+  "pOv": "",
+  "s": {
+   "id": "n000069",
+   "h": 1,
+   "mode": "split",
+   "pOv": "",
+   "s": {
+    "id": "n000062",
+    "h": 2,
+    "mode": "split",
+    "pOv": "",
+    "s": {
+     "id": "n000059",
+     "h": 3,
+     "mode": "pass",
+     "pOv": "",
+     "n": {
+      "id": "n000058",
+      "leaf": true,
+      "label": "Release isolated – gas disperses without ignition",
+      "cat": "k000053"
+     }
+    },
+    "f": {
+     "id": "n000061",
+     "h": 3,
+     "mode": "pass",
+     "pOv": "",
+     "n": {
+      "id": "n000060",
+      "leaf": true,
+      "label": "Small flash fire – isolated inventory",
+      "cat": "k000054"
+     }
+    }
+   },
+   "f": {
+    "id": "n000068",
+    "h": 2,
+    "mode": "split",
+    "pOv": "",
+    "s": {
+     "id": "n000064",
+     "h": 3,
+     "mode": "pass",
+     "pOv": "",
+     "n": {
+      "id": "n000063",
+      "leaf": true,
+      "label": "Prolonged release disperses without ignition – plant gas-out",
+      "cat": "k000053"
+     }
+    },
+    "f": {
+     "id": "n000067",
+     "h": 3,
+     "mode": "split",
+     "pOv": "",
+     "s": {
+      "id": "n000065",
+      "leaf": true,
+      "label": "Large flash fire – prolonged release",
+      "cat": "k000056"
+     },
+     "f": {
+      "id": "n000066",
+      "leaf": true,
+      "label": "Vapour cloud explosion – blast damage, multiple fatalities",
+      "cat": "k000057"
+     }
+    }
+   }
+  },
+  "f": {
+   "id": "n000076",
+   "h": 1,
+   "mode": "split",
+   "pOv": "",
+   "s": {
+    "id": "n000072",
+    "h": 2,
+    "mode": "pass",
+    "pOv": "",
+    "n": {
+     "id": "n000071",
+     "h": 3,
+     "mode": "pass",
+     "pOv": "",
+     "n": {
+      "id": "n000070",
+      "leaf": true,
+      "label": "Jet fire – isolated quickly, local damage",
+      "cat": "k000055"
+     }
+    }
+   },
+   "f": {
+    "id": "n000075",
+    "h": 2,
+    "mode": "pass",
+    "pOv": "",
+    "n": {
+     "id": "n000074",
+     "h": 3,
+     "mode": "pass",
+     "pOv": "",
+     "n": {
+      "id": "n000073",
+      "leaf": true,
+      "label": "Prolonged jet fire – escalation to heaters / filter-separators",
+      "cat": "k000056"
+     }
+    }
+   }
+  }
+ },
+ "cats": [
+  {
+   "id": "k000053",
+   "code": "C1",
+   "name": "Minor – gas released and dispersed, plant gas-out",
+   "color": "#e6ee9c",
+   "target": "",
+   "cost": 5
+  },
+  {
+   "id": "k000054",
+   "code": "C2",
+   "name": "Moderate – small flash fire, isolated inventory",
+   "color": "#fff59d",
+   "target": 1,
+   "cost": 50
+  },
+  {
+   "id": "k000055",
+   "code": "C3",
+   "name": "Serious – short jet fire, isolated quickly",
+   "color": "#ffcc80",
+   "target": 0.1,
+   "cost": 300
+  },
+  {
+   "id": "k000056",
+   "code": "C4",
+   "name": "Major – prolonged jet fire or large flash fire, escalation",
+   "color": "#ff8a65",
+   "target": 0.01,
+   "cost": 5000
+  },
+  {
+   "id": "k000057",
+   "code": "C5",
+   "name": "Catastrophic – vapour cloud explosion, multiple fatalities",
+   "color": "#e57373",
+   "target": 0.0001,
+   "cost": 50000
+  }
+ ],
+ "fts": [
+  {
+   "id": "f000048",
+   "name": "FT-GN-02 – Gas detection and ESD isolation",
+   "project": {
+    "app": "Fault Tree & PFD Calculator",
+    "schema": 1,
+    "title": "FT-GN-02 – HP / MP gas detection and ESD isolation fails on demand (Hadeed gas network example)",
+    "description": "Top event (gate G-001): a gas release in the GRMS / PRS-1 is not isolated – neither the automatic function (2oo3 gas detectors GD-1110A/B/C, SIS logic UCP-1000) nor the operator's manual ESD (HS-1000) initiates, or ESD valves ESDV-1001 / ESDV-1107 fail to close. PFDavg of G-001 is used as heading H2 of event tree ETA-GN-01 and as the mitigative ESD barrier of bow tie BT-GN-01. HAZOP N01-05, N02-05, N08-01…04; FMECA S01, S08. Illustrative failure data – replace with site / vendor data before use. Part of the Hadeed gas network PHA worked example (HAZOP HZ-EX-GN-001).",
+    "modified": "2026-10-14T16:00:00.000Z",
+    "top": "g000017",
+    "gates": [
+     {
+      "id": "g000017",
+      "code": "G-001",
+      "name": "Gas release in the HP / MP system not isolated (ESD fails on demand)",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000019"
+       },
+       {
+        "kind": "g",
+        "id": "g000030"
+       },
+       {
+        "kind": "e",
+        "id": "e000034"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000019",
+      "code": "G-002",
+      "name": "ESD not initiated (automatic and manual both fail)",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000020"
+       },
+       {
+        "kind": "g",
+        "id": "g000027"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000020",
+      "code": "G-003",
+      "name": "Automatic initiation fails",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000021"
+       },
+       {
+        "kind": "e",
+        "id": "e000025"
+       },
+       {
+        "kind": "e",
+        "id": "e000026"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000021",
+      "code": "G-006",
+      "name": "Gas detectors fail – 2oo3 vote not reached",
+      "type": "VOTE",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000022"
+       },
+       {
+        "kind": "e",
+        "id": "e000023"
+       },
+       {
+        "kind": "e",
+        "id": "e000024"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000027",
+      "code": "G-004",
+      "name": "Manual ESD not initiated",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000028"
+       },
+       {
+        "kind": "e",
+        "id": "e000029"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000030",
+      "code": "G-005",
+      "name": "ESD valves fail to isolate the release",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000031"
+       },
+       {
+        "kind": "e",
+        "id": "e000032"
+       },
+       {
+        "kind": "e",
+        "id": "e000033"
+       }
+      ],
+      "collapsed": false
+     }
+    ],
+    "events": [
+     {
+      "id": "e000022",
+      "code": "BE-001",
+      "name": "Gas detector GD-1110A fails to detect (drift / dust / poisoning)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 2190,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000018",
+      "undeveloped": false,
+      "notes": "Quarterly bump test (R-001); FMECA S08 GD-1110A"
+     },
+     {
+      "id": "e000023",
+      "code": "BE-002",
+      "name": "Gas detector GD-1110B fails to detect (drift / dust / poisoning)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 2190,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000018",
+      "undeveloped": false,
+      "notes": "Quarterly bump test (R-001); FMECA S08 GD-1110A"
+     },
+     {
+      "id": "e000024",
+      "code": "BE-003",
+      "name": "Gas detector GD-1110C fails to detect (drift / dust / poisoning)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 2190,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000018",
+      "undeveloped": false,
+      "notes": "Quarterly bump test (R-001); FMECA S08 GD-1110A"
+     },
+     {
+      "id": "e000025",
+      "code": "BE-004",
+      "name": "SIS logic solver UCP-1000 fails dangerous",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-07,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S08 UCP-1000"
+     },
+     {
+      "id": "e000026",
+      "code": "BE-005",
+      "name": "Gas cloud does not reach the detectors (coverage / wind direction)",
+      "model": "prob",
+      "q": 0.1,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": true,
+      "notes": "Detector coverage – F&G mapping study"
+     },
+     {
+      "id": "e000028",
+      "code": "BE-006",
+      "name": "Operator does not initiate the manual ESD in time on gas alarm / field report",
+      "model": "prob",
+      "q": 0.1,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Alarm response and drills (R-020); HAZOP N08-03"
+     },
+     {
+      "id": "e000029",
+      "code": "BE-008",
+      "name": "Manual ESD push-button circuit HS-1000 fails",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-07,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S08 HS-1000"
+     },
+     {
+      "id": "e000031",
+      "code": "BE-007",
+      "name": "GRMS inlet ESD valve ESDV-1001 fails to close",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 1.5e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Annual full-stroke test; FMECA S01 ESDV-1001 (R-001 partial-stroke)"
+     },
+     {
+      "id": "e000032",
+      "code": "BE-009",
+      "name": "PRS outlet ESD valve ESDV-1107 fails to close",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 1.5e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Back-flow from the MP header inventory"
+     },
+     {
+      "id": "e000033",
+      "code": "BE-010",
+      "name": "ESD valve solenoids / air supply fail to vent",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-07,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": ""
+     },
+     {
+      "id": "e000034",
+      "code": "BE-011",
+      "name": "ESD function in bypass / detectors inhibited",
+      "model": "prob",
+      "q": 0.001,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Bypass management (R-012); HAZOP N08-04"
+     }
+    ],
+    "ccf": [
+     {
+      "id": "c000018",
+      "code": "CCF-001",
+      "name": "PRS shelter gas detectors",
+      "beta": 0.1,
+      "betaD": ""
+     }
+    ],
+    "settings": {
+     "mission": 8760,
+     "points": 400,
+     "maxOrder": 8,
+     "cutoff": 1e-15,
+     "maxCS": 20000,
+     "mcSamples": 2000,
+     "demandMode": "low"
+    }
+   }
+  }
+ ],
+ "settings": {
+  "mcSamples": 5000
+ }
+}

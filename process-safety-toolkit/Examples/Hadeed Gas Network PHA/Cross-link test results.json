@@ -1,0 +1,2624 @@
+[
+ {
+  "group": "A. Apps",
+  "check": "fta app boots headless without script errors",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "fta app: no runtime errors while loading / rendering the example files",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "eta app boots headless without script errors",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "eta app: no runtime errors while loading / rendering the example files",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "bowtie app boots headless without script errors",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "bowtie app: no runtime errors while loading / rendering the example files",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "hazop app boots headless without script errors",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "hazop app: no runtime errors while loading / rendering the example files",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json opens in its app (File \u25b8 Open accepts it)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json renders in its app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json: calculation has no warnings",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json: calculation has no warnings",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json: calculation has no warnings",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json: no warnings (FT gate linked, sequences sum to IE, every end state categorised)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json: sequence frequencies add up to the initiating frequency",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: no warnings (FT gate linked, sequences sum to IE, every end state categorised)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: sequence frequencies add up to the initiating frequency",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: no warnings (FT gates linked, every threat / consequence has a barrier, no barrier on both sides)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: no warnings (FT gates linked, every threat / consequence has a barrier, no barrier on both sides)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "A. Apps",
+  "check": "HAZOP file: integrity check finds no orphaned records",
+  "pass": true,
+  "detail": "0"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-01 H2 (ESD) = FT-GN-02 gate G-001 PFDavg",
+  "pass": true,
+  "detail": "0.02640920172036772 vs 0.02640920172036772"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-01 H2 is live-linked to the fault tree (source = ft)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-02 H2 (BMS) = FT-GN-03 gate G-002 PFDavg",
+  "pass": true,
+  "detail": "0.011455248866667052 vs 0.011455248866667052"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 PRS overpressure barrier = FT-GN-01 gate G-002 PFDavg",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 ESD barrier = FT-GN-02 gate G-001 PFDavg",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-02 BMS barrier = FT-GN-03 gate G-002 PFDavg",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT1 barrier PRS is live-linked to its fault tree (source = ft)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT1 barrier ESD is live-linked to its fault tree (source = ft)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT2 barrier BMS is live-linked to its fault tree (source = ft)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "Fault tree embedded in Hadeed gas network - ETA-GN-01 Major gas release.eta.json is identical to Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "Fault tree embedded in Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json is identical to Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "Fault tree embedded in Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json is identical to Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "Fault tree embedded in Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json is identical to Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "Fault tree embedded in Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json is identical to Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-01 initiating frequency = BT-GN-01 top-event frequency",
+  "pass": true,
+  "detail": "0.005768081 vs 0.005768080896376277"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 consequence 'JET' residual = ETA-GN-01 end state 'Prolonged jet fire \u2013 escalation to heaters / filter-separators'",
+  "pass": true,
+  "detail": "7.617E-6 vs 7.617E-6"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 consequence 'FF' residual = ETA-GN-01 end state 'Large flash fire \u2013 prolonged release'",
+  "pass": true,
+  "detail": "1.013E-5 vs 1.013E-5"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 consequence 'VCE' residual = ETA-GN-01 end state 'Vapour cloud explosion \u2013 blast damage, multiple fatalities'",
+  "pass": true,
+  "detail": "4.341E-6 vs 4.341E-6"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 threat T1 frequency = FT-GN-01 demand gate G-006",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 threat T1 contribution = FT-GN-01 top frequency x P(leak | overpressure)",
+  "pass": true,
+  "detail": "1.808E-5 vs 1.808E-5"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "FT-GN-03 top frequency = ETA-GN-02 frequency of 'below AIT and fuel still flowing'",
+  "pass": true,
+  "detail": "9.164E-3 vs 9.164E-3"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "FT-GN-03 top frequency = BT-GN-02 threat T1 contribution",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-02 initiating frequency = FT-GN-03 BE-001 frequency",
+  "pass": true,
+  "detail": "4 vs 4"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-02 H1 (below AIT) = FT-GN-03 BE-002",
+  "pass": true,
+  "detail": "0.2 vs 0.2"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-02 H1 (below AIT) = BT-GN-02 threat T1 condition",
+  "pass": true,
+  "detail": "0.2 vs 0.2"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-02 threat T1 frequency = FT-GN-03 BE-001",
+  "pass": true,
+  "detail": "4 vs 4"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-02 H3 = BT-GN-02 barrier 'draught / post-purge'",
+  "pass": true,
+  "detail": "0.5 vs 0.5"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-02 H4 = BT-GN-02 barrier 'explosion relief doors'",
+  "pass": true,
+  "detail": "0.2 vs 0.2"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-01 H3 = BT-GN-01 barrier 'ignition source control'",
+  "pass": true,
+  "detail": "0.1 vs 0.1"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA-GN-01 H1 = BT-GN-01 'prolonged jet fire' condition",
+  "pass": true,
+  "detail": "0.05 vs 0.05"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 'VCE' condition = (1 \u2212 ETA H1) x ETA H4",
+  "pass": true,
+  "detail": "0.285 vs 0.285"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-01 'large flash fire' condition = (1 \u2212 ETA H1) x (1 \u2212 ETA H4)",
+  "pass": true,
+  "detail": "0.665 vs 0.6649999999999999"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "BT-GN-02 'deflagration relieved' condition = 1 \u2212 ETA-GN-02 H4",
+  "pass": true,
+  "detail": "0.8 vs 0.8"
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA1 catastrophic target (0.0001 /yr) = bow-tie tolerable frequency for severity 5",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "ETA2 catastrophic target (0.0001 /yr) = bow-tie tolerable frequency for severity 5",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP N01-05 likelihood after safeguards (1) matches the calculated ETA1_C5 = 4.3E-6 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP N02-02 likelihood after safeguards (1) matches the calculated FT1_TOP = 3.6E-5 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP N02-05 likelihood after safeguards (1) matches the calculated ETA1_C5 = 4.3E-6 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP N03-02 likelihood after safeguards (1) matches the calculated FT1_TOP = 3.6E-5 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP N06-01 likelihood after safeguards (2) matches the calculated ETA2_C5 = 9.2E-4 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP N08-01 likelihood after safeguards (1) matches the calculated ETA1_C5 = 4.3E-6 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP texts quote FT1_TOP = 3.6E-5 exactly as the apps calculate it",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP texts quote FT1_PFD = 2.0E-4 exactly as the apps calculate it",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP texts quote FT2_PFD = 2.6E-2 exactly as the apps calculate it",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP texts quote FT3_TOP = 9.2E-3 exactly as the apps calculate it",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP texts quote FT3_PFD = 1.1E-2 exactly as the apps calculate it",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "HAZOP texts quote ETA2_C5 = 9.2E-4 exactly as the apps calculate it",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "R-010 quotes the event-tree explosion frequency and the FT-GN-03 PFDavg",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "B. Numbers",
+  "check": "R-001 quotes the FT-GN-02 PFDavg and RRF",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FT-GN-01 exists as 'Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FT-GN-02 exists as 'Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FT-GN-03 exists as 'Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "ETA-GN-01 exists as 'Hadeed gas network - ETA-GN-01 Major gas release.eta.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "ETA-GN-02 exists as 'Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "BT-GN-01 exists as 'Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "BT-GN-02 exists as 'Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HZ-EX-GN-001 exists as 'Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FM-EX-GN-001 exists as 'Hadeed gas network - FMECA_Workbook.xlsx'",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json: every FT / ETA / BT document code it mentions exists (2 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json: every HAZOP deviation reference Nxx-yy resolves (4 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json: every recommendation reference R-0xx resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json: every FMECA system reference resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json: every FT / ETA / BT document code it mentions exists (3 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json: every HAZOP deviation reference Nxx-yy resolves (5 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json: every recommendation reference R-0xx resolves (3 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json: every FMECA system reference resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json: every FT / ETA / BT document code it mentions exists (3 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json: every HAZOP deviation reference Nxx-yy resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json: every recommendation reference R-0xx resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json: every FMECA system reference resolves (1 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json: every FT / ETA / BT document code it mentions exists (3 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json: every HAZOP deviation reference Nxx-yy resolves (5 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json: every recommendation reference R-0xx resolves (3 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json: every FMECA system reference resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: every FT / ETA / BT document code it mentions exists (3 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: every HAZOP deviation reference Nxx-yy resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: every recommendation reference R-0xx resolves (2 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: every FMECA system reference resolves (1 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: every FT / ETA / BT document code it mentions exists (4 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: every HAZOP deviation reference Nxx-yy resolves (14 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: every recommendation reference R-0xx resolves (11 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: every FMECA system reference resolves (4 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: every FT / ETA / BT document code it mentions exists (3 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: every HAZOP deviation reference Nxx-yy resolves (6 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: every recommendation reference R-0xx resolves (3 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: every FMECA system reference resolves (1 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json: every FT / ETA / BT document code it mentions exists (7 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json: every HAZOP deviation reference Nxx-yy resolves (46 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json: every recommendation reference R-0xx resolves (21 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json: every FMECA system reference resolves (8 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx: every FT / ETA / BT document code it mentions exists (7 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx: every HAZOP deviation reference Nxx-yy resolves (46 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx: every recommendation reference R-0xx resolves (21 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx: every FMECA system reference resolves (8 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: every FT / ETA / BT document code it mentions exists (7 codes)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: every HAZOP deviation reference Nxx-yy resolves (27 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: every recommendation reference R-0xx resolves (12 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: every FMECA system reference resolves (0 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json: FT-GN-02 G-001 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: FT-GN-03 G-002 exists in Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json: FT-GN-03 G-002 exists in Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: FT-GN-01 G-002 exists in Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: FT-GN-02 G-001 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: FT-GN-01 G-002 exists in Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: FT-GN-02 G-001 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: FT-GN-03 G-002 exists in Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: FT-GN-03 G-002 exists in Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json: FT-GN-02 G-004 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json: FT-GN-02 G-004 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx: FT-GN-02 G-004 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx: FT-GN-02 G-004 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx: FT-GN-02 G-004 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-01 BE-004 exists in Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-01 BE-006 exists in Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-03 BE-003 exists in Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-03 BE-006 exists in Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-03 BE-005 exists in Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-02 BE-001 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-02 BE-004 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-02 G-004 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx: FT-GN-02 BE-008 exists in Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Every HAZOP recommendation is linked to at least one deviation",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N01-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N01-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N01-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N01-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N01-05 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N01-06 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N01-07 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N02-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N02-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N02-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N02-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N02-05 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N02-06 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N02-07 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N03-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N03-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N03-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N03-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N03-05 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N03-06 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N04-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N04-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N04-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N04-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N04-05 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N05-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N05-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N05-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N05-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N06-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N06-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N06-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N06-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N06-05 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N06-06 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N06-07 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N07-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N07-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N07-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N07-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N07-05 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N07-06 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N08-01 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N08-02 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N08-03 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "HAZOP N08-04 complete (causes, consequence, safeguards, risk before / after; risk not increased)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Every HAZOP node has PSI documents linked",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "Every HAZOP node is covered by a study session",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA systems S01\u2013S08 map one-to-one to HAZOP nodes N01\u2013N08 with the same names",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S01 ESDV-1001 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N01-05 exists and belongs to node N01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S01 PR-1001 'ELP \u2013 External leakage \u2013 pro' \u2192 HAZOP N01-07 exists and belongs to node N01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S01 F-1002A 'PLU \u2013 Plugged / fouled' \u2192 HAZOP N01-03 exists and belongs to node N01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S01 FT-1003A 'AIR \u2013 Abnormal instrument re' \u2192 HAZOP N01-01 exists and belongs to node N01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S01 PSV-1006A 'FTO \u2013 Fail to open on demand' \u2192 HAZOP N01-02 exists and belongs to node N01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S02 PCV-1104A 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N02-02 exists and belongs to node N02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S02 PCV-1103A 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N02-02 exists and belongs to node N02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S02 SSV-1102A 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N02-02 exists and belongs to node N02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S02 SSV-1102A 'SPO \u2013 Spurious operation' \u2192 HAZOP N02-03 exists and belongs to node N02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S02 H-1101A 'UST \u2013 Flame failure / flame-' \u2192 HAZOP N02-01 exists and belongs to node N02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S02 TT-1101 'HIO \u2013 High reading / drift h' \u2192 HAZOP N02-01 exists and belongs to node N02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S03 L-1200 'ELP \u2013 External leakage \u2013 pro' \u2192 HAZOP N03-01 exists and belongs to node N03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S03 L-1200 'ELP \u2013 External leakage \u2013 pro' \u2192 HAZOP N03-01 exists and belongs to node N03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S03 CP-1200 'FOV \u2013 Faulty output voltage' \u2192 HAZOP N03-04 exists and belongs to node N03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S03 XV-1201 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N03-01 exists and belongs to node N03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S04 FCV-2004 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N04-01 exists and belongs to node N04",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S04 XV-2008 'LCP \u2013 Leakage in closed posi' \u2192 HAZOP N04-03 exists and belongs to node N04",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S04 PSLL-2006 'FTF \u2013 Fail to function on de' \u2192 HAZOP N04-02 exists and belongs to node N04",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S05 NRV-3010 'LCP \u2013 Leakage in closed posi' \u2192 HAZOP N05-01 exists and belongs to node N05",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S05 XV-3011 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N05-02 exists and belongs to node N05",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S05 LPH-3020 'FTC \u2013 Fail to shut off fuel' \u2192 HAZOP N05-03 exists and belongs to node N05",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S06 BS-4010 'FTF \u2013 Fail to function on de' \u2192 HAZOP N06-01 exists and belongs to node N06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S06 XV-4002A 'FTC \u2013 Fail to close on deman' \u2192 HAZOP N06-01 exists and belongs to node N06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S06 XV-4002A 'LCP \u2013 Leakage in closed posi' \u2192 HAZOP N06-05 exists and belongs to node N06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S06 BMS-4000 'OTH \u2013 Software / configurati' \u2192 HAZOP N06-06 exists and belongs to node N06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S06 FN-4007 'UST \u2013 Spurious stop' \u2192 HAZOP N06-03 exists and belongs to node N06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S07 N2-1304 'OTH \u2013 Other' \u2192 HAZOP N07-03 exists and belongs to node N07",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S07 BDV-1302 'LCP \u2013 Leakage in closed posi' \u2192 HAZOP N07-04 exists and belongs to node N07",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S07 VS-1301 'PLU \u2013 Plugged / choked' \u2192 HAZOP N07-04 exists and belongs to node N07",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S08 GD-1110A 'FTF \u2013 Fail to function on de' \u2192 HAZOP N08-04 exists and belongs to node N08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S08 UCP-1000 'FTF \u2013 Fail to function on de' \u2192 HAZOP N08-01 exists and belongs to node N08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S08 UPS-1000 'BRD \u2013 Breakdown' \u2192 HAZOP N08-02 exists and belongs to node N08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "C. References",
+  "check": "FMECA S08 HS-1000 'FTF \u2013 Fail to function on de' \u2192 HAZOP N08-03 exists and belongs to node N08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "Equipment register tags are unique",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json: every equipment tag in the basic events is in the FMECA equipment register (3 tags)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json: every equipment tag in the basic events is in the FMECA equipment register (7 tags)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json: every equipment tag in the basic events is in the FMECA equipment register (4 tags)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json: every tag in barrier names / notes is defined in the HAZOP or FMECA (14 tags)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT1 barrier 'PRS-1 overpressure protection \u2013 monitor ' \u2192 HAZOP safeguard tag(s) PCV-1103A, PCV-1103B, SSV-1102A, SSV-1102B in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT1 barrier 'Coating + cathodic protection with annua' \u2192 HAZOP safeguard tag(s) CP-1200 in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT1 barrier 'Pig-receiver closure pressure-warning de' \u2192 HAZOP safeguard tag(s) PR-1001 in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT1 barrier 'Pilot / diaphragm vents piped to vent st' \u2192 HAZOP safeguard tag(s) VS-1301 in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT1 barrier 'Gas detection and ESD isolation (GD-1110' \u2192 HAZOP safeguard tag(s) UCP-1000 in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json: every tag in barrier names / notes is defined in the HAZOP or FMECA (7 tags)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT2 barrier 'BMS flame-failure shut-off (BS-4010, BMS' \u2192 HAZOP safeguard tag(s) BMS-4000 in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT2 barrier 'Valve proving VPS-4004 before light-off ' \u2192 HAZOP safeguard tag(s) VPS-4004 in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "BT2 barrier 'Low-low combustion air flow trip FSLL-40' \u2192 HAZOP safeguard tag(s) FSLL-4008 in the safeguard register",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S01 row tag ESDV-1001 is in the equipment register under S01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S01 row tag PR-1001 is in the equipment register under S01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S01 row tag F-1002A is in the equipment register under S01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S01 row tag FT-1003A is in the equipment register under S01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S01 row tag PSV-1006A is in the equipment register under S01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S02 row tag PCV-1104A is in the equipment register under S02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S02 row tag PCV-1103A is in the equipment register under S02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S02 row tag SSV-1102A is in the equipment register under S02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S02 row tag SSV-1102A is in the equipment register under S02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S02 row tag H-1101A is in the equipment register under S02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S02 row tag TT-1101 is in the equipment register under S02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S03 row tag L-1200 is in the equipment register under S03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S03 row tag L-1200 is in the equipment register under S03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S03 row tag CP-1200 is in the equipment register under S03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S03 row tag XV-1201 is in the equipment register under S03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S04 row tag FCV-2004 is in the equipment register under S04",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S04 row tag XV-2008 is in the equipment register under S04",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S04 row tag PSLL-2006 is in the equipment register under S04",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S05 row tag NRV-3010 is in the equipment register under S05",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S05 row tag XV-3011 is in the equipment register under S05",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S05 row tag LPH-3020 is in the equipment register under S05",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S06 row tag BS-4010 is in the equipment register under S06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S06 row tag XV-4002A is in the equipment register under S06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S06 row tag XV-4002A is in the equipment register under S06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S06 row tag BMS-4000 is in the equipment register under S06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S06 row tag FN-4007 is in the equipment register under S06",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S07 row tag N2-1304 is in the equipment register under S07",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S07 row tag BDV-1302 is in the equipment register under S07",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S07 row tag VS-1301 is in the equipment register under S07",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S08 row tag GD-1110A is in the equipment register under S08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S08 row tag UCP-1000 is in the equipment register under S08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S08 row tag UPS-1000 is in the equipment register under S08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "FMECA S08 row tag HS-1000 is in the equipment register under S08",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP safeguard register: every tag is defined (52 tags)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP causes / consequences / comments: every tag is defined (19 tags)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP IPL MON (PCV-1103A/B) is the barrier 'PRS-1 overpressure protection \u2013 monito' in BT1",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP IPL SSV (SSV-1102A/B) is the barrier 'PRS-1 overpressure protection \u2013 monito' in BT1",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP IPL ESD (UCP-1000) is the barrier 'Gas detection and ESD isolation (GD-11' in BT1",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP IPL BMS (BMS-4000) is the barrier 'BMS flame-failure shut-off (BS-4010, B' in BT2",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP IPL VPS (VPS-4004) is the barrier 'Valve proving VPS-4004 before light-of' in BT2",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP IPL FSLL4008 (FSLL-4008) is the barrier 'Low-low combustion air flow trip FSLL-' in BT2",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "D. Tags",
+  "check": "HAZOP IPL PIGINT (PR-1001) is the barrier 'Pig-receiver closure pressure-warning ' in BT1",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook.xlsx recalculates in LibreOffice with no formula errors (9101 formulas)",
+  "pass": true,
+  "detail": "{\"status\": \"success\", \"total_errors\": 0, \"error_summary\": {}, \"total_formulas\": 9101}"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "Hadeed gas network - FMECA_Workbook.xlsx recalculates in LibreOffice with no formula errors (9210 formulas)",
+  "pass": true,
+  "detail": "{\"status\": \"success\", \"total_errors\": 0, \"error_summary\": {}, \"total_formulas\": 9210}"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook: cover shows 8 nodes",
+  "pass": true,
+  "detail": "8"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 01 is 'N01' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 01 has the same 7 deviations as the app",
+  "pass": true,
+  "detail": "7 vs 7"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N01-01 = app (parameter/guideword valid, 3 causes [0 from library], 3 safeguards, IPLs 1, risk 9 \u2192 6)",
+  "pass": true,
+  "detail": "row 14: ['Flow', 'NO', 9, 1, 6]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N01-02 = app (parameter/guideword valid, 3 causes [2 from library], 3 safeguards, IPLs 2, risk 10 \u2192 5)",
+  "pass": true,
+  "detail": "row 15: ['Pressure', 'MORE', 10, 2, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N01-03 = app (parameter/guideword valid, 3 causes [1 from library], 2 safeguards, IPLs 0, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 16: ['Flow', 'AS WELL AS', 12, 0, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N01-04 = app (parameter/guideword valid, 3 causes [1 from library], 2 safeguards, IPLs 0, risk 9 \u2192 6)",
+  "pass": true,
+  "detail": "row 17: ['Composition', 'OTHER THAN', 9, 0, 6]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N01-05 = app (parameter/guideword valid, 3 causes [1 from library], 5 safeguards, IPLs 2, risk 15 \u2192 5)",
+  "pass": true,
+  "detail": "row 18: ['Process gas (CO, H2 \u2013 BFG, COG, LD gas, reducing gas)', 'LEAK OF', 15, 2, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N01-06 = app (parameter/guideword valid, 3 causes [1 from library], 2 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 19: ['Corrosion / erosion', 'MORE', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N01-07 = app (parameter/guideword valid, 3 causes [2 from library], 3 safeguards, IPLs 1, risk 15 \u2192 5)",
+  "pass": true,
+  "detail": "row 20: ['Maintenance', 'INADEQUATE', 15, 1, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 02 is 'N02' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 02 has the same 7 deviations as the app",
+  "pass": true,
+  "detail": "7 vs 7"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N02-01 = app (parameter/guideword valid, 3 causes [1 from library], 3 safeguards, IPLs 0, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 14: ['Temperature', 'LESS', 12, 0, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N02-02 = app (parameter/guideword valid, 3 causes [1 from library], 5 safeguards, IPLs 2, risk 20 \u2192 5)",
+  "pass": true,
+  "detail": "row 15: ['Pressure', 'MORE', 20, 2, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N02-03 = app (parameter/guideword valid, 3 causes [0 from library], 3 safeguards, IPLs 1, risk 9 \u2192 6)",
+  "pass": true,
+  "detail": "row 16: ['Pressure', 'LESS', 9, 1, 6]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N02-04 = app (parameter/guideword valid, 2 causes [1 from library], 2 safeguards, IPLs 0, risk 6 \u2192 4)",
+  "pass": true,
+  "detail": "row 17: ['Flow', 'MORE', 6, 0, 4]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N02-05 = app (parameter/guideword valid, 3 causes [2 from library], 4 safeguards, IPLs 1, risk 15 \u2192 5)",
+  "pass": true,
+  "detail": "row 18: ['Process gas (CO, H2 \u2013 BFG, COG, LD gas, reducing gas)', 'LEAK OF', 15, 1, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N02-06 = app (parameter/guideword valid, 3 causes [1 from library], 2 safeguards, IPLs 1, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 19: ['Temperature', 'MORE', 12, 1, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N02-07 = app (parameter/guideword valid, 2 causes [2 from library], 3 safeguards, IPLs 2, risk 10 \u2192 5)",
+  "pass": true,
+  "detail": "row 20: ['Relief', 'INADEQUATE', 10, 2, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 03 is 'N03' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 03 has the same 6 deviations as the app",
+  "pass": true,
+  "detail": "6 vs 6"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N03-01 = app (parameter/guideword valid, 4 causes [1 from library], 6 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 14: ['Process gas (CO, H2 \u2013 BFG, COG, LD gas, reducing gas)', 'LEAK OF', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N03-02 = app (parameter/guideword valid, 2 causes [2 from library], 2 safeguards, IPLs 2, risk 20 \u2192 5)",
+  "pass": true,
+  "detail": "row 15: ['Pressure', 'MORE', 20, 2, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N03-03 = app (parameter/guideword valid, 2 causes [2 from library], 2 safeguards, IPLs 0, risk 10 \u2192 5)",
+  "pass": true,
+  "detail": "row 16: ['Air / oxygen in process gas', 'AS WELL AS', 10, 0, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N03-04 = app (parameter/guideword valid, 3 causes [2 from library], 2 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 17: ['Corrosion / erosion', 'MORE', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N03-05 = app (parameter/guideword valid, 2 causes [0 from library], 2 safeguards, IPLs 0, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 18: ['Electrical safety / static', 'INADEQUATE', 12, 0, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N03-06 = app (parameter/guideword valid, 2 causes [0 from library], 3 safeguards, IPLs 1, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 19: ['Operator action', 'OTHER THAN', 12, 1, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 04 is 'N04' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 04 has the same 5 deviations as the app",
+  "pass": true,
+  "detail": "5 vs 5"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N04-01 = app (parameter/guideword valid, 2 causes [1 from library], 2 safeguards, IPLs 1, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 14: ['Flow', 'MORE', 12, 1, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N04-02 = app (parameter/guideword valid, 2 causes [1 from library], 1 safeguards, IPLs 1, risk 9 \u2192 6)",
+  "pass": true,
+  "detail": "row 15: ['Flow', 'NO', 9, 1, 6]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N04-03 = app (parameter/guideword valid, 3 causes [2 from library], 1 safeguards, IPLs 1, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 16: ['Flow', 'REVERSE', 15, 1, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N04-04 = app (parameter/guideword valid, 2 causes [1 from library], 2 safeguards, IPLs 0, risk 9 \u2192 6)",
+  "pass": true,
+  "detail": "row 17: ['Composition', 'AS WELL AS', 9, 0, 6]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N04-05 = app (parameter/guideword valid, 1 causes [1 from library], 2 safeguards, IPLs 1, risk 6 \u2192 4)",
+  "pass": true,
+  "detail": "row 18: ['Pressure', 'MORE', 6, 1, 4]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 05 is 'N05' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 05 has the same 4 deviations as the app",
+  "pass": true,
+  "detail": "4 vs 4"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N05-01 = app (parameter/guideword valid, 3 causes [0 from library], 2 safeguards, IPLs 2, risk 15 \u2192 5)",
+  "pass": true,
+  "detail": "row 14: ['Oxygen (lances, burners, pipelines)', 'AS WELL AS', 15, 2, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N05-02 = app (parameter/guideword valid, 3 causes [2 from library], 3 safeguards, IPLs 1, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 15: ['Process gas (CO, H2 \u2013 BFG, COG, LD gas, reducing gas)', 'LEAK OF', 12, 1, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N05-03 = app (parameter/guideword valid, 2 causes [1 from library], 1 safeguards, IPLs 1, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 16: ['Pressure', 'LESS', 12, 1, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N05-04 = app (parameter/guideword valid, 2 causes [0 from library], 2 safeguards, IPLs 0, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 17: ['Operator action', 'OTHER THAN', 12, 0, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 06 is 'N06' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 06 has the same 7 deviations as the app",
+  "pass": true,
+  "detail": "7 vs 7"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N06-01 = app (parameter/guideword valid, 3 causes [0 from library], 3 safeguards, IPLs 2, risk 25 \u2192 10)",
+  "pass": true,
+  "detail": "row 14: ['Flow', 'NO', 25, 2, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N06-02 = app (parameter/guideword valid, 2 causes [2 from library], 2 safeguards, IPLs 1, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 15: ['Pressure', 'MORE', 12, 1, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N06-03 = app (parameter/guideword valid, 2 causes [1 from library], 2 safeguards, IPLs 1, risk 15 \u2192 5)",
+  "pass": true,
+  "detail": "row 16: ['Flow', 'LESS', 15, 1, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N06-04 = app (parameter/guideword valid, 2 causes [0 from library], 2 safeguards, IPLs 1, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 17: ['Timing / sequence', 'BEFORE', 15, 1, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N06-05 = app (parameter/guideword valid, 2 causes [1 from library], 2 safeguards, IPLs 1, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 18: ['Process gas (CO, H2 \u2013 BFG, COG, LD gas, reducing gas)', 'LEAK OF', 15, 1, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N06-06 = app (parameter/guideword valid, 3 causes [3 from library], 2 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 19: ['Process control / instrumentation', 'LOSS OF', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N06-07 = app (parameter/guideword valid, 3 causes [3 from library], 3 safeguards, IPLs 0, risk 10 \u2192 5)",
+  "pass": true,
+  "detail": "row 20: ['Maintenance', 'INADEQUATE', 10, 0, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 07 is 'N07' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 07 has the same 6 deviations as the app",
+  "pass": true,
+  "detail": "6 vs 6"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N07-01 = app (parameter/guideword valid, 2 causes [1 from library], 1 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 14: ['Air / oxygen in process gas', 'AS WELL AS', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N07-02 = app (parameter/guideword valid, 2 causes [2 from library], 2 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 15: ['Inert gas (N2, Ar)', 'LEAK OF', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N07-03 = app (parameter/guideword valid, 2 causes [0 from library], 1 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 16: ['Flow', 'REVERSE', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N07-04 = app (parameter/guideword valid, 2 causes [2 from library], 1 safeguards, IPLs 0, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 17: ['Relief', 'INADEQUATE', 12, 0, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N07-05 = app (parameter/guideword valid, 3 causes [3 from library], 2 safeguards, IPLs 0, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 18: ['Maintenance', 'INADEQUATE', 12, 0, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N07-06 = app (parameter/guideword valid, 2 causes [0 from library], 2 safeguards, IPLs 0, risk 12 \u2192 8)",
+  "pass": true,
+  "detail": "row 19: ['Operator action', 'NO', 12, 0, 8]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 08 is 'N08' and shows the node details from the Nodes sheet",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook Node 08 has the same 4 deviations as the app",
+  "pass": true,
+  "detail": "4 vs 4"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N08-01 = app (parameter/guideword valid, 3 causes [3 from library], 2 safeguards, IPLs 0, risk 15 \u2192 5)",
+  "pass": true,
+  "detail": "row 14: ['Process control / instrumentation', 'LOSS OF', 15, 0, 5]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N08-02 = app (parameter/guideword valid, 2 causes [0 from library], 2 safeguards, IPLs 1, risk 9 \u2192 6)",
+  "pass": true,
+  "detail": "row 15: ['Utilities / services', 'LOSS OF', 9, 1, 6]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N08-03 = app (parameter/guideword valid, 2 causes [0 from library], 1 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 16: ['Operator action', 'NO', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP workbook N08-04 = app (parameter/guideword valid, 3 causes [2 from library], 2 safeguards, IPLs 0, risk 15 \u2192 10)",
+  "pass": true,
+  "detail": "row 17: ['Maintenance', 'INADEQUATE', 15, 0, 10]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA workbook: cover shows 8 systems and 48 equipment items",
+  "pass": true,
+  "detail": "8 / 48"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA Lists sheet read (component and failure-mode blocks found)",
+  "pass": true,
+  "detail": "['Equipment types', None, 'Equipment type', 'Component / maintainable item', None, 'Equipment type', 'Failure mode', None, 'Failure causes / mechanisms', None, 'Detection methods', None, 'Action / task type', None, 'Document category', None, None, None, None, None, None, None, None, None, None, None, None, None, None]"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S01-01 ESDV-1001: type from register, component + failure mode valid for the type, RPN 162, AP M",
+  "pass": true,
+  "detail": "['S01-01', 'ESDV-1001', 'Isolation / ESD valve', 162, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S01-02 PR-1001: type from register, component + failure mode valid for the type, RPN 270, AP H",
+  "pass": true,
+  "detail": "['S01-02', 'PR-1001', 'Pressure vessel / separator / column', 270, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S01-03 F-1002A: type from register, component + failure mode valid for the type, RPN 90, AP L",
+  "pass": true,
+  "detail": "['S01-03', 'F-1002A', 'Pressure vessel / separator / column', 90, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S01-04 FT-1003A: type from register, component + failure mode valid for the type, RPN 36, AP L",
+  "pass": true,
+  "detail": "['S01-04', 'FT-1003A', 'Instrument \u2013 transmitter / switch', 36, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S01-05 PSV-1006A: type from register, component + failure mode valid for the type, RPN 112, AP M",
+  "pass": true,
+  "detail": "['S01-05', 'PSV-1006A', 'Pressure relief device (PSV / rupture disc)', 112, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S02-01 PCV-1104A: type from register, component + failure mode valid for the type, RPN 135, AP H",
+  "pass": true,
+  "detail": "['S02-01', 'PCV-1104A', 'Control valve', 135, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S02-02 PCV-1103A: type from register, component + failure mode valid for the type, RPN 210, AP H",
+  "pass": true,
+  "detail": "['S02-02', 'PCV-1103A', 'Control valve', 210, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S02-03 SSV-1102A: type from register, component + failure mode valid for the type, RPN 210, AP H",
+  "pass": true,
+  "detail": "['S02-03', 'SSV-1102A', 'Isolation / ESD valve', 210, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S02-04 SSV-1102A: type from register, component + failure mode valid for the type, RPN 48, AP L",
+  "pass": true,
+  "detail": "['S02-04', 'SSV-1102A', 'Isolation / ESD valve', 48, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S02-05 H-1101A: type from register, component + failure mode valid for the type, RPN 90, AP L",
+  "pass": true,
+  "detail": "['S02-05', 'H-1101A', 'Burner / combustion system', 90, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S02-06 TT-1101: type from register, component + failure mode valid for the type, RPN 90, AP L",
+  "pass": true,
+  "detail": "['S02-06', 'TT-1101', 'Instrument \u2013 transmitter / switch', 90, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S03-01 L-1200: type from register, component + failure mode valid for the type, RPN 150, AP M",
+  "pass": true,
+  "detail": "['S03-01', 'L-1200', 'Piping, flanges & hoses', 150, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S03-02 L-1200: type from register, component + failure mode valid for the type, RPN 216, AP H",
+  "pass": true,
+  "detail": "['S03-02', 'L-1200', 'Piping, flanges & hoses', 216, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S03-03 CP-1200: type from register, component + failure mode valid for the type, RPN 168, AP M",
+  "pass": true,
+  "detail": "['S03-03', 'CP-1200', 'Transformer', 168, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S03-04 XV-1201: type from register, component + failure mode valid for the type, RPN 147, AP M",
+  "pass": true,
+  "detail": "['S03-04', 'XV-1201', 'Isolation / ESD valve', 147, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S04-01 FCV-2004: type from register, component + failure mode valid for the type, RPN 72, AP L",
+  "pass": true,
+  "detail": "['S04-01', 'FCV-2004', 'Control valve', 72, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S04-02 XV-2008: type from register, component + failure mode valid for the type, RPN 216, AP H",
+  "pass": true,
+  "detail": "['S04-02', 'XV-2008', 'Isolation / ESD valve', 216, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S04-03 PSLL-2006: type from register, component + failure mode valid for the type, RPN 168, AP M",
+  "pass": true,
+  "detail": "['S04-03', 'PSLL-2006', 'Instrument \u2013 transmitter / switch', 168, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S05-01 NRV-3010: type from register, component + failure mode valid for the type, RPN 240, AP H",
+  "pass": true,
+  "detail": "['S05-01', 'NRV-3010', 'Isolation / ESD valve', 240, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S05-02 XV-3011: type from register, component + failure mode valid for the type, RPN 162, AP M",
+  "pass": true,
+  "detail": "['S05-02', 'XV-3011', 'Isolation / ESD valve', 162, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S05-03 LPH-3020: type from register, component + failure mode valid for the type, RPN 180, AP M",
+  "pass": true,
+  "detail": "['S05-03', 'LPH-3020', 'Burner / combustion system', 180, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S06-01 BS-4010: type from register, component + failure mode valid for the type, RPN 240, AP H",
+  "pass": true,
+  "detail": "['S06-01', 'BS-4010', 'Instrument \u2013 transmitter / switch', 240, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S06-02 XV-4002A: type from register, component + failure mode valid for the type, RPN 180, AP M",
+  "pass": true,
+  "detail": "['S06-02', 'XV-4002A', 'Isolation / ESD valve', 180, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S06-03 XV-4002A: type from register, component + failure mode valid for the type, RPN 160, AP H",
+  "pass": true,
+  "detail": "['S06-03', 'XV-4002A', 'Isolation / ESD valve', 160, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S06-04 BMS-4000: type from register, component + failure mode valid for the type, RPN 160, AP H",
+  "pass": true,
+  "detail": "['S06-04', 'BMS-4000', 'Control system / SIS logic solver', 160, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S06-05 FN-4007: type from register, component + failure mode valid for the type, RPN 48, AP L",
+  "pass": true,
+  "detail": "['S06-05', 'FN-4007', 'Fan / blower (incl. ID fan)', 48, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S07-01 N2-1304: type from register, component + failure mode valid for the type, RPN 288, AP H",
+  "pass": true,
+  "detail": "['S07-01', 'N2-1304', 'Piping, flanges & hoses', 288, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S07-02 BDV-1302: type from register, component + failure mode valid for the type, RPN 60, AP L",
+  "pass": true,
+  "detail": "['S07-02', 'BDV-1302', 'Isolation / ESD valve', 60, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S07-03 VS-1301: type from register, component + failure mode valid for the type, RPN 84, AP M",
+  "pass": true,
+  "detail": "['S07-03', 'VS-1301', 'Piping, flanges & hoses', 84, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S08-01 GD-1110A: type from register, component + failure mode valid for the type, RPN 180, AP H",
+  "pass": true,
+  "detail": "['S08-01', 'GD-1110A', 'Analyser / gas detector', 180, 'H']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S08-02 UCP-1000: type from register, component + failure mode valid for the type, RPN 60, AP L",
+  "pass": true,
+  "detail": "['S08-02', 'UCP-1000', 'Control system / SIS logic solver', 60, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S08-03 UPS-1000: type from register, component + failure mode valid for the type, RPN 63, AP L",
+  "pass": true,
+  "detail": "['S08-03', 'UPS-1000', 'Variable speed drive / UPS', 63, 'L']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA S08-04 HS-1000: type from register, component + failure mode valid for the type, RPN 96, AP M",
+  "pass": true,
+  "detail": "['S08-04', 'HS-1000', 'Instrument \u2013 transmitter / switch', 96, 'M']"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA Summary counts all 33 failure modes",
+  "pass": true,
+  "detail": "33"
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "Hadeed gas network - HAZOP_Study_Workbook_Macro.xlsm keeps the template's VBA project unchanged",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "Hadeed gas network - FMECA_Workbook_Macro.xlsm keeps the template's VBA project unchanged",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 01: 7 deviations, 6 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 02: 7 deviations, 7 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 03: 6 deviations, 3 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 04: 5 deviations, 4 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 05: 4 deviations, 4 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 06: 7 deviations, 6 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 07: 6 deviations, 0 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "HAZOP macro workbook Node 08: 4 deviations, 1 IPL tags as the app",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "E. Workbooks",
+  "check": "FMECA macro workbook has all 33 failure modes",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to FT-GN-01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to FT-GN-02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to FT-GN-03",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to ETA-GN-01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to ETA-GN-02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to BT-GN-01",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to BT-GN-02",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to HZ-EX-GN-001",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report refers to FM-EX-GN-001",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes FT1_TOP = 3.6E-5 as calculated by the apps",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes FT1_PFD = 2.0E-4 as calculated by the apps",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes FT2_PFD = 2.6E-2 as calculated by the apps",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes FT3_TOP = 9.2E-3 as calculated by the apps",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes FT3_PFD = 1.1E-2 as calculated by the apps",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1_C5 = 4.3E-6 as calculated by the apps",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA2_C5 = 9.2E-4 as calculated by the apps",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report lists every recommendation (21 of 21)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Every HAZOP deviation reference in the report resolves (46 refs)",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report covers every HAZOP deviation",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1 end state 'Release isolated \u2013 gas disperses without' = 4.8E-3 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1 end state 'Small flash fire \u2013 isolated inventory' = 5.3E-4 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1 end state 'Prolonged release disperses without igni' = 1.3E-4 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1 end state 'Large flash fire \u2013 prolonged release' = 1.0E-5 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1 end state 'Vapour cloud explosion \u2013 blast damage, m' = 4.3E-6 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1 end state 'Jet fire \u2013 isolated quickly, local damag' = 2.8E-4 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA1 end state 'Prolonged jet fire \u2013 escalation to heate' = 7.6E-6 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA2 end state 'Unburnt gas burns off in the hot furnace' = 3.2E0 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA2 end state 'Fuel shut off \u2013 furnace purged and relit' = 7.9E-1 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA2 end state 'Gas removed through the stack \u2013 post-pur' = 4.6E-3 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA2 end state 'Deflagration relieved by explosion doors' = 3.7E-3 /yr",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "group": "F. Report",
+  "check": "Report quotes ETA2 end state 'Furnace explosion \u2013 casing / door failur' = 9.2E-4 /yr",
+  "pass": true,
+  "detail": ""
+ }
+]

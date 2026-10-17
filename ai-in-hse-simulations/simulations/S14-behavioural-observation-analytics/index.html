@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S14 · Behavioural observation analytics</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>S14 &middot; Behavioural-safety observation analytics</h1>
+  <p class="sub">Simulation 14 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 2, Topic 1
+    (also Day 3, Topic 1). A large batch of observation cards clustered by theme and location at once —
+    and how a data-quality habit can quietly manufacture a hotspot that isn't real.</p>
+
+  <div class="topbar">
+    <div><label class="field" for="scenario">Scenario</label><select id="scenario"></select></div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner"><strong>Teaching simulation.</strong> No model runs. The theme/location/shift
+    vocabulary, base weights, location-theme bias and the merge pair are pre-authored. The seeded
+    weighted sampling of every observation, every count/chart, and the as-recorded-vs-true
+    comparison are computed live.</div>
+
+  <div id="context" class="context"></div>
+
+  <div class="card">
+    <div class="ctl"><div class="ch"><span>Sample size (observation cards)</span><span class="cv" id="sampleVal"></span></div><input type="range" id="sampleInp"></div>
+    <label class="switchrow"><input type="checkbox" id="mergeChk"><span id="mergeLabel"></span></label>
+    <div class="opsbtns"><button class="ghost" id="reseedBtn" type="button">Re-seed sample</button></div>
+  </div>
+
+  <div class="stage">
+    <section class="card">
+      <h2>By location</h2>
+      <div class="bars" id="locBars"></div>
+      <div class="legend3"><span><span class="sw a"></span>true split</span><span><span class="sw b"></span>as recorded</span></div>
+      <div class="topline" id="topline"></div>
+    </section>
+    <section class="card">
+      <h2>By theme</h2>
+      <div class="bars" id="themeBars"></div>
+      <h3>Observations per week</h3>
+      <div class="bars" id="trend"></div>
+    </section>
+  </div>
+
+  <section class="card"><h2>What this demonstrates</h2><div id="callouts" class="callouts"></div></section>
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes:</strong> see <code>README.md</code>. <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>, register it.</p>
+    <p>Source: <code>../../AI_Workplace_Safety_Research_1.md</code> — Day 2 Topic 1 (AI-assisted hazard identification), Day 3 Topic 1.</p>
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/manufacturing-site/dataset.js"></script>
+<script src="data/logistics-hub/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

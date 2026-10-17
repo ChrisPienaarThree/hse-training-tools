@@ -1,0 +1,322 @@
+{
+ "app": "Fault Tree & PFD Calculator",
+ "schema": 1,
+ "title": "FT-GN-01 – PRS-1 overpressure of the MP header (Hadeed gas network example)",
+ "description": "Top event: MP ring main pressure above its 10 barg design pressure because the PRS-1 active regulator fails open and the two independent overpressure protections – monitor regulator PCV-1103A (7.5 barg) and slam-shut SSV-1102A (OPSO 8.5 barg) – both fail. Gate G-002 = PFDavg of the PRS overpressure protection, used as a barrier in bow tie BT-GN-01 (threat T1). PSV-1105 is a token relief and is not credited. HAZOP N02-02 / N03-02; FMECA S02. Illustrative failure data – replace with site / vendor data before use. Part of the Hadeed gas network PHA worked example (HAZOP HZ-EX-GN-001).",
+ "modified": "2026-10-14T16:00:00.000Z",
+ "top": "g000001",
+ "gates": [
+  {
+   "id": "g000001",
+   "code": "G-001",
+   "name": "MP header pressure exceeds design pressure (10 barg) – PRS-1 overpressure",
+   "type": "AND",
+   "k": 2,
+   "children": [
+    {
+     "kind": "g",
+     "id": "g000002"
+    },
+    {
+     "kind": "g",
+     "id": "g000006"
+    }
+   ],
+   "collapsed": false
+  },
+  {
+   "id": "g000002",
+   "code": "G-006",
+   "name": "Demand: active regulator run A fails to control (drives open)",
+   "type": "OR",
+   "k": 2,
+   "children": [
+    {
+     "kind": "e",
+     "id": "e000003"
+    },
+    {
+     "kind": "e",
+     "id": "e000004"
+    },
+    {
+     "kind": "e",
+     "id": "e000005"
+    }
+   ],
+   "collapsed": false
+  },
+  {
+   "id": "g000006",
+   "code": "G-002",
+   "name": "PRS-1 overpressure protection fails on demand (monitor regulator and slam-shut)",
+   "type": "OR",
+   "k": 2,
+   "children": [
+    {
+     "kind": "g",
+     "id": "g000007"
+    },
+    {
+     "kind": "e",
+     "id": "e000016"
+    }
+   ],
+   "collapsed": false
+  },
+  {
+   "id": "g000007",
+   "code": "G-003",
+   "name": "Both independent overpressure protections fail",
+   "type": "AND",
+   "k": 2,
+   "children": [
+    {
+     "kind": "g",
+     "id": "g000008"
+    },
+    {
+     "kind": "g",
+     "id": "g000011"
+    }
+   ],
+   "collapsed": false
+  },
+  {
+   "id": "g000008",
+   "code": "G-004",
+   "name": "Monitor regulator PCV-1103A fails to take over",
+   "type": "OR",
+   "k": 2,
+   "children": [
+    {
+     "kind": "e",
+     "id": "e000009"
+    },
+    {
+     "kind": "e",
+     "id": "e000010"
+    }
+   ],
+   "collapsed": false
+  },
+  {
+   "id": "g000011",
+   "code": "G-005",
+   "name": "Slam-shut SSV-1102A fails to close",
+   "type": "OR",
+   "k": 2,
+   "children": [
+    {
+     "kind": "e",
+     "id": "e000012"
+    },
+    {
+     "kind": "e",
+     "id": "e000013"
+    },
+    {
+     "kind": "e",
+     "id": "e000014"
+    },
+    {
+     "kind": "e",
+     "id": "e000015"
+    }
+   ],
+   "collapsed": false
+  }
+ ],
+ "events": [
+  {
+   "id": "e000003",
+   "code": "BE-001",
+   "name": "Active regulator PCV-1104A fails open (pilot ice / debris, diaphragm failure)",
+   "model": "freq",
+   "q": 0.01,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 8,
+   "lam": 1e-06,
+   "freq": 0.08,
+   "house": true,
+   "ef": 3,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "HAZOP N02-01 / N02-02; FMECA S02 PCV-1104A"
+  },
+  {
+   "id": "e000004",
+   "code": "BE-002",
+   "name": "Active regulator sensing line blocked or isolated – regulator drives open",
+   "model": "freq",
+   "q": 0.01,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 8,
+   "lam": 1e-06,
+   "freq": 0.05,
+   "house": true,
+   "ef": 3,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "HAZOP N02-02"
+  },
+  {
+   "id": "e000005",
+   "code": "BE-003",
+   "name": "Liquid / dust carry-over from the GRMS jams the active regulator open",
+   "model": "freq",
+   "q": 0.01,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 8,
+   "lam": 1e-06,
+   "freq": 0.05,
+   "house": true,
+   "ef": 3,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "HAZOP N01-03; FMECA S01 F-1002A"
+  },
+  {
+   "id": "e000009",
+   "code": "BE-004",
+   "name": "Monitor regulator PCV-1103A fails to control (sticks / pilot fault)",
+   "model": "tested",
+   "q": 0.01,
+   "lamDU": 3e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 24,
+   "lam": 1e-06,
+   "freq": 0.1,
+   "house": true,
+   "ef": 3,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "Annual lock-up / take-over test (R-003); FMECA S02 PCV-1103A"
+  },
+  {
+   "id": "e000010",
+   "code": "BE-005",
+   "name": "Monitor pilot sensing line blocked",
+   "model": "tested",
+   "q": 0.01,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 24,
+   "lam": 1e-06,
+   "freq": 0.1,
+   "house": true,
+   "ef": 3,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "FMECA S02 PCV-1103A"
+  },
+  {
+   "id": "e000012",
+   "code": "BE-006",
+   "name": "Slam-shut SSV-1102A latch / spring mechanism fails to close",
+   "model": "tested",
+   "q": 0.01,
+   "lamDU": 2e-06,
+   "lamDD": 0,
+   "TI": 4380,
+   "MTTR": 24,
+   "lam": 1e-06,
+   "freq": 0.1,
+   "house": true,
+   "ef": 3,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "Six-monthly trip test (R-003); FMECA S02 SSV-1102A"
+  },
+  {
+   "id": "e000013",
+   "code": "BE-007",
+   "name": "SSV-1102A OPSO pilot / sensing fails to trip",
+   "model": "tested",
+   "q": 0.01,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 4380,
+   "MTTR": 24,
+   "lam": 1e-06,
+   "freq": 0.1,
+   "house": true,
+   "ef": 3,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "FMECA S02 SSV-1102A"
+  },
+  {
+   "id": "e000014",
+   "code": "BE-008",
+   "name": "SSV-1102A OPSO set point wrong (above the MP design pressure)",
+   "model": "prob",
+   "q": 0.001,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 8,
+   "lam": 1e-06,
+   "freq": 0.1,
+   "house": true,
+   "ef": 10,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "Set-point register (R-002)"
+  },
+  {
+   "id": "e000015",
+   "code": "BE-009",
+   "name": "Slam-shut latched open / gagged after maintenance and not restored",
+   "model": "prob",
+   "q": 0.0001,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 8,
+   "lam": 1e-06,
+   "freq": 0.1,
+   "house": true,
+   "ef": 10,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "PTW / line-up check"
+  },
+  {
+   "id": "e000016",
+   "code": "BE-010",
+   "name": "Common sensing point for monitor and slam-shut blocked or isolated",
+   "model": "prob",
+   "q": 5e-05,
+   "lamDU": 1e-06,
+   "lamDD": 0,
+   "TI": 8760,
+   "MTTR": 8,
+   "lam": 1e-06,
+   "freq": 0.1,
+   "house": true,
+   "ef": 10,
+   "ccf": "",
+   "undeveloped": false,
+   "notes": "Defeats both protections – separate sensing points recommended"
+  }
+ ],
+ "ccf": [],
+ "settings": {
+  "mission": 8760,
+  "points": 400,
+  "maxOrder": 8,
+  "cutoff": 1e-15,
+  "maxCS": 20000,
+  "mcSamples": 2000,
+  "demandMode": "low"
+ }
+}

@@ -1,0 +1,435 @@
+{
+ "values": {
+  "FT1_TOP": 3.616194066051065e-05,
+  "FT1_PFD": 0.00020089884862529216,
+  "FT1_DEM": 0.17999999999999977,
+  "FT2_PFD": 0.02640920172036772,
+  "FT3_TOP": 0.009164199187306172,
+  "FT3_PFD": 0.011455248866667052,
+  "FT2_RRF": 37.86558982692628,
+  "BT1_TOP": 0.005768080896376277,
+  "BT2_TOP": 0.011114199093333645,
+  "ETA1_C5": 4.3414168180499795e-06,
+  "ETA1_C4": 1.7746493308870972e-05,
+  "ETA1_C3": 0.00028078752926657903,
+  "ETA1_C2": 0.0005334963056065001,
+  "ETA2_C5": 0.0009164199093333643,
+  "ETA2_C4": 0.003665679637333457,
+  "ETA2_C2": 0.004582099546666821
+ },
+ "files": {
+  "hazop": "Hadeed gas network - HAZOP HZ-EX-GN-001.hazop.json",
+  "FT1": "Hadeed gas network - FT-GN-01 PRS-1 overpressure.fta.json",
+  "FT2": "Hadeed gas network - FT-GN-02 Gas detection and ESD.fta.json",
+  "FT3": "Hadeed gas network - FT-GN-03 Reheat furnace BMS.fta.json",
+  "ETA1": "Hadeed gas network - ETA-GN-01 Major gas release.eta.json",
+  "ETA2": "Hadeed gas network - ETA-GN-02 Reheat furnace flame failure.eta.json",
+  "BT1": "Hadeed gas network - BT-GN-01 Loss of containment.bowtie.json",
+  "BT2": "Hadeed gas network - BT-GN-02 Reheat furnace explosion.bowtie.json",
+  "hz_xlsx": "Hadeed gas network - HAZOP_Study_Workbook.xlsx",
+  "hz_xlsm": "Hadeed gas network - HAZOP_Study_Workbook_Macro.xlsm",
+  "fm_xlsx": "Hadeed gas network - FMECA_Workbook.xlsx",
+  "fm_xlsm": "Hadeed gas network - FMECA_Workbook_Macro.xlsm",
+  "results": "results.json"
+ },
+ "constants": {
+  "P_IMM": 0.05,
+  "P_DEL": 0.1,
+  "P_VCE": 0.3,
+  "P_AIT": 0.2,
+  "P_DRAUGHT": 0.5,
+  "P_DOORS": 0.2
+ },
+ "ft": {
+  "FT1": {
+   "top": "G-001",
+   "freq": 3.616194066051065e-05,
+   "pTime": 3.616194066051065e-05,
+   "gates": {
+    "G-001": 3.6161792752552576e-05,
+    "G-006": 0.17999999999999977,
+    "G-002": 0.00020089884862529216,
+    "G-003": 0.00015090639394498944,
+    "G-004": 0.01731714737364828,
+    "G-005": 0.007634023383706268
+   },
+   "warn": []
+  },
+  "FT2": {
+   "top": "G-001",
+   "freq": null,
+   "pTime": 0.026409201348732165,
+   "gates": {
+    "G-001": 0.02640920172036772,
+    "G-002": 0.010420285597694522,
+    "G-003": 0.10217860687245431,
+    "G-006": 0.00023442490950511947,
+    "G-004": 0.1019681255007419,
+    "G-005": 0.015174521638737113
+   },
+   "warn": []
+  },
+  "FT3": {
+   "top": "G-001",
+   "freq": 0.009164199187306172,
+   "pTime": 0.009164199187306172,
+   "gates": {
+    "G-001": 0.009164199093333643,
+    "G-002": 0.011455248866667052,
+    "G-003": 0.0009572845112626416
+   },
+   "warn": []
+  }
+ },
+ "eta": {
+  "ETA1": {
+   "ie": 0.005768081,
+   "warn": [],
+   "headingP": [
+    0.05,
+    0.02640920172036772,
+    0.1,
+    0.3
+   ],
+   "cats": {
+    "C1": 0.0049317092550000005,
+    "C2": 0.0005334963056065001,
+    "C3": 0.00028078752926657903,
+    "C4": 1.7746493308870972e-05,
+    "C5": 4.3414168180499795e-06
+   },
+   "leaves": [
+    {
+     "label": "Release isolated \u2013 gas disperses without ignition",
+     "f": 0.004801466750458501
+    },
+    {
+     "label": "Small flash fire \u2013 isolated inventory",
+     "f": 0.0005334963056065001
+    },
+    {
+     "label": "Prolonged release disperses without ignition \u2013 plant gas-out",
+     "f": 0.0001302425045414994
+    },
+    {
+     "label": "Large flash fire \u2013 prolonged release",
+     "f": 1.0129972575449952e-05
+    },
+    {
+     "label": "Vapour cloud explosion \u2013 blast damage, multiple fatalities",
+     "f": 4.3414168180499795e-06
+    },
+    {
+     "label": "Jet fire \u2013 isolated quickly, local damage",
+     "f": 0.00028078752926657903
+    },
+    {
+     "label": "Prolonged jet fire \u2013 escalation to heaters / filter-separators",
+     "f": 7.616520733421019e-06
+    }
+   ]
+  },
+  "ETA2": {
+   "ie": 4,
+   "warn": [],
+   "headingP": [
+    0.2,
+    0.011455248866667052,
+    0.5,
+    0.2
+   ],
+   "cats": {
+    "C1": 3.9908358009066665,
+    "C2": 0.004582099546666821,
+    "C4": 0.003665679637333457,
+    "C5": 0.0009164199093333643
+   },
+   "leaves": [
+    {
+     "label": "Unburnt gas burns off in the hot furnace \u2013 trip and relight",
+     "f": 3.2
+    },
+    {
+     "label": "Fuel shut off \u2013 furnace purged and relit",
+     "f": 0.7908358009066664
+    },
+    {
+     "label": "Gas removed through the stack \u2013 post-purge, investigate",
+     "f": 0.004582099546666821
+    },
+    {
+     "label": "Deflagration relieved by explosion doors \u2013 burner / refractory damage",
+     "f": 0.003665679637333457
+    },
+    {
+     "label": "Furnace explosion \u2013 casing / door failure, potential fatalities",
+     "f": 0.0009164199093333643
+    }
+   ]
+  }
+ },
+ "bt": {
+  "BT1": {
+   "top": 0.005768080896376277,
+   "topRaw": 0.33,
+   "warn": [],
+   "threats": [
+    {
+     "name": "PRS-1 active regulator fails open \u2013 MP header overpressure",
+     "key": "T1",
+     "f": 1.8080896376276295e-05,
+     "raw": 0.09
+    },
+    {
+     "name": "External corrosion of buried sections and pipe supports",
+     "key": "T2",
+     "f": 0.0005000000000000001,
+     "raw": 0.05
+    },
+    {
+     "name": "Mechanical impact \u2013 vehicles, mobile cranes, excavation",
+     "key": "T3",
+     "f": 0.0002000000000000001,
+     "raw": 0.020000000000000004
+    },
+    {
+     "name": "Flange, gasket or small-bore fitting failure",
+     "key": "T4",
+     "f": 0.003,
+     "raw": 0.1
+    },
+    {
+     "name": "Maintenance / pigging error \u2013 wrong isolation, receiver opened under pressure, hot work",
+     "key": "T5",
+     "f": 5e-05,
+     "raw": 0.05
+    },
+    {
+     "name": "Regulator diaphragm / pilot venting inside the PRS shelter",
+     "key": "T6",
+     "f": 0.0020000000000000005,
+     "raw": 0.020000000000000004
+    }
+   ],
+   "cons": [
+    {
+     "name": "Prolonged jet fire \u2013 escalation to heaters / filter-separators",
+     "key": "JET",
+     "res": 7.616520596590029e-06,
+     "inh": 0.0165,
+     "S": 5,
+     "Lr": 1,
+     "rankR": "Medium",
+     "tol": "1e-4"
+    },
+    {
+     "name": "Large flash fire from a prolonged release",
+     "key": "FF",
+     "res": 1.0129972393464737e-05,
+     "inh": 0.21945000000000003,
+     "S": 4,
+     "Lr": 1,
+     "rankR": "Low",
+     "tol": "0.01"
+    },
+    {
+     "name": "Vapour cloud explosion \u2013 blast damage to PRS / control room, multiple fatalities",
+     "key": "VCE",
+     "res": 4.341416740056316e-06,
+     "inh": 0.09405,
+     "S": 5,
+     "Lr": 1,
+     "rankR": "Medium",
+     "tol": "1e-4"
+    },
+    {
+     "name": "Gas migration into buildings / cable trenches \u2013 confined explosion",
+     "key": "BLDG",
+     "res": 3.4608485378257665e-05,
+     "inh": 0.006600000000000001,
+     "S": 5,
+     "Lr": 1,
+     "rankR": "Medium",
+     "tol": "1e-4"
+    }
+   ],
+   "barriers": [
+    {
+     "id": "b000104",
+     "name": "PRS-1 overpressure protection \u2013 monitor regulator + slam-shut",
+     "pfd": 0.00020089884862529216
+    },
+    {
+     "id": "b000105",
+     "name": "Coating + cathodic protection with annual CP / DCVG survey",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000106",
+     "name": "Thickness monitoring at supports, crossings and low points",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000107",
+     "name": "Crash barriers and height gantries at pipe-rack road crossings",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000108",
+     "name": "Ground-disturbance permit with buried-services drawing",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000109",
+     "name": "Gasket control, bolt-torque procedure and leak survey",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000110",
+     "name": "Small-bore fitting bracing and vibration survey",
+     "pfd": 0.3
+    },
+    {
+     "id": "b000111",
+     "name": "Permit-to-work with isolation verification, gas-free test and fire watch",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000112",
+     "name": "Pig-receiver closure pressure-warning device / key interlock (PR-1001)",
+     "pfd": 0.01
+    },
+    {
+     "id": "b000113",
+     "name": "Pilot / diaphragm vents piped to vent stack VS-1301 outside the shelter",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000114",
+     "name": "Gas detection and ESD isolation (GD-1110A/B/C 2oo3, UCP-1000, ESDV-1001 / ESDV-1107)",
+     "pfd": 0.02640920172036772
+    },
+    {
+     "id": "b000115",
+     "name": "Ignition source control \u2013 Ex equipment, hot-work permit, vehicle control",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000116",
+     "name": "Sealed cable-trench entries and building pressurisation near the MP header",
+     "pfd": 0.3
+    }
+   ]
+  },
+  "BT2": {
+   "top": 0.011114199093333645,
+   "topRaw": 1.2500000000000002,
+   "warn": [],
+   "threats": [
+    {
+     "name": "Burner flame failure / failed light-off with fuel flowing, furnace below auto-ignition temperature",
+     "key": "T1",
+     "f": 0.009164199093333643,
+     "raw": 0.8
+    },
+    {
+     "name": "Safety shut-off valves passing into the idle, cold furnace",
+     "key": "T2",
+     "f": 0.0007500000000000001,
+     "raw": 0.15
+    },
+    {
+     "name": "Light-off without an adequate pre-purge",
+     "key": "T3",
+     "f": 0.0002,
+     "raw": 0.2
+    },
+    {
+     "name": "Loss of combustion air with gas still flowing (fuel-rich)",
+     "key": "T4",
+     "f": 0.001,
+     "raw": 0.1
+    }
+   ],
+   "cons": [
+    {
+     "name": "Furnace explosion \u2013 casing / door failure, potential fatalities",
+     "key": "EXPL",
+     "res": 0.0011114199093333645,
+     "inh": 1.2500000000000002,
+     "S": 5,
+     "Lr": 3,
+     "rankR": "High",
+     "tol": "1e-4"
+    },
+    {
+     "name": "Deflagration relieved \u2013 burner / refractory damage, outage",
+     "key": "DEFL",
+     "res": 0.004445679637333458,
+     "inh": 1.0000000000000002,
+     "S": 4,
+     "Lr": 3,
+     "rankR": "High",
+     "tol": "0.01"
+    },
+    {
+     "name": "Burns from flame blow-back at peep-holes / burner ports",
+     "key": "BURN",
+     "res": 0.00011114199093333646,
+     "inh": 0.12500000000000003,
+     "S": 4,
+     "Lr": 2,
+     "rankR": "Medium",
+     "tol": "0.01"
+    }
+   ],
+   "barriers": [
+    {
+     "id": "b000140",
+     "name": "BMS flame-failure shut-off (BS-4010, BMS-4000, XV-4002A/B)",
+     "pfd": 0.011455248866667052
+    },
+    {
+     "id": "b000141",
+     "name": "Valve proving VPS-4004 before light-off (DBB vent XV-4003)",
+     "pfd": 0.05
+    },
+    {
+     "id": "b000142",
+     "name": "Positive isolation (spade) for extended shutdowns and furnace entry",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000143",
+     "name": "BMS pre-purge interlock (proven air flow, \u2265 4 volume changes)",
+     "pfd": 0.01
+    },
+    {
+     "id": "b000144",
+     "name": "Light-off procedure and checklist (no manual torch lighting)",
+     "pfd": 0.1
+    },
+    {
+     "id": "b000145",
+     "name": "Low-low combustion air flow trip FSLL-4008",
+     "pfd": 0.01
+    },
+    {
+     "id": "b000146",
+     "name": "Furnace draught / post-purge removes unburnt gas before it ignites",
+     "pfd": 0.5
+    },
+    {
+     "id": "b000147",
+     "name": "Explosion relief doors on the furnace roof / walls",
+     "pfd": 0.2
+    },
+    {
+     "id": "b000148",
+     "name": "No-go zone around burner platforms during light-off",
+     "pfd": 0.1
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,57 @@
+INCIDENT INVESTIGATION TOOLKIT  (Istec Training, version 1.0 (2026-10-15))
+=====================================================================
+
+Three offline investigation tools that run directly from this folder - no
+installation, no administrator rights, no internet connection:
+
+  - Storyline Casebook         investigation file: evidence register, ECFA+
+                               storyline, ICAM, root causes, actions, report
+  - Tripod Beta Investigator   Tripod Beta trees: trios, barriers, Immediate
+                               Cause > Precondition > Underlying Cause (BRF)
+  - RCA Fault Tree             cause-and-effect fault tree for RCA: test each
+                               hypothesis against the evidence; optional
+                               probabilities (IPL / human error / equipment /
+                               initiating frequency library, all editable)
+
+plus START HERE.html: tool cards and a case register of your investigations.
+
+HOW TO START
+  1. Copy this whole folder to the USB stick (keep the folder structure).
+  2. Open "START HERE.html" (double-click), or:
+       Windows: double-click "Start Toolkit - Windows.cmd"  (opens Microsoft Edge)
+       Mac:     double-click "Start Toolkit - Mac.command"  (opens Chrome / Edge)
+               (first time: right-click > Open if macOS asks for confirmation)
+  3. Choose a tool. Each tool also opens directly from the "Tools" folder.
+
+BROWSER
+  Use Google Chrome or Microsoft Edge. They keep a case file on the stick
+  linked to the tool, so every change is saved to it. Firefox / Safari work
+  too, but only by downloading a copy and opening it again.
+
+SAVING YOUR WORK  (important)
+  - Each tool keeps your work automatically in the browser of the computer you
+    are using. That copy stays on that computer - it does NOT travel with the
+    USB stick.
+  - To keep a case on the stick, save it into the "My cases" folder:
+       Storyline Casebook        workspace bar: Save to file...   (.casebook-ws.json)
+       Tripod Beta Investigator  header: Save to file...          (.tripod.json)
+       RCA Fault Tree            File > Save as...                (.rcaft.json)
+    Every later change is written to that file automatically.
+  - On another computer: open the file from "My cases" in the tool, or use
+    the case register on START HERE. If asked, click "Reconnect file"
+    (the browser needs permission again after a restart).
+  - Make an extra copy now and then (Download backup).
+  - Always eject the USB stick safely before removing it.
+
+FOLDERS
+  Tools\       the three tools (self-contained HTML files)
+  Examples\    worked examples: Tripod Annex 8 vehicle roll-over (as a Tripod
+               case and as a Casebook workspace) and the tank T-101 overfill
+               RCA fault tree
+  Guides\      Quick guide (all tools) and RCA Fault Tree user guide (PDF)
+  My cases\    save your investigations here
+
+NOTES
+  - The RCA Fault Tree library holds generic screening values for ranking
+    hypotheses; they are not design data.
+  - The examples are fictional or training cases.

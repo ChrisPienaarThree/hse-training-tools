@@ -1,0 +1,27 @@
+HADEED NATURAL GAS DISTRIBUTION NETWORK - COMPLETE WORKED PHA EXAMPLE
+=====================================================================
+ILLUSTRATIVE TRAINING EXAMPLE - plant arrangement, tags, pressures and failure data are
+representative of a DRI-EAF steel-works gas network, NOT Hadeed design data.
+
+Start with: PHA Study Report - Hadeed gas distribution network (worked example).pdf
+
+Open each file with File > Open file... in the matching toolkit app (Tools folder):
+  ...HAZOP HZ-EX-GN-001.hazop.json        HAZOP Study Manager   8 nodes N01-N08, 46 deviations, 21 recs
+  ...FT-GN-01 PRS-1 overpressure          Fault Tree & PFD Calculator   monitor + slam-shut protection
+  ...FT-GN-02 Gas detection and ESD       Fault Tree & PFD Calculator   ESD isolation PFDavg
+  ...FT-GN-03 Reheat furnace BMS          Fault Tree & PFD Calculator   flame-failure shut-off
+  ...ETA-GN-01 Major gas release          Event Tree Analysis   (H2 linked to FT-GN-02)
+  ...ETA-GN-02 Reheat furnace flame failure  Event Tree Analysis (H2 linked to FT-GN-03)
+  ...BT-GN-01 Loss of containment         Bow Tie Analysis      (barriers linked to FT-GN-01 / 02)
+  ...BT-GN-02 Reheat furnace explosion    Bow Tie Analysis      (BMS barrier linked to FT-GN-03)
+  ...HAZOP_Study_Workbook(.xlsx/.xlsm)    the same HAZOP in the Excel workbooks
+  ...FMECA_Workbook(.xlsx/.xlsm)          FMECA systems S01-S08 = HAZOP nodes N01-N08
+
+How the files link: same node numbers (Nxx-yy deviation refs), equipment tags, recommendation
+numbers (R-0xx) and document codes everywhere. Fault-tree gates feed event-tree headings and
+bow-tie barriers; the bow-tie top event is the event-tree initiating frequency; calculated
+frequencies set the HAZOP likelihood after safeguards. See section 9 of the report.
+
+Cross-link test results.txt = automated checks (all files re-opened in their apps and
+recalculated; workbooks recalculated). results.json = all calculated values.
+Build / test scripts: Claude Outputs/_build_scripts/gas_network_example/

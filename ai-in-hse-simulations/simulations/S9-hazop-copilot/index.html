@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S9 · HAZOP co-pilot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S9 &middot; AI-assisted HAZOP co-pilot</h1>
+  <p class="sub">Simulation 9 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 2, Topic 6
+     (also Topic 2). Pick a deviation; the co-pilot proposes causes, consequences and expected safeguards.
+     Your team adds what only this site knows &mdash; then you verify before closing it out.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No model runs. Every deviation's candidate causes, consequences, expected safeguards and
+    site-specific "human catch" are pre-authored. Your checklist state, your own team's entries,
+    the review gate and the running worksheet are computed live.
+  </div>
+
+  <div id="node" class="node"></div>
+  <div id="screened" class="screened"></div>
+
+  <div id="devpick" class="devpick"></div>
+  <div id="devstatement"></div>
+
+  <div class="stage">
+    <section class="card pane" data-kind="ai" id="left"></section>
+    <section class="card pane" data-kind="team" id="right"></section>
+  </div>
+
+  <section class="card" id="worksheet"></section>
+
+  <section class="card">
+    <h2>What this workshop pattern is (and isn't)</h2>
+    <div id="callouts" class="callouts"></div>
+  </section>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 2 Topic 6
+       (workshop: AI-assisted risk assessment), Day 2 Topic 2 (AI-enhanced risk assessment).</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/reactor-feed-line/dataset.js"></script>
+<script src="data/loading-bay-tanker/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

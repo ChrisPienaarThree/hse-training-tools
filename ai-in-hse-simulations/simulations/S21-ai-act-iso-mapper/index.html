@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S21 — EU AI Act screener &amp; ISO mapper</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>S21 · EU AI Act high-risk screener &amp; ISO 45001 ↔ 42001 mapper</h1>
+      <p class="sub">Six questions classify an AI use case; a shared clause structure shows how to integrate its management.</p>
+    </div>
+    <div>
+      <label class="field" for="scenarioSelect">Scenario</label>
+      <select id="scenarioSelect"></select>
+    </div>
+    <button id="themeBtn" class="ghost theme-toggle">Theme: system</button>
+  </div>
+  <div id="app"><p>Loading…</p></div>
+  <footer class="notes">
+    Part of <em>Integrating AI in Workplace Safety Practices</em> — Day 4 (EU AI Act) and Day 5 (management-system
+    integration). No AI model runs in this page; <code>app.js</code> evaluates a real rule engine and a live table
+    filter, in your browser.
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/computer-vision-tools/dataset.js"></script>
+<script src="data/predictive-and-nlp-tools/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

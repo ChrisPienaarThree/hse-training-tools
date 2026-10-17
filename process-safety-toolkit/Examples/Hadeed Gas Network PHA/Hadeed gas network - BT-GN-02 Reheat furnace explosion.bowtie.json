@@ -1,0 +1,630 @@
+{
+ "app": "Bow Tie Analysis",
+ "schema": 1,
+ "title": "BT-GN-02 – Explosive mixture in the reheat furnace (Hadeed gas network example)",
+ "description": "Threat T1 = flame failure 4 /yr x P(below auto-ignition temperature) 0.2 with the BMS barrier from fault tree FT-GN-03 gate G-002 – its contribution equals the FT-GN-03 top event and the event tree ETA-GN-02 branch 'below AIT, fuel still flowing'. Mitigative barriers 'draught / post-purge' and 'explosion relief doors' are ETA-GN-02 headings H3 and H4. HAZOP N06; FMECA S06. Illustrative data.",
+ "modified": "2026-10-14T16:00:00.000Z",
+ "hazard": "Natural gas fuel in the reheat furnace firing system (0.3–1.5 barg at the burners)",
+ "top": "Explosive gas / air mixture in the reheat furnace combustion chamber",
+ "threats": [
+  {
+   "id": "t000149",
+   "name": "Burner flame failure / failed light-off with fuel flowing, furnace below auto-ignition temperature",
+   "freq": 4,
+   "cond": 0.2,
+   "notes": "4 /yr = FT-GN-03 BE-001; 0.2 = P(below AIT) = ETA-GN-02 H1. HAZOP N06-01.",
+   "barrierIds": [
+    "b000140"
+   ],
+   "key": "T1"
+  },
+  {
+   "id": "t000150",
+   "name": "Safety shut-off valves passing into the idle, cold furnace",
+   "freq": 0.5,
+   "cond": 0.3,
+   "notes": "HAZOP N06-05; FMECA S06 XV-4002A seats",
+   "barrierIds": [
+    "b000141",
+    "b000142"
+   ],
+   "key": "T2"
+  },
+  {
+   "id": "t000151",
+   "name": "Light-off without an adequate pre-purge",
+   "freq": 0.2,
+   "cond": 1,
+   "notes": "HAZOP N06-04",
+   "barrierIds": [
+    "b000143",
+    "b000144"
+   ],
+   "key": "T3"
+  },
+  {
+   "id": "t000152",
+   "name": "Loss of combustion air with gas still flowing (fuel-rich)",
+   "freq": 0.5,
+   "cond": 0.2,
+   "notes": "HAZOP N06-03; FMECA S06 FN-4007",
+   "barrierIds": [
+    "b000145"
+   ],
+   "key": "T4"
+  }
+ ],
+ "consequences": [
+  {
+   "id": "q000153",
+   "name": "Furnace explosion – casing / door failure, potential fatalities",
+   "cond": 1,
+   "sev": {
+    "P": 5,
+    "E": 2,
+    "A": 5,
+    "R": 4
+   },
+   "notes": "ETA-GN-02 end state C5 (for threat T1)",
+   "barrierIds": [
+    "b000146",
+    "b000147"
+   ],
+   "key": "EXPL"
+  },
+  {
+   "id": "q000154",
+   "name": "Deflagration relieved – burner / refractory damage, outage",
+   "cond": 0.8,
+   "sev": {
+    "P": 2,
+    "E": 1,
+    "A": 4,
+    "R": 2
+   },
+   "notes": "ETA-GN-02 end state C4 (for threat T1)",
+   "barrierIds": [
+    "b000146"
+   ],
+   "key": "DEFL"
+  },
+  {
+   "id": "q000155",
+   "name": "Burns from flame blow-back at peep-holes / burner ports",
+   "cond": 0.1,
+   "sev": {
+    "P": 4,
+    "E": 1,
+    "A": 1,
+    "R": 2
+   },
+   "notes": "",
+   "barrierIds": [
+    "b000148"
+   ],
+   "key": "BURN"
+  }
+ ],
+ "barriers": [
+  {
+   "id": "b000140",
+   "name": "BMS flame-failure shut-off (BS-4010, BMS-4000, XV-4002A/B)",
+   "type": "Active hardware",
+   "pfd": 0.011455,
+   "source": "ft",
+   "ftId": "f000139",
+   "gateId": "g000038",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Instrument engineer",
+   "performance": "Fuel shut off within 1 s of flame loss",
+   "verification": "Annual BMS proof test; scanner checks",
+   "critical": "Yes",
+   "notes": "PFDavg from fault tree FT-GN-03 gate G-002 = ETA-GN-02 H2. HAZOP safeguard BMS-4000 (N06-01).",
+   "key": "BMS"
+  },
+  {
+   "id": "b000141",
+   "name": "Valve proving VPS-4004 before light-off (DBB vent XV-4003)",
+   "type": "Active hardware",
+   "pfd": 0.05,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Instrument engineer",
+   "performance": "Passing SSOV detected before light-off",
+   "verification": "Annual VPS function test",
+   "critical": "",
+   "notes": "HAZOP safeguard VPS-4004 (N06-05, R-011)",
+   "key": "VPS"
+  },
+  {
+   "id": "b000142",
+   "name": "Positive isolation (spade) for extended shutdowns and furnace entry",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Rolling-mill superintendent",
+   "performance": "No gas can reach an idle furnace",
+   "verification": "PTW / isolation audits",
+   "critical": "",
+   "notes": "HAZOP N06-05, N06-07",
+   "key": "SPADE"
+  },
+  {
+   "id": "b000143",
+   "name": "BMS pre-purge interlock (proven air flow, ≥ 4 volume changes)",
+   "type": "Active hardware",
+   "pfd": 0.01,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Instrument engineer",
+   "performance": "No light-off without a completed purge",
+   "verification": "Annual BMS proof test",
+   "critical": "",
+   "notes": "HAZOP safeguard BMS-4000 purge (N06-04) – shares the BMS logic solver with the flame-failure barrier",
+   "key": "PURGE"
+  },
+  {
+   "id": "b000144",
+   "name": "Light-off procedure and checklist (no manual torch lighting)",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Shift supervisor",
+   "performance": "Light-off only per procedure",
+   "verification": "Observation audits",
+   "critical": "",
+   "notes": "HAZOP N06-04",
+   "key": "LIGHT"
+  },
+  {
+   "id": "b000145",
+   "name": "Low-low combustion air flow trip FSLL-4008",
+   "type": "Active hardware",
+   "pfd": 0.01,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Instrument engineer",
+   "performance": "Fuel shut off on loss of combustion air",
+   "verification": "Annual proof test",
+   "critical": "",
+   "notes": "HAZOP safeguard FSLL-4008 (N06-03)",
+   "key": "FSLL"
+  },
+  {
+   "id": "b000146",
+   "name": "Furnace draught / post-purge removes unburnt gas before it ignites",
+   "type": "Passive hardware",
+   "pfd": 0.5,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Process engineer",
+   "performance": "Stack draught maintained after a trip",
+   "verification": "Draught measurement",
+   "critical": "",
+   "notes": "= ETA-GN-02 heading H3. HAZOP N06-01",
+   "key": "DRAUGHT"
+  },
+  {
+   "id": "b000147",
+   "name": "Explosion relief doors on the furnace roof / walls",
+   "type": "Passive hardware",
+   "pfd": 0.2,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Mechanical engineer",
+   "performance": "Doors open freely at the design overpressure",
+   "verification": "Annual inspection (not bolted / seized)",
+   "critical": "",
+   "notes": "= ETA-GN-02 heading H4. HAZOP N06-01",
+   "key": "DOORS"
+  },
+  {
+   "id": "b000148",
+   "name": "No-go zone around burner platforms during light-off",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Shift supervisor",
+   "performance": "Nobody at peep-holes / burner ports during light-off",
+   "verification": "Supervision",
+   "critical": "",
+   "notes": "HAZOP N06-01",
+   "key": "NOGO"
+  }
+ ],
+ "efs": [
+  {
+   "id": "x000156",
+   "barrierId": "b000140",
+   "name": "Dust / scale on the scanner lens or poor sighting",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000157",
+     "name": "Scanner purge air and cleaning schedule",
+     "type": "Continuous / procedural",
+     "owner": "Instrument technician"
+    }
+   ]
+  },
+  {
+   "id": "x000158",
+   "barrierId": "b000140",
+   "name": "Flame-failure trip bypassed or forced",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000159",
+     "name": "Bypass / override management (R-012)",
+     "type": "Continuous / procedural",
+     "owner": "HSE"
+    }
+   ]
+  },
+  {
+   "id": "x000160",
+   "barrierId": "b000147",
+   "name": "Relief doors seized or bolted shut by maintenance",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000161",
+     "name": "Annual door inspection and free-movement check",
+     "type": "Continuous / procedural",
+     "owner": "Mechanical engineer"
+    }
+   ]
+  },
+  {
+   "id": "x000162",
+   "barrierId": "b000143",
+   "name": "BMS logic solver common to the purge and flame-failure functions",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000163",
+     "name": "BMS logic solver to IEC 61511 with proof testing (R-010)",
+     "type": "Active hardware",
+     "owner": "Instrument engineer"
+    }
+   ]
+  }
+ ],
+ "fts": [
+  {
+   "id": "f000139",
+   "name": "FT-GN-03 – Reheat furnace BMS flame-failure shut-off",
+   "project": {
+    "app": "Fault Tree & PFD Calculator",
+    "schema": 1,
+    "title": "FT-GN-03 – Reheat furnace explosive mixture after flame failure (Hadeed gas network example)",
+    "description": "Top event: explosive gas / air mixture in a reheat furnace zone because a burner loses flame (or fails to light) while the zone is below auto-ignition temperature and the BMS flame-failure shut-off fails. Gate G-002 = PFDavg of the BMS shut-off (scanners BS-4010, logic BMS-4000, SSOVs XV-4002A/B 1oo2) – used by event tree ETA-GN-02 heading H2 and bow tie BT-GN-02 threat T1. HAZOP N06-01; FMECA S06. Illustrative failure data – replace with site / vendor data before use. Part of the Hadeed gas network PHA worked example (HAZOP HZ-EX-GN-001).",
+    "modified": "2026-10-14T16:00:00.000Z",
+    "top": "g000035",
+    "gates": [
+     {
+      "id": "g000035",
+      "code": "G-001",
+      "name": "Explosive mixture in reheat furnace following flame failure",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000036"
+       },
+       {
+        "kind": "e",
+        "id": "e000037"
+       },
+       {
+        "kind": "g",
+        "id": "g000038"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000038",
+      "code": "G-002",
+      "name": "BMS fails to shut off fuel gas on flame failure",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000040"
+       },
+       {
+        "kind": "e",
+        "id": "e000041"
+       },
+       {
+        "kind": "e",
+        "id": "e000042"
+       },
+       {
+        "kind": "g",
+        "id": "g000043"
+       },
+       {
+        "kind": "e",
+        "id": "e000046"
+       },
+       {
+        "kind": "e",
+        "id": "e000047"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000043",
+      "code": "G-003",
+      "name": "Both safety shut-off valves fail to close (1oo2)",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000044"
+       },
+       {
+        "kind": "e",
+        "id": "e000045"
+       }
+      ],
+      "collapsed": false
+     }
+    ],
+    "events": [
+     {
+      "id": "e000036",
+      "code": "BE-001",
+      "name": "Burner flame failure / failed light-off at a reheat furnace burner",
+      "model": "freq",
+      "q": 0.01,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 4,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Plant records – illustrative; ETA-GN-02 initiating event"
+     },
+     {
+      "id": "e000037",
+      "code": "BE-002",
+      "name": "Furnace zone below auto-ignition temperature (start-up / low fire)",
+      "model": "prob",
+      "q": 0.2,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "ETA-GN-02 heading H1; BT-GN-02 threat T1 condition"
+     },
+     {
+      "id": "e000040",
+      "code": "BE-003",
+      "name": "Flame scanner BS-4010 fails to detect loss of flame",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S06 BS-4010 – R-010 self-checking 1oo2"
+     },
+     {
+      "id": "e000041",
+      "code": "BE-004",
+      "name": "BMS logic solver BMS-4000 hardware fails dangerous",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-07,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": ""
+     },
+     {
+      "id": "e000042",
+      "code": "BE-005",
+      "name": "BMS application logic error / unauthorised change",
+      "model": "prob",
+      "q": 0.001,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S06 BMS-4000; MOC (R-012)"
+     },
+     {
+      "id": "e000044",
+      "code": "BE-006",
+      "name": "SSOV XV-4002A fails to close",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000039",
+      "undeveloped": false,
+      "notes": "FMECA S06 XV-4002A"
+     },
+     {
+      "id": "e000045",
+      "code": "BE-007",
+      "name": "SSOV XV-4002B fails to close",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000039",
+      "undeveloped": false,
+      "notes": "FMECA S06 XV-4002A/B"
+     },
+     {
+      "id": "e000046",
+      "code": "BE-008",
+      "name": "Flame-failure response time too long (scanner + valve closing)",
+      "model": "prob",
+      "q": 0.001,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Closing-time test"
+     },
+     {
+      "id": "e000047",
+      "code": "BE-009",
+      "name": "Flame-failure trip bypassed / forced",
+      "model": "prob",
+      "q": 0.002,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "HAZOP N06-06; bypass management (R-012)"
+     }
+    ],
+    "ccf": [
+     {
+      "id": "c000039",
+      "code": "CCF-001",
+      "name": "Safety shut-off valves XV-4002A/B",
+      "beta": 0.1,
+      "betaD": ""
+     }
+    ],
+    "settings": {
+     "mission": 8760,
+     "points": 400,
+     "maxOrder": 8,
+     "cutoff": 1e-15,
+     "maxCS": 20000,
+     "mcSamples": 2000,
+     "demandMode": "low"
+    }
+   }
+  }
+ ],
+ "matrix": {
+  "sev": [
+   "Negligible",
+   "Minor",
+   "Moderate",
+   "Major",
+   "Catastrophic"
+  ],
+  "lik": [
+   "Rare",
+   "Unlikely",
+   "Possible",
+   "Likely",
+   "Frequent"
+  ],
+  "likBands": [
+   0.0001,
+   0.001,
+   0.01,
+   0.1
+  ],
+  "bands": {
+   "Medium": 5,
+   "High": 10,
+   "Very High": 20
+  },
+  "tol": [
+   "",
+   "",
+   "1",
+   "0.01",
+   "1e-4"
+  ]
+ },
+ "settings": {
+  "health": false
+ }
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S8 · Dynamic bowtie</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S8 &middot; Dynamic bowtie &mdash; barrier status live</h1>
+  <p class="sub">Simulation 8 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 2, Topic 5.
+     A bowtie built the LOPA way: barriers in series between threats and a top event, and between the
+     top event and the worst consequence. Flip a barrier's status and watch the residual risk move &mdash;
+     against what the signed-off, static bowtie still assumes.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No model runs. Threat frequencies, each barrier's nominal probability of failure on demand (PFD),
+    its degraded/overdue behaviour, and one common-cause pairing are pre-authored. The PFD for each
+    barrier's current status, the series-product maths, the static-vs-live comparison, the ratio and
+    the risk-matrix placement are computed live &mdash; and are checkable by hand.
+  </div>
+
+  <div id="eventline" class="eventline"></div>
+
+  <div id="tiles" class="tiles"></div>
+
+  <div class="stage">
+    <section class="card">
+      <h2>Live bowtie</h2>
+      <div id="bowtie" class="bowtie"></div>
+      <div id="barriers" class="barriers"></div>
+      <div id="ccnote" class="ccnote"></div>
+      <h3>Operating the bowtie over time</h3>
+      <div id="ops" class="ops"></div>
+    </section>
+
+    <section class="card">
+      <h2>Risk matrix &mdash; live vs as-approved</h2>
+      <div class="matrixwrap">
+        <div id="matrix" class="rmatrix"></div>
+      </div>
+      <div class="mlabels" style="margin-top:6px">Rows: severity (Catastrophic at top &rarr; Minor at bottom). Columns: likelihood (Rare &rarr; Frequent, left to right).</div>
+      <div class="legend2">
+        <span><span class="sw live"></span>live</span>
+        <span><span class="sw stat"></span>as-approved (static)</span>
+      </div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>What the paper bowtie cannot show you</h2>
+    <div id="callouts" class="callouts"></div>
+  </section>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 2 Topic 5
+       (AI in process / operational safety: digital twins and dynamic bowties).</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/process-overpressure/dataset.js"></script>
+<script src="data/mobile-plant-pedestrian/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

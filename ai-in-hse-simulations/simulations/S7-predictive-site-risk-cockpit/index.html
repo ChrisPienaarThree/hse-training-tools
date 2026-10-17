@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S7 · Site-risk cockpit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S7 &middot; Predictive site-risk cockpit</h1>
+  <p class="sub">Simulation 7 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 2, Topic 3
+     (also Day 3, Topic 1). Leading indicators in, a 30-day recordable probability out &mdash; then watch
+     what time (model drift) and a slipping reporting culture (under-reporting bias) do to it.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No model was trained. The logistic coefficients, the indicator means/SDs, the drift terms and the
+    health thresholds are pre-authored. The standardisation, the logistic prediction, the drifting
+    "true" risk, the seeded weekly outcomes and every gap on screen are computed live &mdash; and are
+    checkable by hand.
+  </div>
+
+  <div id="target" class="target"></div>
+
+  <div id="cockpit" class="cockpit"></div>
+
+  <div class="stage">
+    <section class="card">
+      <h2>Leading indicators (model inputs)</h2>
+      <div id="indicators"></div>
+      <div id="lagging" class="laggingcard"></div>
+      <h3>Operating the model over time</h3>
+      <div id="ops" class="ops"></div>
+    </section>
+
+    <section class="card">
+      <div id="right"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>What the cockpit cannot show you</h2>
+    <div id="callouts" class="callouts"></div>
+  </section>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 2 Topic 3
+       (predictive analytics for safety risk), Day 3 Topic 1, leading vs lagging indicators, model reliability &amp; drift.</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/distribution-centre/dataset.js"></script>
+<script src="data/construction-project/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

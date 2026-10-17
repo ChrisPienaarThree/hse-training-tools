@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S12 · Gas anomaly detection</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>S12 &middot; Gas-detection anomaly detection</h1>
+  <p class="sub">Simulation 12 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 3, Topic 3
+    (also Day 1 T2b, Day 2 T5). A multivariate anomaly detector versus a fixed hardware setpoint — watch
+    how much earlier a developing leak can be flagged, and why the baseline it learns from matters.</p>
+
+  <div class="topbar">
+    <div><label class="field" for="scenario">Scenario</label><select id="scenario"></select></div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner"><strong>Teaching simulation.</strong> No model runs. Channel baselines, noise,
+    ramp rates and which channels the leak affects are pre-authored. The seeded sensor traces, the
+    baseline statistics, the anomaly score, both detectors' first-crossing times and the lead time
+    are computed live.</div>
+
+  <div id="context" class="context"></div>
+  <div id="tiles" class="tiles"></div>
+
+  <div class="stage">
+    <section class="card">
+      <h2>Sensor traces</h2>
+      <div class="chart" id="chart"></div>
+      <div class="legend3" id="legend"></div>
+    </section>
+    <section class="card">
+      <h2>Controls</h2>
+      <div class="ctl"><div class="ch"><span>Leak start</span><span class="cv" id="leakStartVal"></span></div><input type="range" id="leakStartInp"></div>
+      <div class="ctl"><div class="ch"><span>Leak rate</span><span class="cv" id="leakRateVal"></span></div><input type="range" id="leakRateInp"></div>
+      <div class="ctl"><div class="ch"><span>Anomaly sensitivity (z-threshold)</span><span class="cv" id="sensVal"></span></div><input type="range" id="sensInp"></div>
+      <div class="ctl"><div class="ch"><span>Fixed setpoint</span><span class="cv" id="setpointVal"></span></div><input type="range" id="setpointInp"></div>
+      <div class="ctl"><div class="ch"><span>Wind speed</span><span class="cv" id="windSpeedVal"></span></div><input type="range" id="windSpeedInp" min="1" max="15" step="1"></div>
+      <div class="ctl"><div class="ch"><span>Wind direction</span><span class="cv" id="windDirVal"></span></div><input type="range" id="windDirInp" min="0" max="359" step="5"></div>
+      <div class="opsbtns"><button class="ghost" id="reseedBtn" type="button">Re-seed traces</button></div>
+      <h3>Dispersion sketch</h3>
+      <div class="plume" id="plume"></div>
+    </section>
+  </div>
+
+  <section class="card"><h2>What this demonstrates</h2><div id="callouts" class="callouts"></div></section>
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes:</strong> see <code>README.md</code>. <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>, register it.</p>
+    <p>Source: <code>../../AI_Workplace_Safety_Research_1.md</code> — Day 3 Topic 3, Day 1 Topic 2b, Day 2 Topic 5.</p>
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/compressor-house/dataset.js"></script>
+<script src="data/tank-farm/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+PROCESS SAFETY ANALYSIS TOOLKIT  (version 1.0, 2026-10-05)
+=====================================================
+
+Four offline tools that run directly from this folder - no installation,
+no administrator rights, no internet connection - plus HAZOP and FMECA
+Excel workbooks:
+
+  - HAZOP Study Manager           relational HAZOP database
+  - Fault Tree and PFD Calculator quantitative fault trees, PFDavg, SIF (IEC 61508)
+  - Event Tree Analysis           outcome frequencies, consequence categories
+  - Bow Tie Analysis              barriers, escalation factors, barrier criticality
+  - HAZOP Study Workbook          Excel (.xlsx, and .xlsm with macros)
+  - FMECA Workbook                Excel (.xlsx, and .xlsm with macros)
+  - HAZOP guidewords reference    Word + PDF (parameter / deviation / causes)
+
+NEW TO THE TOOLKIT?  Read  Guides\Toolkit Overview - How the Tools Fit Together
+(PDF or Word) - what each tool is for, how they connect, and the hot DRI
+conveyor fire traced through all of them.
+
+HOW TO START
+  1. Copy this whole folder to the USB stick (keep the folder structure).
+  2. Open "START HERE.html" (double-click), or:
+       Windows: double-click "Start Toolkit - Windows.cmd"  (opens Microsoft Edge)
+       Mac:     double-click "Start Toolkit - Mac.command"  (opens Chrome / Edge)
+               (first time: right-click > Open if macOS asks for confirmation)
+  3. Choose a tool. Each tool also opens directly from the "Tools" folder.
+
+BROWSER
+  Use Google Chrome or Microsoft Edge. They can save your work directly to a
+  file on the stick. Firefox / Safari work too, but only with
+  "Download backup" / "Import backup".
+
+SAVING YOUR WORK  (important)
+  - Each tool keeps your work automatically in the browser of the computer you
+    are using. That copy stays on that computer - it does NOT travel with the
+    USB stick.
+  - To keep a study on the stick: in the tool use  File > Save as... (link file)
+    and save it in the "My studies" folder. Every later change is written to
+    that file automatically.
+  - On another computer: open the tool from the stick and use
+    File > Open file... to open your study from "My studies".
+    If asked, click "Reconnect file" (the browser needs permission again).
+  - Make an extra copy now and then with  File > Download backup.
+  - Always eject the USB stick safely before removing it.
+
+FOLDERS
+  Tools\        the four tools (self-contained HTML files)
+  Workbooks\    Excel workbooks
+                 - HAZOP_Study_Workbook.xlsx        no macros
+                 - HAZOP_Study_Workbook_Macro.xlsm  multi-select causes,
+                   double-click safeguards with IPL, AddNodeSheet
+                 - FMECA_Workbook.xlsx              no macros
+                 - FMECA_Workbook_Macro.xlsm        multi-select causes and
+                   detection methods, AddSystemSheet
+                 Macro versions: click "Enable Content" / "Enable Macros".
+                 Macros need desktop Excel (not Excel for the web / tablets).
+                 If macros from USB drives are blocked by your organisation,
+                 use the .xlsx versions or copy the file to a trusted folder.
+                 Use File > Save As to keep filled-in copies in "My studies".
+                 Windows: if Excel says "Microsoft has blocked macros from
+                 running because the source of this file is untrusted" (this
+                 happens when the folder came from a downloaded / e-mailed
+                 .zip), close Excel, right-click the .xlsm file > Properties >
+                 tick "Unblock" > OK, and open it again.
+  Reference\    HAZOP_Guidewords_Chemical_Steel_Metals.docx (and .pdf)
+                 Guidewords, deviations and potential causes for HAZOP in
+                 the chemical and the steel & metals industries
+                 (Parameter - Deviation - Potential causes; [C] / [S] tags).
+                 The same lists drive the HAZOP Study Manager and the
+                 HAZOP Study Workbook drop-downs.
+  Examples\     example studies (open with File > Open file...)
+    Examples\Hadeed Gas Network PHA\   complete worked PHA of a steel-works natural gas
+                  network through every tool (HAZOP app + workbooks, FMECA, 3 fault trees,
+                  2 event trees, 2 bow ties) with a PHA study report and cross-link test results
+                 - HAZOP: hot DRI transfer conveyor and N2 fire protection
+                 - Fault tree: hot DRI conveyor N2 fire detection & extinguishing
+                 - Event tree / bow tie: hot DRI conveyor fire
+                 The fault tree file can be imported into the Event Tree and
+                 Bow Tie tools (File > Import fault tree).
+  Guides\       Toolkit Overview - How the Tools Fit Together (PDF + Word)
+                 user guides for each tool (PDF); each tool also has its
+                 guide built in (User guide tab).
+  My studies\   put your own study files here.
+
+NOTES
+  - All example data are illustrative. Replace with site and vendor data.
+  - Nothing is sent over the internet; all data stay on the computer / stick.
+  - If your organisation blocks running files from USB drives, copy the whole
+    folder to the computer (e.g. Documents) and run it from there.
+  - Results support analysis, training and design comparison. Confirm SIL
+    verification and risk decisions with your company's approved tools and
+    procedures.

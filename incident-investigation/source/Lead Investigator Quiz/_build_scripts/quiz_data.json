@@ -1,0 +1,2693 @@
+[
+ {
+  "vol": 1,
+  "ch": 1,
+  "title": "Incident Investigation Fundamentals and the Role of the Lead Investigator",
+  "exercise": {
+   "intro": "Small groups classify causes and test a weak investigation against the Golden Rules.",
+   "steps": [
+    "Read the scenario and list every fact it gives you.",
+    "Sort the facts into immediate, contributing, root, latent and organisational causes (Section 1.6).",
+    "Identify which common investigation mistakes the draft report shows (Section 1.8).",
+    "Test the draft against the ten Golden Rules — which rules does it break?",
+    "Rewrite the conclusion so that it addresses the system, not the individual.",
+    "Propose two corrective actions that are stronger than retraining."
+   ],
+   "deliverable": "A one-page cause classification table and a rewritten conclusion with two system-level corrective actions.",
+   "scenarios": [
+    {
+     "title": "Scenario — Valve left open during start-up",
+     "text": "A drain valve on a pump suction line was left open after maintenance. On start-up, hydrocarbon was released to the drain system and a small flash fire occurred. The draft report concludes: \"Operator failed to close the valve. Operator to be retrained.\" The procedure in use did not include a valve line-up check, the night shift was two operators short, and the handover log had no entry about the maintenance work."
+    }
+   ]
+  },
+  "review": [
+   "Why do major accident investigations so rarely find a single cause? Use Piper Alpha, Texas City, Deepwater Horizon or Chevron Richmond to illustrate.",
+   "Choose a recent near miss at your site. Was it investigated with the same rigour as an injury? What did that decision cost or save?",
+   "Explain the difference between an immediate cause, a contributing cause, a root cause, a latent cause and an organisational cause using one incident you know.",
+   "\"The Lead Investigator is not necessarily the most senior person present.\" What problems arise when the most senior person leads by default?",
+   "Which of the five attributes of an effective Lead Investigator is hardest to maintain under management pressure, and how would you protect it?",
+   "Why are \"retrain personnel\" and \"conduct a toolbox talk\" described as weak corrective actions?",
+   "Pick two of the Lead Investigator's Golden Rules and describe a situation where breaking them would derail an investigation."
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What is the primary purpose of incident investigation?",
+    "opts": [
+     "To satisfy the insurer",
+     "To protect the company's reputation",
+     "Prevention of recurrence",
+     "To establish who was at fault"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "A dropped spanner misses a worker by one metre. How is this event classified?",
+    "opts": [
+     "Not an incident — no one was hurt",
+     "An asset integrity incident",
+     "A near miss",
+     "A personal safety incident with injury"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 3,
+    "q": "A poor investigation concludes: \"The operator made an error.\" Why is this not acceptable as a finding?",
+    "opts": [
+     "It is an immediate cause, not a root cause — the investigation stopped too early",
+     "Operators can never be at fault",
+     "It names a person, which breaches privacy law",
+     "It should have said \"the technician forgot\""
+    ],
+    "ans": 0
+   },
+   {
+    "n": 4,
+    "q": "Which statement best describes the Lead Investigator?",
+    "opts": [
+     "Project manager and technical facilitator of the investigation process",
+     "The person who decides on disciplinary action",
+     "Always the most senior person on site",
+     "The technical expert in every discipline involved"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 5,
+    "q": "Which attribute requires an investigator to actively seek evidence that disproves their own first assumption?",
+    "opts": [
+     "Communication skill",
+     "Technical competence",
+     "Integrity",
+     "Objectivity"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "\"Procedure did not require the valve to be closed\" is given in the course as an example of which type of cause?",
+    "opts": [
+     "Contributing cause",
+     "Root cause",
+     "Immediate cause",
+     "Organisational cause"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 7,
+    "q": "Judging a decision using information that was not available to the person at the time is known as…",
+    "opts": [
+     "Stopping too early",
+     "Anchoring",
+     "Confirmation bias",
+     "Hindsight bias"
+    ],
+    "ans": 3
+   }
+  ],
+  "model": [
+   "Immediate cause: the drain valve was left open at start-up. Contributing causes: no handover log entry about the maintenance work; night shift two operators short. Root cause: the start-up procedure had no valve line-up check. Latent cause: high workload from short staffing and no supervision of the line-up. Organisational cause: staffing levels and procedure management did not support safe start-up.",
+   "The draft stops too early (operator error is an immediate cause), is blame-focused (investigates the person, not the system) and proposes a weak corrective action (retrain). It breaks the Golden Rules \"investigate systems, not people\", \"distinguish causes from symptoms\" and \"verify corrective actions address root causes\".",
+   "Better conclusion: the release occurred because the start-up procedure did not require a valve line-up verification, and the shift handover process did not communicate the status of maintenance work, under staffing conditions that removed independent checking.",
+   "Stronger actions: add a signed valve line-up checklist as a mandatory start-up hold point; make maintenance status a required handover log field; review minimum-staffing rules for start-up activities."
+  ],
+  "takeaways": [
+   "The purpose of investigation is prevention — never blame, punishment or reputation protection.",
+   "Near misses are free lessons; many major accidents were preceded by near misses that were not investigated.",
+   "\"Operator error\", \"the technician forgot\" and \"the pump failed\" are immediate causes, not root causes.",
+   "The Lead Investigator is project manager and technical facilitator, not necessarily the most senior person or the technical expert.",
+   "Integrity, curiosity, objectivity, technical competence and communication define an effective investigator.",
+   "Major accidents result from multiple system failures, not isolated human errors.",
+   "Success is measured by future incidents prevented, not by the number of causes listed."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 2,
+  "title": "Incident Investigation Planning, Team Formation and Initial Response",
+  "exercise": {
+   "intro": "Teams act as the Lead Investigator receiving the first call and produce an initial response plan.",
+   "steps": [
+    "List the preliminary information you would gather at notification (Section 2.1).",
+    "Confirm emergency response status and decide what still takes priority over evidence.",
+    "Decide the investigation level and justify it using actual and potential consequences.",
+    "Identify legal, regulatory and contractor notifications.",
+    "Define the scene boundary, access control and preservation measures (including the rain).",
+    "List the perishable data to secure in the next hour.",
+    "Propose the investigation team and the first-day plan (scope, schedule, deliverables, communication, risks)."
+   ],
+   "deliverable": "A one-page initial response plan following the Lead Investigator checklist in Section 2.15.",
+   "scenarios": [
+    {
+     "title": "Scenario — Night-shift pump seal release",
+     "text": "At 02:10 the control room reports a hydrocarbon release from a pump seal in the tank farm. The release has been isolated, no ignition occurred and one contractor was treated for vapour exposure. The maintenance supervisor wants to change the seal before the morning shift. Rain is forecast at 06:00. The DCS historian overwrites high-resolution data after 72 hours."
+    }
+   ]
+  },
+  "review": [
+   "\"The quality of an investigation is often determined within the first few hours.\" Give three examples of evidence that can be lost in that window.",
+   "How would you persuade an operations manager who wants to repair damaged equipment immediately to wait for examination?",
+   "Describe how you would decide between a moderate and a major investigation for a near miss with catastrophic potential.",
+   "Which legal or regulatory notifications apply at your site for a contractor injury, an environmental release and a fatality?",
+   "Design an investigation team for a compressor fire. Who do you need, and why?",
+   "Why is the most technically knowledgeable person not always the most effective investigator?",
+   "Walk through the Lead Investigator checklist. Which item is most often missed in practice?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What is the investigator's objective during the notification stage?",
+    "opts": [
+     "Form an early hypothesis to guide evidence collection",
+     "Draft the preliminary report",
+     "Gather information — not analyse it",
+     "Identify the person responsible"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "A fire is still burning beside the damaged equipment. What takes priority?",
+    "opts": [
+     "Securing the evidence boundary",
+     "Photographing the scene before anything changes",
+     "Emergency response — the investigation is never more important",
+     "Isolating witnesses for interview"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 3,
+    "q": "A hydrocarbon release narrowly avoided ignition and injured no one. What level of investigation does the course suggest?",
+    "opts": [
+     "A moderate investigation, the same as a minor burn",
+     "A minimal investigation — there was no actual harm",
+     "Possibly a major investigation, because of the potential consequences",
+     "No investigation — only actual losses are investigated"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 4,
+    "q": "What should a scene entry log record?",
+    "opts": [
+     "The evidence removed by each person",
+     "Name, date, time and purpose of entry",
+     "Only the names of investigation team members",
+     "The PPE worn by each person"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 5,
+    "q": "On what basis should investigation team members be selected?",
+    "opts": [
+     "Volunteering",
+     "Availability",
+     "Seniority",
+     "Competence"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "Which information is described as highly perishable and to be secured immediately?",
+    "opts": [
+     "Design calculations",
+     "Corporate HSE policy",
+     "DCS historian data and alarm logs",
+     "Training matrices"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 7,
+    "q": "Why should the Lead Investigator avoid becoming heavily involved in collecting evidence personally?",
+    "opts": [
+     "They may lose oversight of the investigation process",
+     "It is not covered by their training",
+     "Evidence collection is the responsibility of security",
+     "It may contaminate the chain of custody"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Notification: incident type (LOPC), location, time, the contractor's exposure and treatment, environmental impact, process consequences, current status (isolated) and emergency actions taken. No hypothesis yet.",
+   "Level: a major investigation is justified — a flammable release with no ignition has major accident potential even though actual harm was minor. The contractor exposure brings in contractor-management and injury-reporting requirements.",
+   "Scene: boundary around the pump, seal area, drain/spill path and the local control panel; barricade with an entry log (name, date, time, purpose); a temporary shelter over the pump before the 06:00 rain; seal replacement deferred until the seal and pump have been photographed, examined and logged.",
+   "Perishable data: DCS historian trends (pressure, flow, seal-pot level), alarm and event logs, CCTV, access records, the permit for any recent seal work, and shift logs — all exported before the 72-hour overwrite.",
+   "Team: operations, maintenance, a rotating-equipment/reliability engineer, an instrument engineer if seal-pot alarms are involved, a human-factors view for the night-shift response, and the seal vendor as an SME. Plan: objectives, scope, milestones, deliverables, update recipients and risks (weather, data loss, early repair pressure)."
+  ],
+  "takeaways": [
+   "Notification is for gathering information, not for analysis — avoid early hypotheses.",
+   "Protect life, stabilise, prevent escalation, then preserve evidence.",
+   "Potential consequences can justify a major investigation even when actual harm is minor.",
+   "Secure the scene with boundaries, access control and an entry log; never repair equipment before examination.",
+   "Select team members for competence, not availability.",
+   "Secure perishable electronic data, process data and records immediately.",
+   "Failures in the first few hours often cannot be corrected later."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 3,
+  "title": "Evidence Collection, Scene Examination and Investigation Photography",
+  "exercise": {
+   "intro": "Teams plan the evidence collection and photography for a failed flange release.",
+   "steps": [
+    "Confirm the pre-entry conditions for the scene (Section 3.4).",
+    "List what you will observe on the initial walkthrough under the five headings in Section 3.6.",
+    "Plan the photographs using the overall → mid-range → close-up → scale sequence.",
+    "Identify the physical evidence to collect and how each item will be preserved.",
+    "List the electronic and documentary evidence to request.",
+    "Draft a chain-of-custody record for the gasket and bolts."
+   ],
+   "deliverable": "An evidence collection plan with a photo log template and a chain-of-custody form.",
+   "scenarios": [
+    {
+     "title": "Scenario — Flange leak in a pipe rack",
+     "text": "A flange on an 8-inch hydrocarbon line in a pipe rack leaked overnight. The line has been isolated and depressurised. The gasket remnants are visible, two bolts appear loose, there is staining on the steelwork below, and a maintenance work order for the flange was closed two days earlier. A contractor crew is waiting to clean the area."
+    }
+   ]
+  },
+  "review": [
+   "Why do many investigations rely too heavily on witness opinion? What evidence types do they neglect?",
+   "Describe a case where documentation (HAZOP, MOC, inspection records) revealed a cause that was invisible at the scene.",
+   "What would you check before entering an incident scene for the first time?",
+   "Explain how a single close-up photograph without context could mislead a court or regulator months later.",
+   "Which electronic evidence sources exist at your facility, and how long are they retained?",
+   "How would you set up a chain-of-custody process for a failed flange being sent to an external laboratory?",
+   "\"Evidence collected during the first 24 hours frequently determines the outcome.\" Do you agree? Why?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What are the four primary categories of evidence in the course?",
+    "opts": [
+     "Primary, secondary, tertiary and expert",
+     "People, environment, equipment and procedures",
+     "Direct, indirect, circumstantial and hearsay",
+     "Physical, documentary, electronic and human"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 2,
+    "q": "Which sequence describes a professional, evidence-based investigation?",
+    "opts": [
+     "Opinion → conclusion → search for supporting evidence",
+     "Evidence → facts → analysis → findings → conclusions → recommendations",
+     "Witness statements → conclusions → evidence",
+     "Recommendations → findings → evidence"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 3,
+    "q": "A damaged transmitter is found at the scene. What must NOT happen before investigation?",
+    "opts": [
+     "Photographing it in place",
+     "Logging it with a unique identifier",
+     "Recalibrating it",
+     "Recording its displayed reading"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 4,
+    "q": "What does chain of custody document?",
+    "opts": [
+     "The cost of evidence storage",
+     "Which witnesses saw the evidence",
+     "The investigation team's working hours",
+     "Who collected the evidence, when, where it was stored, who handled it and when it was transferred"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 5,
+    "q": "What is the correct structured photography sequence?",
+    "opts": [
+     "Mid-range, overall, scale, close-up",
+     "Scale, close-up, overall, mid-range",
+     "Close-up, mid-range, overall, scale",
+     "Overall, mid-range, close-up, scale"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "According to the course, what is the MOST common photography mistake?",
+    "opts": [
+     "Taking too few photographs",
+     "Poor lighting",
+     "Moving evidence first",
+     "Not using a scale"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 7,
+    "q": "The evidence checklist of people, environment, equipment, procedures and organisation aligns with which framework?",
+    "opts": [
+     "Bowtie",
+     "PEEPO, used in ICAM",
+     "SnapCharT®",
+     "Hazard–Event–Target"
+    ],
+    "ans": 1
+   }
+  ],
+  "model": [
+   "Pre-entry: emergency response complete, hazards identified (residual hydrocarbon, working at height), access authorised and correct PPE available. Cleaning by the contractor crew is stopped until evidence is documented.",
+   "Walkthrough: equipment (isolation status, flange alignment, bolt condition), process (staining, residue, spill pattern), environment (weather overnight, lighting), human factors (access to the flange, signage), barriers (gas detection, fire protection).",
+   "Photography: overall rack and line location; mid-range showing the flange relative to supports and the staining; close-ups of the gasket, each bolt, any torque marks or tags; repeat close-ups with a scale. Log each photo with location and time before anything is moved.",
+   "Physical evidence: gasket remnants, bolts and nuts (marked for position), samples of residue. Electronic: historian pressure and temperature trends, gas detector alarms. Documentary: the closed work order, bolt-torque records, gasket specification, P&ID, isolation certificate, MOC history.",
+   "Chain of custody: item ID, description, collected by, date and time, location, storage, every transfer with signatures — essential if the gasket goes to an external laboratory."
+  ],
+  "takeaways": [
+   "Analysis methods are only as good as the evidence underneath them.",
+   "Facts first, conclusions later: evidence → facts → analysis → findings → conclusions → recommendations.",
+   "Use all four evidence types — physical, documentary, electronic and human.",
+   "Never clean, disassemble or recalibrate evidence before it has been documented.",
+   "Maintain chain of custody from the first item collected.",
+   "Photograph overall → mid-range → close-up → scale; when in doubt, photograph it.",
+   "Assume witnesses may be mistaken and records incomplete — verify everything."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 4,
+  "title": "Witness Interviewing, Human Memory and Statement Validation",
+  "exercise": {
+   "intro": "Pairs conduct and critique a short interview using the structured question set.",
+   "steps": [
+    "Prepare: list what you would review before interviewing the board operator (Section 4.7).",
+    "Draft five open questions and three closed questions for the board operator.",
+    "Rewrite these poor questions: \"You ignored the alarm, didn't you?\" and \"Why did you make that mistake?\"",
+    "Conduct a five-minute role-play interview; the observer notes active-listening behaviours.",
+    "Convert two statements into single-fact building blocks.",
+    "Plan how you will resolve the contradiction between the testimony and the historian data."
+   ],
+   "deliverable": "An interview plan, question set, two building blocks and a validation plan for the contradiction.",
+   "scenarios": [
+    {
+     "title": "Scenario — Tank overfill",
+     "text": "A storage tank overfilled during a night transfer. The board operator says the high-level alarm \"never came in\". The field operator says he heard a horn but thought it was from the neighbouring unit. The shift supervisor was in a meeting. Historian data shows the high-level alarm activated at 03:14 and was acknowledged at 03:15."
+    }
+   ]
+  },
+  "review": [
+   "Physical evidence does not forget or reinterpret. Why do we still need witness interviews?",
+   "List the factors that distort human memory. Which are most present after a serious incident?",
+   "Who might be an overlooked witness in a control-room-initiated trip? How do you find them?",
+   "Role-play: convert \"I noticed a mist coming from the decanter and called the control room\" into building blocks and follow-up questions.",
+   "When is interviewing at the incident scene better than a neutral room?",
+   "Which common interviewing mistake do you think you are most prone to? How will you guard against it?",
+   "How would you validate a witness's account that an alarm \"never sounded\"?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "Whose responsibility is root cause determination?",
+    "opts": [
+     "The witnesses directly involved",
+     "The investigation team",
+     "The supervisor of the area",
+     "The HSE manager alone"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 2,
+    "q": "Why should witnesses be separated before interviews where possible?",
+    "opts": [
+     "To prevent shared narratives and memory contamination",
+     "To speed up the interview schedule",
+     "Because legal counsel requires it",
+     "To make witnesses feel under scrutiny"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 3,
+    "q": "Which of these is an open question?",
+    "opts": [
+     "Was the valve open?",
+     "Did the alarm activate?",
+     "Was anyone else present?",
+     "What did you observe?"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "\"When did you realise you had caused the release?\" is an example of which type of question to avoid?",
+    "opts": [
+     "Closed",
+     "Leading",
+     "Accusatory",
+     "Assumptive"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 5,
+    "q": "Which question best helps you understand why an action made sense at the time?",
+    "opts": [
+     "Who told you to do that?",
+     "Why did you do that?",
+     "What information was available to you when you made that decision?",
+     "Didn't you read the procedure?"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 6,
+    "q": "Two witnesses give contradictory accounts. What should the investigator do?",
+    "opts": [
+     "Document the differences and seek additional evidence",
+     "Accept the supervisor's version",
+     "Re-interview both together to agree a single account",
+     "Assume the less experienced witness is mistaken"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 7,
+    "q": "A witness is under medication that affects recall on the day of the incident. What does the course advise?",
+    "opts": [
+     "Obtain a written statement instead",
+     "Interview immediately — memory degrades fast",
+     "Delay the interview until they can participate effectively",
+     "Interview their supervisor in their place"
+    ],
+    "ans": 2
+   }
+  ],
+  "model": [
+   "Preparation: initial report, transfer plan, alarm and event logs, historian level trend, shift log, the operator's role and experience, the alarm-management philosophy for that tank, and the specific gaps (who acknowledged the alarm at 03:15?).",
+   "Open questions: What were conditions at the start of the transfer? What were you doing between 03:00 and 03:30? What indications did you receive? Who did you speak with? What happened next? Closed: Was the high-level alarm visible on your screen? Were other alarms active? Who else had access to the console?",
+   "Rewrites: \"Tell me about the alarms you saw during the transfer.\" and \"Talk me through what was happening when the level reached the alarm point.\"",
+   "Building blocks: \"Field operator heard a horn.\" \"Field operator attributed horn to neighbouring unit.\" — each with source and time.",
+   "Contradiction: do not assume anyone is lying. Check who was logged in at 03:15, whether the alarm was shelved or flooded among other alarms, whether horns are distinguishable between units, and whether the acknowledge came from a different console. Evidence resolves the contradiction."
+  ],
+  "takeaways": [
+   "Interviews collect facts and context — not opinions on cause.",
+   "Human memory is not a video recorder; validate every statement against other evidence.",
+   "Interview promptly, separate witnesses, and balance urgency with wellbeing.",
+   "Start with open questions, follow with closed questions; never lead, accuse or assume.",
+   "Ask what information was available, not \"why did you do that?\"",
+   "Convert statements into single-fact building blocks with sources.",
+   "Contradictions are resolved by evidence, not by deciding who to believe."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 5,
+  "title": "Timeline Development, Event Reconstruction and Causal Factor Charting",
+  "exercise": {
+   "intro": "Teams build building blocks, a timeline and a first causal factor chart from mixed evidence.",
+   "steps": [
+    "Convert the witness statement into single-fact building blocks with sources.",
+    "Arrange all blocks chronologically and continue until control is restored.",
+    "Classify each item as an event or a condition.",
+    "Define the loss event and work backwards to build a causal factor chart.",
+    "Apply the removal test to each candidate causal factor.",
+    "List the information gaps and the questions they generate."
+   ],
+   "deliverable": "A sourced timeline, an ECFA+/causal factor chart and a list of open investigation questions.",
+   "scenarios": [
+    {
+     "title": "Scenario — Pump trip and release",
+     "text": "Witness: \"I was doing my rounds about quarter to eight, heard the pump vibrating badly and called it in. Then it tripped and there was a release.\" DCS: 08:32 high-vibration alarm; 08:36 pump trip; 08:41 gas detector alarm. Shift log: 08:25 control room received vibration report. Maintenance: vibration monitoring route overdue by six weeks. Procedure: no instruction on action for high vibration."
+    }
+   ]
+  },
+  "review": [
+   "\"If the timeline is wrong, the investigation will be wrong.\" Discuss with an example.",
+   "Why do humans naturally prefer stories over timelines, and what does a story hide?",
+   "Give two examples of conditions that existed for months before an incident at your facility.",
+   "How would you handle a timeline event that is supported only by one witness?",
+   "Explain how identifying missing information helps focus the investigation.",
+   "Which logic tests from Section 5.18 do you find hardest to apply in a team setting?",
+   "How does ECFA+ move beyond simple chronology toward causation?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "Why do many investigations fail at the analysis stage?",
+    "opts": [
+     "They use too many analysis methods",
+     "They try to identify causes before fully understanding the sequence of events",
+     "They rely on electronic data",
+     "They interview too many witnesses"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 2,
+    "q": "Which is a correctly written building block?",
+    "opts": [
+     "Operator observed a leak and called the control room because the system was unsafe",
+     "The operator should have shut the pump down",
+     "Deluge system activated",
+     "The leak was caused by corrosion"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 3,
+    "q": "In ECFA+, what is the difference between an event and a condition?",
+    "opts": [
+     "Events are human actions; conditions are equipment failures",
+     "An event happens at a point in time; a condition is a state that exists",
+     "Events are causal; conditions are not",
+     "There is no difference"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 4,
+    "q": "What test does the course recommend for validating a causal factor?",
+    "opts": [
+     "Did a witness identify it?",
+     "If this factor were removed, would the incident still have occurred?",
+     "Is it in the timeline?",
+     "Does the team agree?"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 5,
+    "q": "What is the first step in developing a causal factor chart?",
+    "opts": [
+     "Validate relationships",
+     "Interview witnesses",
+     "Define the loss event",
+     "Identify conditions"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 6,
+    "q": "Which statement about the timeline is TRUE according to the course?",
+    "opts": [
+     "The timeline ends when the incident occurs",
+     "Assumptions may be included if clearly marked",
+     "Every event in the timeline must have an identified source",
+     "Witness opinions belong in the timeline"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 7,
+    "q": "Where does timeline analysis sit relative to root cause analysis?",
+    "opts": [
+     "It supports RCA and comes before it",
+     "It is done after RCA to confirm findings",
+     "It replaces RCA for simple incidents",
+     "It is only used with TapRooT®"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Blocks: 07:45 operator begins rounds (witness); 08:21 operator observes abnormal vibration (witness — time approximate); 08:25 control room receives vibration report (shift log); 08:32 high-vibration alarm (DCS); 08:36 pump trips (DCS); 08:41 gas detector alarm (DCS); then emergency response and control restored.",
+   "Conditions: vibration route six weeks overdue; no procedure for action on high vibration. Events: report at 08:25, alarm, trip, release.",
+   "Causal factors that pass the removal test: no response instruction between the 08:25 report and the trip (with guidance the pump might have been stopped before seal failure); the overdue monitoring route (earlier detection likely). The rounds themselves are not causal.",
+   "Gaps: what action, if any, did the control room take between 08:25 and 08:36? What failed — seal or bearing? Why was the route overdue? Was the vibration trend visible on the DCS before 08:21?"
+  ],
+  "takeaways": [
+   "Reconstruct what happened before analysing why it happened.",
+   "Building blocks hold one fact each, are specific and are traceable to a source.",
+   "No unsupported assumptions in the timeline; continue it until control is restored.",
+   "Conditions are often as important as events — ECFA+ links them logically.",
+   "Validate causal factors with the removal test.",
+   "Timeline gaps generate the next investigation questions.",
+   "If the timeline is wrong, the investigation will be wrong."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 6,
+  "title": "Cause-and-Effect Trees, Fault Tree Thinking and Analytical Logic",
+  "exercise": {
+   "intro": "Teams build a cause-and-effect tree with AND/OR logic and test every branch.",
+   "steps": [
+    "Define the top event and ask \"What was necessary for this to occur?\"",
+    "Build the first two levels using AND/OR logic.",
+    "Continue asking \"Why?\" on each branch until organisational influences appear.",
+    "Mark every node where the cause is unknown and write the questions it generates.",
+    "Apply the sufficiency, necessity, evidence and alternative-explanation tests to each branch.",
+    "Identify the organisational factors that are the best targets for corrective action."
+   ],
+   "deliverable": "A tree diagram on flipchart or A3 with logic gates, unknowns and validated branches.",
+   "scenarios": [
+    {
+     "title": "Scenario — Separator overpressure",
+     "text": "A test separator ruptured during a well test. Initial information: the outlet control valve was found closed; the pressure safety valve (PSV) was last tested 4 years ago against a 2-year interval; the high-pressure alarm had been on the bad-actor list for months; the operator on duty had acknowledged 41 alarms in the previous hour."
+    }
+   ]
+  },
+  "review": [
+   "Why does a timeline explain what happened but not necessarily why?",
+   "Give an example from your own experience where sequence was mistaken for causation.",
+   "Draw an AND and an OR gate for an incident type at your site. Which failures are single points of failure?",
+   "How does the Lead Investigator move a team from storytelling to analytical thinking without shutting down discussion?",
+   "Explain how \"Unknown cause\" on a tree can become the most useful node in the analysis.",
+   "Which common analytical error (single cause, premature closure, confirmation bias…) have you seen most often?",
+   "Why are organisational factors usually the most effective targets for corrective action?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "A maintenance contractor was working near a compressor shortly before it failed. What can the investigator conclude?",
+    "opts": [
+     "The contractor is a contributing cause",
+     "The contractor caused the failure",
+     "Nothing yet — evidence must establish the relationship",
+     "The failure was a coincidence"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "Which three necessary conditions does the course give for a fire?",
+    "opts": [
+     "Fuel, oxygen and an ignition source",
+     "Heat, pressure and inventory",
+     "Weakness, stress and failure mechanism",
+     "Inventory, pathway and driving force"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 3,
+    "q": "When should the team stop asking \"Why?\"",
+    "opts": [
+     "When the organisation reaches a level where it can take meaningful corrective action",
+     "After exactly five questions",
+     "When the team runs out of time",
+     "When a person responsible has been identified"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 4,
+    "q": "Fire requires fuel, oxygen and ignition together. Which logic gate represents this?",
+    "opts": [
+     "NOT",
+     "AND",
+     "Inhibit",
+     "OR"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 5,
+    "q": "How does Fault Tree Analysis differ from a timeline?",
+    "opts": [
+     "FTA works backwards from a known undesirable top event",
+     "There is no difference",
+     "FTA is used only for human error",
+     "FTA moves forward through time from the first event"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 6,
+    "q": "\"Was this factor required for the event?\" is which validation test?",
+    "opts": [
+     "Necessity test",
+     "Alternative explanation test",
+     "Sufficiency test",
+     "Evidence test"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 7,
+    "q": "A tree branch ends at \"Alarm ignored\". What should the investigator do next?",
+    "opts": [
+     "Close the branch — human error has been identified",
+     "Ask why the action made sense to the individual at the time",
+     "Move the branch to the timeline",
+     "Recommend disciplinary action"
+    ],
+    "ans": 1
+   }
+  ],
+  "model": [
+   "Top event: separator rupture. AND gate: overpressure AND pressure relief failed to protect. Overpressure — OR gate: blocked outlet (control valve closed), inflow surge, or instrumentation error. Relief failure — OR gate: PSV failed to lift, set incorrectly, or inlet/outlet blocked.",
+   "Why branches: valve closed → why? (unknown — positioner fault? manual action?); PSV overdue → why? (inspection backlog, no escalation of overdue safety-critical items); alarm on bad-actor list → why? (alarm management programme not resourced); 41 alarms/hour → alarm flood exceeds human capability.",
+   "Unknowns generate questions: Was the PSV tested after the incident — did it lift? What closed the outlet valve? Was the vessel inventory within design limits?",
+   "Organisational targets: overdue safety-critical maintenance management, alarm management, and MOC for any changes to the well-test package. The operator's alarm acknowledgements are a symptom of alarm flood, not a root cause."
+  ],
+  "takeaways": [
+   "Sequence is not causation — evidence must establish each relationship.",
+   "Identify all necessary conditions and how each developed.",
+   "Cause-and-effect trees work backwards from the outcome and make gaps visible.",
+   "AND gates mean all inputs are required; OR gates mean any one is sufficient.",
+   "Test every branch for sufficiency, necessity, evidence and alternative explanations.",
+   "Human actions are symptoms — keep asking why the action made sense.",
+   "Keep asking why until the organisation can take meaningful corrective action."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 7,
+  "title": "Root Cause Analysis Fundamentals, 5-Why Analysis and Fishbone Analysis",
+  "exercise": {
+   "intro": "Teams combine Fishbone and 5-Why on one incident and validate the result.",
+   "steps": [
+    "Draw the Fishbone with the six categories and place the problem at the head.",
+    "Brainstorm possible contributors — no criticism, validate later.",
+    "Select the three most significant contributors.",
+    "Apply 5-Why to each selected contributor.",
+    "Test each \"why\" answer: What evidence supports it? Is it logical? Alternatives?",
+    "State the root causes and check each one with \"Could this recur tomorrow?\""
+   ],
+   "deliverable": "A completed Fishbone, three 5-Why chains and a list of validated root causes.",
+   "scenarios": [
+    {
+     "title": "Scenario — Worker enters the wrong process area",
+     "text": "A contractor scaffolder entered a live process area instead of the isolated unit next door and began erecting scaffold against a pressurised line. Signage at the unit boundary was damaged, the permit map attached to the work permit showed an old layout, lighting at the boundary was poor (night shift), the scaffolder was on his second day at site, and the area authority's last field verification of permit maps was eight months ago."
+    }
+   ]
+  },
+  "review": [
+   "Why do recommendations like \"retrain\" and \"increase awareness\" keep appearing in reports, even though they rarely work?",
+   "Take a recent incident and classify its causes as physical, human, organisational and management system.",
+   "Run a 5-Why on a slip incident at your site. Where did your team want to stop, and why?",
+   "When would you choose Fishbone over 5-Why, and when would you combine them?",
+   "How do you facilitate a Fishbone session so that quieter team members contribute?",
+   "\"Could this incident recur tomorrow?\" How would you answer that honestly for your last investigation?",
+   "Which RCA failure mode (groupthink, human error trap…) is your organisation most vulnerable to?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "How does the course define a root cause?",
+    "opts": [
+     "The person most responsible for the event",
+     "The most expensive failure in the event",
+     "The last action before the incident",
+     "An underlying condition that, if corrected, would significantly reduce the likelihood of recurrence"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 2,
+    "q": "\"Pump failed\" is a symptom. Which of these is the corresponding root cause given in the course?",
+    "opts": [
+     "The pump was old",
+     "The pump seal leaked",
+     "Inadequate lubrication management system",
+     "The operator ran the pump too hard"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 3,
+    "q": "What is the correct statement about the number of \"Whys\" in 5-Why analysis?",
+    "opts": [
+     "No more than three should be used",
+     "Exactly five are required for validity",
+     "It must equal the number of causal factors",
+     "The number is not mandatory — the goal is meaningful causes"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "What is a key limitation of 5-Why analysis?",
+    "opts": [
+     "It requires specialist software",
+     "It cannot be used for process safety incidents",
+     "It is too slow for workshops",
+     "It tends to follow a single causal path"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 5,
+    "q": "Which set lists the six common Fishbone categories used in the course?",
+    "opts": [
+     "Design, Build, Operate, Maintain, Inspect, Retire",
+     "Plan, Do, Check, Act, Review, Improve",
+     "People, Equipment, Procedures, Materials, Environment, Management",
+     "Man, Machine, Method, Money, Market, Management"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 6,
+    "q": "During a Fishbone brainstorming session, when should causes be validated against evidence?",
+    "opts": [
+     "Only if the team disagrees",
+     "Before they are written on the diagram",
+     "After brainstorming — generate first, validate later",
+     "Never — the diagram is the finding"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 7,
+    "q": "What does the course call developing recommendations before causes are understood?",
+    "opts": [
+     "Root cause confusion",
+     "Groupthink",
+     "Corrective action bias",
+     "Human error trap"
+    ],
+    "ans": 2
+   }
+  ],
+  "model": [
+   "Fishbone: People — inexperienced worker (day 2), night shift fatigue. Equipment — damaged signage. Procedures — permit map out of date. Environment — poor lighting at boundary. Materials — none significant. Management — permit map verification overdue; contractor induction did not include a site walk-down.",
+   "5-Why on the permit map: map wrong → layout changed → plant modification not reflected in permit drawings → MOC close-out did not require permit-map update → MOC procedure lacks a document-update checklist.",
+   "5-Why on signage: damaged → not reported → no inspection of boundary signage → no owner assigned for unit-boundary signage.",
+   "5-Why on induction: second-day contractor working at night without escort → induction is classroom only → contractor management procedure has no escort or walk-down requirement for new starters.",
+   "Validated root causes: MOC close-out does not include permit documentation; no ownership or inspection of boundary signage; contractor onboarding lacks field orientation. Each would allow recurrence tomorrow if uncorrected."
+  ],
+  "takeaways": [
+   "A root cause is an underlying condition whose correction significantly reduces recurrence.",
+   "Symptoms describe what happened; root causes explain why.",
+   "Effective RCA is systematic, evidence-based, objective, comprehensive, defensible and action-oriented.",
+   "5-Why is simple and fast, but follows a single path — rarely enough on its own for major incidents.",
+   "Fishbone broadens thinking across six categories but proves nothing until causes are validated.",
+   "Combine Fishbone (breadth) with 5-Why (depth), then validate with evidence.",
+   "If the incident could recur tomorrow, the root causes have not all been found."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 8,
+  "title": "TapRooT® Root Cause Analysis Methodology",
+  "exercise": {
+   "intro": "Teams apply TapRooT® thinking to one causal factor of each type: human performance and equipment.",
+   "steps": [
+    "Build a short SnapCharT® of events and conditions leading to the rupture.",
+    "Identify the causal factors with the removal test.",
+    "Run the equipment questions (design, installation, operation, maintenance, inspection, procurement, QA) on the rupture.",
+    "Run the human performance questions on \"no work order raised\".",
+    "Assign root causes to TapRooT® basic categories (procedures, training, communications, QC, human engineering, work direction, management systems).",
+    "Write two strong corrective actions with an owner, due date and verification method."
+   ],
+   "deliverable": "SnapCharT®, causal factor list, categorised root causes and two strong corrective actions.",
+   "scenarios": [
+    {
+     "title": "Scenario — Pipe rupture under insulation",
+     "text": "An insulated 4-inch hydrocarbon line ruptured. Examination shows external corrosion under insulation (CUI). The line was in the RBI programme with a 10-year inspection interval. Jacketing was damaged near a support and water ingress was visible. The coating specification was changed two years ago to a cheaper system without MOC. The night operator had reported \"wet insulation\" in the log three months earlier; no work order was raised."
+    }
+   ]
+  },
+  "review": [
+   "Why does TapRooT® insist that event reconstruction is completed before the Root Cause Tree® is used?",
+   "How does SnapCharT® differ from a simple timeline?",
+   "Walk through the eight human performance questions for an incident you know. Which question revealed most?",
+   "Give an example from your site where human engineering made an error likely.",
+   "Why is \"equipment failure is rarely the end of the analysis\" as important as the same rule for human error?",
+   "What makes a corrective action measurable and verifiable? Give an example.",
+   "How would you use TapRooT® alongside ICAM or Tripod Beta in the same investigation?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What should TapRooT® be used for?",
+    "opts": [
+     "Selecting the investigation team",
+     "Collecting witness statements",
+     "Determining why the identified causal factors existed",
+     "Determining what happened"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "What is SnapCharT®?",
+    "opts": [
+     "A fault tree gate symbol",
+     "A corrective-action tracking tool",
+     "A barrier diagram used in Tripod Beta",
+     "The TapRooT® event-mapping process"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 3,
+    "q": "Which question belongs to the Human Engineering category in TapRooT®?",
+    "opts": [
+     "Did equipment design contribute?",
+     "Was adequate oversight present?",
+     "Did the individual know what to do?",
+     "Were instructions clear?"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 4,
+    "q": "An operator bypassed an alarm. Which line of inquiry follows TapRooT® human performance troubleshooting?",
+    "opts": [
+     "Confirm the operator's disciplinary record",
+     "Ask whether nuisance alarms had become normalised and alarm frequency was excessive",
+     "Close the causal factor — the action was a violation",
+     "Record \"operator negligence\" as the root cause"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 5,
+    "q": "\"Poor job planning, inadequate permits, inadequate staffing and poor shift coordination\" fall under which TapRooT® category?",
+    "opts": [
+     "Communications",
+     "Work Direction",
+     "Quality Control",
+     "Human Engineering"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 6,
+    "q": "Which is a STRONG corrective action according to the course?",
+    "opts": [
+     "Redesign the alarm management system",
+     "Retrain operators",
+     "Remind personnel to follow procedures",
+     "Issue a safety bulletin"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 7,
+    "q": "In the refinery pump-seal example, what did the final recommendations address?",
+    "opts": [
+     "Increasing operator rounds",
+     "Replacing the seal with the same model",
+     "Reliability management — the under-resourced reliability programme",
+     "Retraining the maintenance technician"
+    ],
+    "ans": 2
+   }
+  ],
+  "model": [
+   "Causal factors: CUI wall loss (equipment); 10-year interval with incorrect RBI assumptions (inspection); coating changed without MOC (procurement/management of change); log report of wet insulation not converted into a work order (human performance/communication).",
+   "Equipment analysis: design — insulated carbon steel in a wet area; procurement — lower-grade coating; inspection — RBI did not assume jacketing damage; maintenance — damaged jacketing not repaired; QA — the coating change was not reviewed.",
+   "Human performance: did the operator know that wet insulation was a CUI indicator (knowledge)? Did the log-to-work-order process exist and was it usable (procedures, communications)? Did supervision review the log (supervision)?",
+   "Categories: Management systems (MOC not applied to specification change; RBI assumptions not validated), Communications (log not reviewed), Training (CUI awareness).",
+   "Strong actions: (1) Revise RBI for all insulated lines in the area with CUI susceptibility, owner Integrity Lead, due 90 days, verified by audit of updated RBI records. (2) Apply MOC to specification changes and back-review all coating changes since the substitution, owner Engineering Manager, verified by MOC register check."
+  ],
+  "takeaways": [
+   "TapRooT® explains why causal factors existed — it is not for finding out what happened.",
+   "SnapCharT® organises events, conditions and causal factors before the Root Cause Tree®.",
+   "Analyse each significant causal factor separately; expect multiple causes.",
+   "Human performance analysis asks about knowledge, skills, procedures, communication, work direction, human engineering, environment and supervision.",
+   "Equipment analysis asks about design, installation, operation, maintenance, inspection, procurement and QA.",
+   "Management system weaknesses usually sit behind front-line failures.",
+   "Strong actions redesign the system; each needs an owner, due date and verification method."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 9,
+  "title": "ICAM – Incident Cause Analysis Method",
+  "exercise": {
+   "intro": "Teams build an ICAM chart from defences through to organisational factors.",
+   "steps": [
+    "Identify the defences that should have prevented the event and classify each (present/ineffective/partial/missing).",
+    "List the individual and team actions and classify each as slip, lapse, mistake or violation.",
+    "Identify the task and environmental conditions — workplace, human and task factors.",
+    "Identify organisational factors using the ICAM categories (hardware, training, communication, procedures, risk management, design, maintenance, contractor management, MOC, structure).",
+    "Link each element in a chain from defence failure to organisational factor.",
+    "Propose one corrective action at each ICAM level."
+   ],
+   "deliverable": "An ICAM analysis chart with one corrective action per level.",
+   "scenarios": [
+    {
+     "title": "Scenario — Incorrect isolation during maintenance",
+     "text": "A fitter opened a pump casing that was still connected to a pressurised suction line. The isolation certificate listed the wrong suction valve — two pumps share a similar layout and the valve tags were faded. The permit was issued at 05:30 at the end of a 12-hour night shift during a busy turnaround week. No independent isolation verification was done; the site procedure allows the issuer to self-verify \"when resources are limited\". The fitter suffered minor burns from warm process liquid."
+    }
+   ]
+  },
+  "review": [
+   "How does ICAM shift the focus of an investigation from individual blame toward organisational learning?",
+   "Classify the defences at your facility for a hydrocarbon release into engineering, administrative, human and emergency defences.",
+   "Give an example of each error type — slip, lapse, mistake and violation — and the different corrective actions each needs.",
+   "Why are team factors such as shift handover and SIMOPS coordination easy to miss?",
+   "\"Many incidents involve procedure deficiencies rather than procedure non-compliance.\" Discuss.",
+   "Which organisational factor category (MOC, maintenance management, contractor management…) appears most often in your site's findings?",
+   "How would you use the PEEPO evidence categories to feed an ICAM analysis?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "On whose work is ICAM based?",
+    "opts": [
+     "Professor James Reason's Organisational Accident Model",
+     "Heinrich's domino theory",
+     "Deming's Plan–Do–Check–Act cycle",
+     "Kepner-Tregoe problem analysis"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 2,
+    "q": "Which set lists the four ICAM categories?",
+    "opts": [
+     "Absent/failed defences, individual/team actions, task/environmental conditions, organisational factors",
+     "Hazard, event, target, barrier",
+     "People, equipment, procedures, management",
+     "Slips, lapses, mistakes, violations"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 3,
+    "q": "What is the first ICAM question?",
+    "opts": [
+     "What corrective action is needed?",
+     "What defences should have prevented this event?",
+     "What was the root cause?",
+     "Who was involved?"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 4,
+    "q": "A gas detector was installed but had not been calibrated. How does ICAM classify this defence?",
+    "opts": [
+     "Missing entirely",
+     "Present but ineffective (failed)",
+     "Not a defence",
+     "Present and effective"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 5,
+    "q": "An operator diagnosed a process condition wrongly and took the wrong action. What type of human error is this?",
+    "opts": [
+     "Lapse",
+     "Mistake",
+     "Violation",
+     "Slip"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 6,
+    "q": "Fatigue, time pressure, complacency and normalisation of abnormal conditions belong in which ICAM category?",
+    "opts": [
+     "Organisational factors",
+     "Task and environmental conditions",
+     "Absent or failed defences",
+     "Individual or team actions"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 7,
+    "q": "Which ICAM mistake does the course warn about with training?",
+    "opts": [
+     "Identifying training as a factor without evidence",
+     "Never recommending training",
+     "Examining training records too closely",
+     "Treating training as a defence"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Defences: isolation certificate (present but ineffective — wrong valve); valve tagging (degraded); independent verification (missing — allowed to be skipped); pressure check before break-in (missing). PPE limited the injury (partially effective).",
+   "Actions: issuer selected the wrong valve on the certificate — a slip influenced by similar layout and faded tags; independent verification not done — a situational violation permitted by the procedure; fitter broke containment without a zero-pressure check — a mistake if he believed the isolation was proven.",
+   "Conditions: end of a 12-hour night shift (fatigue), turnaround workload and time pressure, similar equipment layout, faded tags.",
+   "Organisational factors: Procedures — self-verification allowed; Maintenance management — tag condition not maintained; Organisational structure/resources — turnaround staffing insufficient for independent checks; Design — similar layouts without clear differentiation.",
+   "Actions by level: defence — mandatory zero-energy test before break-in; action — independent verification as a hold point; condition — no isolation sign-off in the last two hours of a night shift; organisational — resource turnaround permits for independent verification and run a tag-condition survey."
+  ],
+  "takeaways": [
+   "ICAM is based on Reason's Organisational Accident Model.",
+   "Four categories: absent/failed defences, individual/team actions, task/environmental conditions, organisational factors.",
+   "Always start with \"What defences should have prevented this event?\"",
+   "Classify defences as effective, ineffective, partially effective or missing — the fixes differ.",
+   "Slips, lapses, mistakes and violations need different corrective actions.",
+   "Task and environmental conditions explain why actions made sense.",
+   "Do not assume training is the answer — evidence first."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 10,
+  "title": "Human Factors, Human Error Theory, the Swiss Cheese Model and Human Performance Investigation",
+  "exercise": {
+   "intro": "Teams analyse a control-room event through a human factors lens and map the Swiss Cheese layers.",
+   "steps": [
+    "Separate the active failures from the latent failures.",
+    "Classify each human action as slip, lapse, mistake or violation — and justify.",
+    "List the error-producing conditions present.",
+    "Draw the Swiss Cheese layers (design, procedures, control system, supervision, emergency response) and mark the holes.",
+    "Apply the seven human factors questions (knowledge, skill, information, environment, equipment, supervision, organisation).",
+    "Write two weak and two strong corrective actions and explain the difference."
+   ],
+   "deliverable": "A Swiss Cheese diagram, an error classification table and two strong corrective actions.",
+   "scenarios": [
+    {
+     "title": "Scenario — Start-up overpressure",
+     "text": "During a unit start-up at 04:00, the board operator raised the feed rate before the downstream column was lined up. A high-pressure alarm activated among 60 other start-up alarms. The operator acknowledged it, thinking it was a nuisance alarm that \"always comes in on start-up\". A relief valve lifted to flare. The operator was on the fourth of four night shifts, with 3 hours of overtime the day before. The start-up procedure was last revised before a column modification two years earlier. Production had asked for the unit to be on-spec by 06:00."
+    }
+   ]
+  },
+  "review": [
+   "\"People do not come to work intending to cause incidents.\" How should this belief change how you interview and write findings?",
+   "Map the Swiss Cheese layers for a major hazard at your facility. Where are the holes today?",
+   "Why does correcting one latent failure often deliver more than correcting a single active failure?",
+   "Discuss a violation you have seen that was considered acceptable. What made it acceptable?",
+   "How would you investigate fatigue? What evidence would you collect?",
+   "Describe a situation where a loss of situational awareness contributed to an incident.",
+   "What is \"training fixation\", and why is it so common in investigation reports?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What does the traditional, person-focused view of human error assume?",
+    "opts": [
+     "Systems should be designed around people",
+     "Errors are symptoms of system weaknesses",
+     "Errors are normal and expected",
+     "Workers are the problem and discipline solves it"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 2,
+    "q": "In the Swiss Cheese Model, when does an incident occur?",
+    "opts": [
+     "When a latent failure is first created",
+     "When the number of layers falls below three",
+     "When any single layer has a hole",
+     "When the holes in several layers align and let the hazard through"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 3,
+    "q": "Which of these is a latent failure?",
+    "opts": [
+     "Opening the incorrect valve",
+     "Deficient maintenance management",
+     "Bypassing an alarm",
+     "Missing a procedural step"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 4,
+    "q": "An operator selects the wrong switch while intending to select the right one. What type of error is this?",
+    "opts": [
+     "Mistake",
+     "Lapse",
+     "Slip",
+     "Routine violation"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 5,
+    "q": "A deviation that has become accepted as normal practice is which type of violation?",
+    "opts": [
+     "Malicious",
+     "Situational",
+     "Exceptional",
+     "Routine"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "What question protects an investigator against hindsight bias?",
+    "opts": [
+     "What should they have done?",
+     "Why did they not follow procedure?",
+     "Who approved the decision?",
+     "What information did they have at the time?"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 7,
+    "q": "Which is the STRONGER human factors corrective action?",
+    "opts": [
+     "Retrain the operator",
+     "Redesign the confusing HMI interface",
+     "Remind personnel of the procedure",
+     "Add a warning to the shift briefing"
+    ],
+    "ans": 1
+   }
+  ],
+  "model": [
+   "Active failures: feed raised before the column was lined up; high-pressure alarm acknowledged without response. Latent failures: procedure not updated after the column modification (MOC); alarm system flooding during start-up (alarm management); start-up scheduled at night under production pressure (planning, incompatible goals).",
+   "Classification: raising feed early is most likely a mistake (the operator followed an outdated sequence); dismissing the alarm is a mistake shaped by normalisation of nuisance alarms — arguably a routine practice, but the question is why it became acceptable.",
+   "Error-producing conditions: fatigue (fourth night, overtime), time pressure (06:00 target), alarm flood (60 alarms), outdated procedure.",
+   "Swiss Cheese holes: design (no start-up permissive on the column line-up), procedure (outdated), control system (alarm flood, no alarm prioritisation), supervision (no start-up oversight at 04:00), relief (worked — it limited the consequence).",
+   "Weak actions: retrain the operator; remind staff to respond to all alarms. Strong actions: update the start-up procedure through MOC and add a column line-up permissive; rationalise start-up alarms (state-based alarming) and set rules for scheduling start-ups and supervisor presence."
+  ],
+  "takeaways": [
+   "Human error is rarely the root cause — people operate within systems.",
+   "The modern view asks why the action made sense, not who failed.",
+   "Swiss Cheese: incidents occur when holes in several defensive layers align.",
+   "Active failures are visible symptoms; latent failures are hidden and widespread.",
+   "Slips, lapses, mistakes and violations have different causes and fixes.",
+   "Judge decisions on the information available at the time — avoid hindsight bias.",
+   "Strong corrective actions redesign the system rather than retraining the person."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 11,
+  "title": "Tripod Beta, Barrier Failure Analysis and Latent Failure Investigation",
+  "exercise": {
+   "intro": "Teams complete a Tripod Beta analysis following the ten-step process.",
+   "steps": [
+    "Define the hazard, event and target (Steps 1–3).",
+    "Identify the barriers that should have prevented or mitigated the event (Step 4).",
+    "Classify each barrier failure as missing, ineffective, defeated or inadequate (Step 5).",
+    "Identify the active failure behind each failed barrier (Step 6).",
+    "Identify preconditions for each active failure (Step 7).",
+    "Identify latent failures and classify them by GFT (Steps 8–9).",
+    "Develop corrective actions targeting the latent failures (Step 10)."
+   ],
+   "deliverable": "A Tripod Beta diagram (hazard–event–target with barriers and causation paths) and a GFT-coded action list.",
+   "scenarios": [
+    {
+     "title": "Scenario — Gas release on an offshore module",
+     "text": "A small-bore instrument fitting on a gas compressor discharge line failed from vibration fatigue. Gas detectors on the module were in inhibit for a calibration campaign; the inhibit had been extended twice without risk assessment. The compressor had a known vibration problem with a deferred engineering fix due to budget constraints. The technician who last worked on the fitting had used a compression fitting of the wrong type from an uncontrolled stores bin. No one was injured; the release was detected by a passing operator."
+    }
+   ]
+  },
+  "review": [
+   "Why does Tripod Beta accept that people make errors and equipment fails, and what does that mean for barrier design?",
+   "Practise defining hazard, event and target for three incidents: a dropped object, an H2S release and a spill to a river.",
+   "Give an example of each barrier failure type (missing, ineffective, defeated, inadequate) from your own work.",
+   "Why are active failures not root causes? Use the \"operator opened incorrect valve\" example.",
+   "Which GFT do you think is most common at your site, and what evidence would show it?",
+   "How could you use your site's bowtie diagrams at the start of a Tripod investigation?",
+   "Why does the greatest long-term benefit usually come from addressing latent failures?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What are the three elements of the Tripod Beta core model?",
+    "opts": [
+     "Threat, barrier, consequence",
+     "Cause, effect, consequence",
+     "Hazard, event, target",
+     "Plan, do, check"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "A hydrocarbon release ignited and caused a fire. In Tripod Beta, what is the event?",
+    "opts": [
+     "The injury to personnel",
+     "The fire",
+     "The hydrocarbon release",
+     "The emergency response"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 3,
+    "q": "An alarm was intentionally inhibited. What type of barrier failure is this?",
+    "opts": [
+     "Barrier ineffective",
+     "Barrier inadequate",
+     "Barrier missing",
+     "Barrier defeated"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "In Tripod Beta, what are preconditions?",
+    "opts": [
+     "The permit requirements for a task",
+     "Organisational weaknesses that existed for years",
+     "Barriers that must exist before work starts",
+     "Circumstances that make active failures more likely"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 5,
+    "q": "How many primary General Failure Types (GFTs) does Tripod Beta identify?",
+    "opts": [
+     "Four",
+     "Seven",
+     "Eleven",
+     "Twenty"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 6,
+    "q": "Cost reduction versus inspection quality is an example of which GFT?",
+    "opts": [
+     "Organisation (OR)",
+     "Incompatible Goals (IG)",
+     "Error Enforcing Conditions (EC)",
+     "Maintenance Management (MM)"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 7,
+    "q": "How do Bowtie and Tripod Beta relate?",
+    "opts": [
+     "Bowtie asks which barriers should exist; Tripod asks why they failed",
+     "They are the same method",
+     "Tripod identifies barriers; Bowtie explains their failure",
+     "Bowtie is only used after Tripod"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Hazard: pressurised gas inventory. Event: loss of containment at the small-bore fitting. Target: personnel on the module (and the asset).",
+   "Barriers: vibration management (inadequate — known problem, fix deferred); correct fitting selection and stores control (ineffective — wrong fitting used); gas detection (defeated — inhibited and extended); small-bore tubing inspection (missing or inadequate).",
+   "Active failures: wrong fitting installed; inhibit extended without risk assessment; engineering fix deferred.",
+   "Preconditions: uncontrolled stores bin; calibration campaign workload; no override-management rules visible to the operator; budget pressure.",
+   "Latent failures and GFTs: materials control (Hardware/Procedures); inhibit and override management (Defences/Procedures); deferral of the vibration fix for budget (Incompatible Goals); small-bore inspection scope (Maintenance Management).",
+   "Actions: implement override/inhibit management with time limits and risk assessment; remove uncontrolled stores and introduce fitting identification; treat safety-critical deferrals through a risk-based process with senior sign-off; add small-bore vibration surveys."
+  ],
+  "takeaways": [
+   "Tripod Beta asks what happened, which barriers failed and why they failed.",
+   "Hazard–Event–Target: the event is the loss of control; the harm is the consequence.",
+   "Barriers fail by being missing, ineffective, defeated or inadequate.",
+   "Active failures are part of the story, not the explanation.",
+   "Preconditions make errors likely; latent failures create preconditions.",
+   "Eleven General Failure Types classify latent failures consistently.",
+   "Bowtie identifies barriers; Tripod explains why they failed."
+  ]
+ },
+ {
+  "vol": 1,
+  "ch": 12,
+  "title": "Fault Tree Analysis (FTA), Cause-and-Effect Trees and Advanced Technical Failure Analysis",
+  "exercise": {
+   "intro": "Teams build a fault tree for a technical failure and integrate the technical and organisational findings.",
+   "steps": [
+    "Define the top event precisely.",
+    "Build the tree with AND/OR gates down to basic events.",
+    "Identify any common cause failure between the two pumps.",
+    "List the engineering evidence required to confirm each basic event.",
+    "Develop and test failure hypotheses for the starter and strainer.",
+    "Integrate technical, human factors, barrier and organisational findings into one causal pathway."
+   ],
+   "deliverable": "A fault tree with gates and symbols, an evidence list and an integrated causal statement.",
+   "scenarios": [
+    {
+     "title": "Scenario — Pump unavailable during an emergency",
+     "text": "The firewater pump failed to start during a weekly test, two days after a tank fire drill. The standby diesel pump started but tripped on high temperature after 4 minutes. Findings so far: the electric pump's starter contactor had burned contacts; the diesel's cooling water strainer was blocked; both pumps' maintenance routines were managed by the same contractor whose contract scope was reduced last year; the weekly test records show \"OK\" ticks with no run times recorded for the last 3 months."
+    }
+   ]
+  },
+  "review": [
+   "Why are simple RCA tools often inadequate for complex technical failures?",
+   "Give two examples of failure modes and their possible mechanisms from equipment at your site.",
+   "What specialist evidence (metallurgy, corrosion, vibration, process) would you secure first after a pressure vessel failure?",
+   "How would you explain a common cause failure to a manager who believes redundancy makes a system safe?",
+   "Describe how preventive and mitigative barriers appear in a fault tree.",
+   "How do you resist pressure to close an investigation before laboratory results are available?",
+   "Using the refinery sulfidation case, explain why the release \"cannot be explained by corrosion alone\"."
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What is the difference between a failure mode and a failure mechanism?",
+    "opts": [
+     "A mechanism is how it failed; a mode is why",
+     "A mode is human; a mechanism is technical",
+     "They mean the same thing",
+     "A mode is how the equipment failed; a mechanism is why that mode occurred"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 2,
+    "q": "Which of these is a failure MECHANISM?",
+    "opts": [
+     "Seal leak",
+     "Pipe rupture",
+     "Bearing seizure",
+     "Stress corrosion cracking"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 3,
+    "q": "In a fault tree, what is a basic event?",
+    "opts": [
+     "A link to another branch",
+     "An event requiring further development",
+     "A known cause requiring no further analysis",
+     "The primary incident under investigation"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 4,
+    "q": "Two redundant transmitters both failed because both were incorrectly calibrated. What is this?",
+    "opts": [
+     "A random failure",
+     "A failure mode",
+     "An OR-gate failure",
+     "A common cause failure"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 5,
+    "q": "\"Corrosion under insulation caused wall loss.\" How should the investigator treat this statement?",
+    "opts": [
+     "As a technical finding — continue by asking why the corrosion was not detected",
+     "As the root cause",
+     "As a recommendation",
+     "As an assumption to be discarded"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 6,
+    "q": "What does the course list as a common technical investigation error?",
+    "opts": [
+     "Identifying the failure mode as the root cause",
+     "Developing several failure hypotheses",
+     "Using specialist metallurgists",
+     "Waiting for laboratory results before concluding"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 7,
+    "q": "How should failure hypotheses be handled?",
+    "opts": [
+     "Test each against evidence and actively seek evidence that could disprove the preferred one",
+     "Let the vendor decide",
+     "Choose the most likely one and collect evidence for it",
+     "Keep all hypotheses in the final report"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Top event: firewater supply unavailable on demand. AND gate: electric pump failed to start AND diesel pump failed to run.",
+   "Electric pump — OR: starter failure (burned contacts — basic event pending electrical inspection), power supply loss, control circuit fault. Diesel pump — OR: overheating (blocked strainer), fuel, start system. Overheating → blocked strainer → strainer not cleaned → routine removed from the reduced contract scope?",
+   "Common cause: the reduced contractor scope affecting both pumps' maintenance, and the ineffective weekly test (ticks without run times) failing to reveal either degradation.",
+   "Evidence: contactor examination and electrical test records, strainer debris sample, maintenance work orders, contract scope documents, test records, MOC for the contract change.",
+   "Integrated statement: firewater was unavailable because both pumps had degraded undetected (technical); test records were completed without verifying run performance (human factors); the weekly test barrier was ineffective (barrier); and the contract scope change was not assessed for its effect on safety-critical equipment (organisational — MOC/contractor management)."
+  ],
+  "takeaways": [
+   "Technical analysis asks what failed, how, why, what allowed it and what should have prevented it.",
+   "Failure modes are not root causes — identify the failure mechanism.",
+   "Fault trees work backwards from a clearly defined top event using AND/OR logic.",
+   "Look for common cause failures that defeat redundancy.",
+   "Secure specialist engineering evidence early; do not conclude before lab results.",
+   "Test multiple hypotheses and try to disprove your favourite.",
+   "Integrate technical, human, barrier and organisational findings into one pathway."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 13,
+  "title": "Process Safety Incident Investigation and Loss of Containment Investigations",
+  "exercise": {
+   "intro": "Teams reconstruct the failed bowtie for a loss of containment event.",
+   "steps": [
+    "Define the hazard and the top event (LOPC).",
+    "Identify the threats that led to the top event.",
+    "List the preventive barriers and say how each failed.",
+    "List the detection, mitigation and recovery barriers and assess their performance.",
+    "Identify the weak signals and leading indicators that were missed.",
+    "Identify the process conditions: what was normal, what changed, when and why?",
+    "Draft three recommendations that strengthen several layers."
+   ],
+   "deliverable": "A reconstructed bowtie with failed barriers marked and three multi-layer recommendations.",
+   "scenarios": [
+    {
+     "title": "Scenario — Overfill and vapour cloud",
+     "text": "During a night-time gasoline transfer into a floating-roof tank, the tank overfilled. The automatic tank gauge had stuck at 78 % for three hours; the independent high-level switch had been tested by the contractor last month but the test lever was left in the 'test' position. Vapour drifted toward a car park. Gas detection alarmed at the bund wall; the operator diverted the transfer 18 minutes later. No ignition occurred. Three similar 'gauge sticking' entries appear in the maintenance log in the last year."
+    }
+   ]
+  },
+  "review": [
+   "How does a process safety investigation differ in focus from a personal injury investigation?",
+   "What weak signals exist at your facility today that could be precursors to an LOPC?",
+   "Which process safety evidence (historian, alarm logs, SIS records, cause-and-effect charts) would you secure first after a release, and why?",
+   "Explain how you would \"reconstruct the failed bowtie\" after an incident.",
+   "Walk through the five alarm questions (activated, recognised, understood, acted upon, design appropriate) for an alarm-related event you know.",
+   "What leading indicators would have given warning before Chevron Richmond?",
+   "Why do the strongest process safety recommendations improve several layers of protection at once?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What lesson do Texas City, Buncefield and Longford teach about personal safety metrics?",
+    "opts": [
+     "Personal safety and process safety use the same indicators",
+     "Injury rates rise before every major accident",
+     "Organisations with excellent personal safety performance can still suffer catastrophic process safety failures",
+     "Good injury rates prove process safety is under control"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "What does LOPC stand for?",
+    "opts": [
+     "Layer of Protection Check",
+     "Level of Protection Classification",
+     "Loss of Primary Containment",
+     "Loss of Process Control"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 3,
+    "q": "Small leaks, alarm bypasses, corrosion findings and PSV lifts before a major incident are examples of…",
+    "opts": [
+     "Precursor events — weak signals",
+     "Lagging indicators",
+     "Mitigation barriers",
+     "Root causes"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 4,
+    "q": "Gas detection and alarm systems are which type of barrier in the course's barrier-based investigation?",
+    "opts": [
+     "Recovery",
+     "Preventive",
+     "Detection",
+     "Mitigation"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 5,
+    "q": "What should a fire investigation establish?",
+    "opts": [
+     "The insurance value of the damage",
+     "Fuel source, release source, ignition source, barrier failures and escalation factors",
+     "Only the ignition source",
+     "Only who raised the alarm"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 6,
+    "q": "A PSV lifted to flare with no other consequence. How should it be treated?",
+    "opts": [
+     "As an environmental incident only",
+     "As a lagging indicator only",
+     "As a warning sign — find out why overpressure occurred and whether the PSV worked correctly",
+     "As normal operation — no investigation needed"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 7,
+    "q": "Which major accident highlighted the importance of independent protection layers after an independent high-level shutdown failed during tank overfilling?",
+    "opts": [
+     "Chevron Richmond",
+     "Buncefield",
+     "Texas City",
+     "Deepwater Horizon"
+    ],
+    "ans": 1
+   }
+  ],
+  "model": [
+   "Hazard: gasoline inventory. Top event: LOPC by tank overfill. Threats: level measurement failure; transfer not stopped at the planned level.",
+   "Preventive barriers: automatic tank gauge (failed — stuck at 78 %); independent high-level switch (defeated — test lever left in test); operator monitoring of transfer rate versus level (ineffective — a stuck gauge during a constant-rate transfer was not noticed); transfer plan with calculated finish time (missing or not used).",
+   "Detection: gas detection at the bund (worked). Mitigation/recovery: transfer diverted after 18 minutes (slow), no ignition control around the car park.",
+   "Weak signals: three previous gauge-sticking entries with no reliability action; no post-test verification by the contractor.",
+   "Process conditions: normal transfer rate; the change was the gauge freezing three hours earlier — a rate-versus-level mismatch was visible in the historian.",
+   "Recommendations: (1) independent overfill protection with post-test return-to-service verification and override management; (2) rate-of-change and gauge-deviation alarms with transfer finish-time monitoring; (3) treat repeat instrument failures as reliability investigations, with a site-wide review of safety-critical instrument test procedures."
+  ],
+  "takeaways": [
+   "Process safety prevents high-consequence, low-frequency releases of hazardous material and energy.",
+   "Good personal safety statistics do not show that process safety is under control.",
+   "Most major incidents start with a loss of primary containment.",
+   "Weak signals and precursors are usually present — look for them.",
+   "Always include barrier analysis: preventive, detection, mitigation, recovery.",
+   "PSV lifts, alarm failures and SIS bypasses are warning signs worth investigating.",
+   "The strongest recommendations improve several layers of protection at once."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 14,
+  "title": "Asset Integrity Failure Investigation and Reliability-Based Incident Analysis",
+  "exercise": {
+   "intro": "Teams trace a failure from mode to management system using the asset integrity case structure.",
+   "steps": [
+    "State the failure mode and the likely failure mechanism.",
+    "List the engineering evidence needed to confirm the mechanism.",
+    "Run the corrosion investigation questions (Section 14.7).",
+    "Examine RBI: was the damage mechanism identified and were the assumptions valid?",
+    "Identify the MOC failure and the weak signals that were missed.",
+    "Write the chain: mode → mechanism → inspection finding → programme finding → management finding → root cause.",
+    "Propose technical, inspection, reliability and management-system actions."
+   ],
+   "deliverable": "A completed failure chain and a four-category corrective action plan.",
+   "scenarios": [
+    {
+     "title": "Scenario — Heat exchanger tube leak",
+     "text": "Cooling water was found contaminated with hydrocarbon. A heat exchanger had multiple tube leaks. The tubes showed pitting on the cooling water side. Cooling water treatment chemical dosing had been reduced six months earlier to save cost; no MOC was raised. The exchanger was in the RBI programme with an 8-year interval based on 'clean' cooling water. Vibration and fouling data were not trended. Two previous minor contamination events were attributed to 'sampling error'."
+    }
+   ]
+  },
+  "review": [
+   "Why are asset integrity and process safety described as inseparable?",
+   "Which elements of your site's Asset Integrity Management System would you examine first after a piping failure?",
+   "How would you distinguish general corrosion, pitting, CUI and sulfidation in evidence?",
+   "What does a rising maintenance backlog tell an investigator?",
+   "How can FMEA/FMECA records help — or embarrass — an organisation during an investigation?",
+   "Give an example of a material or process change that should have triggered MOC from an integrity perspective.",
+   "\"The rupture was merely the final manifestation of a much larger system failure.\" Discuss."
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "\"Pump failed\", \"PSV failed\", \"Compressor failed\" — what do these statements describe?",
+    "opts": [
+     "Failure mechanisms",
+     "The outcome only",
+     "Latent failures",
+     "Root causes"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 2,
+    "q": "Which statement about fatigue is TRUE?",
+    "opts": [
+     "It can occur below yield strength and is often hard to detect visually",
+     "It is a form of corrosion",
+     "It only occurs above yield strength",
+     "It always produces visible deformation first"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 3,
+    "q": "On what two factors does Risk-Based Inspection (RBI) prioritise inspection?",
+    "opts": [
+     "Cost and schedule",
+     "Operator experience and workload",
+     "Probability of failure and consequence of failure",
+     "Age and size of equipment"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 4,
+    "q": "What is MTBF?",
+    "opts": [
+     "Mean Time to Bring Forward",
+     "Minimum Test Before Function",
+     "Mean Time Between Failures",
+     "Maximum Time Before Failure"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 5,
+    "q": "What does FMECA add to FMEA?",
+    "opts": [
+     "Cost analysis",
+     "Fault tree logic",
+     "Human factors",
+     "Criticality"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "In the sulfidation case example, what was the root cause?",
+    "opts": [
+     "Sulfidation corrosion",
+     "Pipe rupture",
+     "Wall thickness below minimum allowable",
+     "The asset integrity management system failed to identify and manage the degradation mechanism"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 7,
+    "q": "Which is a common asset integrity investigation failure?",
+    "opts": [
+     "Assuming corrosion without confirming the mechanism",
+     "Engaging metallurgists early",
+     "Examining MOC records",
+     "Reviewing deferred work"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Failure mode: tube leak. Mechanism: pitting corrosion on the cooling water side — possibly microbiologically influenced (MIC) once treatment was reduced. Confirm by metallurgy and deposit analysis.",
+   "Evidence: tube samples (fractography, pit morphology, deposits, microbial analysis), cooling water chemistry records, dosing records, RBI assessment, previous contamination sample results.",
+   "Corrosion questions: mechanism active? Pitting/MIC. Was it known? Not in the RBI. In the corrosion programme? No. Inspection adequate? 8-year interval on invalid assumptions. Wall loss monitored? No. Previous warnings? Two contamination events dismissed as sampling errors.",
+   "Chain: tube leak → pitting/MIC → no recent inspection data → RBI interval based on a 'clean water' assumption → chemical treatment change without MOC, previous warnings not investigated → root cause: integrity management did not link process-chemistry changes to damage mechanisms and RBI.",
+   "Actions: technical — retube or replace and restore treatment; inspection — revise the RBI damage mechanism and interval and inspect sister exchangers; reliability — trend fouling and water chemistry; management — bring treatment programme changes under MOC and require investigation of repeat contamination events."
+  ],
+  "takeaways": [
+   "Failed equipment is the outcome, not the root cause.",
+   "Identify and confirm the degradation mechanism with evidence — never assume it.",
+   "Review inspection, maintenance, reliability data, RBI and FMEA/FMECA records.",
+   "Fatigue can occur below yield and is hard to see; check vibration and cyclic loading.",
+   "Unmanaged change (process, material, condition) is a frequent integrity contributor.",
+   "Secure engineering evidence early — metallurgy, thickness, corrosion products.",
+   "The strongest actions address both technical and organisational contributors."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 15,
+  "title": "Environmental Incident Investigation and Environmental Root Cause Analysis",
+  "exercise": {
+   "intro": "Teams investigate a produced-water spill that reached a stream.",
+   "steps": [
+    "List the initial response priorities in order.",
+    "Determine source, quantity, duration, pathway and receptors.",
+    "Plan the environmental sampling programme (locations, methods, chain of custody).",
+    "Identify primary containment, secondary containment, detection and administrative barriers and how each failed.",
+    "Identify the human factors and management system contributors.",
+    "Propose corrective actions that reduce both probability and consequence."
+   ],
+   "deliverable": "A source–pathway–receptor diagram, a sampling plan and a barrier failure table with corrective actions.",
+   "scenarios": [
+    {
+     "title": "Scenario — Produced water to a stream",
+     "text": "A produced-water transfer line leaked at a buried section. The leak was found by a farmer who reported an oily sheen on a stream 400 m downhill. The line had no leak detection; flow imbalance data existed but no one reviewed it. The bund around the nearby transfer pump had its drain valve open, so rainwater and spilled fluid drained to the field. The pipeline's corrosion inhibitor injection had been off for two months awaiting a pump spare. The release continued for an estimated 3 days."
+    }
+   ]
+  },
+  "review": [
+   "Why should environmental investigations apply the same analytical rigour as process safety investigations?",
+   "How does your organisation classify environmental incidents, and how does classification affect investigation scope?",
+   "Map source, pathway and receptor for a credible spill at your site. Which element is easiest to break?",
+   "What would you include in a chain-of-custody record for a groundwater sample?",
+   "How would you balance protecting a watercourse against preserving evidence at a spill?",
+   "Why do waste management incidents so often reveal organisational weaknesses?",
+   "What environmental near misses are under-reported at your facility?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What are the three elements of environmental impact in the course model?",
+    "opts": [
+     "Hazard, event, target",
+     "Release, spill, cleanup",
+     "Source, pathway, receptor",
+     "Volume, area, sensitivity"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "Which is listed among the first priorities after an environmental incident?",
+    "opts": [
+     "Begin root cause analysis",
+     "Protect sensitive receptors",
+     "Notify the media",
+     "Start remediation"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 3,
+    "q": "What can invalidate environmental investigation findings?",
+    "opts": [
+     "Taking too many samples",
+     "Involving the regulator",
+     "Improper sampling",
+     "Using an external laboratory"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 4,
+    "q": "Bunds, dikes and containment pits are which type of environmental barrier?",
+    "opts": [
+     "Secondary containment",
+     "Primary containment",
+     "Administrative controls",
+     "Detection systems"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 5,
+    "q": "A tank's high-level alarm activates before overflow and the transfer is stopped. How should this be treated?",
+    "opts": [
+     "As an environmental near miss worth investigating",
+     "As a lagging indicator",
+     "As normal operation",
+     "As a regulatory breach"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 6,
+    "q": "Which is a common environmental investigation failure?",
+    "opts": [
+     "Barrier analysis",
+     "Focusing only on clean-up",
+     "Preserving samples",
+     "Examining management systems"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 7,
+    "q": "What does the course conclude about the Deepwater Horizon environmental impact?",
+    "opts": [
+     "It was caused by contractor sampling errors",
+     "It was mainly a navigation failure",
+     "It was caused by a single blowout preventer fault",
+     "It was a consequence of multiple process safety failures"
+    ],
+    "ans": 3
+   }
+  ],
+  "model": [
+   "Priorities: protect personnel; stop the release (isolate the line); prevent escalation; protect the stream (booms, absorbents, block the field drainage path); preserve evidence; make regulatory notifications.",
+   "Source: buried line leak (produced water with hydrocarbon). Quantity: estimate from the flow imbalance over about 3 days. Pathway: soil and surface run-off downhill, plus bund drainage through the open valve. Receptors: field soil, the stream and potentially groundwater.",
+   "Sampling: soil at the leak point and along the path, stream upstream (control) and downstream points, sediment and groundwater if indicated. Record GPS locations, methods and preservation, and keep chain of custody to the laboratory.",
+   "Barriers: primary containment (failed — corrosion with inhibitor off); detection (missing — no leak detection, imbalance data not reviewed); secondary containment (defeated — bund drain open); administrative (inhibitor outage not risk-assessed, no bund-valve inspection).",
+   "Contributors: no process for reviewing flow-imbalance data; spare parts management for the inhibitor pump; bund drain valve management; corrosion management did not escalate the inhibitor outage.",
+   "Actions: install leak detection or imbalance alarms; risk-assess and escalate inhibitor outages; keep bund drains locked closed with inspection checks; run an integrity assessment of the line (ILI or excavations)."
+  ],
+  "takeaways": [
+   "Environmental incidents share causes with process safety and asset integrity failures.",
+   "Establish what, where, how much, how long, which pathway and which receptors.",
+   "Source–pathway–receptor: break any one element to prevent impact.",
+   "Sampling must be documented, preserved and under chain of custody.",
+   "Secondary containment failures often turn small spills into significant ones.",
+   "Environmental near misses deserve real investigation effort.",
+   "Look beyond clean-up to barriers and management systems."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 16,
+  "title": "Corrective Action Development, Recommendations, Human Performance Improvement and Verification of Effectiveness",
+  "exercise": {
+   "intro": "Teams rewrite a weak action list into a strong, verifiable corrective action plan.",
+   "steps": [
+    "Link each finding to a causal factor and a root cause.",
+    "Classify the draft actions as weak or strong and explain why.",
+    "Write immediate, intermediate and long-term actions.",
+    "Rank your long-term actions on the hierarchy of controls.",
+    "Give each action an owner, due date, deliverable and verification method.",
+    "Define how effectiveness (not completion) will be verified.",
+    "Answer: could the incident still occur after implementation?"
+   ],
+   "deliverable": "A corrective action register with traceability, ownership and effectiveness verification.",
+   "scenarios": [
+    {
+     "title": "Scenario — Draft report actions for a crane dropped load",
+     "text": "Findings: a load slipped from a sling during a lift at a tank farm. The sling was past its inspection date; the lift plan did not specify a tag line; the exclusion zone was not barricaded; the rigger was a contractor whose competence card had expired; the same sling inventory had been flagged by audit 6 months earlier. Draft actions: (1) Retrain riggers. (2) Remind all staff of lifting procedure. (3) Issue a safety bulletin. (4) Toolbox talk on exclusion zones."
+    }
+   ]
+  },
+  "review": [
+   "Why do weak actions such as \"retrain\" and \"toolbox talk\" remain so popular in spite of the evidence?",
+   "Take a recent recommendation from your site and test it against the six characteristics of effective actions.",
+   "Give one immediate, one intermediate and one long-term action for a recent incident you know.",
+   "When IS training the right corrective action? What three questions should you ask first?",
+   "How would you verify the effectiveness — not just completion — of a revised permit-to-work procedure?",
+   "What closure evidence should be required before an action is signed off?",
+   "Why do lessons-learned bulletins so often fail to change anything?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "What is the true measure of investigation effectiveness?",
+    "opts": [
+     "The sophistication of the RCA method",
+     "Whether the organisation prevents recurrence",
+     "The number of findings identified",
+     "The length and quality of the report"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 2,
+    "q": "Every corrective action should be traceable to…",
+    "opts": [
+     "The budget available",
+     "The preferences of the area manager",
+     "Previous reports at other sites",
+     "Findings, causal factors, root causes and barrier failures"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 3,
+    "q": "\"Isolate equipment, repair leak, suspend activity\" are which category of action?",
+    "opts": [
+     "Long-term",
+     "Intermediate",
+     "Verification",
+     "Immediate"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "An operator opened the wrong valve. Which action reduces the opportunity for error?",
+    "opts": [
+     "Improve valve labelling and line identification",
+     "Remind all operators to take care",
+     "Issue a safety bulletin",
+     "Retrain the operator"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 5,
+    "q": "Which is the most effective level of the hierarchy of controls?",
+    "opts": [
+     "Engineering controls",
+     "Elimination",
+     "Administrative controls",
+     "Substitution"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 6,
+    "q": "What is the difference between completion and effectiveness?",
+    "opts": [
+     "Effectiveness is checked by the action owner; completion by the auditor",
+     "Completion means the action was performed; effectiveness means risk was actually reduced",
+     "There is none",
+     "Completion is for long-term actions only"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 7,
+    "q": "\"Alarm rates reduced and alarm floods eliminated\" verifies which recommendation?",
+    "opts": [
+     "Install leak detection",
+     "Retrain operators",
+     "Improve alarm management",
+     "Revise the inspection programme"
+    ],
+    "ans": 2
+   }
+  ],
+  "model": [
+   "Root causes: lifting-equipment inspection control did not prevent expired slings from being used; audit findings were not tracked to closure; contractor competence verification at the gate was ineffective; the lift planning template did not require exclusion zones or tag lines.",
+   "All four draft actions are weak — they depend on people and do not change the system.",
+   "Immediate: quarantine all slings past their inspection date; suspend lifts by uncertified riggers. Intermediate: 100 % lifting-gear inspection and colour-coding; supervisor sign-off of each lift plan. Long-term: lifting-gear register with automatic lock-out of expired gear (engineering/administrative); revise the lift-plan template with mandatory exclusion zone and tag line fields; electronic competence check at permit issue; audit action tracking with escalation.",
+   "Each action: owner (e.g. Lifting Superintendent), due date, deliverable (register live), verification (spot-check of 20 lifts finds 0 expired gear; overdue audit actions trend down).",
+   "Effectiveness: measure outcomes — no expired gear found in quarterly audits, every lift plan complete, no repeat dropped loads. If the incident could still occur, revisit the actions."
+  ],
+  "takeaways": [
+   "Investigation value is measured by prevented recurrence, not report quality.",
+   "Every action must trace to a finding, causal factor, root cause or barrier failure.",
+   "Address immediate, intermediate and long-term levels.",
+   "Strong actions improve systems; weak actions depend on people.",
+   "Use the hierarchy of controls: elimination, substitution, engineering, administrative.",
+   "Training is overused — only recommend it when training was actually deficient.",
+   "Close actions on evidence of effectiveness, not just completion."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 17,
+  "title": "Investigation Report Writing, Executive Communication, Findings Development and Evidence-Based Conclusions",
+  "exercise": {
+   "intro": "Teams turn rough investigation notes into report sections and an executive briefing.",
+   "steps": [
+    "Write a factual incident description (no blame, no conclusions).",
+    "Extract findings — specific, evidence-based, verifiable.",
+    "Separate the findings from causes and recommendations.",
+    "Write one weak and one strong root-cause statement.",
+    "List what is known, probable and unknown.",
+    "Draft a five-line executive summary.",
+    "Identify the appendices you would attach."
+   ],
+   "deliverable": "Incident description, findings table, uncertainty statement and executive summary.",
+   "scenarios": [
+    {
+     "title": "Scenario — Investigator's rough notes",
+     "text": "\"Big diesel spill at the loading bay Tuesday morning. Hose coupling was rubbish, totally corroded — maintenance obviously never checked it. Driver didn't notice for ages, should have been watching. About 3,000 L, maybe more. Some went into the storm drain. We think the interceptor was full. Inspection record for the coupling shows last check 26 months ago (should be 12). Driver had done induction. Spill kit was empty.\""
+    }
+   ]
+  },
+  "review": [
+   "Who reads investigation reports at your organisation, and what does each audience need?",
+   "Rewrite a blame-oriented sentence from a real report into evidence-based language.",
+   "Why should technical detail often go into appendices?",
+   "How do you present uncertainty without undermining the credibility of the whole report?",
+   "What would you include in a 5-minute verbal briefing to the executive team?",
+   "How should findings be communicated to the workforce so that they drive learning, not fear?",
+   "Which common report-writing failure have you seen most often?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "Which section of the report is often the most widely read?",
+    "opts": [
+     "Evidence Reviewed",
+     "Appendices",
+     "Executive Summary",
+     "Methodology"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "Which is a well-written incident description?",
+    "opts": [
+     "Approximately 12 m³ of diesel was released from a corroded section of transfer piping at 09:42 on 14 March.",
+     "The spill was the worst in the site's history.",
+     "A serious spill occurred because maintenance failed to do its job.",
+     "Careless work caused a major diesel spill."
+    ],
+    "ans": 0
+   },
+   {
+    "n": 3,
+    "q": "\"Pipe wall thickness below minimum allowable\" is a…",
+    "opts": [
+     "Recommendation",
+     "Cause",
+     "Lesson learned",
+     "Finding"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "A finding without supporting evidence is…",
+    "opts": [
+     "A probable conclusion",
+     "A causal factor",
+     "An opinion",
+     "Acceptable if an expert agrees"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 5,
+    "q": "The ignition source could not be conclusively identified. How should the report deal with this?",
+    "opts": [
+     "Leave it out of the report",
+     "Delay the report until it is found",
+     "Choose the most likely source and state it as fact",
+     "State known facts, probable conclusions and unknown elements clearly"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "Which rewrite follows the course's guidance on language?",
+    "opts": [
+     "Operator negligence led to the release.",
+     "The operator carelessly ignored the alarm.",
+     "The operator should have known better.",
+     "The operator did not respond to the alarm. Investigation identified alarm flooding and competing operational demands."
+    ],
+    "ans": 3
+   },
+   {
+    "n": 7,
+    "q": "What chain should a high-quality report make transparent?",
+    "opts": [
+     "Evidence → findings → causal factors → root causes → recommendations → risk reduction",
+     "Blame → discipline → closure",
+     "Opinion → conclusion → evidence",
+     "Recommendations → findings → evidence"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Description: \"At approximately [time] on Tuesday [date], diesel was released from a hose coupling at the road-tanker loading bay. An estimated 3,000 L was released; part entered the storm drain system.\" (Confirm the time and volume from meter and tanker records.)",
+   "Findings: the coupling showed corrosion (photo ref); the last coupling inspection was 26 months before the incident against a 12-month requirement (inspection record); the spill kit at the bay was empty (photo/observation); diesel entered the storm drain (observation).",
+   "Unknown or probable: whether the interceptor was full (to be confirmed by inspection record and level check); exact release duration; the driver's line of sight to the coupling during loading.",
+   "Weak root cause: \"Maintenance failed to check the coupling.\" Strong: \"The loading-hose inspection programme did not ensure couplings were inspected at the required frequency, and overdue inspections were not escalated.\"",
+   "Executive summary: what happened (diesel release, ~3,000 L, partly to storm drain); consequences (environmental exposure, notification); key findings (overdue inspection, empty spill kit, interceptor capacity unconfirmed); root causes; key recommendations.",
+   "Appendices: photographs with scale and references, inspection records, meter data, interceptor records, sampling results, chain-of-custody forms."
+  ],
+  "takeaways": [
+   "The report is often the only part of the investigation most stakeholders see.",
+   "Reports must be factual, objective, logical, traceable, defensible and action-oriented.",
+   "The Executive Summary may be the only section senior managers read.",
+   "A finding without evidence is an opinion.",
+   "Keep findings, causes and recommendations clearly separate.",
+   "State known facts, probable conclusions and unknowns transparently.",
+   "Remove blame and emotional language; give context and evidence instead."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 18,
+  "title": "Investigation Management and Leadership",
+  "exercise": {
+   "intro": "Teams set up the governance and management plan for a major investigation.",
+   "steps": [
+    "Decide the investigation type and the escalation required.",
+    "Set out the governance structure: sponsor, Lead Investigator, team, SMEs, review panel.",
+    "Define the scope — boundaries, timeframe, systems, organisational interfaces.",
+    "List the SMEs you need and how you will manage their input.",
+    "Identify the biases already present and how you will counter them.",
+    "Plan engagement with the regulator, police, legal team, contractor company and media.",
+    "Define the quality assurance checks before the report is issued."
+   ],
+   "deliverable": "An investigation charter covering governance, scope, team, stakeholder plan and QA checks.",
+   "scenarios": [
+    {
+     "title": "Scenario — Refinery fire with a contractor fatality",
+     "text": "A hydrocarbon release during a contractor-led maintenance activity on a hydrotreater ignited. One contractor died and two were injured. The regulator has opened a parallel investigation, the police are attending, the local media are outside the gate, and the CEO wants a preliminary report within 72 hours. The contractor company has its own investigation team. The plant manager tells you the cause is obvious: \"the contractor didn't follow the permit.\""
+    }
+   ]
+  },
+  "review": [
+   "The Lead Investigator plays nine roles at once. Which are hardest to balance?",
+   "How would you resist pressure from senior management to finish a major investigation quickly?",
+   "Describe a disagreement between SMEs and how evidence could resolve it.",
+   "How do you interview a plant manager about resource decisions without creating defensiveness?",
+   "What interfaces (operations–maintenance, company–contractor, onshore–offshore) create the most risk at your site?",
+   "What investigation performance indicators drive learning, and which ones just drive paperwork?",
+   "When should an investigation be escalated? Give examples of triggers."
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "Which statement about the Lead Investigator's accountability is correct?",
+    "opts": [
+     "Tasks may be delegated, but accountability cannot",
+     "SMEs share accountability for conclusions",
+     "Accountability passes to the sponsor once the plan is approved",
+     "Tasks and accountability can both be delegated"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 2,
+    "q": "In investigation governance, who is the senior executive responsible for resources?",
+    "opts": [
+     "Investigation Sponsor",
+     "Lead Investigator",
+     "Subject Matter Expert",
+     "Review Panel"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 3,
+    "q": "What role should Subject Matter Experts play in conclusions?",
+    "opts": [
+     "They should not be consulted on conclusions at all",
+     "They determine conclusions in their specialist area",
+     "They approve the final report",
+     "They provide technical input; the Lead Investigator integrates findings and owns conclusions"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "Accepting a senior manager's opinion without challenge is an example of…",
+    "opts": [
+     "Outcome bias",
+     "Hindsight bias",
+     "Authority bias",
+     "Confirmation bias"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 5,
+    "q": "What is the risk of an investigation scope that is too narrow?",
+    "opts": [
+     "It overwhelms the team",
+     "It breaches legal privilege",
+     "It delays the report",
+     "It may miss important causes"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "How should executives be treated in investigation interviews?",
+    "opts": [
+     "They should not be interviewed",
+     "With the same standards applied to operators",
+     "With more deference because of their role",
+     "Only through written questions"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 7,
+    "q": "Who should normally act as media spokesperson during a major investigation?",
+    "opts": [
+     "The Lead Investigator",
+     "The contractor's representative",
+     "Anyone on the investigation team",
+     "An authorised spokesperson — not the Lead Investigator unless specifically authorised"
+    ],
+    "ans": 3
+   }
+  ],
+  "model": [
+   "Type: executive investigation — fatality, major process safety event, regulatory and media interest. Escalate to senior executive oversight immediately.",
+   "Governance: sponsor (an executive with authority over resources); Lead Investigator independent of the hydrotreater line management; multidisciplinary team (operations, maintenance, process, reliability, metallurgy, human factors, contractor representative); SMEs (fire/explosion, metallurgist, permit specialist); independent review panel.",
+   "Scope: the release, ignition and emergency response; the permit, isolation and work-planning process; the contractor selection, competence and supervision interface; timeframe back to the maintenance planning and any relevant MOC; similar previous events.",
+   "Bias: authority bias (the plant manager's \"obvious\" cause), outcome bias (the fatality), hindsight bias. Counter it by setting rules — evidence first, no conclusions in the 72-hour preliminary report, challenge sessions.",
+   "Stakeholders: cooperate professionally with the regulator and police and maintain evidence integrity; get legal guidance on privilege and documentation; agree an information-sharing protocol with the contractor's team; route media through an authorised spokesperson; the 72-hour report states facts only — no causes.",
+   "QA: Is the evidence sufficient? Are conclusions supported? Were alternatives considered? Are recommendations linked to causes? Are findings traceable? An independent review before issue."
+  ],
+  "takeaways": [
+   "The Lead Investigator may delegate tasks but never accountability.",
+   "Scale the investigation to risk: local, formal, major or executive.",
+   "Clear governance: sponsor, Lead Investigator, team, SMEs and review panel.",
+   "SMEs provide input; the Lead Investigator owns the integrated conclusions.",
+   "Actively challenge confirmation, hindsight, authority and outcome bias.",
+   "Apply the same interview standards to executives as to operators.",
+   "Never sacrifice investigation quality for speed or external pressure."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 19,
+  "title": "Personal Injury Case Study Workshop",
+  "exercise": {
+   "intro": "Run the timed six-part workshop from Section 19.7 (20 minutes in total).",
+   "steps": [
+    "Part 1 — Event timeline (5 min).",
+    "Part 2 — Causal factors (3 min).",
+    "Part 3 — Barrier analysis (3 min).",
+    "Part 4 — Human factors analysis (3 min).",
+    "Part 5 — 5-Why analysis (3 min).",
+    "Part 6 — Root causes and recommendations (3 min)."
+   ],
+   "deliverable": "Timeline, causal factors, barrier table, human factors notes, a 5-Why chain, root causes and recommendations — ready to report back.",
+   "scenarios": [
+    {
+     "title": "Incident — Lost-time injury during pump maintenance (14 Sep, 10:25)",
+     "text": "Crude Stabilisation Unit, pump P-204A. A contract mechanical technician removing suction piping from a mobile scaffold (about 1.8 m) lost balance while loosening very tight flange bolts with a breaker bar, fell to the concrete floor and fractured an ankle (surgery, 8 weeks lost time). Emergency response arrived within 5 minutes."
+    },
+    {
+     "title": "Evidence",
+     "text": "Witnesses: the supervisor saw the technician near the platform edge applying force; the technician said the bolts were extremely tight; the scaffold was inspected 2 days before; the planner said the work was added late. Scaffold: no defects, tag valid, top rail and midrail fitted, no toe board. Documents: PTW, JSA, scaffold certificate, procedure and toolbox talk all in place. Other findings: 8 years' experience; 11 consecutive days worked; shutdown 14 hours behind; supervisor responsible for 24 people; no discussion of force application from scaffolds; no secondary restraint; a similar incident at another company site 18 months earlier."
+    }
+   ]
+  },
+  "review": [
+   "The scaffold passed inspection and the permit was valid. Why did the barriers still fail?",
+   "How would you interview the maintenance planner about the work being \"added late to the shutdown schedule\"?",
+   "Was standing near the edge of the platform a slip, lapse, mistake or violation? Justify your answer.",
+   "How would you check whether fatigue actually contributed, rather than assuming it did?",
+   "Why did the toolbox talk not cover force application at height? What does that tell you about the JSA process?",
+   "What would a learning team ask the technicians about tight flange bolts during shutdowns?",
+   "How would you make sure the lesson from this incident reaches other sites, unlike the one 18 months ago?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "In the P-204A case, which barrier was missing from the scaffold platform?",
+    "opts": [
+     "Top guardrail",
+     "Midrail",
+     "Toe board",
+     "Ladder access"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "Which piece of evidence points to fatigue as a contributing factor?",
+    "opts": [
+     "Scaffold inspected two days before",
+     "Good housekeeping",
+     "Eight years' maintenance experience",
+     "Eleven consecutive days worked"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 3,
+    "q": "All the paperwork was in order — valid permit, JSA, scaffold certificate, procedure and toolbox talk. What does this tell the investigator?",
+    "opts": [
+     "The incident was unforeseeable",
+     "The technician must have violated the procedure",
+     "No further analysis is needed",
+     "The administrative barriers existed but did not address the actual hazard of applying force at height"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "Which is an IMMEDIATE cause in the facilitator guide?",
+    "opts": [
+     "Schedule pressure",
+     "Loss of balance while applying force",
+     "High supervisory workload",
+     "Lessons not shared from a previous incident"
+    ],
+    "ans": 1
+   },
+   {
+    "n": 5,
+    "q": "Which statement is one of the example ROOT CAUSES for this workshop?",
+    "opts": [
+     "The flange bolts were very tight",
+     "The technician did not use a secondary restraint",
+     "The task risk assessment process failed to identify force-application hazards during elevated work",
+     "The technician stood too close to the edge"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 6,
+    "q": "A similar incident occurred at another company site 18 months earlier. Which root-cause area does this point to?",
+    "opts": [
+     "Emergency response",
+     "Contractor competence",
+     "Organisational learning — lessons not built into planning standards",
+     "Scaffold design"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 7,
+    "q": "Which corrective action is STRONGEST for this incident?",
+    "opts": [
+     "Engineering review of high-torque tasks performed from elevated work positions",
+     "Retrain the injured technician",
+     "Remind technicians to keep away from platform edges",
+     "Repeat the toolbox talk"
+    ],
+    "ans": 0
+   }
+  ],
+  "model": [
+   "Facilitator guide (Section 19.8). Immediate causes: loss of balance while applying force; fall from an elevated platform.",
+   "Contributing factors: excessive force required; position near the platform edge; inadequate task-specific hazard assessment; fatigue (11 consecutive days); schedule pressure (14 hours behind); high supervisory workload (24 people); no secondary restraint; lessons not shared from the previous incident.",
+   "Example root causes: (1) the task risk assessment process failed to identify force-application hazards during elevated work; (2) the shutdown planning process did not adequately evaluate work execution methods; (3) previous organisational learning from a similar incident was not incorporated into work planning standards.",
+   "Example corrective actions: revise JSA requirements to include force-application hazards; set supervisory workload limits during shutdowns; introduce an engineering review for high-torque tasks done from elevated work positions."
+  ],
+  "takeaways": [
+   "Valid paperwork does not prove that barriers addressed the real hazard.",
+   "Immediate causes (loss of balance, fall) are only the start of the analysis.",
+   "Fatigue, schedule pressure and supervisory span are system conditions, not individual failings.",
+   "Task risk assessments must capture how the work will actually be done (force at height).",
+   "Late changes to shutdown scope need planning review of execution methods.",
+   "Lessons from similar incidents elsewhere must reach work planning standards.",
+   "Prefer engineering and planning controls over reminders."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 20,
+  "title": "Major Incident Investigation Workshop — Hydrotreater Release and Fire",
+  "exercise": {
+   "intro": "Teams apply the full method toolkit to the hydrotreater case (Section 20.4).",
+   "steps": [
+    "Develop the ECFA timeline (events and conditions).",
+    "Identify immediate, contributing and root causes.",
+    "Construct the Tripod barrier analysis.",
+    "Identify failed preventive and mitigative barriers.",
+    "Conduct the ICAM analysis.",
+    "Identify the Asset Integrity Management System failures.",
+    "Develop 10 corrective actions ranked by risk reduction."
+   ],
+   "deliverable": "ECFA chart, Tripod diagram, ICAM table, AIMS failure list and a ranked list of 10 corrective actions.",
+   "scenarios": [
+    {
+     "title": "Incident — Hydrotreater release and fire, 02:14",
+     "text": "Crude oil refinery hydrotreater unit. A hydrocarbon release from an 8-inch carbon steel line at 42 bar and 285 °C ignited, causing a local fire. About 15 m³ of hydrocarbon entered the oily water sewer before isolation was completed. Unit shut down; environmental contamination."
+    },
+    {
+     "title": "Evidence package",
+     "text": "Corrosion circuit rated low-risk in the previous RBI review. Last thickness inspection 6 years ago. Wall thickness down from 8.7 mm to 2.1 mm. Previous inspection recommended follow-up within 24 months — never implemented. Process alarm 11 minutes before the release; acknowledged, no corrective action. Safety-critical inspection backlog over 1,200 work orders. Corrosion engineer post vacant for 9 months. Similar corrosion findings elsewhere in the unit 18 months earlier."
+    }
+   ]
+  },
+  "review": [
+   "Which single piece of evidence in the package most strongly points to a management system failure, and why?",
+   "How would you build the ECFA timeline when the key conditions developed over 6 years but the release happened in minutes?",
+   "Why is \"operator acknowledged alarm but took no action\" not a root cause?",
+   "How would you test the hypothesis that the RBI low-risk classification was wrong?",
+   "What role does the 1,200-work-order backlog play — cause, condition or symptom?",
+   "How would you rank 10 corrective actions by risk reduction? Which criteria matter most?",
+   "How does this case compare with Chevron Richmond?"
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "Wall thickness had fallen from 8.7 mm to 2.1 mm. Approximately what percentage of the original wall was lost?",
+    "opts": [
+     "About 24 %",
+     "About 50 %",
+     "About 76 %",
+     "About 90 %"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 2,
+    "q": "The previous inspection recommended follow-up within 24 months, but it was never implemented. Which ICAM organisational factor does this mainly point to?",
+    "opts": [
+     "Maintenance management",
+     "Housekeeping",
+     "Communication with the regulator",
+     "Design"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 3,
+    "q": "The corrosion circuit was rated low-risk in the previous RBI review. In Tripod Beta terms, the inspection barrier was most likely…",
+    "opts": [
+     "Defeated",
+     "Missing",
+     "Effective",
+     "Inadequate — present but unable to control the risk"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 4,
+    "q": "A process alarm activated 11 minutes before the release; the operator acknowledged it but took no corrective action. What should the investigation ask next?",
+    "opts": [
+     "Nothing — this is the root cause",
+     "Whether the operator should be disciplined",
+     "Whether the alarm was recognised, understood and acted on — and whether its design, priority and response guidance were adequate",
+     "Whether the alarm should be removed"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 5,
+    "q": "The corrosion engineer post had been vacant for 9 months. Which Tripod GFT best fits this?",
+    "opts": [
+     "Organisation (OR)",
+     "Hardware (HW)",
+     "Error Enforcing Conditions (EC)",
+     "Housekeeping (HK)"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 6,
+    "q": "About 15 m³ of hydrocarbon entered the oily water sewer before isolation was complete. Which barrier type covers how fast the release was isolated?",
+    "opts": [
+     "Preventive",
+     "Design",
+     "Mitigation/recovery",
+     "Administrative"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 7,
+    "q": "Similar corrosion findings were found elsewhere in the unit 18 months earlier. What does this indicate?",
+    "opts": [
+     "A coincidence",
+     "Evidence of good inspection practice",
+     "A weak signal that was not acted on — a repeat-learning failure",
+     "A design defect only"
+    ],
+    "ans": 2
+   }
+  ],
+  "model": [
+   "Immediate cause: loss of containment from a corroded 8-inch line (wall 2.1 mm against 8.7 mm original), ignited. Contributing: inspection 6 years overdue against a 24-month follow-up; alarm acknowledged without action 11 minutes before release; isolation delayed (15 m³ to sewer); repeat findings 18 months earlier not acted on.",
+   "Tripod: hazard — hot pressurised hydrocarbon; event — LOPC; targets — personnel, asset, environment. Failed barriers: RBI classification (inadequate); thickness inspection (missing in practice — overdue); follow-up recommendation tracking (ineffective); alarm response (ineffective); isolation (partially effective). GFTs: MM, OR, DF, possibly IG.",
+   "ICAM: defences — RBI, inspection, action tracking, alarm, isolation; actions — alarm acknowledged without response, recommendation not implemented; conditions — night shift, alarm design, workload; organisational — backlog of over 1,200 work orders, vacant corrosion engineer post, weak learning from previous findings.",
+   "AIMS failures: incorrect damage-mechanism and risk classification in RBI; inspection programme non-compliance; recommendation tracking without escalation; competence/resourcing gap (corrosion engineer); no learning loop from findings elsewhere in the unit.",
+   "Ranked actions (examples): 1 inspect all circuits in the unit with the same mechanism; 2 re-validate RBI corrosion circuits and damage mechanisms; 3 clear the safety-critical backlog with risk-based prioritisation and escalation; 4 fill and protect the corrosion engineer role; 5 track inspection recommendations to closure with management review; 6 alarm rationalisation and response guidance; 7 faster isolation (remote ESD valves); 8 sewer-system containment of hydrocarbon releases; 9 leading KPIs on overdue safety-critical inspections; 10 cross-unit sharing of corrosion findings."
+  ],
+  "takeaways": [
+   "Major incidents combine technical, human, barrier and organisational failures.",
+   "An overdue recommendation and a large backlog are management system evidence, not background.",
+   "RBI risk classifications must be validated — an incorrect classification is an inadequate barrier.",
+   "Alarm acknowledgement without action is a symptom; examine alarm design and response guidance.",
+   "Mitigation and recovery barriers determine how bad the consequence becomes.",
+   "Repeat findings are weak signals of unresolved root causes.",
+   "Rank corrective actions by risk reduction, not ease of implementation."
+  ]
+ },
+ {
+  "vol": 2,
+  "ch": 21,
+  "title": "Mock Investigation, Witness Interviews, Final Report Preparation and Competency Assessment",
+  "exercise": {
+   "intro": "The capstone: a full Lead Investigator exercise from notification to executive presentation (Section 21.4).",
+   "steps": [
+    "Phase 1 — Investigation planning.",
+    "Phase 2 — Evidence review.",
+    "Phase 3 — Witness interviews.",
+    "Phase 4 — ECFA timeline development.",
+    "Phase 5 — TapRooT® analysis.",
+    "Phase 6 — ICAM analysis.",
+    "Phase 7 — Tripod Beta analysis.",
+    "Phase 8 — Corrective actions.",
+    "Phase 9 — Executive summary preparation.",
+    "Phase 10 — Management presentation."
+   ],
+   "deliverable": "A final investigation report with executive summary and a management presentation, assessed against the eight competency criteria.",
+   "scenarios": [
+    {
+     "title": "Incident — Electrical burns during turnaround",
+     "text": "A contractor electrician received serious electrical burns while troubleshooting a Motor Control Centre during a refinery turnaround. Hospitalisation, project delays and a regulatory investigation followed."
+    },
+    {
+     "title": "Investigation package",
+     "text": "Incident notification, photographs, permit to work, isolation certificates, witness statements, maintenance records, training records, electrical single line diagrams and interview transcripts."
+    }
+   ]
+  },
+  "review": [
+   "What would be in your investigation plan for the first 24 hours after the MCC burn incident?",
+   "Which witnesses would you interview, in what order, and why?",
+   "How would you prove whether the isolation was incomplete or was reversed after verification?",
+   "What contractor supervision evidence would you look for?",
+   "How would you show that procedural deviations had become normalised, rather than assume it?",
+   "Which of the five expected recommendations is strongest on the hierarchy of controls?",
+   "Prepare three key messages for the management presentation."
+  ],
+  "kc": [
+   {
+    "n": 1,
+    "q": "In the mock investigation scenario, what injury did the contractor electrician sustain?",
+    "opts": [
+     "A fall from height",
+     "Crush injury from a dropped load",
+     "Chemical exposure",
+     "Serious electrical burns while troubleshooting a Motor Control Centre"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 2,
+    "q": "What is the FIRST phase of the mock investigation?",
+    "opts": [
+     "ECFA timeline development",
+     "Evidence review",
+     "Witness interviews",
+     "Investigation planning"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 3,
+    "q": "Which document in the investigation package would best show the planned isolation boundary?",
+    "opts": [
+     "Electrical single line diagrams together with the isolation certificates",
+     "Interview transcripts",
+     "Training records",
+     "Photographs only"
+    ],
+    "ans": 0
+   },
+   {
+    "n": 4,
+    "q": "Which of these is one of the model investigation's key findings?",
+    "opts": [
+     "Electrician wore incorrect PPE",
+     "MCC was faulty from the manufacturer",
+     "Incomplete isolation verification",
+     "Weather contributed"
+    ],
+    "ans": 2
+   },
+   {
+    "n": 5,
+    "q": "\"Organisational normalisation of procedural deviations\" in the model findings is closest to which type of violation?",
+    "opts": [
+     "Lapse",
+     "Exceptional violation",
+     "Slip",
+     "Routine violation"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 6,
+    "q": "Which recommendation from the model outcomes directly addresses incomplete isolation verification?",
+    "opts": [
+     "Contractor assurance improvements",
+     "Leadership field verification programme",
+     "Electrical safety-critical task reviews",
+     "Independent isolation verification"
+    ],
+    "ans": 3
+   },
+   {
+    "n": 7,
+    "q": "Which is NOT one of the competency assessment criteria for the mock investigation?",
+    "opts": [
+     "Barrier analysis quality",
+     "Speed of report submission",
+     "Interview effectiveness",
+     "Corrective action strength"
+    ],
+    "ans": 1
+   }
+  ],
+  "model": [
+   "Model key findings (Section 21.6): incomplete isolation verification; permit-to-work deficiencies; inadequate contractor supervision; weak electrical safety auditing; organisational normalisation of procedural deviations.",
+   "Expected recommendations: independent isolation verification; electrical safety-critical task reviews; contractor assurance improvements; permit system redesign; a leadership field verification programme.",
+   "Competency assessment criteria (Section 21.5): evidence collection quality, interview effectiveness, analytical rigour, root cause identification, barrier analysis quality, corrective action strength, report quality and executive presentation effectiveness.",
+   "Facilitator steer: check that teams trace each recommendation to a finding, test isolation evidence against the single line diagrams and certificates, avoid blame language about the electrician, and present facts, risks, root causes, recommendations and resource implications to leadership."
+  ],
+  "takeaways": [
+   "A complete investigation runs from planning through to an executive presentation.",
+   "Isolation verification must be independent and evidenced against single line diagrams.",
+   "Permit-to-work and contractor supervision weaknesses often appear together.",
+   "Normalised deviations are organisational findings, not individual ones.",
+   "Each recommendation must trace to a finding and be strong on the hierarchy of controls.",
+   "Competence is judged on evidence, interviews, rigour, barriers, actions, report and presentation.",
+   "Leadership needs facts, risks, root causes, recommendations and resource implications."
+  ]
+ }
+]

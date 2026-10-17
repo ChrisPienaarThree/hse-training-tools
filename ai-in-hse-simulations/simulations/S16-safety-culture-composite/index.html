@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S16 — Composite safety culture score</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>S16 · Composite safety culture score</h1>
+      <p class="sub">One number, four components, and a weighting choice that decides who ranks first.</p>
+    </div>
+    <div>
+      <label class="field" for="scenarioSelect">Scenario</label>
+      <select id="scenarioSelect"></select>
+    </div>
+    <button id="themeBtn" class="ghost theme-toggle">Theme: system</button>
+  </div>
+  <div id="app"><p>Loading…</p></div>
+  <footer class="notes">
+    Part of <em>Integrating AI in Workplace Safety Practices</em> — Day 3, aggregated/composite safety metrics. No AI
+    model runs in this page; <code>app.js</code> computes a weighted average and re-ranks sites live from your
+    slider positions, in your browser.
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/manufacturing-network/dataset.js"></script>
+<script src="data/construction-portfolio/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

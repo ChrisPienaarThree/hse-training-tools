@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S18 — Permit &amp; SIMOPs cross-check</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>S18 · AI-assisted permit-to-work &amp; SIMOPs cross-check</h1>
+      <p class="sub">Build a permit; a rule engine checks its controls and cross-checks it against every active permit.</p>
+    </div>
+    <div>
+      <label class="field" for="scenarioSelect">Scenario</label>
+      <select id="scenarioSelect"></select>
+    </div>
+    <button id="themeBtn" class="ghost theme-toggle">Theme: system</button>
+  </div>
+  <div id="app"><p>Loading…</p></div>
+  <footer class="notes">
+    Part of <em>Integrating AI in Workplace Safety Practices</em> — Day 4, permit-to-work and SIMOPs. No AI model
+    runs in this page; <code>app.js</code> evaluates a checklist and a real zone/time overlap against an
+    incompatibility matrix, live, in your browser.
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/refinery-turnaround/dataset.js"></script>
+<script src="data/construction-site/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

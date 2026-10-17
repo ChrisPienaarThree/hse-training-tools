@@ -1,0 +1,1177 @@
+{
+ "app": "Bow Tie Analysis",
+ "schema": 1,
+ "title": "BT-GN-01 – Loss of containment of the HP / MP natural gas system (Hadeed gas network example)",
+ "description": "Threats with frequencies, conditional probabilities and barrier PFDs are illustrative. Threat T1 frequency = demand gate of fault tree FT-GN-01 and its barrier = FT-GN-01 gate G-002; the ESD barrier = FT-GN-02 gate G-001. The top-event frequency is the initiating frequency of event tree ETA-GN-01, and consequences 1–3 reproduce its end states. HAZOP N01–N03, N07, N08; FMECA S01–S03, S08.",
+ "modified": "2026-10-14T16:00:00.000Z",
+ "hazard": "Natural gas at 7–42 barg in the GRMS, PRS-1 and MP ring main (extremely flammable, asphyxiant)",
+ "top": "Loss of containment of natural gas from the HP / MP gas system",
+ "threats": [
+  {
+   "id": "t000117",
+   "name": "PRS-1 active regulator fails open – MP header overpressure",
+   "freq": 0.18,
+   "cond": 0.5,
+   "notes": "Frequency = demand gate G-006 of fault tree FT-GN-01; 0.5 = probability that an MP overpressure (up to 42 barg on 10 barg design) causes a leak. HAZOP N02-02.",
+   "barrierIds": [
+    "b000104"
+   ],
+   "key": "T1"
+  },
+  {
+   "id": "t000118",
+   "name": "External corrosion of buried sections and pipe supports",
+   "freq": 0.05,
+   "cond": 1,
+   "notes": "HAZOP N01-06, N03-04; FMECA S03 L-1200 / CP-1200",
+   "barrierIds": [
+    "b000105",
+    "b000106"
+   ],
+   "key": "T2"
+  },
+  {
+   "id": "t000119",
+   "name": "Mechanical impact – vehicles, mobile cranes, excavation",
+   "freq": 0.2,
+   "cond": 0.1,
+   "notes": "HAZOP N03-01",
+   "barrierIds": [
+    "b000107",
+    "b000108"
+   ],
+   "key": "T3"
+  },
+  {
+   "id": "t000120",
+   "name": "Flange, gasket or small-bore fitting failure",
+   "freq": 0.5,
+   "cond": 0.2,
+   "notes": "HAZOP N01-05, N03-01; FMECA S03 L-1200 flanges",
+   "barrierIds": [
+    "b000109",
+    "b000110"
+   ],
+   "key": "T4"
+  },
+  {
+   "id": "t000121",
+   "name": "Maintenance / pigging error – wrong isolation, receiver opened under pressure, hot work",
+   "freq": 1,
+   "cond": 0.05,
+   "notes": "HAZOP N01-07, N07-05; FMECA S01 PR-1001",
+   "barrierIds": [
+    "b000111",
+    "b000112"
+   ],
+   "key": "T5"
+  },
+  {
+   "id": "t000122",
+   "name": "Regulator diaphragm / pilot venting inside the PRS shelter",
+   "freq": 0.1,
+   "cond": 0.2,
+   "notes": "HAZOP N02-05",
+   "barrierIds": [
+    "b000113"
+   ],
+   "key": "T6"
+  }
+ ],
+ "consequences": [
+  {
+   "id": "q000123",
+   "name": "Prolonged jet fire – escalation to heaters / filter-separators",
+   "cond": 0.05,
+   "sev": {
+    "P": 4,
+    "E": 2,
+    "A": 5,
+    "R": 4
+   },
+   "notes": "ETA-GN-01 leaf: Prolonged jet fire – escalation to heaters / filter-separators. cond = P(immediate ignition) = H1.",
+   "barrierIds": [
+    "b000114"
+   ],
+   "key": "JET"
+  },
+  {
+   "id": "q000124",
+   "name": "Large flash fire from a prolonged release",
+   "cond": 0.665,
+   "sev": {
+    "P": 4,
+    "E": 1,
+    "A": 3,
+    "R": 3
+   },
+   "notes": "ETA-GN-01 leaf: Large flash fire – prolonged release. cond = (1 − H1) × (1 − H4).",
+   "barrierIds": [
+    "b000114",
+    "b000115"
+   ],
+   "key": "FF"
+  },
+  {
+   "id": "q000125",
+   "name": "Vapour cloud explosion – blast damage to PRS / control room, multiple fatalities",
+   "cond": 0.285,
+   "sev": {
+    "P": 5,
+    "E": 2,
+    "A": 5,
+    "R": 5
+   },
+   "notes": "ETA-GN-01 leaf: Vapour cloud explosion – blast damage, multiple fatalities. cond = (1 − H1) × H4.",
+   "barrierIds": [
+    "b000114",
+    "b000115"
+   ],
+   "key": "VCE"
+  },
+  {
+   "id": "q000126",
+   "name": "Gas migration into buildings / cable trenches – confined explosion",
+   "cond": 0.02,
+   "sev": {
+    "P": 5,
+    "E": 1,
+    "A": 4,
+    "R": 4
+   },
+   "notes": "Not modelled in ETA-GN-01 (releases from buried / rack sections near buildings); R-007",
+   "barrierIds": [
+    "b000116"
+   ],
+   "key": "BLDG"
+  }
+ ],
+ "barriers": [
+  {
+   "id": "b000104",
+   "name": "PRS-1 overpressure protection – monitor regulator + slam-shut",
+   "type": "Active hardware",
+   "pfd": 0.000201,
+   "source": "ft",
+   "ftId": "f000102",
+   "gateId": "g000006",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Instrument engineer",
+   "performance": "Monitor takes over at 7.5 barg; SSV closes at 8.5 barg; MP header never above 10 barg",
+   "verification": "Annual lock-up test, six-monthly SSV trip test (R-003)",
+   "critical": "Yes",
+   "notes": "PFDavg from fault tree FT-GN-01 gate G-002. HAZOP safeguards PCV-1103A/B, SSV-1102A/B (N02-02).",
+   "key": "PRS"
+  },
+  {
+   "id": "b000105",
+   "name": "Coating + cathodic protection with annual CP / DCVG survey",
+   "type": "Continuous / procedural",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Corrosion engineer",
+   "performance": "Pipe-to-soil potential within criteria",
+   "verification": "Annual CP survey; monthly TR readings",
+   "critical": "",
+   "notes": "HAZOP safeguard CP-1200 (N01-06, N03-04)",
+   "key": "CP"
+  },
+  {
+   "id": "b000106",
+   "name": "Thickness monitoring at supports, crossings and low points",
+   "type": "Continuous / procedural",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Inspection engineer",
+   "performance": "Wall loss found before leak",
+   "verification": "2-yearly UT survey",
+   "critical": "",
+   "notes": "HAZOP N03-04; FMECA S03 L-1200",
+   "key": "INSP"
+  },
+  {
+   "id": "b000107",
+   "name": "Crash barriers and height gantries at pipe-rack road crossings",
+   "type": "Passive hardware",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Civil engineer",
+   "performance": "Vehicles cannot strike the rack",
+   "verification": "Annual inspection",
+   "critical": "",
+   "notes": "HAZOP N03-01 (R-009)",
+   "key": "CRASH"
+  },
+  {
+   "id": "b000108",
+   "name": "Ground-disturbance permit with buried-services drawing",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Area owner",
+   "performance": "No excavation near gas lines without permit",
+   "verification": "Permit audits",
+   "critical": "",
+   "notes": "HAZOP N03-01 (R-009)",
+   "key": "EXCAV"
+  },
+  {
+   "id": "b000109",
+   "name": "Gasket control, bolt-torque procedure and leak survey",
+   "type": "Continuous / procedural",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Maintenance planner",
+   "performance": "Joints made to procedure; leaks found early",
+   "verification": "Annual acoustic leak survey",
+   "critical": "",
+   "notes": "FMECA S03 L-1200 flanges",
+   "key": "GASKET"
+  },
+  {
+   "id": "b000110",
+   "name": "Small-bore fitting bracing and vibration survey",
+   "type": "Continuous / procedural",
+   "pfd": 0.3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Mechanical engineer",
+   "performance": "No fatigue failures",
+   "verification": "Vibration survey after changes",
+   "critical": "",
+   "notes": "HAZOP N01-05",
+   "key": "SBF"
+  },
+  {
+   "id": "b000111",
+   "name": "Permit-to-work with isolation verification, gas-free test and fire watch",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Area owner",
+   "performance": "No break-in without verified isolation",
+   "verification": "PTW audits",
+   "critical": "",
+   "notes": "HAZOP N07-05",
+   "key": "PTW"
+  },
+  {
+   "id": "b000112",
+   "name": "Pig-receiver closure pressure-warning device / key interlock (PR-1001)",
+   "type": "Active hardware",
+   "pfd": 0.01,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Mechanical engineer",
+   "performance": "Closure cannot open under pressure",
+   "verification": "Function check before each pigging run",
+   "critical": "",
+   "notes": "HAZOP safeguard PR-1001 (N01-07, R-017)",
+   "key": "PIGINT"
+  },
+  {
+   "id": "b000113",
+   "name": "Pilot / diaphragm vents piped to vent stack VS-1301 outside the shelter",
+   "type": "Passive hardware",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Process engineer",
+   "performance": "No venting inside the shelter",
+   "verification": "Walk-down after modifications",
+   "critical": "",
+   "notes": "HAZOP safeguard VS-1301 (N02-05, R-005)",
+   "key": "VENTS"
+  },
+  {
+   "id": "b000114",
+   "name": "Gas detection and ESD isolation (GD-1110A/B/C 2oo3, UCP-1000, ESDV-1001 / ESDV-1107)",
+   "type": "Active hardware",
+   "pfd": 0.026409,
+   "source": "ft",
+   "ftId": "f000103",
+   "gateId": "g000017",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Instrument engineer",
+   "performance": "Release detected and isolated within 2 minutes",
+   "verification": "Quarterly detector bump tests; annual ESD valve full-stroke and logic tests",
+   "critical": "Yes",
+   "notes": "PFDavg from fault tree FT-GN-02 gate G-001 = event tree ETA-GN-01 heading H2. HAZOP safeguard UCP-1000 (N01-05, N02-05, N08-01).",
+   "key": "ESD"
+  },
+  {
+   "id": "b000115",
+   "name": "Ignition source control – Ex equipment, hot-work permit, vehicle control",
+   "type": "Continuous / procedural",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Area owner",
+   "performance": "No ignition source inside the hazardous area",
+   "verification": "Ex inspection; PTW audits",
+   "critical": "",
+   "notes": "= event tree ETA-GN-01 heading H3 (delayed ignition). HAZOP N01-05, N02-05.",
+   "key": "IGN"
+  },
+  {
+   "id": "b000116",
+   "name": "Sealed cable-trench entries and building pressurisation near the MP header",
+   "type": "Passive hardware",
+   "pfd": 0.3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Electrical engineer",
+   "performance": "Gas cannot enter buildings",
+   "verification": "Annual walk-down",
+   "critical": "",
+   "notes": "HAZOP N03-01 (R-007)",
+   "key": "TRENCH"
+  }
+ ],
+ "efs": [
+  {
+   "id": "x000127",
+   "barrierId": "b000104",
+   "name": "Regulator-run bypass opened during maintenance (defeats monitor and slam-shut)",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000128",
+     "name": "Bypass valves car-sealed closed – CSC register (R-002)",
+     "type": "Continuous / procedural",
+     "owner": "Process engineer"
+    },
+    {
+     "id": "y000129",
+     "name": "PTW with line-up check",
+     "type": "Active human",
+     "owner": "Area owner"
+    }
+   ]
+  },
+  {
+   "id": "x000130",
+   "barrierId": "b000104",
+   "name": "Ice / hydrate in pilots after heater trip (common cause for active and monitor regulators)",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000131",
+     "name": "Duty / standby heaters with TSL-1101 alarm and auto change-over (R-004)",
+     "type": "Active human-hardware",
+     "owner": "Operations"
+    }
+   ]
+  },
+  {
+   "id": "x000132",
+   "barrierId": "b000114",
+   "name": "Gas detectors inhibited or out of calibration",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000133",
+     "name": "Bypass / override management (R-012)",
+     "type": "Continuous / procedural",
+     "owner": "HSE"
+    },
+    {
+     "id": "y000134",
+     "name": "Quarterly bump tests (R-001)",
+     "type": "Continuous / procedural",
+     "owner": "Instrument engineer"
+    }
+   ]
+  },
+  {
+   "id": "x000135",
+   "barrierId": "b000115",
+   "name": "Hot work near live gas lines",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000136",
+     "name": "PTW with continuous gas monitoring",
+     "type": "Active human",
+     "owner": "Area owner"
+    }
+   ]
+  },
+  {
+   "id": "x000137",
+   "barrierId": "b000105",
+   "name": "EAF / LF stray currents defeat the CP",
+   "notes": "",
+   "controls": [
+    {
+     "id": "y000138",
+     "name": "CP interference testing and bonding survey (R-008)",
+     "type": "Continuous / procedural",
+     "owner": "Electrical engineer"
+    }
+   ]
+  }
+ ],
+ "fts": [
+  {
+   "id": "f000102",
+   "name": "FT-GN-01 – PRS-1 overpressure protection",
+   "project": {
+    "app": "Fault Tree & PFD Calculator",
+    "schema": 1,
+    "title": "FT-GN-01 – PRS-1 overpressure of the MP header (Hadeed gas network example)",
+    "description": "Top event: MP ring main pressure above its 10 barg design pressure because the PRS-1 active regulator fails open and the two independent overpressure protections – monitor regulator PCV-1103A (7.5 barg) and slam-shut SSV-1102A (OPSO 8.5 barg) – both fail. Gate G-002 = PFDavg of the PRS overpressure protection, used as a barrier in bow tie BT-GN-01 (threat T1). PSV-1105 is a token relief and is not credited. HAZOP N02-02 / N03-02; FMECA S02. Illustrative failure data – replace with site / vendor data before use. Part of the Hadeed gas network PHA worked example (HAZOP HZ-EX-GN-001).",
+    "modified": "2026-10-14T16:00:00.000Z",
+    "top": "g000001",
+    "gates": [
+     {
+      "id": "g000001",
+      "code": "G-001",
+      "name": "MP header pressure exceeds design pressure (10 barg) – PRS-1 overpressure",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000002"
+       },
+       {
+        "kind": "g",
+        "id": "g000006"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000002",
+      "code": "G-006",
+      "name": "Demand: active regulator run A fails to control (drives open)",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000003"
+       },
+       {
+        "kind": "e",
+        "id": "e000004"
+       },
+       {
+        "kind": "e",
+        "id": "e000005"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000006",
+      "code": "G-002",
+      "name": "PRS-1 overpressure protection fails on demand (monitor regulator and slam-shut)",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000007"
+       },
+       {
+        "kind": "e",
+        "id": "e000016"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000007",
+      "code": "G-003",
+      "name": "Both independent overpressure protections fail",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000008"
+       },
+       {
+        "kind": "g",
+        "id": "g000011"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000008",
+      "code": "G-004",
+      "name": "Monitor regulator PCV-1103A fails to take over",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000009"
+       },
+       {
+        "kind": "e",
+        "id": "e000010"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000011",
+      "code": "G-005",
+      "name": "Slam-shut SSV-1102A fails to close",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000012"
+       },
+       {
+        "kind": "e",
+        "id": "e000013"
+       },
+       {
+        "kind": "e",
+        "id": "e000014"
+       },
+       {
+        "kind": "e",
+        "id": "e000015"
+       }
+      ],
+      "collapsed": false
+     }
+    ],
+    "events": [
+     {
+      "id": "e000003",
+      "code": "BE-001",
+      "name": "Active regulator PCV-1104A fails open (pilot ice / debris, diaphragm failure)",
+      "model": "freq",
+      "q": 0.01,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.08,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "HAZOP N02-01 / N02-02; FMECA S02 PCV-1104A"
+     },
+     {
+      "id": "e000004",
+      "code": "BE-002",
+      "name": "Active regulator sensing line blocked or isolated – regulator drives open",
+      "model": "freq",
+      "q": 0.01,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.05,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "HAZOP N02-02"
+     },
+     {
+      "id": "e000005",
+      "code": "BE-003",
+      "name": "Liquid / dust carry-over from the GRMS jams the active regulator open",
+      "model": "freq",
+      "q": 0.01,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.05,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "HAZOP N01-03; FMECA S01 F-1002A"
+     },
+     {
+      "id": "e000009",
+      "code": "BE-004",
+      "name": "Monitor regulator PCV-1103A fails to control (sticks / pilot fault)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 3e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Annual lock-up / take-over test (R-003); FMECA S02 PCV-1103A"
+     },
+     {
+      "id": "e000010",
+      "code": "BE-005",
+      "name": "Monitor pilot sensing line blocked",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S02 PCV-1103A"
+     },
+     {
+      "id": "e000012",
+      "code": "BE-006",
+      "name": "Slam-shut SSV-1102A latch / spring mechanism fails to close",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 4380,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Six-monthly trip test (R-003); FMECA S02 SSV-1102A"
+     },
+     {
+      "id": "e000013",
+      "code": "BE-007",
+      "name": "SSV-1102A OPSO pilot / sensing fails to trip",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 4380,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S02 SSV-1102A"
+     },
+     {
+      "id": "e000014",
+      "code": "BE-008",
+      "name": "SSV-1102A OPSO set point wrong (above the MP design pressure)",
+      "model": "prob",
+      "q": 0.001,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Set-point register (R-002)"
+     },
+     {
+      "id": "e000015",
+      "code": "BE-009",
+      "name": "Slam-shut latched open / gagged after maintenance and not restored",
+      "model": "prob",
+      "q": 0.0001,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "PTW / line-up check"
+     },
+     {
+      "id": "e000016",
+      "code": "BE-010",
+      "name": "Common sensing point for monitor and slam-shut blocked or isolated",
+      "model": "prob",
+      "q": 5e-05,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Defeats both protections – separate sensing points recommended"
+     }
+    ],
+    "ccf": [],
+    "settings": {
+     "mission": 8760,
+     "points": 400,
+     "maxOrder": 8,
+     "cutoff": 1e-15,
+     "maxCS": 20000,
+     "mcSamples": 2000,
+     "demandMode": "low"
+    }
+   }
+  },
+  {
+   "id": "f000103",
+   "name": "FT-GN-02 – Gas detection and ESD isolation",
+   "project": {
+    "app": "Fault Tree & PFD Calculator",
+    "schema": 1,
+    "title": "FT-GN-02 – HP / MP gas detection and ESD isolation fails on demand (Hadeed gas network example)",
+    "description": "Top event (gate G-001): a gas release in the GRMS / PRS-1 is not isolated – neither the automatic function (2oo3 gas detectors GD-1110A/B/C, SIS logic UCP-1000) nor the operator's manual ESD (HS-1000) initiates, or ESD valves ESDV-1001 / ESDV-1107 fail to close. PFDavg of G-001 is used as heading H2 of event tree ETA-GN-01 and as the mitigative ESD barrier of bow tie BT-GN-01. HAZOP N01-05, N02-05, N08-01…04; FMECA S01, S08. Illustrative failure data – replace with site / vendor data before use. Part of the Hadeed gas network PHA worked example (HAZOP HZ-EX-GN-001).",
+    "modified": "2026-10-14T16:00:00.000Z",
+    "top": "g000017",
+    "gates": [
+     {
+      "id": "g000017",
+      "code": "G-001",
+      "name": "Gas release in the HP / MP system not isolated (ESD fails on demand)",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000019"
+       },
+       {
+        "kind": "g",
+        "id": "g000030"
+       },
+       {
+        "kind": "e",
+        "id": "e000034"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000019",
+      "code": "G-002",
+      "name": "ESD not initiated (automatic and manual both fail)",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000020"
+       },
+       {
+        "kind": "g",
+        "id": "g000027"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000020",
+      "code": "G-003",
+      "name": "Automatic initiation fails",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "g000021"
+       },
+       {
+        "kind": "e",
+        "id": "e000025"
+       },
+       {
+        "kind": "e",
+        "id": "e000026"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000021",
+      "code": "G-006",
+      "name": "Gas detectors fail – 2oo3 vote not reached",
+      "type": "VOTE",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000022"
+       },
+       {
+        "kind": "e",
+        "id": "e000023"
+       },
+       {
+        "kind": "e",
+        "id": "e000024"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000027",
+      "code": "G-004",
+      "name": "Manual ESD not initiated",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000028"
+       },
+       {
+        "kind": "e",
+        "id": "e000029"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "g000030",
+      "code": "G-005",
+      "name": "ESD valves fail to isolate the release",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "e000031"
+       },
+       {
+        "kind": "e",
+        "id": "e000032"
+       },
+       {
+        "kind": "e",
+        "id": "e000033"
+       }
+      ],
+      "collapsed": false
+     }
+    ],
+    "events": [
+     {
+      "id": "e000022",
+      "code": "BE-001",
+      "name": "Gas detector GD-1110A fails to detect (drift / dust / poisoning)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 2190,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000018",
+      "undeveloped": false,
+      "notes": "Quarterly bump test (R-001); FMECA S08 GD-1110A"
+     },
+     {
+      "id": "e000023",
+      "code": "BE-002",
+      "name": "Gas detector GD-1110B fails to detect (drift / dust / poisoning)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 2190,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000018",
+      "undeveloped": false,
+      "notes": "Quarterly bump test (R-001); FMECA S08 GD-1110A"
+     },
+     {
+      "id": "e000024",
+      "code": "BE-003",
+      "name": "Gas detector GD-1110C fails to detect (drift / dust / poisoning)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 2e-06,
+      "lamDD": 0,
+      "TI": 2190,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "c000018",
+      "undeveloped": false,
+      "notes": "Quarterly bump test (R-001); FMECA S08 GD-1110A"
+     },
+     {
+      "id": "e000025",
+      "code": "BE-004",
+      "name": "SIS logic solver UCP-1000 fails dangerous",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-07,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S08 UCP-1000"
+     },
+     {
+      "id": "e000026",
+      "code": "BE-005",
+      "name": "Gas cloud does not reach the detectors (coverage / wind direction)",
+      "model": "prob",
+      "q": 0.1,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": true,
+      "notes": "Detector coverage – F&G mapping study"
+     },
+     {
+      "id": "e000028",
+      "code": "BE-006",
+      "name": "Operator does not initiate the manual ESD in time on gas alarm / field report",
+      "model": "prob",
+      "q": 0.1,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Alarm response and drills (R-020); HAZOP N08-03"
+     },
+     {
+      "id": "e000029",
+      "code": "BE-008",
+      "name": "Manual ESD push-button circuit HS-1000 fails",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-07,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "FMECA S08 HS-1000"
+     },
+     {
+      "id": "e000031",
+      "code": "BE-007",
+      "name": "GRMS inlet ESD valve ESDV-1001 fails to close",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 1.5e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Annual full-stroke test; FMECA S01 ESDV-1001 (R-001 partial-stroke)"
+     },
+     {
+      "id": "e000032",
+      "code": "BE-009",
+      "name": "PRS outlet ESD valve ESDV-1107 fails to close",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 1.5e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Back-flow from the MP header inventory"
+     },
+     {
+      "id": "e000033",
+      "code": "BE-010",
+      "name": "ESD valve solenoids / air supply fail to vent",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-07,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": ""
+     },
+     {
+      "id": "e000034",
+      "code": "BE-011",
+      "name": "ESD function in bypass / detectors inhibited",
+      "model": "prob",
+      "q": 0.001,
+      "lamDU": 1e-06,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 1e-06,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Bypass management (R-012); HAZOP N08-04"
+     }
+    ],
+    "ccf": [
+     {
+      "id": "c000018",
+      "code": "CCF-001",
+      "name": "PRS shelter gas detectors",
+      "beta": 0.1,
+      "betaD": ""
+     }
+    ],
+    "settings": {
+     "mission": 8760,
+     "points": 400,
+     "maxOrder": 8,
+     "cutoff": 1e-15,
+     "maxCS": 20000,
+     "mcSamples": 2000,
+     "demandMode": "low"
+    }
+   }
+  }
+ ],
+ "matrix": {
+  "sev": [
+   "Negligible",
+   "Minor",
+   "Moderate",
+   "Major",
+   "Catastrophic"
+  ],
+  "lik": [
+   "Rare",
+   "Unlikely",
+   "Possible",
+   "Likely",
+   "Frequent"
+  ],
+  "likBands": [
+   0.0001,
+   0.001,
+   0.01,
+   0.1
+  ],
+  "bands": {
+   "Medium": 5,
+   "High": 10,
+   "Very High": 20
+  },
+  "tol": [
+   "",
+   "",
+   "1",
+   "0.01",
+   "1e-4"
+  ]
+ },
+ "settings": {
+  "health": false
+ }
+}

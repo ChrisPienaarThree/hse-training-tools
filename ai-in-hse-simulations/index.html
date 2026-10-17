@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI in HSE — Simulation Suite</title>
+<style>
+:root {
+  --bg: #f4f6f8; --panel: #ffffff; --ink: #1c2531; --ink-soft: #55606f;
+  --line: #d7dde4; --line-strong: #b6c0cc;
+  --amber: #b4690e; --amber-bg: #fdf3e3; --green: #1f7a43; --green-bg: #e9f5ee;
+  --blue: #1f5fa8; --blue-bg: #eaf1fa;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(20,30,45,.08), 0 10px 28px rgba(20,30,45,.07);
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --c1:#2563eb; --c2:#7c3aed; --c3:#dc2626; --c4:#0d9488; --c5:#d97706;
+  --c6:#16a34a; --c7:#4f46e5; --c8:#ea580c; --c9:#db2777; --c10:#0891b2; --c11:#65a30d;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e131a; --panel: #171e27; --ink: #e7ecf2; --ink-soft: #9aa7b6;
+    --line: #2a3441; --line-strong: #3a4756;
+    --amber: #e6a552; --amber-bg: #2c2416; --green: #7fd3a1; --green-bg: #16271d;
+    --blue: #6ea8e6; --blue-bg: #17222f;
+    --shadow: 0 1px 3px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e131a; --panel: #171e27; --ink: #e7ecf2; --ink-soft: #9aa7b6;
+  --line: #2a3441; --line-strong: #3a4756;
+  --amber: #e6a552; --amber-bg: #2c2416; --green: #7fd3a1; --green-bg: #16271d;
+  --blue: #6ea8e6; --blue-bg: #17222f;
+  --shadow: 0 1px 3px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.3);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 34px 22px 70px; }
+
+header { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: flex-start;
+  border-bottom: 1px solid var(--line); padding-bottom: 22px; margin-bottom: 24px; }
+.eyebrow { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); font-weight: 600; }
+h1 { font-size: 2rem; margin: 4px 0 8px; }
+.lede { color: var(--ink-soft); max-width: 62ch; font-size: 1rem; margin: 0; }
+button.themebtn { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line-strong);
+  border-radius: 8px; padding: 8px 12px; cursor: pointer; height: fit-content; }
+button.themebtn:hover { border-color: var(--ink-soft); }
+
+.stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: .84rem; box-shadow: var(--shadow); }
+.stat b { font-variant-numeric: tabular-nums; }
+
+h2 { font-size: 1.15rem; margin: 0 0 4px; }
+.sectionlede { color: var(--ink-soft); font-size: .9rem; margin: 0 0 16px; max-width: 70ch; }
+section { margin-bottom: 40px; }
+
+/* coverage */
+.coverage-grid { display: grid; grid-template-columns: 140px 1fr; gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--panel); box-shadow: var(--shadow); }
+.day-row { display: contents; }
+.day-row > .daylabel { padding: 14px 16px; font-weight: 700; font-size: .9rem; border-top: 1px solid var(--line); background: var(--blue-bg); color: var(--blue); display: flex; flex-direction: column; justify-content: center; }
+.day-row:first-child > .daylabel { border-top: 0; }
+.day-row > .daybody { padding: 12px 16px; border-top: 1px solid var(--line); font-size: .84rem; }
+.day-row:first-child > .daybody { border-top: 0; }
+.topicline { margin: 3px 0; }
+.topicline .done { color: var(--green); font-weight: 700; }
+.topicline .todo { color: var(--ink-soft); }
+.badge { display: inline-block; font-family: var(--mono); font-size: .72rem; font-weight: 700; color: #fff;
+  border-radius: 5px; padding: 1px 6px; margin-right: 4px; }
+.bar { height: 7px; border-radius: 4px; background: var(--line); overflow: hidden; margin-top: 6px; width: 100px; }
+.bar i { display: block; height: 100%; background: var(--green); }
+
+/* card grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-top: 5px solid var(--accent);
+  border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: transform .12s ease, box-shadow .12s ease; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(20,30,45,.12), 0 16px 34px rgba(20,30,45,.12); }
+.card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.card .sid { font-family: var(--mono); font-weight: 800; font-size: 1.05rem; color: var(--accent); }
+.card .tag { font-size: .7rem; color: var(--ink-soft); border: 1px solid var(--line-strong); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.card h3 { font-size: 1.02rem; margin: 8px 0 6px; }
+.card .hook { font-size: .87rem; color: var(--ink-soft); flex: 1; margin: 0 0 10px; }
+.card .controls { font-size: .74rem; color: var(--ink-soft); border-top: 1px dashed var(--line); padding-top: 8px; margin-top: auto; }
+.card .controls b { color: var(--ink); font-weight: 600; }
+.card .go { margin-top: 10px; font-size: .84rem; font-weight: 700; color: var(--accent); }
+.card:hover .go { text-decoration: underline; }
+
+/* order */
+.order-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.order-list li { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px;
+  font-size: .88rem; display: flex; gap: 10px; align-items: baseline; box-shadow: var(--shadow); }
+.order-list .slot { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); min-width: 92px; }
+.order-list .chain { font-family: var(--mono); font-size: .82rem; }
+.order-list .chain span { color: var(--accent-inline, var(--blue)); font-weight: 700; }
+
+footer { border-top: 1px solid var(--line); padding-top: 18px; font-size: .84rem; color: var(--ink-soft); }
+footer code { font-family: var(--mono); font-size: .92em; }
+footer .rules { margin: 10px 0 0; padding-left: 18px; }
+footer .rules li { margin: 3px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="eyebrow">Integrating AI in Workplace Safety Practices — HSE Methods Engineers</div>
+      <h1>Simulation Suite</h1>
+      <p class="lede">Eleven self-contained, offline teaching simulations — one per AI capability in the course
+        research. Every one runs from a double-click, nothing is trained, and every number on screen is either
+        pre-authored (labelled as such) or computed live and checkable by hand.</p>
+      <div class="stats">
+        <div class="stat"><b>11</b> simulations built</div>
+        <div class="stat"><b>22</b> scenario datasets</div>
+        <div class="stat">Day 1 <b>complete</b></div>
+        <div class="stat">Day 2 <b>5 / 6</b> topics</div>
+      </div>
+    </div>
+    <button class="themebtn" id="theme" type="button">Theme: system</button>
+  </header>
+
+  <section>
+    <h2>Course coverage</h2>
+    <p class="sectionlede">Each simulation maps to one or more topics in <code>AI_Workplace_Safety_Research_1.md</code>.
+      This is the honest state of the suite — what's built, and what isn't yet.</p>
+    <div class="coverage-grid" id="coverage"></div>
+  </section>
+
+  <section>
+    <h2>The eleven simulations</h2>
+    <p class="sectionlede">Click a card to open it directly. Each one opens instantly, works offline, and has its
+      own facilitator README (walkthrough, timing, discussion questions) in its folder.</p>
+    <div class="grid" id="cards"></div>
+  </section>
+
+  <section>
+    <h2>Suggested delivery order</h2>
+    <p class="sectionlede">One plausible path through a two-day session. Every simulation also stands alone.</p>
+    <ul class="order-list" id="order"></ul>
+  </section>
+
+  <footer>
+    <p>Source material: <code>AI_Workplace_Safety_Research_1.md</code> (this folder). Each simulation lives in
+      <code>simulations/&lt;name&gt;/</code> with its own <code>README.md</code>, and a <code>data/_TEMPLATE/</code>
+      folder for adding scenarios — copy the folder, fill in the dataset, add two lines of registration.</p>
+    <p><b>Design rules held across every simulation:</b></p>
+    <ul class="rules">
+      <li>Nothing is trained. Parameters and content are pre-authored; the maths that runs on them (softmax, logistic regression, tree traversal, LOPA products, REBA/NIOSH equations, seeded simulation) is real and hand-checkable.</li>
+      <li>Every demo shows a failure mode, not just a success — hallucination, alert fatigue, model drift, under-reporting bias, common-cause failure, matrix banding, narrow-space pattern-matching errors.</li>
+      <li>Independent evidence is marked as such wherever the literature is cited; vendor claims are marked separately.</li>
+      <li>A human stays in the loop in every panel, named for what they verify.</li>
+      <li>Light + dark, offline, projector-friendly — open <code>index.html</code>, no server, no build step.</li>
+    </ul>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SIMS = [
+    { id: "S1", accent: "c1", folder: "S1-four-ai-engines", title: "Four kinds of AI, one incident",
+      day: "Day 1", topic: "T1 / T2", hook: "One near-miss scored by vision, predictive, NLP and generative AI side by side — each validated, and each failing, differently.",
+      controls: "image conditions · confidence threshold · temperature · decoding" },
+    { id: "S2", accent: "c2", folder: "S2-token-by-token", title: "Token by token",
+      day: "Day 1", topic: "T2a", hook: "Watch an LLM predict one token at a time — then evict the source from the context window and watch a confident, wrong number appear.",
+      controls: "temperature · top-k · context window · greedy / sample" },
+    { id: "S3", accent: "c3", folder: "S3-grounded-vs-ungrounded", title: "Grounded vs ungrounded",
+      day: "Day 1", topic: "T2a (+D3 T2, D4 T1/T6)", hook: "The same question, with and without the source in the prompt — audited claim by claim, with a review gate that isn't satisfied by trust alone.",
+      controls: "view · topic familiarity · source: full / snippet" },
+    { id: "S4", accent: "c4", folder: "S4-predictive-model-sandbox", title: "Four predictive models, one dataset",
+      day: "Day 1", topic: "T2b", hook: "The same site data through a regression, a single tree, a boosted ensemble and an anomaly detector — accuracy vs explainability, made concrete.",
+      controls: "7 feature sliders · 3 preset cases · model tabs" },
+    { id: "S5", accent: "c5", folder: "S5-computer-vision-ppe", title: "Computer vision on a safety camera",
+      day: "Day 2", topic: "T4 (+D1 T2)", hook: "Seven detectors on one camera feed — degrade the image and watch false alarms bury a real hazard under alert fatigue.",
+      controls: "lighting / blur / occlusion / weather · threshold · site match · detectors on/off" },
+    { id: "S6", accent: "c6", folder: "S6-ergonomic-lifting-risk", title: "Pose estimation → lifting risk",
+      day: "Day 2", topic: "T4", hook: "A camera estimates a lift; a REBA worksheet and the NIOSH lifting equation turn the posture into a risk rating, with every step of the sum shown.",
+      controls: "load · heights · reach · twist · frequency · camera view" },
+    { id: "S7", accent: "c7", folder: "S7-predictive-site-risk-cockpit", title: "Predictive site-risk cockpit",
+      day: "Day 2", topic: "T3 (+D3 T1)", hook: "Leading indicators drive a 30-day risk score — then watch it drift quietly, and watch it read ‘safer’ the moment reporting culture slips.",
+      controls: "7 indicator sliders · weeks since fitted · reporting culture · retrain" },
+    { id: "S8", accent: "c8", folder: "S8-dynamic-bowtie", title: "Dynamic bowtie: barrier status live",
+      day: "Day 2", topic: "T5", hook: "A LOPA-style bowtie where barriers can actually fail — bypass one and watch the return period collapse against what the paper still assumes.",
+      controls: "6 barrier status toggles · weeks since review" },
+    { id: "S9", accent: "c9", folder: "S9-hazop-copilot", title: "AI-assisted HAZOP co-pilot",
+      day: "Day 2", topic: "T6 (+T2)", hook: "An AI co-pilot lists causes, consequences and safeguards in seconds; your team adds what only this site knows, then verifies before signing off.",
+      controls: "deviation picker · safeguard checklist · free-text team additions" },
+    { id: "S11", accent: "c10", folder: "S11-incident-investigation-assistant", title: "AI-assisted incident investigation",
+      day: "Day 3", topic: "T2", hook: "One narrative in, a full draft report out — timeline, causes, actions, similar past incidents. One of those similar incidents does not exist.",
+      controls: "6 section review checks · repository verification · include/exclude" },
+    { id: "S22", accent: "c11", folder: "S22-reliability-metrics-playground", title: "AI reliability metrics playground",
+      day: "Day 5", topic: "T4", hook: "A confusion-matrix sandbox tying every trust meter in this suite together — threshold trade-offs, the accuracy paradox, and drift you have to notice yourself.",
+      controls: "prevalence · model power · threshold · weeks since deployment · recalibrate" }
+  ];
+
+  var COVERAGE = [
+    { day: "Day 1", label: "AI Fundamentals", pct: 50, topics: [
+      ["T1 / T2 — AI, ML, DL, GenAI; AI technologies for HSE", "S1"],
+      ["T2a — how LLMs generate text", "S2, S3"],
+      ["T2b — predictive models", "S4"],
+      ["T3 — AI-enabled HSE management systems", null],
+      ["T4 — HSE data fundamentals", null],
+      ["T5 — identifying suitable AI use cases", null],
+      ["T6 — responsible / ethical / human-centred AI", null]
+    ] },
+    { day: "Day 2", label: "Hazard ID & Risk Assessment", pct: 83, topics: [
+      ["T1 — AI-assisted hazard identification", null],
+      ["T2 — AI-enhanced risk assessment", "touched by S9"],
+      ["T3 — predictive analytics for safety risk", "S7"],
+      ["T4 — computer vision for hazard detection", "S5, S6"],
+      ["T5 — AI in process / operational safety", "S8"],
+      ["T6 — workshop: AI-assisted risk assessment", "S9"]
+    ] },
+    { day: "Day 3", label: "Incident Prevention, Investigation & Monitoring", pct: 25, topics: [
+      ["T1 — AI-based incident & near-miss analysis", "touched by S7"],
+      ["T2 — AI-assisted incident investigation", "S11 (+touched by S3)"],
+      ["T3 — predictive safety & early-warning systems", null],
+      ["T4 — AI for inspections & observations", null],
+      ["T5 — AI for HSE performance monitoring", null],
+      ["T6 — AI for CAPA management", null]
+    ] },
+    { day: "Day 4", label: "Methods, Procedures & Controls", pct: 8, topics: [
+      ["T1 — generative AI for HSE documentation", "touched by S3"],
+      ["T2 — AI-assisted permit-to-work & JSA", null],
+      ["T3 — AI for compliance & audit management", null],
+      ["T4 — AI-enabled emergency preparedness", null],
+      ["T5 — AI for safety training & competency", null],
+      ["T6 — prompt engineering for HSE Methods Engineers", null]
+    ] },
+    { day: "Day 5", label: "Implementation, Governance & Continuous Improvement", pct: 17, topics: [
+      ["T1 — designing an AI-enabled HSE workflow", null],
+      ["T2 — AI risk management & governance", null],
+      ["T3 — cybersecurity, privacy, data protection", null],
+      ["T4 — evaluating AI reliability", "S22"],
+      ["T5 — AI implementation roadmap", null],
+      ["T6 — final workshop", null]
+    ] }
+  ];
+
+  var ORDER = [
+    ["Day 1 — morning", "S1 &rarr; S2 &rarr; S3"],
+    ["Day 1 — afternoon", "S4"],
+    ["Day 2 — morning", "S5 &rarr; S6"],
+    ["Day 2 — afternoon", "S7 &rarr; S8 &rarr; S9"],
+    ["Day 3 — morning", "S11"],
+    ["Day 5 — closing", "S22"]
+  ];
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  document.getElementById("cards").innerHTML = SIMS.map(function (s) {
+    return "<a class='card' style='--accent:var(--" + s.accent + ")' href='simulations/" + s.folder + "/index.html'>" +
+      "<div class='top'><span class='sid'>" + s.id + "</span><span class='tag'>" + esc(s.day) + " &middot; " + esc(s.topic) + "</span></div>" +
+      "<h3>" + esc(s.title) + "</h3>" +
+      "<p class='hook'>" + s.hook + "</p>" +
+      "<div class='controls'><b>You control:</b> " + esc(s.controls) + "</div>" +
+      "<div class='go'>Open simulation &rarr;</div>" +
+      "</a>";
+  }).join("");
+
+  document.getElementById("coverage").innerHTML = COVERAGE.map(function (d) {
+    var rows = d.topics.map(function (t) {
+      var cls = t[1] ? "done" : "todo";
+      var mark = t[1] ? "✓ " + t[1] : "not yet built";
+      return "<div class='topicline'>" + t[0] + " — <span class='" + cls + "'>" + mark + "</span></div>";
+    }).join("");
+    return "<div class='day-row'>" +
+      "<div class='daylabel'>" + d.day + "<span style='font-weight:400;color:var(--ink-soft);font-size:.78rem;margin-top:2px'>" + d.label + "</span>" +
+      "<div class='bar'><i style='width:" + d.pct + "%'></i></div></div>" +
+      "<div class='daybody'>" + rows + "</div></div>";
+  }).join("");
+
+  document.getElementById("order").innerHTML = ORDER.map(function (o) {
+    return "<li><span class='slot'>" + esc(o[0]) + "</span><span class='chain'>" + o[1] + "</span></li>";
+  }).join("");
+
+  var THEMES = ["system", "light", "dark"];
+  var btn = document.getElementById("theme");
+  function applyTheme(t) {
+    if (t === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", t);
+    btn.textContent = "Theme: " + t;
+  }
+  var cur = "system";
+  try { cur = localStorage.getItem("hse-dashboard.theme") || "system"; } catch (e) {}
+  applyTheme(cur);
+  btn.addEventListener("click", function () {
+    cur = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+    applyTheme(cur);
+    try { localStorage.setItem("hse-dashboard.theme", cur); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

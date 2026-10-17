@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S22 · Reliability metrics playground</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S22 &middot; AI reliability metrics playground</h1>
+  <p class="sub">Simulation 22 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 5, Topic 4.
+     A confusion-matrix sandbox: move the threshold and watch precision trade against recall; change how
+     common the event really is and watch "accuracy" stop meaning anything.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No model runs. Population size, default prevalence/separation/drift rate and the framing labels
+    are pre-authored. Every score is a seeded random draw; every confusion-matrix count, every
+    metric, the swept ROC curve and its AUC, and the recalibrated threshold are computed live.
+  </div>
+
+  <div id="context" class="context"></div>
+
+  <div class="stage">
+    <section class="card">
+      <h2>Controls</h2>
+
+      <div class="ctl"><div class="ch"><span>Prevalence &mdash; how common is the real event?</span><span class="cv" id="prevVal"></span></div>
+        <input type="range" id="prevInp" min="1" max="50" step="1">
+        <div class="presets" id="presets"></div>
+      </div>
+
+      <div class="ctl"><div class="ch"><span>Model discriminative power</span><span class="cv" id="sepVal"></span></div>
+        <input type="range" id="sepInp" min="0.1" max="0.9" step="0.05">
+        <div class="hint">low = a weak/noisy model, high = a strong one &mdash; this sets the BEST curve achievable</div>
+      </div>
+
+      <div class="ctl"><div class="ch"><span>Decision threshold</span><span class="cv" id="thrVal"></span></div>
+        <input type="range" id="thrInp" min="0" max="1" step="0.01">
+        <div class="hint">up &rarr; fewer false alarms, lower recall &mdash; moves you ALONG the curve, not off it</div>
+      </div>
+
+      <div class="ctl"><div class="ch"><span>Weeks since deployment (drift)</span><span class="cv" id="weeksVal"></span></div>
+        <input type="range" id="weeksInp" min="0" max="52" step="1">
+        <div class="hint">shifts the 'normal' score distribution toward the threshold over time</div>
+      </div>
+
+      <div class="opsbtns">
+        <button class="ghost" id="recalBtn" type="button">Recalibrate threshold</button>
+        <button class="ghost" id="resetBtn" type="button">Reset to defaults</button>
+        <button class="ghost" id="reseedBtn" type="button">Re-seed population</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Confusion matrix &amp; metrics</h2>
+      <div id="matrix"></div>
+      <div id="mets"></div>
+      <div id="baseline"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>Visualising the trade-off</h2>
+    <div class="stage">
+      <div>
+        <h3>Score distributions</h3>
+        <div class="hist" id="hist"></div>
+        <div class="legend3"><span><span class="sw neg"></span> negative class</span><span><span class="sw pos"></span> positive class</span></div>
+      </div>
+      <div>
+        <h3>ROC curve</h3>
+        <div class="roc" id="roc"></div>
+        <div class="aucline" id="auc"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>What the vocabulary actually means</h2>
+    <div id="callouts" class="callouts"></div>
+  </section>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 5 Topic 4
+       (evaluating AI reliability: accuracy, precision, recall, false-alarm rate, model drift).</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/ppe-alert/dataset.js"></script>
+<script src="data/elevated-risk-day/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

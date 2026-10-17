@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S5 · Computer-vision PPE detection</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S5 &middot; Computer vision on a safety camera</h1>
+  <p class="sub">Simulation 5 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 2, Topic 4
+     (also Day 1, Topic 2). One video pipeline, seven detectors. Degrade the conditions and watch recall
+     fall, false alarms rise, and the supervisor stop looking.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No vision model runs. Each detector's ideal reliability, the condition-effect coefficients and the
+    ground-truth hazard windows are pre-authored. A real seeded per-frame detector draw, the confusion
+    matrix, every metric and the alert-fatigue curve are computed live. Same seed + settings &rarr; same run.
+  </div>
+
+  <div class="stage">
+    <section class="card">
+      <div id="viewport" class="viewport"></div>
+      <div class="transport">
+        <button id="restart" type="button" title="restart">&#9198;</button>
+        <button id="play" class="primary" type="button">&#9654; Play</button>
+        <button id="step" type="button" title="step">&#9197;</button>
+        <span class="fc" id="fc">1 / 150</span>
+        <input type="range" id="scrub" class="scrub" min="0" max="149" step="1" value="0" aria-label="frame">
+        <button id="reseed" class="ghost" type="button">re-seed</button>
+      </div>
+
+      <div class="grp"><div class="glabel">Image conditions (0 = ideal)</div><div id="conds" class="conds"></div></div>
+
+      <div class="grp"><div class="glabel">Deployment</div>
+        <div class="sitetoggle" id="site">
+          <button data-v="match" type="button" aria-pressed="true">Validated here</button>
+          <button data-v="elsewhere" type="button" aria-pressed="false">Deployed elsewhere</button>
+        </div>
+        <div class="hint">the model's numbers came from one site &mdash; this is it on an unseen camera</div>
+      </div>
+
+      <div class="grp"><div class="glabel">Detectors running on the feed</div><div id="dets" class="dets"></div></div>
+
+      <div class="grp thr"><div class="glabel">Confidence threshold &nbsp;<span class="tv" id="thrVal">0.50</span></div>
+        <input type="range" id="thrInput" min="0.1" max="0.95" step="0.01" value="0.5" aria-label="confidence threshold">
+        <div class="hint">raise it &rarr; fewer false alarms <em>and</em> lower recall &mdash; the trade you cannot win</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="focuspick">
+        <label class="field" for="focus">Confusion-matrix focus</label>
+        <select id="focus"></select>
+      </div>
+      <div id="readouts"></div>
+    </section>
+  </div>
+
+  <div id="score"></div>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 2 Topic 4
+       (computer vision for hazard detection), Day 1 Topic 2, plus reliability metrics and alert fatigue.</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/warehouse-aisle/dataset.js"></script>
+<script src="data/steel-erection/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

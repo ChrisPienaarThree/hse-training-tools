@@ -1,0 +1,1564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RCA Fault Tree</title>
+<style>
+/* Layout: investigation workbench. Brand bar with File menu, tabs, tree canvas with an inspector rail.
+   Status colours (confirmed green, likely amber, unverified grey, ruled out red) are fixed method colours. */
+:root {
+  --bg: #eef1f4; --surface: #ffffff; --surface-2: #f5f7f9; --ink: #142132; --muted: #5a6779; --line: #d3dae2;
+  --accent: #1d4ea3; --accent-ink: #ffffff; --accent-soft: #e3ebf8;
+  --err: #b42318; --err-soft: #fdecea; --warn: #9a5b00; --warn-soft: #fff3dc; --tip: #276a8a; --tip-soft: #e4f1f7; --ok: #1f7a45; --ok-soft: #e3f3e9;
+  --canvas: #f9fafb; --grid: #dfe5ec; --brand: #0f2a4d;
+  --f-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e141b; --surface: #161f2a; --surface-2: #1c2633; --ink: #e3e9f0; --muted: #96a3b4; --line: #2b3746;
+  --accent: #82a8ff; --accent-ink: #0b1220; --accent-soft: #1d2c47;
+  --err: #ff8a80; --err-soft: #3a1d1d; --warn: #f5b74e; --warn-soft: #362a14; --tip: #7cc4e4; --tip-soft: #15303c; --ok: #6fd39c; --ok-soft: #14301f;
+  --canvas: #111922; --grid: #222e3c; --brand: #0a1d36; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e141b; --surface: #161f2a; --surface-2: #1c2633; --ink: #e3e9f0; --muted: #96a3b4; --line: #2b3746;
+  --accent: #82a8ff; --accent-ink: #0b1220; --accent-soft: #1d2c47;
+  --err: #ff8a80; --err-soft: #3a1d1d; --warn: #f5b74e; --warn-soft: #362a14; --tip: #7cc4e4; --tip-soft: #15303c; --ok: #6fd39c; --ok-soft: #14301f;
+  --canvas: #111922; --grid: #222e3c; --brand: #0a1d36; color-scheme: dark }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 var(--f-body); margin: 0; }
+* { box-sizing: border-box; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: 1.9rem; } h2 { font-size: 1.4rem; } h3 { font-size: 1.1rem; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); } .small { font-size: .86rem; }
+.eyebrow { font-family: var(--f-display); text-transform: uppercase; letter-spacing: .09em; font-size: .8rem; color: var(--muted); font-weight: 600; }
+#app { min-height: 100%; display: flex; flex-direction: column; }
+.top { background: var(--brand); color: #fff; display: flex; align-items: center; gap: 12px; padding: 8px 16px; flex-wrap: wrap; position: relative; }
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand .co { font-family: var(--f-display); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .82rem; color: #9fc0ff; }
+.brand .app { font-family: var(--f-display); font-weight: 600; font-size: 1.3rem; white-space: nowrap; }
+.top .case-name { flex: 1 1 200px; min-width: 0; font-size: .92rem; color: #d6e2f5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: .78rem; border: 1px solid var(--line); background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+.top .pill { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.25); }
+.top .pill.ok { color: #8fe3b4; } .top .pill.warn { color: #ffd38f; } .top .pill.err { color: #ffb3ab; }
+.top .btn { background: transparent; color: #fff; border-color: rgba(255,255,255,.35); }
+.top .btn:hover { background: rgba(255,255,255,.1); }
+.menu { position: absolute; right: 16px; top: 46px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.18); padding: 6px; z-index: 30; min-width: 280px; display: flex; flex-direction: column; }
+.menu button { text-align: left; border: 0; background: none; padding: 7px 10px; border-radius: 5px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; }
+.menu button:hover { background: var(--surface-2); }
+.menu hr { border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
+.menu .lbl { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 6px 10px 2px; }
+.tabs { display: flex; gap: 2px; padding: 0 16px; background: var(--surface); border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { border: 0; background: none; padding: 10px 12px 9px; cursor: pointer; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; font-weight: 500; display: flex; gap: 6px; align-items: center; }
+.tab:hover { color: var(--ink); } .tab.on { color: var(--ink); border-bottom-color: var(--accent); }
+.count { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; font-size: .72rem; font-weight: 600; font-family: var(--f-mono); color: #fff; }
+.count.err { background: var(--err); } .count.warn { background: var(--warn); } .count.ok { background: var(--ok); }
+.banner { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 9px 16px; font-size: .9rem; border-bottom: 1px solid var(--line); }
+.banner.info { background: var(--tip-soft); } .banner.warn { background: var(--warn-soft); }
+main { flex: 1; min-height: 0; }
+.page { max-width: 1200px; margin: 0 auto; padding-block: 22px 60px; padding-inline: 16px; display: flex; flex-direction: column; gap: 18px; }
+.page-head { display: flex; gap: 12px; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; } .spacer { flex: 1; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: .9rem; line-height: 1.3; white-space: nowrap; color: var(--ink); }
+.btn:hover { background: var(--surface-2); } .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.danger { color: var(--err); border-color: var(--err); background: transparent; } .btn.sm { padding: 3px 8px; font-size: .82rem; } .btn.ghost { background: transparent; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px; min-width: 0; }
+.panel > h2, .panel > h3 { margin-bottom: 10px; }
+.form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px 16px; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; } .field.wide { grid-column: 1 / -1; }
+.field > span, .lbl { font-size: .8rem; font-weight: 600; color: var(--muted); }
+input[type=text], input[type=date], input[type=number], input:not([type]), select, textarea { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 5px; padding: 6px 8px; min-width: 0; }
+textarea { resize: vertical; min-height: 60px; line-height: 1.45; }
+input:focus, select:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.check { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: .9rem; }
+.bench { display: grid; grid-template-columns: minmax(0, 1fr) 360px; height: calc(100vh - 96px); min-height: 520px; }
+.canvas-wrap { position: relative; background: var(--canvas); overflow: hidden; }
+#cv { width: 100%; height: 100%; display: block; touch-action: none; user-select: none; -webkit-user-select: none; }
+#cv.panning { cursor: grabbing; }
+.ftn { cursor: pointer; } .ftn .sel-ring { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-dasharray: 6 3; }
+.toolbar { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; pointer-events: none; }
+.toolbar > * { pointer-events: auto; }
+.grp { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.grp .btn { border: 0; border-radius: 0; border-right: 1px solid var(--line); } .grp .btn:last-child { border-right: 0; }
+.grp .btn.on { background: var(--accent-soft); color: var(--accent); }
+.topcard { background: var(--brand); color: #fff; border-radius: 6px; padding: 5px 12px; font-size: .86rem; display: flex; gap: 12px; flex-wrap: wrap; }
+.topcard b { font-family: var(--f-mono); font-weight: 500; }
+.hint { position: absolute; bottom: 10px; left: 10px; right: 10px; font-size: .78rem; color: var(--muted); pointer-events: none; }
+.inspector { border-left: 1px solid var(--line); background: var(--surface); overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.seg { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; border-right: 1px solid var(--line); background: var(--surface); padding: 6px 2px; cursor: pointer; font-size: .8rem; font-weight: 600; }
+.seg button:last-child { border-right: 0; }
+.seg button.on.confirmed { background: #1f7a45; color: #fff; } .seg button.on.likely { background: #a86200; color: #fff; } .seg button.on.unverified { background: #64707e; color: #fff; } .seg button.on.ruledout { background: #b42318; color: #fff; }
+.kids { display: flex; flex-direction: column; gap: 4px; }
+.kid { display: flex; gap: 6px; align-items: center; font-size: .84rem; padding: 3px 6px; background: var(--surface-2); border-radius: 4px; }
+.kid span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.xbtn { border: 0; background: none; cursor: pointer; color: var(--muted); padding: 0 4px; font-size: .95rem; }
+.xbtn:hover { color: var(--accent); }
+.quick { display: flex; flex-wrap: wrap; gap: 6px; }
+.box { border: 1px solid var(--line); border-radius: 6px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.box > .lbl { text-transform: uppercase; letter-spacing: .06em; font-size: .72rem; }
+.libnote { font-size: .8rem; color: var(--muted); background: var(--surface-2); border-radius: 4px; padding: 6px 8px; }
+.libnote.edited { background: var(--warn-soft); color: var(--ink); }
+.issues { display: flex; flex-direction: column; gap: 6px; }
+.issue { display: grid; grid-template-columns: 74px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 8px 10px; border-radius: 6px; font-size: .88rem; border: 1px solid var(--line); background: var(--surface); }
+.issue .sev { font-family: var(--f-display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; padding-top: 2px; }
+.issue.error { border-left: 4px solid var(--err); } .issue.error .sev { color: var(--err); }
+.issue.warning { border-left: 4px solid var(--warn); } .issue.warning .sev { color: var(--warn); }
+.issue.tip { border-left: 4px solid var(--tip); } .issue.tip .sev { color: var(--tip); }
+.allclear { background: var(--ok-soft); color: var(--ok); border-radius: 6px; padding: 10px 12px; font-weight: 500; }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table.tbl { border-collapse: collapse; width: 100%; font-size: .87rem; }
+.tbl th { text-align: left; font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; background: var(--surface-2); padding: 7px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.tbl td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl td select { min-width: 110px; } .tbl td input { min-width: 90px; }
+.st { display: inline-block; font-size: .72rem; font-weight: 700; padding: 1px 8px; border-radius: 9px; white-space: nowrap; }
+.st-confirmed { background: #e3f3e9; color: #1f7a45; } .st-likely { background: #fff1d9; color: #a86200; } .st-unverified { background: #eef1f4; color: #64707e; } .st-ruledout { background: #f6e3e1; color: #b42318; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.stat { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); }
+.stat b { display: block; font-family: var(--f-display); font-size: 1.7rem; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .8rem; color: var(--muted); }
+.bar { height: 12px; background: var(--grid); border-radius: 3px; overflow: hidden; min-width: 80px; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.cols2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px; }
+.rpt-frame { background: #fff; color: #111; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.guide { max-width: 860px; } .guide h2 { margin-top: 18px; } .guide p, .guide li { line-height: 1.6; } .guide ul { padding-left: 20px; }
+.guide code { font-family: var(--f-mono); background: var(--surface-2); padding: 0 4px; border-radius: 3px; }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 6px; font-size: .9rem; z-index: 50; max-width: calc(100% - 32px); }
+.confirm { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; background: var(--err-soft); padding: 6px 8px; border-radius: 5px; font-size: .85rem; }
+@media (max-width: 900px) { .bench { grid-template-columns: 1fr; height: auto; } .canvas-wrap { height: 62vh; } .inspector { border-left: 0; border-top: 1px solid var(--line); } .issue { grid-template-columns: minmax(0,1fr) auto; } .issue .sev { grid-column: 1 / -1; } .brand .co { display: none; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div id="app"><div class="page"><p class="muted">Loading RCA Fault Tree…</p></div></div>
+<script>/* Incident Investigation Toolkit — shared offline helpers (Istec Training).
+   Inlined into every tool and the START HERE dashboard at build time.
+
+   KitStore    tiny IndexedDB key/value store (db "iikit", store "kv"), shared by every page opened from file://
+   FileLink    save to / open from a real file on the USB stick (File System Access API in Chrome/Edge),
+               remembers file handles so later saves write straight to the file; download / file-input fallback
+   KitRegistry list of investigations known on this computer (localStorage "iikit.registry"), shown on the dashboard
+   KitHandoff  dashboard -> tool: "open this file" (passes a file handle through IndexedDB)
+
+   Chrome and Edge give all file:// pages one shared storage area, which is what makes the registry and the hand-off
+   work. Firefox/Safari keep storage per file, so there the tools still work but the dashboard only sees the folder. */
+var KIT = (function () {
+  'use strict';
+  const VERSION = '1.0';
+  const hasFSA = typeof window !== 'undefined' && typeof window.showSaveFilePicker === 'function' && typeof window.showOpenFilePicker === 'function';
+  const hasDirPicker = typeof window !== 'undefined' && typeof window.showDirectoryPicker === 'function';
+
+  /* ---------- IndexedDB key/value ---------- */
+  let dbp = null;
+  function db() {
+    if (dbp) return dbp;
+    dbp = new Promise((res, rej) => {
+      let done = false;
+      const t = setTimeout(() => { if (!done) { done = true; rej(new Error('IndexedDB timeout')); } }, 4000);
+      try {
+        const r = indexedDB.open('iikit', 1);
+        r.onupgradeneeded = () => { r.result.createObjectStore('kv'); };
+        r.onsuccess = () => { if (!done) { done = true; clearTimeout(t); res(r.result); } };
+        r.onerror = () => { if (!done) { done = true; clearTimeout(t); rej(r.error); } };
+      } catch (e) { done = true; clearTimeout(t); rej(e); }
+    });
+    dbp.catch(() => { dbp = null; });
+    return dbp;
+  }
+  const KitStore = {
+    async get(k) { try { const d = await db(); return await new Promise((res, rej) => { const q = d.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); }); } catch (e) { return undefined; } },
+    async set(k, v) { try { const d = await db(); await new Promise((res, rej) => { const t = d.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }); return true; } catch (e) { return false; } },
+    async del(k) { try { const d = await db(); await new Promise((res) => { const t = d.transaction('kv', 'readwrite'); t.objectStore('kv').delete(k); t.oncomplete = res; t.onerror = res; }); } catch (e) {} },
+    async keys(prefix) { try { const d = await db(); return await new Promise((res) => { const q = d.transaction('kv').objectStore('kv').getAllKeys(); q.onsuccess = () => res((q.result || []).filter(k => typeof k === 'string' && (!prefix || k.startsWith(prefix)))); q.onerror = () => res([]); }); } catch (e) { return []; } }
+  };
+
+  /* ---------- files ---------- */
+  function download(name, data, mime) {
+    const blob = data instanceof Blob ? data : new Blob([data], { type: mime || 'application/octet-stream' });
+    const url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = name; a.style.display = 'none'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+  function pickWithInput(accept) {
+    return new Promise(res => {
+      const i = document.createElement('input'); i.type = 'file'; if (accept) i.accept = accept; i.style.display = 'none';
+      i.onchange = () => { const f = i.files && i.files[0]; i.remove(); res(f || null); };
+      document.body.appendChild(i); i.click();
+    });
+  }
+  async function permission(handle, ask) {
+    if (!handle || !handle.queryPermission) return 'denied';
+    try {
+      let s = await handle.queryPermission({ mode: 'readwrite' });
+      if (s !== 'granted' && ask) s = await handle.requestPermission({ mode: 'readwrite' });
+      return s;
+    } catch (e) { return 'denied'; }
+  }
+  /* opts: {tool, ext, label, mime} e.g. {tool:'tripod', ext:'.tripod.json', label:'Tripod Beta case'} */
+  function FileLink(opts) {
+    const types = [{ description: opts.label, accept: { [opts.mime || 'application/json']: [opts.ext.slice(opts.ext.lastIndexOf('.'))] } }];
+    const key = id => 'handle:' + opts.tool + ':' + id;
+    return {
+      supported: hasFSA,
+      /* Ask where to save; returns {handle, name} or null when cancelled. */
+      async saveAs(id, suggested, text) {
+        if (!hasFSA) { download(suggested, text, opts.mime || 'application/json'); return { handle: null, name: suggested, downloaded: true }; }
+        let h;
+        try { h = await window.showSaveFilePicker({ suggestedName: suggested, types, id: 'iikit-cases' }); }
+        catch (e) { if (e && e.name === 'AbortError') return null; throw e; }
+        await this.write(h, text);
+        await KitStore.set(key(id), h);
+        return { handle: h, name: h.name };
+      },
+      async write(h, text) { const w = await h.createWritable(); await w.write(text); await w.close(); },
+      /* Open a file; returns {handle|null, name, text} or null. */
+      async open() {
+        if (hasFSA) {
+          let hs;
+          try { hs = await window.showOpenFilePicker({ types, multiple: false, id: 'iikit-cases' }); }
+          catch (e) { if (e && e.name === 'AbortError') return null; throw e; }
+          const f = await hs[0].getFile();
+          return { handle: hs[0], name: f.name, text: await f.text(), modified: f.lastModified };
+        }
+        const f = await pickWithInput(opts.ext + ',.json,application/json');
+        return f ? { handle: null, name: f.name, text: await f.text(), modified: f.lastModified } : null;
+      },
+      async link(id, h) { if (h) await KitStore.set(key(id), h); },
+      async unlink(id) { await KitStore.del(key(id)); },
+      async handleFor(id) { return await KitStore.get(key(id)); },
+      permission,
+      download: (name, text) => download(name, text, opts.mime || 'application/json')
+    };
+  }
+
+  /* ---------- registry of investigations on this computer ---------- */
+  const RK = 'iikit.registry';
+  const KitRegistry = {
+    list() { try { return JSON.parse(localStorage.getItem(RK) || '[]'); } catch (e) { return []; } },
+    upsert(entry) {
+      try {
+        const L = this.list().filter(x => !(x.tool === entry.tool && x.id === entry.id));
+        L.push(Object.assign({ seenAt: new Date().toISOString() }, entry));
+        localStorage.setItem(RK, JSON.stringify(L.slice(-500)));
+      } catch (e) {}
+    },
+    remove(tool, id) { try { localStorage.setItem(RK, JSON.stringify(this.list().filter(x => !(x.tool === tool && x.id === id)))); } catch (e) {} }
+  };
+  /* action summary helper: items [{status, due}] with open statuses */
+  function actionStats(items, isOpen, dueOf) {
+    const today = new Date().toISOString().slice(0, 10);
+    let open = 0, overdue = 0; const dues = [];
+    (items || []).forEach(a => { if (isOpen(a)) { open++; const d = dueOf(a); if (d) dues.push(String(d).slice(0, 10)); if (d && d < today) overdue++; } });
+    return { total: (items || []).length, open, overdue, dues };
+  }
+
+  /* ---------- dashboard -> tool hand-off ---------- */
+  const KitHandoff = {
+    async put(tool, handle, name) { return KitStore.set('handoff:' + tool, { handle, name, at: Date.now() }); },
+    async take(tool) { const v = await KitStore.get('handoff:' + tool); await KitStore.del('handoff:' + tool); return v && Date.now() - v.at < 10 * 60000 ? v : null; }
+  };
+
+  return { VERSION, hasFSA, hasDirPicker, KitStore, FileLink, KitRegistry, KitHandoff, actionStats, download, pickWithInput, permission };
+})();
+if (typeof module !== 'undefined') module.exports = KIT;
+</script>
+<script>/* RCA Fault Tree — generic reliability data library.
+   Typical screening values from published generic sources. They are starting points for ranking RCA hypotheses,
+   NOT design data: every value can be edited per event, overridden for the case on the Data library tab, or
+   replaced with site data. Sources (short names used in `ref`):
+     CCPS-LOPA   CCPS, Layer of Protection Analysis: Simplified Process Risk Assessment (2001) and
+                 Guidelines for Initiating Events and Independent Protection Layers in LOPA (2015)
+     IEC61511    IEC 61511-1 SIL bands (PFDavg upper bound of the band used)
+     THERP       Swain & Guttmann, NUREG/CR-1278 Handbook of Human Reliability Analysis (1983)
+     HEART       Williams, HEART generic task types (nominal human unreliability, 5th–95th bounds)
+     GENERIC     Typical generic per-demand failure probabilities quoted in CCPS CPQRA / process-industry
+                 reliability handbooks (order-of-magnitude screening values)
+   unit 'p' = probability per demand / per occasion; 'f' = frequency per year. */
+var RCALIB = (function () {
+  const L = [];
+  const add = (src, id, name, value, unit, range, ref, note) => L.push({ src, id, name, value, unit, range: range || '', ref, note: note || '' });
+
+  /* ---- Independent protection layers / safeguards: PFD ---- */
+  const I = (id, n, v, r, ref, note) => add('ipl', id, n, v, 'p', r, ref || 'CCPS-LOPA', note);
+  I('ipl-bpcs', 'BPCS control loop acting as a safeguard (not the initiator)', 0.1, '0.1 (max credit)', 'CCPS-LOPA / IEC61511', 'Max credit for BPCS per IEC 61511');
+  I('ipl-op10', 'Operator response to alarm, ≥10 min available, trained, procedure', 0.1, '0.1–1', 'CCPS-LOPA', 'Only if alarm independent of the initiator');
+  I('ipl-op-short', 'Operator response to alarm, <10 min or complex diagnosis', 1, '1 (no credit)', 'CCPS-LOPA');
+  I('ipl-sil1', 'Safety instrumented function, SIL 1', 0.1, '0.1–0.01', 'IEC61511');
+  I('ipl-sil2', 'Safety instrumented function, SIL 2', 0.01, '0.01–0.001', 'IEC61511');
+  I('ipl-sil3', 'Safety instrumented function, SIL 3', 0.001, '0.001–0.0001', 'IEC61511');
+  I('ipl-prv', 'Pressure relief valve (clean service)', 0.01, '0.1–0.00001', 'CCPS-LOPA', 'Fouling, plugging or polymerising service: use 0.1');
+  I('ipl-rd', 'Rupture disc', 0.01, '0.1–0.00001', 'CCPS-LOPA');
+  I('ipl-bund', 'Dike / bund (secondary containment)', 0.01, '0.01–0.001', 'CCPS-LOPA');
+  I('ipl-drain', 'Underground drainage / spill collection system', 0.01, '0.01–0.001', 'CCPS-LOPA');
+  I('ipl-vent', 'Open vent (no valve)', 0.01, '0.01–0.001', 'CCPS-LOPA');
+  I('ipl-fireproof', 'Fireproofing / passive fire protection', 0.01, '0.01–0.001', 'CCPS-LOPA');
+  I('ipl-blast', 'Blast wall / bunker', 0.001, '0.01–0.001', 'CCPS-LOPA');
+  I('ipl-arrester', 'Flame or detonation arrester', 0.01, '0.1–0.001', 'CCPS-LOPA');
+  I('ipl-check', 'Check valve, single (reverse flow)', 0.1, '1–0.1', 'CCPS-LOPA', 'Many companies give no IPL credit (PFD 1)');
+  I('ipl-vacbrk', 'Vacuum breaker', 0.01, '0.1–0.01', 'CCPS-LOPA');
+  I('ipl-ro', 'Restriction orifice (limits flow)', 0.01, '0.01–0.001', 'CCPS-LOPA');
+  I('ipl-deluge', 'Automatic deluge / sprinkler system', 0.1, '0.1–0.01', 'CCPS-LOPA');
+  I('ipl-gasdet', 'Gas detection with automatic action', 0.1, '1–0.1', 'CCPS-LOPA');
+  I('ipl-interlock', 'Hard-wired mechanical / electrical interlock', 0.01, '0.1–0.001', 'CCPS-LOPA');
+
+  /* ---- Human error probabilities ---- */
+  const H = (id, n, v, r, ref, note) => add('hep', id, n, v, 'p', r, ref, note);
+  H('hep-heartA', 'HEART A: totally unfamiliar task, performed at speed, no idea of consequences', 0.55, '0.35–0.97', 'HEART');
+  H('hep-heartB', 'HEART B: shift or restore system to a new state at one attempt, no supervision or procedure', 0.26, '0.14–0.42', 'HEART');
+  H('hep-heartC', 'HEART C: complex task needing high understanding and skill', 0.16, '0.12–0.28', 'HEART');
+  H('hep-heartD', 'HEART D: fairly simple task performed rapidly or given scant attention', 0.09, '0.06–0.13', 'HEART');
+  H('hep-heartE', 'HEART E: routine, highly practised, rapid task, low skill', 0.02, '0.007–0.045', 'HEART');
+  H('hep-heartF', 'HEART F: restore or shift system following procedure, with some checking', 0.003, '0.0008–0.007', 'HEART');
+  H('hep-heartG', 'HEART G: completely familiar, well-designed, highly practised routine task', 0.0004, '0.00008–0.009', 'HEART');
+  H('hep-heartH', 'HEART H: respond correctly to command when an automated supervisory system is in place', 0.00002, '0.000006–0.0009', 'HEART');
+  H('hep-omit-check', 'Omit a step from a written procedure that has check-off', 0.001, '0.0005–0.005', 'THERP');
+  H('hep-omit-nocheck', 'Omit a step from a written procedure, no check-off', 0.003, '0.001–0.01', 'THERP');
+  H('hep-omit-long', 'Omit a step from a long list (>10 items), no check-off', 0.01, '0.003–0.03', 'THERP');
+  H('hep-wrong-ctrl', 'Select wrong control from a group of similar-looking controls', 0.003, '0.001–0.01', 'THERP');
+  H('hep-wrong-ctrl-clear', 'Select wrong control, controls well delineated / labelled', 0.001, '0.0005–0.005', 'THERP');
+  H('hep-read-meter', 'Misread an analogue meter / gauge', 0.003, '0.001–0.01', 'THERP');
+  H('hep-checker', 'Second-person check fails to detect the error', 0.1, '0.05–0.5', 'THERP');
+  H('hep-alarm-single', 'Fail to respond to a single clear alarm, low workload', 0.001, '0.0001–0.01', 'THERP');
+  H('hep-alarm-flood', 'Fail to respond to an alarm, high workload / many alarms', 0.1, '0.05–0.5', 'THERP');
+  H('hep-isolation', 'Isolation error: wrong valve or breaker isolated', 0.003, '0.001–0.01', 'THERP');
+  H('hep-verbal', 'Error in recalling or passing on a verbal instruction (several items)', 0.003, '0.001–0.01', 'THERP');
+  H('hep-restore', 'Fail to restore equipment (bypass, valve, guard) after maintenance', 0.003, '0.001–0.01', 'HEART F / THERP');
+
+  /* ---- Equipment failure on demand ---- */
+  const E = (id, n, v, r, note) => add('equip', id, n, v, 'p', r, 'GENERIC', note);
+  E('eq-pump-start', 'Pump fails to start on demand', 0.003, '0.001–0.01');
+  E('eq-firepump', 'Diesel fire pump fails to start', 0.01, '0.003–0.03');
+  E('eq-edg', 'Emergency generator fails to start', 0.03, '0.01–0.1');
+  E('eq-mov', 'Motor-operated valve fails to open / close on demand', 0.003, '0.001–0.01');
+  E('eq-aov', 'Air-operated valve fails to operate on demand', 0.002, '0.001–0.01');
+  E('eq-sov', 'Solenoid valve fails to operate on demand', 0.001, '0.0005–0.005');
+  E('eq-manual-valve', 'Manual valve fails to operate (stuck)', 0.001, '0.0001–0.005');
+  E('eq-checkv', 'Check valve fails to close (reverse flow)', 0.001, '0.0001–0.01');
+  E('eq-prv', 'Relief valve fails to open at set pressure', 0.003, '0.001–0.01');
+  E('eq-lswitch', 'Level / pressure switch fails on demand (annual test)', 0.01, '0.003–0.05', 'Longer test intervals scale the value up');
+  E('eq-ltx', 'Transmitter fails, reading frozen or wrong (annual test)', 0.01, '0.003–0.05');
+  E('eq-gasdet', 'Gas detector fails to detect (annual test)', 0.05, '0.01–0.1');
+  E('eq-alarm', 'Alarm horn / beacon fails on demand', 0.01, '0.001–0.03');
+  E('eq-relay', 'Relay fails to operate', 0.0001, '0.00003–0.001');
+  E('eq-breaker', 'Circuit breaker fails to open on demand', 0.003, '0.001–0.01');
+  E('eq-ups', 'UPS / battery fails to supply on demand', 0.01, '0.003–0.03');
+  E('eq-hose', 'Flexible transfer hose ruptures (per transfer)', 0.0001, '0.00001–0.001');
+  E('eq-sling', 'Lifting sling / wire rope fails under rated load (per lift, inspected)', 0.00001, '0.000001–0.0001');
+  E('eq-hoistbrake', 'Hoist brake fails to hold on demand', 0.0001, '0.00003–0.001');
+  E('eq-harness', 'Fall-arrest harness / lanyard fails on arrest', 0.0001, '0.00001–0.001');
+  E('eq-guard-interlock', 'Machine guard interlock fails to stop machine on opening', 0.001, '0.0001–0.01');
+
+  /* ---- Initiating event frequencies (/yr) ---- */
+  const F = (id, n, v, r, note) => add('freq', id, n, v, 'f', r, 'CCPS-LOPA', note);
+  F('ie-bpcs', 'BPCS instrument loop failure', 0.1, '1–0.1');
+  F('ie-regulator', 'Pressure regulator failure', 0.1, '1–0.1');
+  F('ie-pumpseal', 'Pump seal failure (leak)', 0.1, '1–0.01');
+  F('ie-hose', 'Loading / unloading hose failure', 0.1, '1–0.01');
+  F('ie-gasket', 'Gasket / packing blow-out', 0.01, '0.1–0.001');
+  F('ie-pipe-leak', 'Piping leak (10 % section), 100 m', 0.001, '0.001–0.0001');
+  F('ie-pipe-rupture', 'Piping full-bore rupture, 100 m', 0.00001, '0.00001–0.000001');
+  F('ie-atmtank', 'Atmospheric tank catastrophic failure', 0.001, '0.001–0.0001');
+  F('ie-vessel', 'Pressure vessel residual failure', 0.000001, '0.00001–0.0000001');
+  F('ie-cw', 'Loss of cooling water', 0.1, '1–0.1');
+  F('ie-power', 'Loss of power supply', 0.1, '1–0.1');
+  F('ie-spurious-prv', 'Relief valve opens spuriously', 0.01, '0.1–0.001');
+  F('ie-thirdparty', 'Third-party impact (vehicle, excavation)', 0.01, '0.1–0.001');
+  F('ie-lightning', 'Lightning strike', 0.001, '0.001–0.0001');
+  F('ie-extfire', 'Large external fire', 0.01, '0.1–0.001');
+  F('ie-turbine', 'Turbine / diesel overspeed with casing breach', 0.0001, '0.001–0.00001');
+
+  const SOURCES = [
+    { k: 'none', name: 'Not quantified', unit: '' },
+    { k: 'manual', name: 'Manual value', unit: '' },
+    { k: 'ipl', name: 'Safeguard / IPL PFD', unit: 'p' },
+    { k: 'hep', name: 'Human error probability', unit: 'p' },
+    { k: 'equip', name: 'Equipment failure on demand', unit: 'p' },
+    { k: 'freq', name: 'Initiating event frequency', unit: 'f' },
+    { k: 'site', name: 'Site data (custom library item)', unit: '' }
+  ];
+  const REFS = {
+    'CCPS-LOPA': 'CCPS, Layer of Protection Analysis (2001); Guidelines for Initiating Events and IPLs in LOPA (2015)',
+    IEC61511: 'IEC 61511-1, safety instrumented systems for the process industry sector (SIL bands)',
+    THERP: 'Swain & Guttmann, NUREG/CR-1278 Handbook of Human Reliability Analysis (1983)',
+    HEART: 'Williams, HEART – Human Error Assessment and Reduction Technique (generic task types)',
+    GENERIC: 'Typical generic process-industry per-demand failure values (CCPS CPQRA and reliability handbooks)'
+  };
+  return { ITEMS: L, SOURCES, REFS };
+})();
+if (typeof module !== 'undefined') module.exports = RCALIB;
+</script>
+<script>/* RCA Fault Tree — engine: evaluation (probability / frequency), evidence conditioning, minimal cut sets,
+   consistency checks, tidy top-down layout and SVG drawing. Pure functions; no DOM.
+   Case: { meta, root, nodes:{id: node}, actions:[], libOverrides:{itemId: value}, customLib:[items] }
+   Node: { id, code, kind:'gate'|'basic'|'undeveloped'|'house', label, gate:'OR'|'AND'|'INHIBIT'|'VOTE', k, children:[ids],
+           status:'confirmed'|'likely'|'unverified'|'ruledout', evidence, test, testOwner, testDue, cause, category, why, notes, collapsed,
+           prob:{ src, item, value, unit, note } } */
+var RCAE = (function () {
+  const LIB = (typeof RCALIB !== 'undefined') ? RCALIB : require('./library.js');
+  const STATUS = {
+    confirmed: { name: 'Confirmed', col: '#1f7a45', soft: '#e3f3e9' },
+    likely: { name: 'Likely', col: '#a86200', soft: '#fff1d9' },
+    unverified: { name: 'Unverified', col: '#64707e', soft: '#eef1f4' },
+    ruledout: { name: 'Ruled out', col: '#b42318', soft: '#f6e3e1' }
+  };
+  const GATES = { OR: 'OR – any input causes it', AND: 'AND – all inputs needed', INHIBIT: 'INHIBIT – input plus enabling condition', VOTE: 'VOTE – k of n inputs' };
+  const KINDS = { gate: 'Intermediate event (gate)', basic: 'Basic event', undeveloped: 'Undeveloped event', house: 'Condition / house event' };
+  const CAUSE = { '': 'Not classified', causal: 'Causal factor', root: 'Root cause', contributing: 'Contributing factor' };
+  const CATEGORIES = ['Equipment / hardware', 'Human performance', 'Procedures', 'Design / engineering', 'Maintenance', 'Training / competence', 'Organisation / management', 'Communication', 'Work environment', 'External'];
+
+  const isGate = n => n && n.kind === 'gate';
+  const kids = (c, n) => ((n && n.children) || []).map(id => c.nodes[id]).filter(Boolean);
+
+  /* ---------- library lookup ---------- */
+  function libItem(c, id) {
+    if (!id) return null;
+    const custom = (c.customLib || []).find(x => x.id === id);
+    const base = custom || LIB.ITEMS.find(x => x.id === id);
+    if (!base) return null;
+    const ov = c.libOverrides && c.libOverrides[id] != null ? +c.libOverrides[id] : null;
+    return Object.assign({}, base, { def: base.value, value: ov != null ? ov : base.value, overridden: ov != null });
+  }
+  function unitOf(c, n) {
+    if (!n) return 'p';
+    if (isGate(n)) {
+      const ks = kids(c, n);
+      if (n.gate === 'OR') return ks.length && ks.every(k => unitOf(c, k) === 'f') ? 'f' : (ks.some(k => unitOf(c, k) === 'f') ? 'mixed' : 'p');
+      return ks.some(k => { const u = unitOf(c, k); return u === 'f' || u === 'mixed'; }) ? 'f' : 'p';
+    }
+    const p = n.prob || {};
+    if (p.src === 'freq') return 'f';
+    if ((p.src === 'manual' || p.src === 'site') && p.unit === 'f') return 'f';
+    if (p.src === 'site') { const it = libItem(c, p.item); if (it && it.unit === 'f') return 'f'; }
+    return 'p';
+  }
+  /* The event's own (prior) value, before evidence: NaN when not quantified. */
+  function rawValue(c, n) {
+    const p = n.prob || {};
+    if (n.kind === 'house' && (!p.src || p.src === 'none')) return 1;
+    if (!p.src || p.src === 'none') return NaN;
+    const v = p.value;
+    if (v === '' || v == null || isNaN(+v)) return NaN;
+    return +v;
+  }
+
+  /* ---------- evaluation ----------
+     mode 'prior'    : every event at its own value (what was likely before the investigation)
+     mode 'evidence' : ruled out = 0, confirmed probability events = 1, the rest at their value
+     force           : {id: value} overrides (used for conditioning). Returns {v, u, err[]} for the node. */
+  function evaluate(c, mode, force) {
+    const memo = {}, errs = [];
+    const val = id => {
+      if (memo[id]) return memo[id];
+      const n = c.nodes[id]; if (!n) return { v: NaN, u: 'p' };
+      const u = unitOf(c, n);
+      let r;
+      if (force && force[id] != null) r = { v: force[id], u };
+      else if (mode === 'evidence' && n.status === 'ruledout') r = { v: 0, u };
+      else if (!isGate(n)) {
+        if (mode === 'evidence' && n.status === 'confirmed' && u === 'p') r = { v: 1, u };
+        else r = { v: rawValue(c, n), u };
+      } else {
+        const ks = kids(c, n).map(k => val(k.id));
+        if (!ks.length) r = { v: NaN, u };
+        else if (n.gate === 'OR') {
+          const nz = ks.filter(k => k.v !== 0);
+          const hasF = nz.some(k => k.u === 'f'), hasP = nz.some(k => k.u === 'p');
+          if (hasF && hasP) { errs.push({ id, code: 'U1' }); r = { v: NaN, u: 'mixed' }; }
+          else if (hasF) r = { v: nz.some(k => isNaN(k.v)) ? NaN : nz.reduce((a, k) => a + k.v, 0), u: 'f' };
+          else if (nz.some(k => k.v >= 1)) r = { v: 1, u: 'p' };
+          else r = { v: nz.some(k => isNaN(k.v)) ? NaN : 1 - nz.reduce((a, k) => a * (1 - k.v), 1), u: 'p' };
+        } else if (n.gate === 'VOTE') {
+          const k = Math.max(1, Math.min(ks.length, +n.k || 2));
+          if (ks.some(x => x.u === 'f')) { errs.push({ id, code: 'U3' }); r = { v: NaN, u: 'p' }; }
+          else if (ks.some(x => isNaN(x.v))) r = { v: NaN, u: 'p' };
+          else { // P(at least k of n)
+            let dp = [1]; ks.forEach(x => { const nd = new Array(dp.length + 1).fill(0); dp.forEach((pv, j) => { nd[j] += pv * (1 - x.v); nd[j + 1] += pv * x.v; }); dp = nd; });
+            r = { v: dp.slice(k).reduce((a, b) => a + b, 0), u: 'p' };
+          }
+        } else { // AND, INHIBIT
+          if (ks.some(x => x.v === 0)) r = { v: 0, u };
+          else {
+            const nf = ks.filter(x => x.u === 'f').length;
+            if (nf > 1) { errs.push({ id, code: 'U2' }); r = { v: NaN, u: 'f' }; }
+            else r = { v: ks.some(x => isNaN(x.v)) ? NaN : ks.reduce((a, x) => a * x.v, 1), u: nf ? 'f' : 'p' };
+          }
+        }
+      }
+      memo[id] = r; return r;
+    };
+    const top = val(c.root);
+    return { top, val, errs, memo };
+  }
+
+  /* Posterior share for every unresolved node: how likely it is that it contributed, given the top event and the
+     evidence so far. Probability nodes: P(X | top) = p(X) * V(top | X=1) / V(top). Frequency nodes (initiators):
+     share of the top frequency, (V(top) - V(top | X=0)) / V(top). */
+  function posteriors(c) {
+    const base = evaluate(c, 'evidence'), V = base.top.v, out = {};
+    if (!(V > 0) || isNaN(V)) return { base, out, ok: false };
+    const prior = evaluate(c, 'prior');
+    walk(c).forEach(({ n }) => {
+      if (n.id === c.root || n.status === 'ruledout') return;
+      if (n.status === 'confirmed' && unitOf(c, n) === 'p') { out[n.id] = 1; return; }
+      const u = unitOf(c, n);
+      if (u === 'f') { const v0 = evaluate(c, 'evidence', { [n.id]: 0 }).top.v; out[n.id] = isNaN(v0) ? NaN : (V - v0) / V; }
+      else {
+        const p = isGate(n) ? evaluate(c, 'evidence').val(n.id).v : rawValue(c, n);
+        const pv = n.status === 'confirmed' ? 1 : (isGate(n) ? p : prior.val(n.id).v);
+        const vt = evaluate(c, 'evidence', { [n.id]: 1 }).top.v;
+        out[n.id] = (isNaN(pv) || isNaN(vt)) ? NaN : Math.min(1, pv * vt / V);
+      }
+    });
+    return { base, out, ok: true };
+  }
+
+  /* ---------- traversal ---------- */
+  function walk(c, opts) {
+    const out = [], seen = {};
+    const go = (id, depth, parent) => {
+      const n = c.nodes[id]; if (!n || seen[id]) return; seen[id] = 1;
+      out.push({ n, depth, parent });
+      if (isGate(n) && !(opts && opts.visibleOnly && n.collapsed)) (n.children || []).forEach(k => go(k, depth + 1, id));
+    };
+    go(c.root, 0, null);
+    return out;
+  }
+  function parentOf(c, id) { for (const k in c.nodes) { const n = c.nodes[k]; if ((n.children || []).indexOf(id) >= 0) return n; } return null; }
+  function descendants(c, id) { const out = []; const go = i => { const n = c.nodes[i]; if (!n) return; (n.children || []).forEach(k => { out.push(k); go(k); }); }; go(id); return out; }
+
+  /* ---------- minimal cut sets ---------- */
+  function cutSets(c, opts) {
+    opts = opts || {}; const LIMIT = opts.limit || 4000; let truncated = false;
+    const excl = n => opts.excludeRuledOut && n.status === 'ruledout';
+    const cs = id => {
+      const n = c.nodes[id]; if (!n || excl(n)) return [];
+      if (!isGate(n)) return [[id]];
+      const ks = kids(c, n).map(k => cs(k.id));
+      if (n.gate === 'OR') return [].concat(...ks);
+      const product = lists => lists.reduce((acc, L) => { const o = []; acc.forEach(a => L.forEach(b => { if (o.length < LIMIT) o.push(a.concat(b)); else truncated = true; })); return o; }, [[]]);
+      if (n.gate === 'VOTE') {
+        const k = Math.max(1, Math.min(ks.length, +n.k || 2)), out = [];
+        const comb = (start, chosen) => { if (chosen.length === k) { out.push(...product(chosen)); return; } for (let i = start; i < ks.length; i++) comb(i + 1, chosen.concat([ks[i]])); };
+        comb(0, []); return out;
+      }
+      return product(ks);
+    };
+    let sets = cs(c.root).map(s => Array.from(new Set(s)).sort());
+    sets.sort((a, b) => a.length - b.length);
+    const min = [];
+    sets.forEach(s => { if (!min.some(m => m.every(x => s.indexOf(x) >= 0))) min.push(s); });
+    return { sets: min, truncated };
+  }
+  function rankCutSets(c) {
+    const { sets, truncated } = cutSets(c, { excludeRuledOut: true });
+    const pri = evaluate(c, 'prior'), evd = evaluate(c, 'evidence');
+    const prod = (s, E) => { let v = 1, nf = 0; s.forEach(id => { const r = E.val(id); if (r.u === 'f') nf++; v *= r.v; }); return { v: nf > 1 ? NaN : v, u: nf ? 'f' : 'p' }; };
+    const rows = sets.map(s => {
+      const st = s.map(id => c.nodes[id].status);
+      const status = st.every(x => x === 'confirmed') ? 'confirmed' : st.every(x => x === 'confirmed' || x === 'likely') ? 'likely' : 'open';
+      return { ids: s, status, prior: prod(s, pri), evid: prod(s, evd) };
+    });
+    const tot = rows.reduce((a, r) => a + (isNaN(r.evid.v) ? 0 : r.evid.v), 0);
+    rows.forEach(r => { r.share = tot > 0 && !isNaN(r.evid.v) ? r.evid.v / tot : NaN; });
+    const order = { confirmed: 0, likely: 1, open: 2 };
+    rows.sort((a, b) => order[a.status] - order[b.status] || (isNaN(b.evid.v) ? -1 : isNaN(a.evid.v) ? 1 : b.evid.v - a.evid.v) || a.ids.length - b.ids.length);
+    const all = cutSets(c, {}).sets.length;
+    return { rows, truncated, eliminated: all - sets.length };
+  }
+
+  /* ---------- checks ---------- */
+  function check(c) {
+    const I = [], add = (sev, code, id, msg) => I.push({ sev, code, ids: id ? [].concat(id) : [], msg });
+    const nm = n => (n.code ? n.code + ' ' : '') + '“' + ((n.label || '').trim() || 'no description') + '”';
+    const root = c.nodes[c.root];
+    if (!root) { add('error', 'T0', null, 'The tree has no top event.'); return I; }
+    if (!isGate(root) || !(root.children || []).length) add('error', 'T1', root.id, 'Develop the top event: add the causes (gates and events) that could have produced it.');
+    if (root.status !== 'confirmed') add('tip', 'T2', root.id, 'The top event is the incident that happened. Mark it Confirmed and record the evidence.');
+    const E = evaluate(c, 'evidence');
+    E.errs.forEach(e => {
+      const n = c.nodes[e.id];
+      if (e.code === 'U1') add('error', 'U1', e.id, 'OR gate ' + nm(n) + ' mixes frequencies (/yr) and probabilities. Every input of an OR must use the same unit.');
+      if (e.code === 'U2') add('error', 'U2', e.id, 'AND gate ' + nm(n) + ' has more than one frequency input. Only one input may be a frequency; the others must be probabilities.');
+      if (e.code === 'U3') add('error', 'U3', e.id, 'VOTE gate ' + nm(n) + ' can only combine probabilities.');
+    });
+    walk(c).forEach(({ n, parent }) => {
+      const p = parent ? c.nodes[parent] : null, ks = kids(c, n);
+      if (!(n.label || '').trim()) add('warning', 'Q1', n.id, (n.code || 'An element') + ' has no description.');
+      if (isGate(n)) {
+        if (!ks.length && n.id !== c.root) add('error', 'G1', n.id, 'Gate ' + nm(n) + ' has no inputs. Add its causes, or change it to an event.');
+        if ((n.gate === 'AND' || n.gate === 'INHIBIT') && ks.length === 1) add('warning', 'G2', n.id, n.gate + ' gate ' + nm(n) + ' has only one input. Add the other condition(s), or use OR.');
+        if (n.gate === 'INHIBIT' && ks.length && !ks.some(k => k.kind === 'house')) add('tip', 'G3', n.id, 'INHIBIT gate ' + nm(n) + ': show the enabling condition as a condition (house) event.');
+        if (n.gate === 'VOTE' && (+n.k < 1 || +n.k > ks.length)) add('error', 'G4', n.id, 'VOTE gate ' + nm(n) + ': k must be between 1 and the number of inputs (' + ks.length + ').');
+        if (n.status === 'confirmed' && ks.length) {
+          if (ks.every(k => k.status === 'ruledout')) add('error', 'C1', n.id, nm(n) + ' is confirmed but every cause under it is ruled out. The tree is missing the real cause: add it.');
+          else if ((n.gate === 'AND' || n.gate === 'INHIBIT') && ks.some(k => k.status === 'ruledout')) add('error', 'C2', n.id, 'AND gate ' + nm(n) + ' is confirmed, but an input it needs is ruled out. Either the input is not ruled out or the gate logic is wrong.');
+          else if (n.gate === 'OR' && !ks.some(k => k.status === 'confirmed')) add('warning', 'C3', n.id, nm(n) + ' is confirmed but none of its causes is confirmed yet. Find which one occurred.');
+        }
+        if (n.status === 'ruledout' && ks.some(k => k.status === 'confirmed')) add('error', 'C4', n.id, nm(n) + ' is ruled out, but a cause under it is confirmed.');
+        if ((n.gate === 'AND' || n.gate === 'INHIBIT') && n.status !== 'ruledout' && ks.length > 1 && ks.every(k => k.status === 'confirmed') && n.status !== 'confirmed') add('tip', 'C5', n.id, 'All inputs of ' + nm(n) + ' are confirmed, so the gate itself occurred: mark it Confirmed.');
+      } else {
+        const pr = n.prob || {};
+        if (pr.src && pr.src !== 'none' && isNaN(rawValue(c, n))) add('warning', 'P1', n.id, 'Enter a value for ' + nm(n) + ', or set its source to Not quantified.');
+        if (pr.src && pr.src !== 'none' && pr.src !== 'manual' && pr.src !== 'freq' && unitOf(c, n) === 'p' && rawValue(c, n) > 1) add('error', 'P2', n.id, nm(n) + ': a probability cannot be greater than 1.');
+        const it = libItem(c, pr.item);
+        if (it && pr.value != null && +pr.value !== it.value && !(pr.note || '').trim()) add('tip', 'P3', n.id, nm(n) + ': the value differs from the library value (' + fmt(it.value) + '). Record why in the value note.');
+      }
+      if (p && p.status === 'ruledout' && n.status === 'confirmed') add('error', 'C6', n.id, nm(n) + ' is confirmed under a branch that is ruled out.');
+      if ((n.status === 'confirmed' || n.status === 'ruledout') && !(n.evidence || '').trim()) add('warning', 'V1', n.id, nm(n) + ' is ' + STATUS[n.status].name.toLowerCase() + ' without recorded evidence.');
+      if ((n.status === 'unverified' || n.status === 'likely') && !(n.test || '').trim() && n.id !== c.root) add('tip', 'V2', n.id, 'Plan how to test ' + nm(n) + ' (inspection, record, interview, test).');
+      if (n.cause === 'root' && n.status === 'ruledout') add('error', 'R1', n.id, nm(n) + ' is marked as a root cause but is ruled out.');
+      if (n.cause === 'root' && !(c.actions || []).some(a => a.target === n.id && a.status !== 'Cancelled')) add('warning', 'R2', n.id, 'Root cause ' + nm(n) + ' has no corrective action.');
+    });
+    const roots = Object.values(c.nodes).filter(n => n.cause === 'root' && n.status !== 'ruledout');
+    if (!roots.length && Object.values(c.nodes).some(n => n.status === 'confirmed' && !isGate(n))) add('tip', 'R3', null, 'Classify the confirmed causes: mark which are root causes, causal factors or contributing factors.');
+    const o = { error: 0, warning: 1, tip: 2 };
+    return I.sort((a, b) => o[a.sev] - o[b.sev]);
+  }
+
+  /* ---------- numbers ---------- */
+  function fmt(v, u) {
+    if (v == null || isNaN(v)) return '—';
+    let s;
+    if (v === 0) s = '0';
+    else if (v >= 0.01 && v < 1000) s = String(+v.toPrecision(2));
+    else { const e = v.toExponential(1).replace('e', 'E'); s = e.replace(/E\+?(-?)(\d)$/, 'E$10$2'); }
+    return u === 'f' ? s + ' /yr' : s;
+  }
+
+  /* ---------- layout (top-down tidy tree) ---------- */
+  const BW = 184, BH = 82, SYM = 34, LEVEL = 152, COL = 204;
+  function layout(c) {
+    const pos = {}; let leaf = 0;
+    const place = (id, depth) => {
+      const n = c.nodes[id]; if (!n) return 0;
+      const ks = isGate(n) && !n.collapsed ? (n.children || []).filter(k => c.nodes[k]) : [];
+      let x;
+      if (!ks.length) { x = leaf * COL; leaf++; }
+      else { const xs = ks.map(k => place(k, depth + 1)); x = (xs[0] + xs[xs.length - 1]) / 2; }
+      pos[id] = { x, y: depth * LEVEL }; return x;
+    };
+    place(c.root, 0);
+    return pos;
+  }
+
+  /* ---------- drawing ---------- */
+  const FONT = 'Arial, Helvetica, sans-serif';
+  const xml = s => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[ch]));
+  function wrap(t, max, lines) {
+    const w = String(t || '').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean), out = []; let cur = '';
+    w.forEach(x => { if (!cur) cur = x; else if ((cur + ' ' + x).length <= max) cur += ' ' + x; else { out.push(cur); cur = x; } });
+    if (cur) out.push(cur);
+    if (out.length > lines) { const cut = out.slice(0, lines); cut[lines - 1] = cut[lines - 1].replace(/.{0,2}$/, '') + '…'; return cut; }
+    return out;
+  }
+  function symbol(n, cx, y) { // y = top of symbol area
+    const s = '#22324a', f = '#ffffff', w = 1.6;
+    if (isGate(n)) {
+      const t = n.gate;
+      if (t === 'OR' || t === 'VOTE') return `<path d="M${cx - 15},${y + 30} Q${cx - 13},${y + 10} ${cx},${y + 2} Q${cx + 13},${y + 10} ${cx + 15},${y + 30} Q${cx},${y + 21} ${cx - 15},${y + 30}Z" fill="${f}" stroke="${s}" stroke-width="${w}"/>` + (t === 'VOTE' ? `<text x="${cx}" y="${y + 24}" text-anchor="middle" font-family="${FONT}" font-size="9" font-weight="700" fill="${s}">${xml((n.k || 2) + '/' + (n.children || []).length)}</text>` : '');
+      if (t === 'AND') return `<path d="M${cx - 14},${y + 30} V${y + 16} A14,14 0 0 1 ${cx + 14},${y + 16} V${y + 30}Z" fill="${f}" stroke="${s}" stroke-width="${w}"/>`;
+      if (t === 'INHIBIT') return `<path d="M${cx},${y + 1} L${cx + 14},${y + 9} L${cx + 14},${y + 23} L${cx},${y + 31} L${cx - 14},${y + 23} L${cx - 14},${y + 9}Z" fill="${f}" stroke="${s}" stroke-width="${w}"/>`;
+    }
+    if (n.kind === 'basic') return `<circle cx="${cx}" cy="${y + 15}" r="13" fill="${f}" stroke="${s}" stroke-width="${w}"/>`;
+    if (n.kind === 'undeveloped') return `<path d="M${cx},${y + 1} L${cx + 17},${y + 15} L${cx},${y + 29} L${cx - 17},${y + 15}Z" fill="${f}" stroke="${s}" stroke-width="${w}"/>`;
+    if (n.kind === 'house') return `<path d="M${cx - 14},${y + 30} V${y + 12} L${cx},${y + 2} L${cx + 14},${y + 12} V${y + 30}Z" fill="${f}" stroke="${s}" stroke-width="${w}"/>`;
+    return '';
+  }
+  /* ctx: {interactive, sel, issues:{id:{error,warning}}, show:'evidence'|'prior'|'none', post:{id:v}} */
+  function render(c, ctx) {
+    ctx = ctx || {};
+    const pos = layout(c);
+    const E = ctx.show && ctx.show !== 'none' ? evaluate(c, ctx.show) : null;
+    let edges = '', nodes = '';
+    let x0 = Infinity, x1 = -Infinity, y1 = 0;
+    Object.keys(pos).forEach(id => {
+      const n = c.nodes[id], p = pos[id], cx = p.x + BW / 2, top = p.y;
+      x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x + BW); y1 = Math.max(y1, p.y + BH + SYM + 4);
+      const ks = isGate(n) && !n.collapsed ? (n.children || []).filter(k => pos[k]) : [];
+      if (ks.length) {
+        const by = top + BH + SYM, mid = by + 18;
+        edges += `<path d="M${cx},${by} V${mid}" fill="none" stroke="#5a6779" stroke-width="1.4"/>`;
+        const xs = ks.map(k => pos[k].x + BW / 2);
+        edges += `<path d="M${Math.min.apply(null, xs)},${mid} H${Math.max.apply(null, xs)}" fill="none" stroke="#5a6779" stroke-width="1.4"/>`;
+        ks.forEach(k => { edges += `<path d="M${pos[k].x + BW / 2},${mid} V${pos[k].y}" fill="none" stroke="#5a6779" stroke-width="1.4"/>`; });
+      }
+      const st = STATUS[n.status] || STATUS.unverified, ro = n.status === 'ruledout';
+      let s = '';
+      s += `<line x1="${cx}" y1="${top + BH}" x2="${cx}" y2="${top + BH + 3}" stroke="#22324a" stroke-width="1.5"/>`;
+      s += `<rect x="${p.x}" y="${top}" width="${BW}" height="${BH}" rx="4" fill="${ro ? '#f4f4f2' : '#ffffff'}" stroke="${n.id === c.root ? '#0f2a4d' : '#8a96a6'}" stroke-width="${n.id === c.root ? 2.2 : 1}"${ro ? ' stroke-dasharray="5 3"' : ''}/>`;
+      s += `<rect x="${p.x}" y="${top}" width="6" height="${BH}" rx="2" fill="${st.col}"/>`;
+      s += `<text x="${p.x + 13}" y="${top + 15}" font-family="${FONT}" font-size="10.5" font-weight="700" fill="${ro ? '#8a8a8a' : '#0f2a4d'}">${xml(n.code || '')}</text>`;
+      const chip = st.name.toUpperCase(), cw = chip.length * 5.6 + 10;
+      s += `<rect x="${p.x + BW - cw - 6}" y="${top + 5}" width="${cw}" height="14" rx="7" fill="${st.soft}"/><text x="${p.x + BW - cw / 2 - 6}" y="${top + 15}" text-anchor="middle" font-family="${FONT}" font-size="8" font-weight="700" letter-spacing=".4" fill="${st.col}">${chip}</text>`;
+      const lines = wrap(n.label, 30, 3);
+      s += `<text font-family="${FONT}" font-size="11" fill="${ro ? '#8a8a8a' : '#17202b'}"${ro ? ' text-decoration="line-through"' : ''}>` + lines.map((l, i) => `<tspan x="${p.x + 13}" y="${top + 31 + i * 13}">${xml(l)}</tspan>`).join('') + '</text>';
+      let foot = '';
+      if (E) { const r = E.val(id); if (!isNaN(r.v)) foot = (r.u === 'f' ? 'f = ' : 'P = ') + fmt(r.v, r.u); else if (!isGate(n) && (!n.prob || !n.prob.src || n.prob.src === 'none')) foot = ''; }
+      if (ctx.post && ctx.post[id] != null && !isNaN(ctx.post[id]) && id !== c.root && n.status !== 'confirmed' && n.status !== 'ruledout') foot += (foot ? '   ' : '') + 'given incident ' + Math.round(ctx.post[id] * 100) + '%';
+      if (n.cause === 'root') foot = 'ROOT CAUSE' + (foot ? '  ·  ' + foot : '');
+      if (foot) s += `<text x="${p.x + 13}" y="${top + BH - 8}" font-family="${FONT}" font-size="9.5" fill="${n.cause === 'root' ? '#8a1c12' : '#3d4a5c'}" font-weight="${n.cause === 'root' ? 700 : 400}">${xml(foot)}</text>`;
+      s += symbol(n, cx, top + BH + 2);
+      if (isGate(n) && n.collapsed && (n.children || []).length) {
+        const cnt = descendants(c, id).length;
+        s += `<path d="M${cx},${top + BH + SYM + 2} l-11,18 h22z" fill="#ffffff" stroke="#22324a" stroke-width="1.4"/><text x="${cx + 16}" y="${top + BH + SYM + 18}" font-family="${FONT}" font-size="9.5" fill="#3d4a5c">${cnt} hidden</text>`;
+        y1 = Math.max(y1, top + BH + SYM + 24);
+      }
+      if (ctx.interactive) {
+        const iss = ctx.issues && ctx.issues[id];
+        if (iss) s += `<circle cx="${p.x + BW}" cy="${top}" r="8.5" fill="${iss.error ? '#b42318' : '#9a5b00'}"/><text x="${p.x + BW}" y="${top + 3.5}" text-anchor="middle" font-family="${FONT}" font-size="9.5" font-weight="700" fill="#fff">${iss.error || iss.warning}</text>`;
+        const sel = ctx.sel === id;
+        s = `<rect class="sel-ring" x="${p.x - 5}" y="${top - 5}" width="${BW + 10}" height="${BH + SYM + 8}" rx="7"${sel ? '' : ' style="display:none"'}/>` + s;
+        nodes += `<g class="ftn${sel ? ' sel' : ''}" data-id="${xml(id)}">${s}</g>`;
+      } else nodes += `<g>${s}</g>`;
+    });
+    if (x0 === Infinity) { x0 = 0; x1 = BW; }
+    return { body: edges + nodes, bbox: { x: x0, y: 0, w: x1 - x0, h: y1 }, pos };
+  }
+  function treeSVG(c, opts) {
+    opts = opts || {};
+    const r = render(c, { show: opts.show || 'evidence', post: opts.post }), pad = 24, head = opts.noTitle ? 0 : 34;
+    const W = Math.ceil(r.bbox.w + pad * 2), H = Math.ceil(r.bbox.h + pad * 2 + head), m = c.meta || {};
+    const title = opts.noTitle ? '' : `<text x="${pad}" y="${pad + 4}" font-family="${FONT}" font-size="15" font-weight="700" fill="#0f2a4d">${xml(m.title || 'RCA fault tree')}</text><text x="${W - pad}" y="${pad + 4}" text-anchor="end" font-family="${FONT}" font-size="11" fill="#5b5b5b">${xml([m.ref, m.date, 'Cause-and-effect fault tree'].filter(Boolean).join('  ·  '))}</text>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><rect width="${W}" height="${H}" fill="#ffffff"/>${title}<g transform="translate(${pad - r.bbox.x},${pad + head})">${r.body}</g></svg>`;
+  }
+
+  return { STATUS, GATES, KINDS, CAUSE, CATEGORIES, isGate, kids, libItem, unitOf, rawValue, evaluate, posteriors, walk, parentOf, descendants, cutSets, rankCutSets, check, fmt, layout, render, treeSVG, symbol, BW, BH, SYM, LIB };
+})();
+if (typeof module !== 'undefined') module.exports = RCAE;
+</script>
+<script>/* RCA Fault Tree — worked example (fictional): diesel overfill of tank T-101 during a night transfer.
+   Mixes all value sources: an initiating frequency, IPL PFDs, human error probabilities, equipment failure on demand,
+   a manual value and a condition (house) event; two looked-up values are edited with a recorded reason. */
+var RCAEX = (function () {
+  const N = (id, code, kind, label, o) => Object.assign({ id, code, kind, label, gate: kind === 'gate' ? 'OR' : '', k: 2, children: [], status: 'unverified', evidence: '', test: '', testOwner: '', testDue: '', cause: '', category: '', why: '', notes: '', collapsed: false, prob: { src: 'none', item: '', value: null, unit: 'p', note: '' } }, o || {});
+  const P = (src, item, value, note, unit) => ({ src, item: item || '', value, unit: unit || (src === 'freq' ? 'f' : 'p'), note: note || '' });
+  const nodes = [
+    N('top', 'TOP', 'gate', 'Diesel overflowed from tank T-101 into the bund during a night transfer', { gate: 'AND', children: ['e0', 'g2', 'g3'], status: 'confirmed',
+      evidence: 'About 14 m³ diesel in bund B-1 at 03:40 (shift log, CCTV, photos P1–P9). Bund held; no off-site release.' }),
+    N('e0', 'E-01', 'basic', 'Ship-to-tank transfer into T-101 under way (demand on the overfill controls)', { status: 'confirmed', prob: P('manual', '', 52, 'About one transfer a week into T-101 (2025 transfer records).', 'f'),
+      evidence: 'Transfer TR-2611 from MV Coral started 22:10.' }),
+    N('g2', 'G-02', 'gate', 'Transfer not stopped before the tank was full', { gate: 'OR', children: ['g4', 'e5'], status: 'confirmed', evidence: 'Pumping continued until 03:38, when the ship stopped on radio call.' }),
+    N('g4', 'G-04', 'gate', 'Operator unaware the tank was nearly full', { gate: 'AND', children: ['g8', 'g7'], status: 'confirmed', evidence: 'Operator interview: believed level was 78 % at 03:20.' }),
+    N('g8', 'G-08', 'gate', 'Level gauge LT-101 indicated lower than the actual level', { gate: 'OR', children: ['e4', 'e9'], status: 'confirmed', evidence: 'DCS trend flat at 78 % from 01:55 while dip showed 100 %.' }),
+    N('e4', 'E-04', 'basic', 'LT-101 servo gauge displacer stuck (frozen reading)', { status: 'confirmed', cause: 'causal', category: 'Equipment / hardware', prob: P('equip', 'eq-ltx', 0.01),
+      evidence: 'Gauge found stuck at 78 % on inspection; displacer wire fouled with wax (photo P12).', why: 'Gauge not in the planned maintenance system after the 2024 replacement.' }),
+    N('e9', 'E-09', 'undeveloped', 'LT-101 calibration drift', { status: 'ruledout', prob: P('manual', '', 0.001, 'Screening estimate.'), evidence: 'Calibration certificate 6 weeks old; as-found check within 2 mm.' }),
+    N('g7', 'G-07', 'gate', 'Operator did not cross-check the level by an independent means', { gate: 'INHIBIT', children: ['e3', 'h1'], status: 'confirmed', evidence: 'No radar or dip cross-check recorded in the 4-hourly round.' }),
+    N('e3', 'E-03', 'basic', 'Level cross-check not done during the transfer', { status: 'confirmed', cause: 'causal', category: 'Human performance', prob: P('hep', 'hep-heartD', 0.2, 'HEART D nominal 0.09 raised for night shift, single operator handling a ship arrival (EPCs: time shortage, high workload).'),
+      evidence: 'Round sheet blank for 02:00; operator was at jetty 2 for MV Delta arrival.', why: 'Transfer procedure has no hold point for cross-checking level near the end of a transfer.' }),
+    N('h1', 'H-01', 'house', 'Single operator on night shift, also handling a ship arrival', { status: 'confirmed', category: 'Organisation / management', cause: 'contributing', evidence: 'Roster: one operator 18:00–06:00; MV Delta berthed 01:50.', why: 'Night manning reduced from two to one in 2025 without a management-of-change review.' }),
+    N('e5', 'E-05', 'basic', 'Transfer nomination larger than available ullage (planning error)', { status: 'ruledout', prob: P('hep', 'hep-omit-nocheck', 0.003), evidence: 'Nomination 2 400 m³ against 2 610 m³ ullage: calculation checked and correct.' }),
+    N('g3', 'G-03', 'gate', 'Independent overfill protection did not stop the transfer', { gate: 'AND', children: ['g5', 'g9'], status: 'confirmed', evidence: 'No trip of XV-101 recorded; LAH-102 alarm acknowledged at 03:12.' }),
+    N('g9', 'G-09', 'gate', 'High-level alarm LAH-102 did not lead to the transfer being stopped', { gate: 'OR', children: ['e8', 'e10'], status: 'confirmed', evidence: 'Alarm at 03:12; pumping stopped 03:38 (26 min later).' }),
+    N('g5', 'G-05', 'gate', 'High-high level trip LSHH-101 / XV-101 failed', { gate: 'OR', children: ['e6', 'e7'], status: 'confirmed', evidence: 'XV-101 stayed open; LSHH-101 did not change state when flooded.' }),
+    N('e6', 'E-06', 'basic', 'LSHH-101 level switch failed on demand (float stuck)', { status: 'confirmed', cause: 'root', category: 'Maintenance', prob: P('equip', 'eq-lswitch', 0.05, 'Library 0.01 assumes an annual proof test; LSHH-101 test was 18 months overdue, so PFD scaled up about ×5.'),
+      evidence: 'Float found seized by corrosion product (photo P15). Last proof test 30 months ago (CMMS).', why: 'Proof testing of tank overfill switches dropped from the CMMS schedule; no tracking of overdue SIS tests.' }),
+    N('e7', 'E-07', 'basic', 'Trip left bypassed after maintenance', { status: 'ruledout', prob: P('hep', 'hep-restore', 0.003), evidence: 'Bypass log and DCS event list: no bypass active on LSHH-101.' }),
+    N('e8', 'E-08', 'basic', 'Control-room operator did not respond to the independent high-level alarm LAH-102', { status: 'likely', cause: 'causal', category: 'Human performance', prob: P('ipl', 'ipl-op10', 0.1),
+      test: 'Retrieve alarm journal 02:30–03:40 and interview control-room operator about alarm load.', testOwner: 'Lead investigator', testDue: '2026-10-20',
+      evidence: 'LAH-102 acknowledged at 03:12; 41 other alarms in the same 20 minutes (preliminary journal).', why: 'Alarm flood during ship arrival; LAH-102 has the same priority as nuisance alarms.' }),
+    N('e10', 'E-10', 'basic', 'Stop instruction to the ship by radio not received or delayed', { status: 'unverified', category: 'Communication', prob: P('hep', 'hep-verbal', 0.003),
+      test: 'Obtain the jetty and ship VHF recordings for 03:10–03:40; interview the ship duty officer.', testOwner: 'HSE adviser', testDue: '2026-10-22' })
+  ];
+  const map = {}; nodes.forEach(n => { map[n.id] = n; });
+  const actions = [
+    ['e6', 'Restore proof testing of all tank overfill switches (LSHH) in the CMMS and test LSHH-101/201/301 within 14 days.', 'Maintenance Manager', '2026-10-31', 'High', 'Engineering'],
+    ['e6', 'Add an overdue-SIS-test KPI to the monthly management review.', 'Terminal Manager', '2026-12-15', 'Medium', 'Administrative'],
+    ['e4', 'Add servo gauge LT-101 (and sister gauges) to the planned maintenance system with a 6-monthly displacer inspection.', 'Instrument Supervisor', '2026-11-15', 'High', 'Engineering'],
+    ['e3', 'Add a level cross-check hold point (radar vs servo, at 85 % and 95 %) to the transfer procedure.', 'Operations Superintendent', '2026-11-01', 'Medium', 'Administrative'],
+    ['h1', 'Carry out a management-of-change review of single-operator night manning during ship arrivals.', 'Terminal Manager', '2026-11-30', 'High', 'Administrative'],
+    ['e8', 'Re-prioritise LAH-102 and other independent overfill alarms as high priority; rationalise nuisance alarms.', 'Control Systems Engineer', '2027-01-31', 'Medium', 'Engineering']
+  ].map((a, i) => ({ id: 'a' + (i + 1), target: a[0], text: a[1], owner: a[2], due: a[3], priority: a[4], control: a[5], status: 'Open', closeNote: '' }));
+  return {
+    id: 'rca-example-t101', example: true, format: 'rca-fault-tree', version: 1,
+    meta: { title: 'Diesel overfill of tank T-101 during night transfer', ref: 'RCA-EX-01', date: '2026-09-18', time: '03:40', location: 'Tank T-101, bund B-1', site: 'Coastal Fuel Terminal (fictional)', client: 'Worked example', investigator: 'Lead investigator', team: 'Lead investigator; Operations superintendent; Instrument technician; HSE adviser',
+      status: 'In review', description: 'During a night ship-to-tank transfer, diesel overflowed from tank T-101 into bund B-1. About 14 m³ was contained in the bund and recovered; no injuries and no off-site release.',
+      conclusion: 'The transfer was not stopped because the level gauge LT-101 froze at 78 % and the single night-shift operator, busy with a ship arrival, did not cross-check the level. The independent high-high trip LSHH-101 failed because its float was seized; proof testing had dropped out of the maintenance system. The independent alarm LAH-102 was probably missed in an alarm flood (still being confirmed).',
+      lessons: 'Independent overfill protection is only independent if it is tested.\nManning changes need a management-of-change review that covers peak workload, such as a ship arrival during a transfer.' },
+    root: 'top', nodes: map, actions, libOverrides: {}, customLib: [], log: []
+  };
+})();
+if (typeof module !== 'undefined') module.exports = RCAEX;
+</script>
+<script>/* RCA Fault Tree — report (HTML), Word (.docx, hand-built), CSV and Storyline Casebook package. Pure string builders. */
+var RCAX = (function () {
+  const E = (typeof RCAE !== 'undefined') ? RCAE : require('./engine.js');
+  const LIB = E.LIB;
+  const h = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const xml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
+  const srcName = k => (LIB.SOURCES.find(s => s.k === k) || {}).name || '';
+
+  function model(c) {
+    const pri = E.evaluate(c, 'prior'), evd = E.evaluate(c, 'evidence'), post = E.posteriors(c).out, cs = E.rankCutSets(c), issues = E.check(c);
+    const rows = E.walk(c).map(({ n, depth }) => {
+      const it = E.libItem(c, n.prob && n.prob.item), u = E.unitOf(c, n);
+      return { n, depth, type: E.isGate(n) ? n.gate + ' gate' : E.KINDS[n.kind], status: (E.STATUS[n.status] || E.STATUS.unverified).name,
+        src: E.isGate(n) ? '' : srcName((n.prob || {}).src || 'none'), lib: it, value: E.isGate(n) ? NaN : E.rawValue(c, n), unit: u,
+        prior: pri.val(n.id), evid: evd.val(n.id), post: post[n.id] };
+    });
+    const counts = {}; Object.keys(E.STATUS).forEach(k => counts[k] = rows.filter(r => r.n.status === k).length);
+    const roots = rows.filter(r => r.n.cause === 'root' && r.n.status !== 'ruledout');
+    const causal = rows.filter(r => r.n.cause === 'causal' && r.n.status !== 'ruledout');
+    const contrib = rows.filter(r => r.n.cause === 'contributing' && r.n.status !== 'ruledout');
+    const open = rows.filter(r => (r.n.status === 'unverified' || r.n.status === 'likely') && r.n.id !== c.root).sort((a, b) => (isNaN(b.post) ? -1 : b.post) - (isNaN(a.post) ? -1 : a.post));
+    const acts = (c.actions || []).map((a, i) => { const t = c.nodes[a.target]; return Object.assign({ n: i + 1, tlabel: t ? (t.code + ' ' + t.label) : '(not linked)' }, a); });
+    return { meta: c.meta || {}, rows, counts, roots, causal, contrib, open, cs, pri, evd, acts, issues };
+  }
+
+  const REPORT_CSS = `.rpt{font:14px/1.55 Arial,Helvetica,sans-serif;color:#141c26;background:#fff;max-width:1040px;margin:0 auto;padding:36px 40px 60px}
+.rpt h1,.rpt h2,.rpt h3{font-family:Arial,Helvetica,sans-serif;letter-spacing:0}.rpt h1{font-size:27px;margin:6px 0 4px;color:#0f2a4d}.rpt h2{font-size:19px;color:#0f2a4d;border-bottom:2px solid #0f2a4d;padding-bottom:4px;margin:28px 0 10px}.rpt h3{font-size:15px;margin:16px 0 6px}
+.rpt .brand{font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:#1d4ea3;border-top:8px solid #0f2a4d;padding-top:16px}
+.rpt .kv{display:grid;grid-template-columns:170px 1fr;gap:4px 14px;margin:14px 0}.rpt .kv b{color:#4b5563;font-weight:600}
+.rpt table{border-collapse:collapse;width:100%;font-size:12.5px;margin:6px 0 10px}.rpt th,.rpt td{border:1px solid #b9c1cc;padding:5px 7px;text-align:left;vertical-align:top}.rpt th{background:#e4eaf3;font-weight:600}
+.rpt .tree{overflow-x:auto;border:1px solid #d0d6de;padding:6px;margin:8px 0}.rpt .tree svg{max-width:100%;height:auto}.rpt .muted{color:#5b6573}
+.rpt .st{display:inline-block;font-size:11px;font-weight:700;padding:0 6px;border-radius:8px}.rpt .st-confirmed{background:#e3f3e9;color:#1f7a45}.rpt .st-likely{background:#fff1d9;color:#a86200}.rpt .st-unverified{background:#eef1f4;color:#64707e}.rpt .st-ruledout{background:#f6e3e1;color:#b42318}
+.rpt .bar{display:inline-block;height:10px;background:#1d4ea3;border-radius:2px;vertical-align:middle;margin-right:6px}
+.rpt .sign{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}.rpt .sign div{border-top:1px solid #333;padding-top:4px;font-size:12px;min-height:56px}
+.rpt .foot{margin-top:36px;font-size:11px;color:#6b7280;border-top:1px solid #d0d6de;padding-top:8px}
+@media print{.rpt{padding:0;max-width:none}.rpt h2{break-after:avoid}.rpt tr{break-inside:avoid}.rpt .pb{break-before:page}}`;
+
+  function reportBody(c, svg) {
+    const M = model(c), m = M.meta, F = E.fmt;
+    const chip = k => `<span class="st st-${k}">${h((E.STATUS[k] || {}).name || k)}</span>`;
+    const nodeLine = r => `<b>${h(r.n.code)}</b> ${h(r.n.label)}`;
+    let s = `<div class="rpt"><div class="brand">Istec Training · Root cause analysis · Cause-and-effect fault tree</div><h1>${h(m.title || 'Untitled investigation')}</h1><div class="muted">${h([m.ref, m.site, m.client].filter(Boolean).join(' · '))}</div>`;
+    s += `<div class="kv"><b>Date and time</b><span>${h(m.date || '–')}${m.time ? ', ' + h(m.time) : ''}</span><b>Location</b><span>${h(m.location || '–')}</span><b>Investigator</b><span>${h(m.investigator || '–')}</span><b>Team</b><span>${h(m.team || '–')}</span><b>Status</b><span>${h(m.status || 'Draft')}</span></div>`;
+    s += `<h2>1. Description of the incident</h2><p>${h(m.description || '').replace(/\n/g, '<br>')}</p>`;
+    s += `<h2>2. Conclusion</h2><p>${h(m.conclusion || 'Not yet written.').replace(/\n/g, '<br>')}</p>`;
+    const list = (L, empty) => L.length ? `<ul>${L.map(r => `<li>${nodeLine(r)}${r.n.category ? ` <span class="muted">(${h(r.n.category)})</span>` : ''} ${chip(r.n.status)}${r.n.why ? `<br><span class="muted">Why: ${h(r.n.why)}</span>` : ''}</li>`).join('')}</ul>` : `<p class="muted">${empty}</p>`;
+    s += `<h3>Root causes</h3>${list(M.roots, 'None identified yet.')}<h3>Causal factors</h3>${list(M.causal, 'None classified.')}<h3>Contributing factors</h3>${list(M.contrib, 'None classified.')}`;
+    s += `<h2 class="pb">3. Fault tree</h2><div class="tree">${svg || ''}</div><p class="muted">Values shown are given the evidence (ruled-out causes = 0, confirmed causes = 1). “Given incident” is the probability that an unresolved cause contributed, given that the top event happened. Status: ${Object.keys(M.counts).map(k => E.STATUS[k].name + ' ' + M.counts[k]).join(' · ')}.</p>`;
+    s += `<h2>4. Hypotheses and evidence</h2><table><tr><th>Code</th><th>Cause / event</th><th>Type</th><th>Status</th><th>Evidence / test</th></tr>${M.rows.map(r => `<tr><td>${h(r.n.code)}</td><td style="padding-left:${7 + r.depth * 12}px">${h(r.n.label)}</td><td>${h(r.type)}</td><td>${chip(r.n.status)}</td><td>${h(r.n.evidence || '')}${r.n.test && r.n.status !== 'confirmed' && r.n.status !== 'ruledout' ? `<br><span class="muted">Test: ${h(r.n.test)}${r.n.testOwner ? ' (' + h(r.n.testOwner) + (r.n.testDue ? ', ' + h(r.n.testDue) : '') + ')' : ''}</span>` : ''}</td></tr>`).join('')}</table>`;
+    if (M.open.length) {
+      const mx = Math.max(0.0001, ...M.open.map(r => isNaN(r.post) ? 0 : r.post));
+      s += `<h3>Open hypotheses ranked by likelihood given the incident</h3><table><tr><th>Cause</th><th>Status</th><th style="width:34%">P(contributed | incident)</th><th>Planned test</th></tr>${M.open.map(r => `<tr><td>${nodeLine(r)}</td><td>${chip(r.n.status)}</td><td>${isNaN(r.post) ? '<span class="muted">needs values</span>' : `<span class="bar" style="width:${Math.max(2, r.post / mx * 140)}px"></span>${Math.round(r.post * 100)} %`}</td><td>${h(r.n.test || '')}</td></tr>`).join('')}</table>`;
+    }
+    s += `<h2>5. Quantification</h2><p>Top event, before the evidence (all hypotheses at their screening values): <b>${F(M.pri.top.v, M.pri.top.u)}</b>. Given the evidence: <b>${F(M.evd.top.v, M.evd.top.u)}</b>.</p>`;
+    const q = M.rows.filter(r => !E.isGate(r.n) && r.src && r.src !== 'Not quantified');
+    s += q.length ? `<table><tr><th>Code</th><th>Event</th><th>Source</th><th>Library item / default</th><th>Value used</th><th>Note</th></tr>${q.map(r => `<tr><td>${h(r.n.code)}</td><td>${h(r.n.label)}</td><td>${h(r.src)}</td><td>${r.lib ? h(r.lib.name) + '<br><span class="muted">' + F(r.lib.value, r.lib.unit) + ' · ' + h(r.lib.ref) + '</span>' : ''}</td><td>${F(r.value, r.unit)}${r.lib && r.value !== r.lib.value ? ' <b>(edited)</b>' : ''}</td><td>${h((r.n.prob || {}).note || '')}</td></tr>`).join('')}</table>` : '<p class="muted">No events quantified. The analysis is qualitative.</p>';
+    const cs = M.cs.rows.slice(0, 15);
+    s += `<h3>Credible causal combinations (minimal cut sets)</h3><p class="muted">Each row is a combination of causes that together produce the top event. ${M.cs.eliminated} combination(s) eliminated by ruled-out causes.${M.cs.truncated ? ' List truncated.' : ''}</p><table><tr><th>#</th><th>Causes</th><th>Status</th><th>Before evidence</th><th>Given evidence</th><th>Share</th></tr>${cs.map((r, i) => `<tr><td>${i + 1}</td><td>${r.ids.map(id => h(c.nodes[id].code + ' ' + c.nodes[id].label)).join('<br>')}</td><td>${h(r.status)}</td><td>${F(r.prior.v, r.prior.u)}</td><td>${F(r.evid.v, r.evid.u)}</td><td>${isNaN(r.share) ? '—' : Math.round(r.share * 100) + ' %'}</td></tr>`).join('')}</table>`;
+    s += `<h2>6. Corrective actions</h2>${M.acts.length ? `<table><tr><th>#</th><th>Addresses</th><th>Action</th><th>Control type</th><th>Owner</th><th>Due</th><th>Status</th></tr>${M.acts.map(a => `<tr><td>${a.n}</td><td>${h(a.tlabel)}</td><td>${h(a.text)}</td><td>${h(a.control || '')}</td><td>${h(a.owner || '')}</td><td>${h(a.due || '')}</td><td>${h(a.status || '')}</td></tr>`).join('')}</table>` : '<p class="muted">No actions recorded.</p>'}`;
+    if (m.lessons) s += `<h2>7. Lessons learned</h2><ul>${String(m.lessons).split('\n').filter(x => x.trim()).map(l => `<li>${h(l)}</li>`).join('')}</ul>`;
+    const open = M.issues.filter(i => i.sev !== 'tip');
+    s += `<h2>${m.lessons ? 8 : 7}. Tree consistency check</h2>${open.length ? `<ul>${open.map(i => `<li><b>${i.sev}</b> ${h(i.msg)}</li>`).join('')}</ul>` : '<p>No logic or evidence inconsistencies found.</p>'}`;
+    s += `<h2>Review and sign-off</h2><div class="sign"><div>Lead investigator</div><div>Reviewer</div><div>Accountable manager</div></div>`;
+    s += `<div class="foot">Prepared with the Istec Training RCA Fault Tree. Screening values from generic sources (${Object.values(LIB.REFS).join('; ')}). They rank hypotheses; they are not design data.</div></div>`;
+    return s;
+  }
+  function reportHTML(c, svg) { const m = c.meta || {}; return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${h((m.ref ? m.ref + ' ' : '') + (m.title || 'RCA report'))}</title><style>body{margin:0;background:#fff}${REPORT_CSS}</style></head><body>${reportBody(c, svg)}</body></html>`; }
+
+  /* CSV of every node */
+  function csv(c) {
+    const M = model(c), q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const head = ['Code', 'Level', 'Description', 'Type', 'Status', 'Cause class', 'Category', 'Evidence', 'Test', 'Test owner', 'Test due', 'Source', 'Library item', 'Library value', 'Value used', 'Unit', 'Value note', 'Value given evidence', 'P(contributed|incident)', 'Why it occurred'];
+    const rows = M.rows.map(r => [r.n.code, r.depth, r.n.label, r.type, r.status, E.CAUSE[r.n.cause || ''], r.n.category, r.n.evidence, r.n.test, r.n.testOwner, r.n.testDue, r.src, r.lib ? r.lib.name : '', r.lib ? r.lib.value : '', isNaN(r.value) ? '' : r.value, r.unit === 'f' ? '/yr' : 'probability', (r.n.prob || {}).note, isNaN(r.evid.v) ? '' : r.evid.v, isNaN(r.post) || r.post == null ? '' : r.post, r.n.why]);
+    return '﻿' + [head].concat(rows).map(r => r.map(q).join(',')).join('\r\n');
+  }
+
+  /* Storyline Casebook case package (events = confirmed chain, conditions = contributing, root causes) */
+  function casebookPackage(c) {
+    const M = model(c), m = M.meta;
+    const confirmed = M.rows.filter(r => r.n.status === 'confirmed' && r.n.id !== c.root && !E.isGate(r.n));
+    const rcs = M.roots.map((r, i) => ({ id: 'rc' + (i + 1), text: r.n.label + (r.n.why ? ' — ' + r.n.why : ''), _node: r.n.id }));
+    const pkg = {
+      format: 'storyline-casebook-case', version: 1, exportedAt: new Date().toISOString(), source: 'RCA Fault Tree (Istec Training)',
+      case: { caseTitle: m.title || 'RCA investigation', facility: m.site || '', location: m.location || '', incidentType: '', dateOccurred: m.date || '', timeOccurred: m.time || '', reportedBy: m.investigator || '',
+        initialDescription: m.description || '', refinedDescription: m.conclusion || '', actualSeverity: 1, potentialSeverity: 1, status: m.status === 'Final' ? 'closed' : 'review' },
+      investigationTeam: String(m.team || '').split(/;|\n/).map(x => x.trim()).filter(Boolean).map((t, i) => ({ name: t, role: i ? 'Co-Investigator' : 'Lead Investigator', customRole: '', organization: m.site || '', contact: '', notes: '' })),
+      involvedPersons: [], evidence: [],
+      events: [{ id: 'e1', time: m.time || '', text: (c.nodes[c.root] || {}).label || m.title, status: 'proven', evidenceIds: [] }],
+      conditions: confirmed.map((r, i) => ({ id: 'c' + (i + 1), eventId: 'e1', text: r.n.code + ' ' + r.n.label, status: 'proven', evidenceIds: [] })),
+      icamFactors: [], contributingFactors: M.contrib.map((r, i) => ({ id: 'cf' + (i + 1), text: r.n.label })),
+      rootCauses: rcs.map(r => ({ id: r.id, text: r.text })),
+      keyLearnings: String(m.lessons || '').split('\n').filter(x => x.trim()).map((t, i) => ({ id: 'kl' + (i + 1), text: t.trim() })),
+      correctiveActions: (c.actions || []).map((a, i) => { const rc = rcs.find(r => r._node === a.target); const t = c.nodes[a.target]; return { id: 'a' + (i + 1), finding: t ? 'Addresses ' + t.code + ': ' + t.label : '', linkedCauseType: rc ? 'root' : 'additional', linkedCauseId: rc ? rc.id : null, action: a.text, timeframe: rc ? 'longterm' : 'intermediate', hocLevel: ({ Elimination: 'elimination', Substitution: 'substitution', Engineering: 'engineering', Administrative: 'administrative', PPE: 'ppe' })[a.control] || 'administrative', owner: a.owner || '', targetDate: a.due || '' }; }),
+      photos: []
+    };
+    return pkg;
+  }
+
+  /* ---------- zip + docx ---------- */
+  const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  const crc32 = b => { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRC[(c ^ b[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  const enc = s => new TextEncoder().encode(s);
+  function zip(files) {
+    const parts = [], cd = []; let off = 0; const d = new Date();
+    const time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+    files.forEach(f => {
+      const name = enc(f.name), data = typeof f.data === 'string' ? enc(f.data) : f.data, crc = crc32(data);
+      const hd = new DataView(new ArrayBuffer(30));
+      hd.setUint32(0, 0x04034b50, true); hd.setUint16(4, 20, true); hd.setUint16(6, 0x0800, true); hd.setUint16(10, time, true); hd.setUint16(12, date, true); hd.setUint32(14, crc, true); hd.setUint32(18, data.length, true); hd.setUint32(22, data.length, true); hd.setUint16(26, name.length, true);
+      parts.push(new Uint8Array(hd.buffer), name, data);
+      const c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(12, time, true); c.setUint16(14, date, true); c.setUint32(16, crc, true); c.setUint32(20, data.length, true); c.setUint32(24, data.length, true); c.setUint16(28, name.length, true); c.setUint32(42, off, true);
+      cd.push(new Uint8Array(c.buffer), name); off += 30 + name.length + data.length;
+    });
+    const cdSize = cd.reduce((a, b) => a + b.length, 0), e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cdSize, true); e.setUint32(16, off, true);
+    const all = parts.concat(cd, [new Uint8Array(e.buffer)]), out = new Uint8Array(all.reduce((a, b) => a + b.length, 0)); let p = 0; all.forEach(b => { out.set(b, p); p += b.length; });
+    return out;
+  }
+  function docx(c, tree) {
+    const M = model(c), m = M.meta, F = E.fmt;
+    const W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
+    const run = (t, o) => { o = o || {}; const rp = (o.b ? '<w:b/>' : '') + (o.i ? '<w:i/>' : '') + (o.color ? `<w:color w:val="${o.color}"/>` : '') + (o.sz ? `<w:sz w:val="${o.sz}"/>` : '');
+      return String(t == null ? '' : t).split('\n').map((l, i) => (i ? '<w:r><w:br/></w:r>' : '') + `<w:r>${rp ? '<w:rPr>' + rp + '</w:rPr>' : ''}<w:t xml:space="preserve">${xml(l)}</w:t></w:r>`).join(''); };
+    const para = (content, o) => { o = o || {}; const pp = (o.style ? `<w:pStyle w:val="${o.style}"/>` : '') + (o.ind ? `<w:ind w:left="${o.ind}"/>` : '');
+      return `<w:p>${pp ? '<w:pPr>' + pp + '</w:pPr>' : ''}${typeof content === 'string' ? run(content, o) : content.join('')}</w:p>`; };
+    const H1 = t => para(t, { style: 'Heading1' }), H2 = t => para(t, { style: 'Heading2' });
+    const tableW = (head, rows, widths, CW) => {
+      const tw = widths.reduce((a, b) => a + b, 0), ws = widths.map(x => Math.round(x / tw * CW));
+      const border = '<w:tblBorders>' + ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(s => `<w:${s} w:val="single" w:sz="4" w:space="0" w:color="A9B2BE"/>`).join('') + '</w:tblBorders>';
+      const cell = (v, w, hd) => `<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${hd ? '<w:shd w:val="clear" w:color="auto" w:fill="E4EAF3"/>' : ''}</w:tcPr>${para(String(v == null ? '' : v), { b: hd, sz: 17 })}</w:tc>`;
+      return `<w:tbl><w:tblPr><w:tblW w:w="${CW}" w:type="dxa"/>${border}<w:tblLayout w:type="fixed"/><w:tblCellMar><w:top w:w="30" w:type="dxa"/><w:left w:w="70" w:type="dxa"/><w:bottom w:w="30" w:type="dxa"/><w:right w:w="70" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid>${ws.map(w => `<w:gridCol w:w="${w}"/>`).join('')}</w:tblGrid><w:tr><w:trPr><w:tblHeader/></w:trPr>${head.map((x, i) => cell(x, ws[i], true)).join('')}</w:tr>${rows.map(r => `<w:tr><w:trPr><w:cantSplit/></w:trPr>${r.map((v, i) => cell(v, ws[i], false)).join('')}</w:tr>`).join('')}</w:tbl>` + para('');
+    };
+    const T = (hd, rows, w) => tableW(hd, rows, w, 9638), TL = (hd, rows, w) => tableW(hd, rows, w, 14570);
+    const pic = (im, maxW, maxH) => { if (!im) return para('Tree image not available.'); const r = im.h / im.w; let wi = maxW, hi = wi * r; if (hi > maxH) { hi = maxH; wi = hi / r; } const cx = Math.round(wi * 914400), cy = Math.round(hi * 914400);
+      return `<w:p><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="1" name="tree"/><wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect="1"/></wp:cNvGraphicFramePr><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="1" name="tree.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="rIdTree"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`; };
+    const mar = '<w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/>';
+    const portrait = '<w:pgSz w:w="11906" w:h="16838"/>' + mar, landscape = '<w:pgSz w:w="16838" w:h="11906" w:orient="landscape"/>' + mar;
+    const st = n => (E.STATUS[n.status] || E.STATUS.unverified).name;
+    let b = para('ISTEC TRAINING · ROOT CAUSE ANALYSIS · CAUSE-AND-EFFECT FAULT TREE', { b: true, color: '1D4EA3', sz: 18 });
+    b += para(m.title || 'Untitled investigation', { style: 'Title' }) + para([m.ref, m.site, m.client].filter(Boolean).join(' · '), { color: '5B6573' });
+    b += T(['Item', 'Detail'], [['Date and time', (m.date || '') + (m.time ? ', ' + m.time : '')], ['Location', m.location || ''], ['Investigator', m.investigator || ''], ['Team', m.team || ''], ['Status', m.status || 'Draft']], [3, 7]);
+    b += H1('1. Description of the incident') + para(m.description || '');
+    b += H1('2. Conclusion') + para(m.conclusion || 'Not yet written.');
+    const li = (title, L) => H2(title) + (L.length ? L.map(r => para([run(r.n.code + ' ', { b: true }), run(r.n.label), r.n.category ? run(' (' + r.n.category + ')', { color: '5B6573' }) : '', run('  [' + st(r.n) + ']', { color: '5B6573' })], { ind: 240 }) + (r.n.why ? para('Why: ' + r.n.why, { ind: 480, color: '5B6573', sz: 18 }) : '')).join('') : para('None.', { color: '5B6573' }));
+    b += li('Root causes', M.roots) + li('Causal factors', M.causal) + li('Contributing factors', M.contrib);
+    b += `<w:p><w:pPr><w:sectPr>${portrait}</w:sectPr></w:pPr></w:p>`;
+    b += H1('3. Fault tree') + pic(tree, 10.1, 5.7) + para('Values given the evidence (ruled out = 0, confirmed = 1). “Given incident” = probability that an unresolved cause contributed, given the top event happened.', { sz: 16, color: '5B6573' });
+    b += H1('4. Hypotheses and evidence') + TL(['Code', 'Cause / event', 'Type', 'Status', 'Evidence', 'Test (open items)'], M.rows.map(r => [r.n.code, ' '.repeat(r.depth * 2) + r.n.label, r.type, st(r.n), r.n.evidence || '', r.n.status === 'confirmed' || r.n.status === 'ruledout' ? '' : (r.n.test || '') + (r.n.testOwner ? ' (' + r.n.testOwner + (r.n.testDue ? ', ' + r.n.testDue : '') + ')' : '')]), [0.8, 4, 1.6, 1.1, 4.5, 3]);
+    if (M.open.length) b += H2('Open hypotheses ranked by likelihood given the incident') + TL(['Cause', 'Status', 'P(contributed | incident)', 'Planned test'], M.open.map(r => [r.n.code + ' ' + r.n.label, st(r.n), isNaN(r.post) ? 'needs values' : Math.round(r.post * 100) + ' %', r.n.test || '']), [5, 1.3, 2, 5]);
+    b += `<w:p><w:pPr><w:sectPr>${landscape}</w:sectPr></w:pPr></w:p>`;
+    b += H1('5. Quantification') + para(`Top event before the evidence: ${F(M.pri.top.v, M.pri.top.u)}. Given the evidence: ${F(M.evd.top.v, M.evd.top.u)}.`);
+    const q = M.rows.filter(r => !E.isGate(r.n) && r.src && r.src !== 'Not quantified');
+    b += q.length ? T(['Code', 'Event', 'Source', 'Library default', 'Value used', 'Note'], q.map(r => [r.n.code, r.n.label, r.src, r.lib ? r.lib.name + ' – ' + F(r.lib.value, r.lib.unit) + ' (' + r.lib.ref + ')' : '', F(r.value, r.unit) + (r.lib && r.value !== r.lib.value ? ' (edited)' : ''), (r.n.prob || {}).note || '']), [0.8, 2.6, 1.5, 2.6, 1.1, 2.4]) : para('No events quantified.');
+    b += H2('Credible causal combinations (minimal cut sets)') + T(['#', 'Causes', 'Status', 'Before evidence', 'Given evidence', 'Share'], M.cs.rows.slice(0, 15).map((r, i) => [i + 1, r.ids.map(id => c.nodes[id].code + ' ' + c.nodes[id].label).join('\n'), r.status, F(r.prior.v, r.prior.u), F(r.evid.v, r.evid.u), isNaN(r.share) ? '—' : Math.round(r.share * 100) + ' %']), [0.5, 5, 1.1, 1.3, 1.3, 0.8]);
+    b += H1('6. Corrective actions') + (M.acts.length ? T(['#', 'Addresses', 'Action', 'Control', 'Owner', 'Due', 'Status'], M.acts.map(a => [a.n, a.tlabel, a.text, a.control || '', a.owner || '', a.due || '', a.status || '']), [0.4, 2.4, 4, 1.3, 1.6, 1.1, 1]) : para('No actions recorded.'));
+    let hn = 7;
+    if (m.lessons) { b += H1(hn++ + '. Lessons learned'); String(m.lessons).split('\n').filter(x => x.trim()).forEach(l => { b += para('• ' + l, { ind: 240 }); }); }
+    const open = M.issues.filter(i => i.sev !== 'tip');
+    b += H1(hn + '. Tree consistency check') + (open.length ? open.map(i => para('• ' + i.sev.toUpperCase() + ': ' + i.msg, { ind: 240, sz: 18 })).join('') : para('No logic or evidence inconsistencies found.'));
+    b += H1('Review and sign-off') + T(['Lead investigator', 'Reviewer', 'Accountable manager'], [['\n\nName, signature, date', '\n\nName, signature, date', '\n\nName, signature, date']], [1, 1, 1]);
+    b += para('Screening values from generic sources: ' + Object.values(LIB.REFS).join('; ') + '. They rank hypotheses; they are not design data.', { sz: 15, color: '6B7280' });
+    const doc = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${W} xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><w:body>${b}<w:sectPr>${portrait}</w:sectPr></w:body></w:document>`;
+    const styles = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles ${W}><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:eastAsia="Arial" w:cs="Arial"/><w:sz w:val="20"/><w:szCs w:val="20"/><w:lang w:val="en-GB"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="80" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:before="120" w:after="80"/></w:pPr><w:rPr><w:b/><w:color w:val="0F2A4D"/><w:sz w:val="42"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:pBdr><w:bottom w:val="single" w:sz="8" w:space="2" w:color="0F2A4D"/></w:pBdr><w:spacing w:before="300" w:after="120"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:color w:val="0F2A4D"/><w:sz w:val="30"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="200" w:after="60"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/><w:color w:val="1D4EA3"/><w:sz w:val="23"/></w:rPr></w:style></w:styles>`;
+    const files = [
+      { name: '[Content_Types].xml', data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>' },
+      { name: '_rels/.rels', data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>' },
+      { name: 'word/document.xml', data: doc }, { name: 'word/styles.xml', data: styles },
+      { name: 'word/_rels/document.xml.rels', data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdStyles" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>${tree ? '<Relationship Id="rIdTree" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/tree.png"/>' : ''}</Relationships>` }
+    ];
+    if (tree) files.push({ name: 'word/media/tree.png', data: tree.bytes });
+    return zip(files);
+  }
+  return { model, reportBody, reportHTML, REPORT_CSS, csv, casebookPackage, docx, zip };
+})();
+if (typeof module !== 'undefined') module.exports = RCAX;
+</script>
+<script>/* RCA Fault Tree — user guide (shown on the User guide tab). */
+var RCAGUIDE = `
+<span class="eyebrow">User guide</span><h1>RCA Fault Tree</h1>
+<p>A cause-and-effect fault tree for <b>root cause analysis</b>. The top event is the incident that happened. Below it you set out every way it could have happened, test each branch against the evidence, and keep the branches that survive. Probabilities are optional. When you enter them, they rank the hypotheses that are still open, so you know what to test first.</p>
+<p>It is not a risk-assessment tool: it does not ask whether a design is good enough. For quantitative design studies (PFDavg, SIL, test intervals) use the Fault Tree and PFD Calculator in the Process Safety Analysis Toolkit.</p>
+
+<h2>1. Quick start</h2>
+<ul>
+<li><b>File ▸ New fault tree</b>, then describe the incident on the <b>Incident</b> tab.</li>
+<li>On the <b>Fault tree</b> tab, select the top event and add its causes with <b>+ Gate</b> (an intermediate event that you develop further) or <b>+ Basic event</b> (a cause you do not break down).</li>
+<li>Choose the gate logic: <b>OR</b> if any one input is enough, <b>AND</b> if all inputs were needed together.</li>
+<li>For each element set the <b>hypothesis status</b> and record the <b>evidence</b>. Plan a <b>test</b> for those still open.</li>
+<li>Optionally give events a probability, from the data library or as a manual value.</li>
+<li>Classify the confirmed causes (root cause, causal factor, contributing factor), add <b>Actions</b>, and produce the <b>Report</b>.</li>
+<li><b>File ▸ Save as</b> links a file in the <code>My cases</code> folder on the stick. After that, every change is written to the file.</li>
+</ul>
+
+<h2>2. Symbols</h2>
+<ul>
+<li><b>Box</b>: the description of every event. The coloured stripe on the left is the hypothesis status.</li>
+<li><b>OR gate</b> (curved shield): the output occurs if any input occurs.</li>
+<li><b>AND gate</b> (flat-bottomed dome): the output occurs only if all inputs occur together.</li>
+<li><b>INHIBIT gate</b> (hexagon): the output occurs if the input occurs while an enabling condition is present. Show the condition as a condition (house) event.</li>
+<li><b>VOTE gate</b> (shield with k/n): the output occurs if at least k of the n inputs occur.</li>
+<li><b>Basic event</b> (circle): a cause that is not developed further.</li>
+<li><b>Undeveloped event</b> (diamond): a cause not developed, for lack of information or because it is outside the scope.</li>
+<li><b>Condition / house event</b> (house): a condition that was or was not present (for example, a single operator on shift). Its value is usually 1 (present) or 0 (absent).</li>
+<li><b>Triangle</b>: a collapsed branch. Select the gate and choose Expand branch.</li>
+</ul>
+
+<h2>3. Hypothesis status</h2>
+<ul>
+<li><b>Confirmed</b>: the evidence shows it happened.</li>
+<li><b>Likely</b>: the evidence points to it but is not conclusive yet.</li>
+<li><b>Unverified</b>: still to be tested.</li>
+<li><b>Ruled out</b>: the evidence shows it did not happen. The branch is drawn dashed and struck through, and it drops out of the causal combinations.</li>
+</ul>
+<p>The consistency check (Results tab) flags contradictions. Examples: a confirmed gate whose causes are all ruled out (the real cause is missing from the tree), a confirmed AND gate with a ruled-out input, or a confirmed cause under a ruled-out branch.</p>
+
+<h2>4. Probabilities and the data library</h2>
+<p>Each event chooses its own source, so one tree can mix failure types:</p>
+<ul>
+<li><b>Safeguard / IPL PFD</b>: typical probability of failure on demand of protection layers (CCPS LOPA, IEC 61511 SIL bands).</li>
+<li><b>Human error probability</b>: THERP and HEART generic task values.</li>
+<li><b>Equipment failure on demand</b>: generic per-demand values for pumps, valves, switches, transmitters, lifting gear and so on.</li>
+<li><b>Initiating event frequency</b>: typical frequencies per year (CCPS LOPA).</li>
+<li><b>Manual value</b>: your own probability or frequency.</li>
+<li><b>Site data</b>: custom items you add on the Data library tab (for example from CMMS history).</li>
+</ul>
+<p>Picking a library item fills in its value. You can then <b>edit the value for that event</b> (for example, scale a switch PFD up because its proof test was 18 months overdue). The panel then shows the event as edited, and you should record why in the value note. <b>Use library value</b> puts it back. On the Data library tab you can also override an item for the whole case; events that use it and were not edited individually follow the new value.</p>
+<p>Units: probability (0 to 1) or frequency (per year). An OR gate must combine inputs of the same unit. An AND gate may have at most one frequency input; the result is then a frequency (frequency × probabilities).</p>
+
+<h2>5. How the numbers are calculated</h2>
+<ul>
+<li>OR: 1 − Π(1 − p<sub>i</sub>) for probabilities; Σ f<sub>i</sub> for frequencies.</li>
+<li>AND / INHIBIT: Π p<sub>i</sub>, or f × Π p<sub>i</sub> with one frequency input.</li>
+<li>VOTE k of n: probability that at least k of the n inputs occur.</li>
+<li>The tree is evaluated exactly. Each element appears once, so the branches are independent.</li>
+<li><b>Before evidence</b>: every hypothesis at its screening value, giving how likely the incident path was before the investigation.</li>
+<li><b>Given evidence</b>: ruled-out causes count as 0 and confirmed probability causes as 1.</li>
+<li><b>Given the incident</b>, for each open hypothesis X: P(X contributed | top event and evidence) = p(X) × P(top | X occurred) / P(top). For a frequency (initiating) event it is that event's share of the top frequency. This is the ranking on the Results tab and the percentage shown on the tree.</li>
+<li><b>Credible causal combinations</b> are the minimal cut sets of the tree with ruled-out causes removed. Each is a set of causes that together are enough to produce the top event. They are sorted by status (all confirmed first) and then by likelihood.</li>
+</ul>
+<p>If an open branch has an event without a value, the percentages that depend on it show “needs values”. The qualitative analysis still works.</p>
+
+<h2>6. Saving on the USB stick</h2>
+<ul>
+<li>The tool keeps your work in the browser of the computer you are using. That copy does not travel with the stick.</li>
+<li><b>File ▸ Save as</b> (Chrome or Edge) links a file in <code>My cases</code>. Every later change is written to it, and the header shows “Saved to …”.</li>
+<li>On another computer, open the tool from the stick and use <b>File ▸ Open file</b>. If the header shows <b>Reconnect file</b>, click it: the browser asks for permission again after a restart.</li>
+<li>Firefox and Safari cannot link files. Use <b>Download backup copy</b> and open it again later.</li>
+<li>The START HERE dashboard lists the cases in <code>My cases</code> and those kept only in this browser.</li>
+</ul>
+
+<h2>7. Limitations</h2>
+<ul>
+<li>Library values are generic, order-of-magnitude screening values. Use them to rank hypotheses, not as design data. Replace them with site data where you have it.</li>
+<li>Elements cannot be shared between branches (each appears once). If the same cause acts in two places, model the dependency explicitly, for example with a common condition event.</li>
+<li>Probability never confirms a cause. A low percentage is not evidence that something did not happen; only evidence rules a cause out.</li>
+</ul>
+`;
+if (typeof module !== 'undefined') module.exports = RCAGUIDE;
+</script>
+<script>/* RCA Fault Tree — application (offline, single file). Saves to the browser and to a linked .rcaft.json file on the USB stick. */
+(function () {
+'use strict';
+const E = RCAE, X = RCAX, LIB = RCALIB, FL = KIT.FileLink({ tool: 'rcaft', ext: '.rcaft.json', label: 'RCA fault tree' });
+const $ = (s, el) => (el || document).querySelector(s);
+const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = p => (p || '') + Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
+const clone = o => JSON.parse(JSON.stringify(o));
+const nowISO = () => new Date().toISOString(), today = () => nowISO().slice(0, 10);
+const slug = s => String(s || 'rca').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'rca';
+let toastT;
+function toast(m) { let t = $('.toast'); if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); } t.textContent = m; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 3600); }
+const LS = { get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
+
+/* ---------- case model ---------- */
+function mkNode(kind, code, label) {
+  return { id: uid('n'), code, kind, label: label || '', gate: kind === 'gate' ? 'OR' : '', k: 2, children: [], status: 'unverified', evidence: '', test: '', testOwner: '', testDue: '', cause: '', category: '', why: '', notes: '', collapsed: false, prob: { src: kind === 'house' ? 'none' : 'none', item: '', value: null, unit: 'p', note: '', edited: false } };
+}
+function newCase() {
+  const top = mkNode('gate', 'TOP', 'Top event: describe what happened (the incident being investigated)');
+  top.status = 'confirmed';
+  return { id: uid('rca-'), format: 'rca-fault-tree', version: 1, meta: { title: 'New RCA investigation', ref: 'RCA-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 900) + 100), date: today(), time: '', location: '', site: '', client: '', investigator: '', team: '', status: 'Draft', description: '', conclusion: '', lessons: '' },
+    root: top.id, nodes: { [top.id]: top }, actions: [], libOverrides: {}, customLib: [], createdAt: nowISO(), updatedAt: nowISO() };
+}
+function normalise(c) {
+  c.meta = Object.assign({ title: '', ref: '', date: '', time: '', location: '', site: '', client: '', investigator: '', team: '', status: 'Draft', description: '', conclusion: '', lessons: '' }, c.meta || {});
+  c.nodes = c.nodes || {}; c.actions = c.actions || []; c.libOverrides = c.libOverrides || {}; c.customLib = c.customLib || [];
+  Object.values(c.nodes).forEach(n => { n.children = n.children || []; n.prob = Object.assign({ src: 'none', item: '', value: null, unit: 'p', note: '', edited: false }, n.prob || {}); if (!n.status) n.status = 'unverified';
+    const it = E.libItem(c, n.prob.item); if (it && n.prob.edited == null) n.prob.edited = n.prob.value != null && +n.prob.value !== it.value; if (it && n.prob.value != null && +n.prob.value !== it.value) n.prob.edited = true; });
+  return c;
+}
+function exampleCase() { const c = normalise(clone(RCAEX)); return c; }
+
+/* ---------- state ---------- */
+const S = { c: null, tab: 'tree', sel: null, view: { x: 40, y: 60, k: 0.8 }, show: 'evidence', menu: false, link: { handle: null, name: '', perm: 'none' }, undo: [], redo: [], hFilter: 'all', confirm: null, handoff: null, fitPending: true, saving: false };
+let issuesCache = null, postCache = null;
+const issues = () => issuesCache || (issuesCache = E.check(S.c));
+const post = () => postCache || (postCache = E.posteriors(S.c).out);
+const invalidate = () => { issuesCache = null; postCache = null; };
+
+function load(c, opts) {
+  opts = opts || {};
+  S.c = normalise(c); S.sel = S.c.root; S.undo = []; S.redo = []; S.confirm = null; invalidate(); S.fitPending = true;
+  S.link = { handle: null, name: '', perm: 'none' };
+  if (opts.handle) { S.link = { handle: opts.handle, name: opts.handle.name, perm: 'granted' }; FL.link(S.c.id, opts.handle); }
+  else FL.handleFor(S.c.id).then(async h => { if (h && S.c && !S.link.handle) { const p = await KIT.permission(h, false); S.link = { handle: h, name: h.name, perm: p === 'granted' ? 'granted' : 'prompt' }; renderTop(); } });
+  LS.set('rcaft.last', S.c.id); persist(true);
+  render();
+}
+
+/* ---------- saving ---------- */
+let lsT, fileT;
+function changed(noRender) {
+  if (!S.c) return;
+  S.c.updatedAt = nowISO(); invalidate();
+  clearTimeout(lsT); lsT = setTimeout(() => persist(false), 350);
+  if (!noRender) renderTop();
+}
+function snapshot() { return JSON.stringify(S.c); }
+function pushUndo() { if (!S.c) return; S.undo.push(snapshot()); if (S.undo.length > 80) S.undo.shift(); S.redo = []; }
+function undo() { if (!S.undo.length) return; S.redo.push(snapshot()); S.c = JSON.parse(S.undo.pop()); if (!S.c.nodes[S.sel]) S.sel = S.c.root; changed(); render(); }
+function redo() { if (!S.redo.length) return; S.undo.push(snapshot()); S.c = JSON.parse(S.redo.pop()); if (!S.c.nodes[S.sel]) S.sel = S.c.root; changed(); render(); }
+function fileText() { return JSON.stringify(Object.assign({}, S.c, { format: 'rca-fault-tree', version: 1, savedAt: nowISO(), app: 'Istec Training RCA Fault Tree' }), null, 1); }
+function persist(quiet) {
+  if (!S.c) return;
+  LS.set('rcaft.case.' + S.c.id, S.c);
+  KIT.KitRegistry.upsert({ tool: 'rcaft', id: S.c.id, title: S.c.meta.title, ref: S.c.meta.ref, status: S.c.meta.status, date: S.c.meta.date, updatedAt: S.c.updatedAt, file: S.link.handle && S.link.perm === 'granted' ? S.link.name : '', toolFile: 'RCA Fault Tree.html', example: !!S.c.example,
+    actions: KIT.actionStats(S.c.actions, a => a.status === 'Open' || a.status === 'In progress', a => a.due) });
+  if (S.link.handle && S.link.perm === 'granted') { clearTimeout(fileT); fileT = setTimeout(writeFile, quiet ? 0 : 600); }
+}
+async function writeFile() {
+  if (!S.link.handle || S.link.perm !== 'granted') return;
+  S.saving = true; renderTop();
+  try { await FL.write(S.link.handle, fileText()); S.link.savedAt = nowISO(); }
+  catch (e) { S.link.perm = 'prompt'; toast('Could not write to ' + S.link.name + '. Click Reconnect file.'); }
+  S.saving = false; renderTop();
+}
+async function saveAs() {
+  try {
+    const r = await FL.saveAs(S.c.id, slug((S.c.meta.ref ? S.c.meta.ref + '-' : '') + S.c.meta.title) + '.rcaft.json', fileText());
+    if (!r) return;
+    if (r.handle) { S.link = { handle: r.handle, name: r.name, perm: 'granted', savedAt: nowISO() }; delete S.c.example; persist(true); toast('Saved to ' + r.name + '. Later changes are written to this file automatically.'); }
+    else toast('Downloaded ' + r.name + '. This browser cannot link files: download again after changes.');
+    renderTop();
+  } catch (e) { toast('Could not save: ' + (e.message || e)); }
+}
+async function reconnect() {
+  if (!S.link.handle) return;
+  const p = await KIT.permission(S.link.handle, true);
+  if (p === 'granted') { S.link.perm = 'granted'; await writeFile(); toast('Reconnected to ' + S.link.name + '.'); } else toast('Permission was not given. Changes stay in this browser.');
+  renderTop();
+}
+function parseCase(text, name) {
+  let o; try { o = JSON.parse(text); } catch (e) { toast(name + ' is not a valid file (not JSON).'); return null; }
+  if (!o || o.format !== 'rca-fault-tree' || !o.nodes || !o.root) { toast(name + ' is not an RCA fault tree file.'); return null; }
+  return o;
+}
+async function openFile() {
+  try { const r = await FL.open(); if (!r) return; const c = parseCase(r.text, r.name); if (!c) return; delete c.example; load(c, { handle: r.handle }); toast('Opened ' + r.name + (r.handle ? '. Changes are saved to this file.' : '.')); }
+  catch (e) { toast('Could not open the file: ' + (e.message || e)); }
+}
+function recentCases() {
+  const out = [];
+  try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith('rcaft.case.')) { const c = LS.get(k); if (c && c.meta) out.push({ id: c.id, title: c.meta.title, ref: c.meta.ref, updatedAt: c.updatedAt, example: c.example }); } } } catch (e) {}
+  return out.sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
+}
+
+/* ---------- tree edits ---------- */
+const node = id => S.c.nodes[id];
+function nextCode(kind) {
+  const pre = kind === 'gate' ? 'G-' : kind === 'house' ? 'H-' : 'E-';
+  let mx = 0; Object.values(S.c.nodes).forEach(n => { const m = (n.code || '').match(/^([GEH])-(\d+)$/); if (m && m[1] + '-' === pre) mx = Math.max(mx, +m[2]); });
+  return pre + String(mx + 1).padStart(2, '0');
+}
+function addChild(pid, kind) {
+  const p = node(pid); if (!p || !E.isGate(p)) return;
+  pushUndo();
+  const n = mkNode(kind, nextCode(kind), '');
+  if (kind === 'house') { n.prob.src = 'manual'; n.prob.value = 1; n.status = 'unverified'; }
+  S.c.nodes[n.id] = n; p.children.push(n.id); p.collapsed = false; S.sel = n.id; changed(); render(); focusLabel();
+}
+function removeBranch(id) {
+  if (id === S.c.root) return;
+  pushUndo();
+  const ids = [id].concat(E.descendants(S.c, id)), p = E.parentOf(S.c, id);
+  if (p) p.children = p.children.filter(k => k !== id);
+  ids.forEach(k => delete S.c.nodes[k]);
+  const orphan = S.c.actions.filter(a => ids.indexOf(a.target) >= 0).length;
+  S.sel = p ? p.id : S.c.root; S.confirm = null; changed(); render();
+  toast('Deleted ' + ids.length + ' element' + (ids.length > 1 ? 's' : '') + '.' + (orphan ? ' ' + orphan + ' action(s) are no longer linked.' : '') + ' Undo is available.');
+}
+function moveSibling(id, dir) {
+  const p = E.parentOf(S.c, id); if (!p) return;
+  const i = p.children.indexOf(id), j = i + dir; if (j < 0 || j >= p.children.length) return;
+  pushUndo(); p.children.splice(i, 1); p.children.splice(j, 0, id); changed(); render();
+}
+function moveBranch(id, newParent) {
+  if (!newParent || id === S.c.root || newParent === id || E.descendants(S.c, id).indexOf(newParent) >= 0) return;
+  const np = node(newParent); if (!E.isGate(np)) return;
+  pushUndo(); const p = E.parentOf(S.c, id); if (p) p.children = p.children.filter(k => k !== id);
+  np.children.push(id); np.collapsed = false; changed(); render();
+}
+function convert(id, to) {
+  const n = node(id); if (!n) return; pushUndo();
+  if (to === 'gate') { n.kind = 'gate'; n.gate = 'OR'; n.prob = { src: 'none', item: '', value: null, unit: 'p', note: '', edited: false }; if (/^[EH]-/.test(n.code)) n.code = nextCode('gate'); }
+  else { if ((n.children || []).length) { toast('Remove the inputs first.'); S.undo.pop(); return; } n.kind = to; n.gate = ''; if (/^G-/.test(n.code)) n.code = nextCode(to); }
+  changed(); render();
+}
+function setProbSource(n, src) {
+  n.prob.src = src; n.prob.item = ''; n.prob.edited = false;
+  if (src === 'none') { n.prob.value = null; }
+  else if (src === 'freq') n.prob.unit = 'f';
+  else if (src !== 'manual' && src !== 'site') n.prob.unit = 'p';
+}
+function pickItem(n, id) {
+  const it = E.libItem(S.c, id); n.prob.item = id || '';
+  if (it) { n.prob.value = it.value; n.prob.unit = it.unit; n.prob.edited = false; }
+}
+function focusLabel() { setTimeout(() => { const t = $('#f-label'); if (t) { t.focus(); t.select(); } }, 30); }
+
+/* ---------- rendering ---------- */
+const TABS = [['tree', 'Fault tree'], ['hyp', 'Hypotheses & evidence'], ['results', 'Results'], ['library', 'Data library'], ['actions', 'Actions'], ['incident', 'Incident'], ['report', 'Report'], ['guide', 'User guide']];
+function render() {
+  if (!S.c) return;
+  $('#app').innerHTML = `<header class="top" id="top"></header><nav class="tabs" id="tabs"></nav><div id="banners"></div><main id="main"></main>`;
+  renderTop(); renderTabs();
+  const v = { tree: treeHTML, hyp: hypHTML, results: resultsHTML, library: libraryHTML, actions: actionsHTML, incident: incidentHTML, report: reportHTML, guide: () => `<div class="page guide">${RCAGUIDE}</div>` }[S.tab];
+  $('#main').innerHTML = v();
+  if (S.tab === 'tree') mountCanvas();
+  if (S.tab === 'report') $('#rpt').innerHTML = `<style>${X.REPORT_CSS}</style>` + X.reportBody(S.c, E.treeSVG(S.c, { noTitle: true, post: post() }));
+}
+function renderTabs() {
+  const t = $('#tabs'); if (!t) return;
+  const is = issues(), e = is.filter(i => i.sev === 'error').length, w = is.filter(i => i.sev === 'warning').length;
+  t.innerHTML = TABS.map(([k, l]) => `<button class="tab${S.tab === k ? ' on' : ''}" data-act="tab" data-t="${k}">${l}${k === 'results' ? (e ? `<span class="count err">${e}</span>` : w ? `<span class="count warn">${w}</span>` : '<span class="count ok">✓</span>') : ''}</button>`).join('');
+}
+function renderTop() {
+  const top = $('#top'); if (!top) return;
+  const L = S.link;
+  const pill = S.saving ? '<span class="pill">Saving…</span>' : L.handle && L.perm === 'granted' ? `<span class="pill ok" title="Every change is written to this file">Saved to ${esc(L.name)}</span>` : L.handle ? `<button class="btn sm" data-act="reconnect">Reconnect file</button>` : `<span class="pill warn" title="Kept in this browser only. Use File ▸ Save as to keep it on the USB stick.">Not saved to a file</span>`;
+  top.innerHTML = `<div class="brand"><span class="co">Istec Training</span><span class="app">RCA Fault Tree</span></div><div class="case-name">${esc((S.c.meta.ref ? S.c.meta.ref + ' · ' : '') + (S.c.meta.title || 'Untitled'))}</div>${pill}<button class="btn sm" data-act="menu" aria-haspopup="true" aria-expanded="${S.menu}">File ▾</button>${S.menu ? menuHTML() : ''}`;
+  const b = $('#banners'); if (b) b.innerHTML = bannersHTML();
+}
+function menuHTML() {
+  const rec = recentCases().filter(r => r.id !== S.c.id).slice(0, 6);
+  return `<div class="menu" role="menu">
+    <button data-act="new">New fault tree</button><button data-act="open">Open file…</button><button data-act="saveAs">Save as… (link a file on the stick)</button><button data-act="backup">Download backup copy</button>
+    <hr><span class="lbl">Export</span><button data-act="print">Print or save report as PDF</button><button data-act="docx">Word report (.docx)</button><button data-act="html">Report as web page (.html)</button><button data-act="svg">Tree picture (.svg)</button><button data-act="png">Tree picture (.png)</button><button data-act="csv">Hypotheses table (.csv)</button><button data-act="casebook">Storyline Casebook package (.json)</button>
+    <hr><button data-act="example">Load the worked example</button>
+    ${rec.length ? `<span class="lbl">On this computer</span>${rec.map(r => `<button data-act="recent" data-id="${esc(r.id)}"><span>${esc(r.ref ? r.ref + ' ' : '')}${esc(r.title || 'Untitled')}</span><span class="muted small">${esc((r.updatedAt || '').slice(0, 10))}</span></button>`).join('')}` : ''}
+  </div>`;
+}
+function bannersHTML() {
+  let s = '';
+  if (S.handoff) s += `<div class="banner info">The dashboard asked to open <b>${esc(S.handoff.name)}</b>.<button class="btn sm primary" data-act="takeHandoff">Open ${esc(S.handoff.name)}</button><button class="btn sm" data-act="dropHandoff">Not now</button></div>`;
+  if (S.c.example) s += `<div class="banner info"><b>Worked example</b> (fictional tank overfill). Edits stay in this browser. Use File ▸ New fault tree to start your own, or File ▸ Save as to keep a copy.</div>`;
+  if (S.link.handle && S.link.perm !== 'granted') s += `<div class="banner warn">This tree is linked to <b>${esc(S.link.name)}</b>, but the browser needs permission again before it can write to it.<button class="btn sm primary" data-act="reconnect">Reconnect file</button></div>`;
+  return s;
+}
+
+/* ---------- tree tab ---------- */
+function treeHTML() {
+  const pr = E.evaluate(S.c, 'prior').top, ev = E.evaluate(S.c, 'evidence').top;
+  return `<div class="bench"><div class="canvas-wrap"><svg id="cv" role="img" aria-label="Fault tree"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="var(--grid)"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/><g id="vp"></g></svg>
+    <div class="toolbar"><div class="topcard">Top event · before evidence <b>${E.fmt(pr.v, pr.u)}</b> · given evidence <b>${E.fmt(ev.v, ev.u)}</b></div>
+      <div class="grp"><button class="btn sm${S.show === 'evidence' ? ' on' : ''}" data-act="show" data-v="evidence" title="Ruled out = 0, confirmed = 1">Given evidence</button><button class="btn sm${S.show === 'prior' ? ' on' : ''}" data-act="show" data-v="prior" title="Screening values for every hypothesis">Before evidence</button><button class="btn sm${S.show === 'none' ? ' on' : ''}" data-act="show" data-v="none">No values</button></div>
+      <span class="spacer"></span>
+      <div class="grp"><button class="btn sm" data-act="undo"${S.undo.length ? '' : ' disabled'}>Undo</button><button class="btn sm" data-act="redo"${S.redo.length ? '' : ' disabled'}>Redo</button></div>
+      <div class="grp"><button class="btn sm" data-act="zoom" data-f="0.833" aria-label="Zoom out">−</button><button class="btn sm" data-act="zoom" data-f="1.2" aria-label="Zoom in">+</button><button class="btn sm" data-act="fit">Fit</button></div></div>
+    <div class="hint">Click a box to edit it · drag the background or Shift+scroll to pan · scroll wheel or pinch to zoom · the coloured stripe shows the hypothesis status</div></div>
+    <aside class="inspector" id="insp"></aside></div>`;
+}
+function issueMap() { const m = {}; issues().forEach(i => i.ids.forEach(id => { m[id] = m[id] || { error: 0, warning: 0 }; if (i.sev !== 'tip') m[id][i.sev]++; })); Object.keys(m).forEach(k => { if (!m[k].error && !m[k].warning) delete m[k]; }); return m; }
+function renderTree() {
+  const vp = $('#vp'); if (!vp) return;
+  const r = E.render(S.c, { interactive: true, sel: S.sel, issues: issueMap(), show: S.show, post: S.show === 'none' ? null : post() });
+  vp.innerHTML = r.body; S.bbox = r.bbox; applyView();
+}
+function applyView() { const vp = $('#vp'); if (vp) vp.setAttribute('transform', `translate(${S.view.x},${S.view.y}) scale(${S.view.k})`); }
+function fit() {
+  const svg = $('#cv'); if (!svg || !S.bbox) return;
+  const b = S.bbox, W = svg.clientWidth || 900, H = svg.clientHeight || 600;
+  const k = Math.max(0.2, Math.min(1.2, (W - 40) / Math.max(1, b.w), (H - 110) / Math.max(1, b.h)));
+  S.view = { k, x: (W - b.w * k) / 2 - b.x * k, y: 60 }; applyView();
+}
+function zoomAt(f, cx, cy) { const k = Math.max(0.15, Math.min(2.5, S.view.k * f)); S.view.x = cx - (cx - S.view.x) * (k / S.view.k); S.view.y = cy - (cy - S.view.y) * (k / S.view.k); S.view.k = k; applyView(); }
+let drag = null;
+function mountCanvas() {
+  const svg = $('#cv');
+  renderTree(); renderInspector();
+  if (S.fitPending) { S.fitPending = false; requestAnimationFrame(fit); }
+  svg.addEventListener('pointerdown', ev => {
+    if (ev.button !== 0) return;
+    const g = ev.target.closest('.ftn');
+    if (g) { S.sel = g.getAttribute('data-id'); S.confirm = null; renderTree(); renderInspector(); return; }
+    drag = { sx: ev.clientX, sy: ev.clientY, vx: S.view.x, vy: S.view.y }; svg.classList.add('panning');
+    try { svg.setPointerCapture(ev.pointerId); } catch (e) {}
+  });
+  svg.addEventListener('pointermove', ev => { if (!drag) return; S.view.x = drag.vx + ev.clientX - drag.sx; S.view.y = drag.vy + ev.clientY - drag.sy; applyView(); });
+  const end = () => { drag = null; svg.classList.remove('panning'); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  svg.addEventListener('wheel', ev => { ev.preventDefault(); const r = svg.getBoundingClientRect(); if (ev.shiftKey) { S.view.x -= ev.deltaX; S.view.y -= ev.deltaY; applyView(); return; } const d = ev.deltaY * (ev.deltaMode === 1 ? 33 : ev.deltaMode === 2 ? 400 : 1); zoomAt(Math.exp(ev.ctrlKey ? -d * 0.01 : -Math.max(-100, Math.min(100, d)) * 0.0015), ev.clientX - r.left, ev.clientY - r.top); }, { passive: false }); // wheel zooms at the pointer, pinch = ctrl+wheel, Shift+scroll pans
+  svg.addEventListener('dblclick', ev => { if (ev.target.closest('.ftn')) focusLabel(); });
+}
+function libOptions(n) {
+  const src = n.prob.src;
+  const items = src === 'site' ? S.c.customLib : LIB.ITEMS.filter(i => i.src === src);
+  return `<option value="">Choose an item…</option>` + items.map(i => { const it = E.libItem(S.c, i.id); return `<option value="${esc(i.id)}"${n.prob.item === i.id ? ' selected' : ''}>${esc(i.name)} — ${E.fmt(it.value, it.unit)}</option>`; }).join('');
+}
+function renderInspector() {
+  const el = $('#insp'); if (!el) return;
+  const n = node(S.sel) || node(S.c.root); S.sel = n.id;
+  const isG = E.isGate(n), p = E.parentOf(S.c, n.id), ks = E.kids(S.c, n);
+  const evd = E.evaluate(S.c, 'evidence').val(n.id), pri = E.evaluate(S.c, 'prior').val(n.id), po = post()[n.id];
+  const it = E.libItem(S.c, n.prob.item);
+  const gates = Object.values(S.c.nodes).filter(m => E.isGate(m) && m.id !== n.id && E.descendants(S.c, n.id).indexOf(m.id) < 0 && (!p || m.id !== p.id));
+  let prob = '';
+  if (!isG) {
+    const srcOpts = LIB.SOURCES.map(s => `<option value="${s.k}"${n.prob.src === s.k ? ' selected' : ''}${s.k === 'site' && !S.c.customLib.length ? ' disabled' : ''}>${esc(s.name)}</option>`).join('');
+    const lib = n.prob.src !== 'none' && n.prob.src !== 'manual';
+    prob = `<div class="box"><span class="lbl">Probability (optional)</span>
+      <label class="field"><span>Source</span><select id="f-src" data-nf="src">${srcOpts}</select></label>
+      ${lib ? `<label class="field"><span>Library item</span><select id="f-item" data-nf="item">${libOptions(n)}</select></label>` : ''}
+      ${n.prob.src !== 'none' ? `<div class="row" style="align-items:flex-end"><label class="field" style="flex:1"><span>Value used${E.unitOf(S.c, n) === 'f' ? ' (per year)' : ' (probability)'}</span><input id="f-val" data-nf="value" type="text" inputmode="decimal" value="${n.prob.value == null ? '' : esc(n.prob.value)}" placeholder="e.g. 0.01 or 1e-3"></label>
+        ${n.prob.src === 'manual' ? `<label class="field" style="width:130px"><span>Unit</span><select id="f-unit" data-nf="unit"><option value="p"${n.prob.unit !== 'f' ? ' selected' : ''}>Probability</option><option value="f"${n.prob.unit === 'f' ? ' selected' : ''}>Frequency /yr</option></select></label>` : ''}</div>` : ''}
+      ${it ? `<div class="libnote${n.prob.edited ? ' edited' : ''}">Library value <b>${E.fmt(it.value, it.unit)}</b>${it.overridden ? ' (case override of ' + E.fmt(it.def, it.unit) + ')' : ''} · range ${esc(it.range || '–')} · ${esc(it.ref)}${it.note ? '<br>' + esc(it.note) : ''}${n.prob.edited ? `<br><b>Edited for this event.</b> <button class="btn sm" data-act="resetVal">Use library value</button>` : ''}</div>` : ''}
+      ${n.prob.src !== 'none' ? `<label class="field"><span>Value note (source, why edited)</span><input id="f-pnote" data-nf="pnote" value="${esc(n.prob.note || '')}"></label>` : ''}
+    </div>`;
+  }
+  el.innerHTML = `<h3>${esc(n.code)} · ${esc(isG ? (n.id === S.c.root ? 'Top event' : 'Intermediate event') : E.KINDS[n.kind])}</h3>
+    <div class="row"><label class="field" style="width:110px"><span>Code</span><input id="f-code" data-nf="code" value="${esc(n.code)}"></label>
+      ${isG ? `<label class="field" style="flex:1"><span>Gate</span><select id="f-gate" data-nf="gate">${Object.keys(E.GATES).map(g => `<option value="${g}"${n.gate === g ? ' selected' : ''}>${esc(E.GATES[g])}</option>`).join('')}</select></label>${n.gate === 'VOTE' ? `<label class="field" style="width:70px"><span>k</span><input id="f-k" data-nf="k" type="number" min="1" value="${esc(n.k || 2)}"></label>` : ''}`
+        : `<label class="field" style="flex:1"><span>Event type</span><select id="f-kind" data-nf="kind">${['basic', 'undeveloped', 'house'].map(k => `<option value="${k}"${n.kind === k ? ' selected' : ''}>${esc(E.KINDS[k])}</option>`).join('')}</select></label>`}</div>
+    <label class="field"><span>Description</span><textarea id="f-label" data-nf="label" rows="3">${esc(n.label)}</textarea></label>
+    <div class="box"><span class="lbl">Hypothesis status</span>
+      <div class="seg" role="group" aria-label="Status">${Object.keys(E.STATUS).map(k => `<button class="${k}${n.status === k ? ' on' : ''}" data-act="status" data-v="${k}" aria-pressed="${n.status === k}">${E.STATUS[k].name}</button>`).join('')}</div>
+      <label class="field"><span>Evidence</span><textarea id="f-evidence" data-nf="evidence" rows="2" placeholder="What confirms or rules this out (records, photos, tests, interviews)">${esc(n.evidence)}</textarea></label>
+      ${n.status === 'unverified' || n.status === 'likely' ? `<label class="field"><span>How to test it</span><textarea id="f-test" data-nf="test" rows="2">${esc(n.test)}</textarea></label><div class="row"><label class="field" style="flex:1"><span>Test owner</span><input id="f-towner" data-nf="testOwner" value="${esc(n.testOwner)}"></label><label class="field" style="width:150px"><span>Due</span><input id="f-tdue" data-nf="testDue" type="date" value="${esc(n.testDue)}"></label></div>` : ''}
+    </div>
+    ${n.id !== S.c.root ? `<div class="box"><span class="lbl">Cause classification</span><div class="row"><label class="field" style="flex:1"><span>Class</span><select id="f-cause" data-nf="cause">${Object.keys(E.CAUSE).map(k => `<option value="${k}"${(n.cause || '') === k ? ' selected' : ''}>${esc(E.CAUSE[k])}</option>`).join('')}</select></label><label class="field" style="flex:1"><span>Category</span><select id="f-cat" data-nf="category"><option value="">–</option>${E.CATEGORIES.map(k => `<option${n.category === k ? ' selected' : ''}>${esc(k)}</option>`).join('')}</select></label></div>
+      ${n.cause ? `<label class="field"><span>Why did it occur? (underlying reason)</span><textarea id="f-why" data-nf="why" rows="2">${esc(n.why)}</textarea></label>` : ''}</div>` : ''}
+    ${prob}
+    <div class="libnote">${isG || n.prob.src !== 'none' || n.kind === 'house' ? `Before evidence <b>${E.fmt(pri.v, pri.u)}</b> · given evidence <b>${E.fmt(evd.v, evd.u)}</b>` : 'Not quantified.'}${po != null && !isNaN(po) && n.id !== S.c.root && n.status !== 'ruledout' && n.status !== 'confirmed' ? ` · contributed, given the incident: <b>${Math.round(po * 100)} %</b>` : ''}</div>
+    ${isG ? `<div class="box"><span class="lbl">Inputs (${ks.length})</span><div class="kids">${ks.map((k, i) => `<div class="kid"><span class="st st-${k.status}">${esc(E.STATUS[k.status].name)}</span><span>${esc(k.code)} ${esc(k.label || '(no description)')}</span><button class="xbtn" data-act="up" data-id="${esc(k.id)}" aria-label="Move left"${i ? '' : ' disabled'}>←</button><button class="xbtn" data-act="down" data-id="${esc(k.id)}" aria-label="Move right"${i < ks.length - 1 ? '' : ' disabled'}>→</button><button class="xbtn" data-act="go" data-id="${esc(k.id)}" aria-label="Select">↗</button></div>`).join('') || '<p class="small muted">No inputs yet.</p>'}</div>
+      <div class="quick"><button class="btn sm primary" data-act="add" data-k="gate">+ Gate</button><button class="btn sm primary" data-act="add" data-k="basic">+ Basic event</button><button class="btn sm" data-act="add" data-k="undeveloped">+ Undeveloped</button><button class="btn sm" data-act="add" data-k="house">+ Condition</button></div>
+      <div class="quick">${ks.length ? `<button class="btn sm" data-act="collapse">${n.collapsed ? 'Expand branch' : 'Collapse branch'}</button>` : `<button class="btn sm" data-act="convert" data-k="basic">Make it a basic event</button>`}</div></div>`
+      : `<div class="quick"><button class="btn sm" data-act="convert" data-k="gate">Develop further (make it a gate)</button></div>`}
+    ${n.id !== S.c.root ? `<div class="row">${gates.length ? `<label class="field" style="flex:1"><span>Move this branch under</span><select id="f-move" data-act-change="move"><option value="">Choose a gate…</option>${gates.map(g => `<option value="${esc(g.id)}">${esc(g.code)} ${esc((g.label || '').slice(0, 50))}</option>`).join('')}</select></label>` : ''}</div>
+      ${S.confirm === n.id ? `<div class="confirm">Delete ${esc(n.code)}${ks.length ? ' and the ' + E.descendants(S.c, n.id).length + ' element(s) under it' : ''}? <button class="btn sm danger" data-act="delYes">Delete</button><button class="btn sm" data-act="delNo">Keep</button></div>` : `<div class="quick"><button class="btn sm danger" data-act="del">Delete${ks.length ? ' branch' : ''}</button></div>`}` : ''}
+    <label class="field"><span>Notes</span><textarea id="f-notes" data-nf="notes" rows="2">${esc(n.notes)}</textarea></label>`;
+}
+
+/* ---------- hypotheses tab ---------- */
+function hypHTML() {
+  const rows = E.walk(S.c).filter(r => S.hFilter === 'all' || r.n.status === S.hFilter), P = post();
+  const cnt = k => Object.values(S.c.nodes).filter(n => n.status === k).length;
+  return `<div class="page"><div class="page-head"><div><span class="eyebrow">Evidence</span><h1>Hypotheses and evidence</h1><p class="muted">Every gate and event is a hypothesis. Confirm or rule it out with evidence; plan a test for those still open.</p></div>
+    <div class="row">${[['all', 'All', Object.keys(S.c.nodes).length]].concat(Object.keys(E.STATUS).map(k => [k, E.STATUS[k].name, cnt(k)])).map(([k, l, n]) => `<button class="btn sm${S.hFilter === k ? ' primary' : ''}" data-act="hfilter" data-f="${k}">${l} ${n}</button>`).join('')}</div></div>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Code</th><th style="min-width:240px">Cause / event</th><th>Status</th><th style="min-width:220px">Evidence</th><th style="min-width:200px">Test (open items)</th><th>Owner</th><th>Due</th><th>Given incident</th></tr></thead><tbody>
+    ${rows.map(({ n, depth }) => `<tr data-nid="${esc(n.id)}"><td class="mono">${esc(n.code)}</td><td style="padding-left:${8 + depth * 14}px">${esc(n.label)}<div class="small muted">${E.isGate(n) ? esc(n.gate) + ' gate' : esc(E.KINDS[n.kind])}${n.cause ? ' · ' + esc(E.CAUSE[n.cause]) : ''}</div></td>
+      <td><select id="h-st-${esc(n.id)}" data-hf="status">${Object.keys(E.STATUS).map(k => `<option value="${k}"${n.status === k ? ' selected' : ''}>${E.STATUS[k].name}</option>`).join('')}</select></td>
+      <td><textarea id="h-ev-${esc(n.id)}" data-hf="evidence" rows="2">${esc(n.evidence)}</textarea></td>
+      <td><textarea id="h-te-${esc(n.id)}" data-hf="test" rows="2">${esc(n.test)}</textarea></td>
+      <td><input id="h-ow-${esc(n.id)}" data-hf="testOwner" value="${esc(n.testOwner)}"></td><td><input id="h-du-${esc(n.id)}" data-hf="testDue" type="date" value="${esc(n.testDue)}"></td>
+      <td class="mono">${P[n.id] != null && !isNaN(P[n.id]) && n.status !== 'confirmed' && n.status !== 'ruledout' ? Math.round(P[n.id] * 100) + ' %' : ''}</td></tr>`).join('')}
+    </tbody></table></div></div>`;
+}
+
+/* ---------- results tab ---------- */
+function resultsHTML() {
+  const is = issues(), pr = E.evaluate(S.c, 'prior').top, ev = E.evaluate(S.c, 'evidence').top, P = post(), cs = E.rankCutSets(S.c);
+  const all = Object.values(S.c.nodes), cnt = k => all.filter(n => n.status === k).length;
+  const events = all.filter(n => !E.isGate(n)), quant = events.filter(n => n.kind === 'house' || (n.prob.src !== 'none' && !isNaN(E.rawValue(S.c, n))));
+  const open = E.walk(S.c).map(r => r.n).filter(n => n.id !== S.c.root && (n.status === 'unverified' || n.status === 'likely')).sort((a, b) => (isNaN(P[b.id]) ? -1 : P[b.id] || 0) - (isNaN(P[a.id]) ? -1 : P[a.id] || 0));
+  const mx = Math.max(0.0001, ...open.map(n => isNaN(P[n.id]) ? 0 : P[n.id] || 0));
+  const label = id => { const n = node(id); return `<span class="st st-${n.status}">${E.STATUS[n.status].name}</span> <b>${esc(n.code)}</b> ${esc(n.label)}`; };
+  return `<div class="page"><div class="page-head"><div><span class="eyebrow">Analysis</span><h1>Results</h1><p class="muted">Probabilities are optional. They rank the hypotheses still open; the evidence decides what happened.</p></div></div>
+    <div class="stats"><div class="stat"><b>${E.fmt(pr.v, pr.u)}</b><span>top event before evidence</span></div><div class="stat"><b>${E.fmt(ev.v, ev.u)}</b><span>top event given evidence</span></div>
+      ${Object.keys(E.STATUS).map(k => `<div class="stat"><b>${cnt(k)}</b><span>${E.STATUS[k].name.toLowerCase()}</span></div>`).join('')}<div class="stat"><b>${quant.length}/${events.length}</b><span>events quantified</span></div></div>
+    <section class="panel"><h2>Consistency check</h2>${!is.filter(i => i.sev !== 'tip').length ? '<div class="allclear">No logic or evidence inconsistencies found.</div>' : ''}
+      <div class="issues" style="margin-top:8px">${is.map(i => `<div class="issue ${i.sev}"><span class="sev">${i.sev}</span><span>${esc(i.msg)}</span>${i.ids.length ? `<button class="btn sm" data-act="showNode" data-id="${esc(i.ids[0])}">Show</button>` : '<span></span>'}</div>`).join('')}</div></section>
+    <section class="panel"><h2>Open hypotheses ranked by likelihood, given the incident</h2><p class="small muted" style="margin-bottom:8px">P(this cause contributed | the top event happened and the evidence so far). Test the high ones first; a low value is not proof that something did not happen.</p>
+      ${open.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Cause</th><th style="width:30%">Given the incident</th><th>Planned test</th></tr></thead><tbody>${open.map(n => `<tr><td>${label(n.id)}</td><td>${isNaN(P[n.id]) || P[n.id] == null ? '<span class="muted small">needs values in its branch</span>' : `<div class="row" style="flex-wrap:nowrap"><div class="bar" style="flex:1"><i style="width:${(P[n.id] / mx) * 100}%"></i></div><span class="mono">${Math.round(P[n.id] * 100)} %</span></div>`}</td><td class="small">${esc(n.test || '')}</td></tr>`).join('')}</tbody></table></div>` : '<p class="muted">No open hypotheses.</p>'}</section>
+    <section class="panel"><h2>Credible causal combinations (minimal cut sets)</h2><p class="small muted" style="margin-bottom:8px">Each combination of causes is enough on its own to produce the top event. ${cs.eliminated} combination(s) eliminated by ruled-out causes${cs.truncated ? '; the list was truncated' : ''}.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Causes</th><th>Status</th><th>Before evidence</th><th>Given evidence</th><th>Share</th></tr></thead><tbody>
+      ${cs.rows.slice(0, 40).map((r, i) => `<tr><td class="mono">${i + 1}</td><td>${r.ids.map(label).join('<br>')}</td><td>${esc(r.status)}</td><td class="mono">${E.fmt(r.prior.v, r.prior.u)}</td><td class="mono">${E.fmt(r.evid.v, r.evid.u)}</td><td class="mono">${isNaN(r.share) ? '—' : Math.round(r.share * 100) + ' %'}</td></tr>`).join('') || '<tr><td colspan="6" class="muted">No credible combinations: every path is ruled out, or the tree is not developed.</td></tr>'}</tbody></table></div></section>
+  </div>`;
+}
+
+/* ---------- library tab ---------- */
+function libraryHTML() {
+  const used = id => Object.values(S.c.nodes).filter(n => n.prob && n.prob.item === id).length;
+  const sec = s => {
+    const items = LIB.ITEMS.filter(i => i.src === s.k);
+    return `<section class="panel"><h2>${esc(s.name)}</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th style="min-width:280px">Item</th><th>Default</th><th>Value for this case</th><th>Range</th><th>Source</th><th>Used</th></tr></thead><tbody>
+      ${items.map(i => { const it = E.libItem(S.c, i.id); return `<tr><td>${esc(i.name)}${i.note ? `<div class="small muted">${esc(i.note)}</div>` : ''}</td><td class="mono">${E.fmt(i.value, i.unit)}</td><td><div class="row" style="flex-wrap:nowrap"><input id="lib-${esc(i.id)}" data-lib="${esc(i.id)}" value="${it.overridden ? esc(it.value) : ''}" placeholder="${esc(i.value)}" style="width:110px">${it.overridden ? `<button class="xbtn" data-act="libReset" data-id="${esc(i.id)}" title="Back to default">↺</button>` : ''}</div></td><td class="small mono">${esc(i.range)}</td><td class="small">${esc(i.ref)}</td><td class="mono">${used(i.id) || ''}</td></tr>`; }).join('')}</tbody></table></div></section>`;
+  };
+  return `<div class="page"><div class="page-head"><div><span class="eyebrow">Reference data</span><h1>Data library</h1><p class="muted">Typical generic screening values. Override a value for this case here (events that use the item and have not been edited individually follow the change), or edit the value on a single event in the tree. Record the reason in the event’s value note.</p></div></div>
+    <section class="panel"><h2>Site data (custom items)</h2><p class="small muted" style="margin-bottom:8px">Add your own values, for example from the site’s CMMS failure history or proof-test records. Choose “Site data” as the source on an event to use them.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Item</th><th>Value</th><th>Unit</th><th>Source / reference</th><th></th></tr></thead><tbody>
+      ${S.c.customLib.map((i, k) => `<tr data-ci="${k}"><td><input id="cl-n-${k}" data-cl="name" value="${esc(i.name)}"></td><td><input id="cl-v-${k}" data-cl="value" value="${esc(i.value)}" style="width:110px"></td><td><select id="cl-u-${k}" data-cl="unit"><option value="p"${i.unit !== 'f' ? ' selected' : ''}>Probability</option><option value="f"${i.unit === 'f' ? ' selected' : ''}>Frequency /yr</option></select></td><td><input id="cl-r-${k}" data-cl="ref" value="${esc(i.ref)}"></td><td><button class="xbtn" data-act="clDel" data-i="${k}" aria-label="Delete">×</button></td></tr>`).join('') || '<tr><td colspan="5" class="muted">No site items yet.</td></tr>'}
+      </tbody></table></div><div class="row" style="margin-top:8px"><button class="btn sm" data-act="clAdd">Add site item</button><button class="btn sm" data-act="clSave" title="Keep these items in this browser for new fault trees">Save as my default site items</button><button class="btn sm" data-act="clLoad">Add my default site items</button></div></section>
+    ${LIB.SOURCES.filter(s => ['ipl', 'hep', 'equip', 'freq'].indexOf(s.k) >= 0).map(sec).join('')}
+    <section class="panel"><h3>References</h3><ul class="small">${Object.keys(LIB.REFS).map(k => `<li><b>${esc(k)}</b>: ${esc(LIB.REFS[k])}</li>`).join('')}</ul><p class="small muted" style="margin-top:6px">These are order-of-magnitude values for ranking hypotheses in an investigation. They are not design data and do not replace site-specific reliability data.</p></section></div>`;
+}
+
+/* ---------- actions tab ---------- */
+function actionsHTML() {
+  const targets = E.walk(S.c).map(r => r.n).filter(n => n.id !== S.c.root && n.status !== 'ruledout');
+  const roots = targets.filter(n => n.cause === 'root'), unc = roots.filter(n => !S.c.actions.some(a => a.target === n.id && a.status !== 'Cancelled'));
+  const ctl = ['Elimination', 'Substitution', 'Engineering', 'Administrative', 'PPE'];
+  return `<div class="page"><div class="page-head"><div><span class="eyebrow">Corrective actions</span><h1>Actions</h1><p class="muted">Link each action to the cause it removes. Prefer actions higher in the hierarchy of control.</p></div><button class="btn primary" data-act="addAction">Add action</button></div>
+    ${unc.length ? `<section class="panel"><h3>Root causes without an action (${unc.length})</h3><div class="kids">${unc.map(n => `<div class="kid"><span>${esc(n.code)} ${esc(n.label)}</span><button class="btn sm" data-act="addActionFor" data-id="${esc(n.id)}">Add action</button></div>`).join('')}</div></section>` : roots.length ? '<div class="allclear">Every root cause has at least one action.</div>' : ''}
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th style="min-width:200px">Addresses</th><th style="min-width:260px">Action</th><th>Control</th><th>Owner</th><th>Due</th><th>Priority</th><th>Status</th><th></th></tr></thead><tbody>
+    ${S.c.actions.map((a, i) => `<tr data-ai="${i}"><td class="mono">${i + 1}</td><td><select id="a-t-${i}" data-af="target"><option value="">Not linked</option>${targets.map(n => `<option value="${esc(n.id)}"${a.target === n.id ? ' selected' : ''}>${esc(n.code)} ${esc((n.label || '').slice(0, 60))}${n.cause === 'root' ? ' [root cause]' : ''}</option>`).join('')}</select></td>
+      <td><textarea id="a-x-${i}" data-af="text" rows="2">${esc(a.text)}</textarea><input id="a-c-${i}" data-af="closeNote" placeholder="Close-out note / evidence" value="${esc(a.closeNote || '')}" style="margin-top:4px"></td>
+      <td><select id="a-k-${i}" data-af="control">${ctl.map(k => `<option${a.control === k ? ' selected' : ''}>${k}</option>`).join('')}</select></td>
+      <td><input id="a-o-${i}" data-af="owner" value="${esc(a.owner)}"></td><td><input id="a-d-${i}" data-af="due" type="date" value="${esc(a.due)}"></td>
+      <td><select id="a-p-${i}" data-af="priority">${['High', 'Medium', 'Low'].map(k => `<option${a.priority === k ? ' selected' : ''}>${k}</option>`).join('')}</select></td>
+      <td><select id="a-s-${i}" data-af="status">${['Open', 'In progress', 'Done', 'Cancelled'].map(k => `<option${a.status === k ? ' selected' : ''}>${k}</option>`).join('')}</select></td>
+      <td><button class="xbtn" data-act="actDel" data-i="${i}" aria-label="Delete action">×</button></td></tr>`).join('') || '<tr><td colspan="9" class="muted">No actions yet.</td></tr>'}</tbody></table></div></div>`;
+}
+
+/* ---------- incident tab ---------- */
+function incidentHTML() {
+  const m = S.c.meta;
+  const f = (k, l, t, wide) => `<label class="field${wide ? ' wide' : ''}"><span>${l}</span><input id="m-${k}" data-meta="${k}" type="${t || 'text'}" value="${esc(m[k] || '')}"></label>`;
+  const a = (k, l, r, ph) => `<label class="field wide"><span>${l}</span><textarea id="m-${k}" data-meta="${k}" rows="${r || 4}" placeholder="${esc(ph || '')}">${esc(m[k] || '')}</textarea></label>`;
+  return `<div class="page"><div class="page-head"><div><span class="eyebrow">Case details</span><h1>Incident</h1></div></div>
+    <section class="panel"><div class="form">${f('title', 'Title', 'text', true)}${f('ref', 'Reference')}${f('date', 'Date', 'date')}${f('time', 'Time')}${f('location', 'Location')}${f('site', 'Site / business unit')}${f('client', 'Client / company')}${f('investigator', 'Lead investigator')}
+      <label class="field"><span>Status</span><select id="m-status" data-meta="status">${['Draft', 'In review', 'Final'].map(s => `<option${m.status === s ? ' selected' : ''}>${s}</option>`).join('')}</select></label>
+      ${f('team', 'Team (separate names with ;)', 'text', true)}${a('description', 'Description of the incident', 5)}${a('conclusion', 'Conclusion (what happened and why)', 5)}${a('lessons', 'Lessons learned (one per line)', 3)}</div></section></div>`;
+}
+
+/* ---------- report tab ---------- */
+function reportHTML() {
+  return `<div class="page"><div class="page-head"><div><span class="eyebrow">Output</span><h1>Report</h1><p class="muted">Built from the incident details, the tree, the evidence, the quantification and the actions.</p></div>
+    <div class="row"><button class="btn primary" data-act="print">Print or save as PDF</button><button class="btn" data-act="docx">Word (.docx)</button><button class="btn" data-act="html">Web page (.html)</button><button class="btn" data-act="png">Tree (.png)</button><button class="btn" data-act="csv">Table (.csv)</button></div></div>
+    <div class="rpt-frame" id="rpt"></div></div>`;
+}
+
+/* ---------- exports ---------- */
+const base = () => slug((S.c.meta.ref ? S.c.meta.ref + '-' : '') + S.c.meta.title);
+function svgToPng(svg) {
+  return new Promise((res, rej) => {
+    const m = svg.match(/width="(\d+)" height="(\d+)"/), w = +m[1], h = +m[2], k = Math.min(2, 9000 / w, 9000 / h), img = new Image();
+    img.onload = () => { try { const cv = document.createElement('canvas'); cv.width = Math.round(w * k); cv.height = Math.round(h * k); const g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height); g.drawImage(img, 0, 0, cv.width, cv.height); cv.toBlob(b => b ? b.arrayBuffer().then(ab => res({ blob: b, bytes: new Uint8Array(ab), w: cv.width, h: cv.height })) : rej(new Error('png')), 'image/png'); } catch (e) { rej(e); } };
+    img.onerror = () => rej(new Error('svg')); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  });
+}
+const EXP = {
+  backup: () => KIT.download(base() + '.rcaft.json', fileText(), 'application/json'),
+  svg: () => KIT.download(base() + '-tree.svg', E.treeSVG(S.c, { post: post() }), 'image/svg+xml'),
+  png: async () => { try { const p = await svgToPng(E.treeSVG(S.c, { post: post() })); KIT.download(base() + '-tree.png', p.blob); } catch (e) { toast('The PNG could not be drawn. Use the SVG.'); } },
+  csv: () => KIT.download(base() + '-hypotheses.csv', X.csv(S.c), 'text/csv'),
+  html: () => KIT.download(base() + '-report.html', X.reportHTML(S.c, E.treeSVG(S.c, { noTitle: true, post: post() })), 'text/html'),
+  casebook: () => KIT.download(base() + '.casebook-case.json', JSON.stringify(X.casebookPackage(S.c), null, 1), 'application/json'),
+  docx: async () => { toast('Building the Word document…'); let t = null; try { t = await svgToPng(E.treeSVG(S.c, { noTitle: true, post: post() })); } catch (e) {} KIT.download(base() + '-report.docx', new Blob([X.docx(S.c, t)], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })); },
+  print: () => { const f = document.createElement('iframe'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0'; document.body.appendChild(f); f.onload = () => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast('Printing is not available. Download the web page and print it.'); } setTimeout(() => f.remove(), 60000); }; f.srcdoc = X.reportHTML(S.c, E.treeSVG(S.c, { noTitle: true, post: post() })); }
+};
+
+/* ---------- events ---------- */
+const A = Object.assign({
+  tab: d => { S.tab = d.t; S.menu = false; render(); },
+  menu: () => { S.menu = !S.menu; renderTop(); },
+  new: () => { S.menu = false; load(newCase()); S.tab = 'incident'; render(); setTimeout(() => { const t = $('#m-title'); if (t) { t.focus(); t.select(); } }, 30); },
+  open: () => { S.menu = false; renderTop(); openFile(); },
+  saveAs: () => { S.menu = false; renderTop(); saveAs(); },
+  reconnect: () => reconnect(),
+  example: () => { S.menu = false; const c = exampleCase(); load(c); },
+  recent: d => { S.menu = false; const c = LS.get('rcaft.case.' + d.id); if (c) load(c); },
+  takeHandoff: async () => { const h = S.handoff; S.handoff = null; if (!h) return; const p = await KIT.permission(h.handle, true); if (p !== 'granted') { toast('Permission was not given.'); renderTop(); return; } try { const f = await h.handle.getFile(); const c = parseCase(await f.text(), f.name); if (c) { delete c.example; load(c, { handle: h.handle }); toast('Opened ' + f.name + '.'); } } catch (e) { toast('Could not read ' + h.name + '.'); } },
+  dropHandoff: () => { S.handoff = null; renderTop(); },
+  show: d => { S.show = d.v; render(); },
+  undo, redo,
+  zoom: d => { const s = $('#cv'); zoomAt(+d.f, s.clientWidth / 2, s.clientHeight / 2); },
+  fit: () => fit(),
+  status: d => { const n = node(S.sel); pushUndo(); n.status = d.v; changed(); renderTree(); renderInspector(); renderTabs(); refreshTopcard(); },
+  add: d => addChild(S.sel, d.k),
+  up: d => moveSibling(d.id, -1), down: d => moveSibling(d.id, 1),
+  go: d => { S.sel = d.id; renderTree(); renderInspector(); },
+  collapse: () => { const n = node(S.sel); n.collapsed = !n.collapsed; changed(); renderTree(); renderInspector(); },
+  convert: d => convert(S.sel, d.k),
+  del: () => { const n = node(S.sel); if ((n.children || []).length) { S.confirm = n.id; renderInspector(); } else removeBranch(n.id); },
+  delYes: () => removeBranch(S.sel), delNo: () => { S.confirm = null; renderInspector(); },
+  resetVal: () => { const n = node(S.sel); pushUndo(); pickItem(n, n.prob.item); changed(); renderTree(); renderInspector(); refreshTopcard(); },
+  showNode: d => { S.sel = d.id; S.tab = 'tree'; render(); },
+  hfilter: d => { S.hFilter = d.f; render(); },
+  libReset: d => { pushUndo(); setOverride(d.id, null); render(); },
+  clAdd: () => { pushUndo(); S.c.customLib.push({ src: 'site', id: uid('site-'), name: 'Site item', value: 0.01, unit: 'p', range: '', ref: 'Site data', note: '' }); changed(); render(); },
+  clDel: d => { pushUndo(); const it = S.c.customLib[+d.i]; S.c.customLib.splice(+d.i, 1); Object.values(S.c.nodes).forEach(n => { if (n.prob.item === it.id) n.prob.item = ''; }); changed(); render(); },
+  clSave: () => { LS.set('rcaft.siteLib', S.c.customLib); toast('Saved ' + S.c.customLib.length + ' site item(s) as your defaults in this browser.'); },
+  clLoad: () => { const L = LS.get('rcaft.siteLib') || []; let n = 0; L.forEach(i => { if (!S.c.customLib.some(x => x.id === i.id)) { S.c.customLib.push(i); n++; } }); changed(); render(); toast(n + ' site item(s) added.'); },
+  addAction: () => addAction(''), addActionFor: d => addAction(d.id),
+  actDel: d => { pushUndo(); S.c.actions.splice(+d.i, 1); changed(); render(); }
+}, EXP);
+function addAction(target) { pushUndo(); S.c.actions.push({ id: uid('a'), target, text: '', owner: '', due: '', priority: 'Medium', control: 'Engineering', status: 'Open', closeNote: '' }); changed(); S.tab = 'actions'; render(); const t = $('#a-x-' + (S.c.actions.length - 1)); if (t) t.focus(); }
+function setOverride(id, v) {
+  const before = E.libItem(S.c, id);
+  if (v == null || v === '' || isNaN(+v)) delete S.c.libOverrides[id]; else S.c.libOverrides[id] = +v;
+  const after = E.libItem(S.c, id);
+  Object.values(S.c.nodes).forEach(n => { if (n.prob.item === id && !n.prob.edited) n.prob.value = after.value; });
+  changed();
+  return before;
+}
+function refreshTopcard() {
+  const tc = $('.topcard'); if (!tc) return;
+  const pr = E.evaluate(S.c, 'prior').top, ev = E.evaluate(S.c, 'evidence').top;
+  tc.innerHTML = `Top event · before evidence <b>${E.fmt(pr.v, pr.u)}</b> · given evidence <b>${E.fmt(ev.v, ev.u)}</b>`;
+}
+document.addEventListener('click', ev => {
+  const b = ev.target.closest('[data-act]');
+  if (!b) { if (S.menu && !ev.target.closest('.menu')) { S.menu = false; renderTop(); } return; }
+  if (b.disabled) return; const f = A[b.dataset.act]; if (!f) return; ev.preventDefault(); f(b.dataset, b);
+});
+let armed = null;
+document.addEventListener('focusin', ev => { const t = ev.target; if (t.matches('[data-nf],[data-hf],[data-af],[data-meta],[data-lib],[data-cl]') && armed !== t) { pushUndo(); armed = t; } });
+document.addEventListener('focusout', () => { armed = null; });
+function nodeField(n, k, v, live) {
+  if (k === 'src') { setProbSource(n, v); return 'full'; }
+  if (k === 'item') { pickItem(n, v); return 'full'; }
+  if (k === 'value') { const num = v.trim() === '' ? null : +v.replace(',', '.'); n.prob.value = (num == null || isNaN(num)) ? (v.trim() === '' ? null : n.prob.value) : num; const it = E.libItem(S.c, n.prob.item); n.prob.edited = !!it && n.prob.value != null && +n.prob.value !== it.value; return live ? 'tree' : 'full'; }
+  if (k === 'unit') { n.prob.unit = v; return 'full'; }
+  if (k === 'pnote') { n.prob.note = v; return 'none'; }
+  if (k === 'k') { n.k = Math.max(1, parseInt(v, 10) || 1); return 'full'; }
+  if (k === 'kind' || k === 'gate' || k === 'cause') { n[k] = v; if (k === 'kind' && v === 'house' && n.prob.src === 'none') { n.prob.src = 'manual'; n.prob.value = 1; } return 'full'; }
+  n[k] = v; return (k === 'label' || k === 'code') ? 'tree' : (k === 'category' ? 'tree' : 'none');
+}
+document.addEventListener('input', ev => {
+  const t = ev.target; if (!S.c) return;
+  if (t.dataset.nf && t.tagName !== 'SELECT') { const r = nodeField(node(S.sel), t.dataset.nf, t.value, true); changed(); if (r !== 'none') { renderTree(); refreshTopcard(); renderTabs(); } return; }
+  if (t.dataset.meta && t.tagName !== 'SELECT') { S.c.meta[t.dataset.meta] = t.value; changed(); return; }
+  const tr = t.closest('tr');
+  if (t.dataset.hf && t.tagName !== 'SELECT') { node(tr.dataset.nid)[t.dataset.hf] = t.value; changed(); return; }
+  if (t.dataset.af && t.tagName !== 'SELECT') { S.c.actions[+tr.dataset.ai][t.dataset.af] = t.value; changed(); return; }
+  if (t.dataset.cl && t.tagName !== 'SELECT') { const it = S.c.customLib[+tr.dataset.ci]; it[t.dataset.cl] = t.dataset.cl === 'value' ? (isNaN(+t.value) ? it.value : +t.value) : t.value; if (t.dataset.cl === 'value') Object.values(S.c.nodes).forEach(n => { if (n.prob.item === it.id && !n.prob.edited) n.prob.value = it.value; }); changed(); return; }
+});
+document.addEventListener('change', ev => {
+  const t = ev.target; if (!S.c) return;
+  if (t.dataset.actChange === 'move') { if (t.value) moveBranch(S.sel, t.value); return; }
+  if (t.dataset.nf) { const r = nodeField(node(S.sel), t.dataset.nf, t.value, false); changed(); if (r === 'full' || t.dataset.nf === 'value') { renderTree(); renderInspector(); refreshTopcard(); renderTabs(); } return; }
+  if (t.dataset.meta) { S.c.meta[t.dataset.meta] = t.value; changed(); return; }
+  const tr = t.closest('tr');
+  if (t.dataset.hf) { node(tr.dataset.nid)[t.dataset.hf] = t.value; changed(); if (t.dataset.hf === 'status') render(); return; }
+  if (t.dataset.af) { S.c.actions[+tr.dataset.ai][t.dataset.af] = t.value; changed(); if (t.dataset.af === 'target') render(); return; }
+  if (t.dataset.lib) { setOverride(t.dataset.lib, t.value.trim() === '' ? null : t.value.replace(',', '.')); render(); return; }
+  if (t.dataset.cl) { const it = S.c.customLib[+tr.dataset.ci]; if (t.dataset.cl === 'unit') { it.unit = t.value; changed(); } return; }
+});
+document.addEventListener('keydown', ev => {
+  if (S.tab !== 'tree') return;
+  const inField = ev.target.closest && ev.target.closest('input,textarea,select');
+  const mod = ev.metaKey || ev.ctrlKey;
+  if (mod && ev.key.toLowerCase() === 'z' && !inField) { ev.preventDefault(); ev.shiftKey ? redo() : undo(); }
+  if (mod && ev.key.toLowerCase() === 's') { ev.preventDefault(); if (S.link.handle && S.link.perm === 'granted') writeFile(); else saveAs(); }
+  if (!inField && (ev.key === 'Delete' || ev.key === 'Backspace') && S.sel && S.sel !== S.c.root) { ev.preventDefault(); A.del(); }
+  if (ev.key === 'Escape' && S.menu) { S.menu = false; renderTop(); }
+});
+window.addEventListener('pagehide', () => { if (S.c) LS.set('rcaft.case.' + S.c.id, S.c); });
+window.TBRCA = { S, E, X, load, newCase, exampleCase, addChild, removeBranch, issues: () => issues(), post: () => post(), render, setOverride, fileText };
+
+/* ---------- boot ---------- */
+(async function boot() {
+  const hash = location.hash || '';
+  let c = null;
+  if (hash.startsWith('#case-')) c = LS.get('rcaft.case.' + hash.slice(6));
+  if (!c) { const last = LS.get('rcaft.last'); if (last) c = LS.get('rcaft.case.' + last); }
+  load(c || exampleCase());
+  if (hash === '#handoff') { const h = await KIT.KitHandoff.take('rcaft'); if (h && h.handle) { S.handoff = h; renderTop(); } }
+})();
+})();
+</script>
+</body>
+</html>

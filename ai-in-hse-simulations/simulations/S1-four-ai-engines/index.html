@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S1 · Four kinds of AI, one incident</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S1 &middot; Four kinds of AI, one incident</h1>
+  <p class="sub">Simulation 1 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 1, Topics 1 &amp; 2.
+     One workplace near-miss, fed to a computer-vision model, a predictive model, an NLP classifier and a generative model, side by side.</p>
+
+  <div class="topbar">
+    <div class="grow">
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation &mdash; synthetic data.</strong>
+    No model runs on this page. Every &ldquo;AI output&rdquo; below is pre-authored to show how each family of AI
+    produces a result, how you would validate it, and how it fails. Figures are marked
+    <span class="indep">independent</span> or <span class="vendor">vendor-reported</span> where they come from the literature.
+  </div>
+
+  <div class="situation" id="situation"></div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="synthesis" id="synthesis"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, timing and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill in <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code>
+       &mdash; Day 1 Topic 2 (computer vision, NLP), Topic 2a (how LLMs generate text), Topic 2b (predictive models).</p>
+  </footer>
+
+</div>
+
+<!-- data: manifest first, then one line per scenario dataset, then the app -->
+<script src="data/manifest.js"></script>
+<script src="data/warehouse-fall/dataset.js"></script>
+<script src="data/forklift-pedestrian/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

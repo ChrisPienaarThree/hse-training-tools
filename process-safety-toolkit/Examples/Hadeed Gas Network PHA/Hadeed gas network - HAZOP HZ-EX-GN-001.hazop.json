@@ -1,0 +1,3863 @@
+{
+ "app": "HAZOP Study Manager",
+ "schema": 1,
+ "created": "2026-10-12T06:00:00.000Z",
+ "modified": "2026-10-14T16:00:00.000Z",
+ "study": {
+  "title": "PHA / HAZOP – Natural gas distribution network (worked example)",
+  "company": "Hadeed – integrated DRI-EAF steel works (illustrative example)",
+  "unit": "Utilities – natural gas receiving, pressure reduction and plant distribution",
+  "project": "PHA revalidation – plant natural gas network",
+  "type": "HAZOP – revalidation",
+  "docNo": "HZ-EX-GN-001",
+  "rev": "A",
+  "start": "2026-10-12",
+  "end": "2026-10-14",
+  "venue": "Utilities training room",
+  "scope": "Natural gas from the supplier's custody-transfer battery limit through the gas receiving & metering station (GRMS), gas heaters and pressure reduction station PRS-1, the 7 barg MP ring main, the district stations and fuel trains of the DRI plant (DS-2), melt shop (DS-3) and rolling-mill reheat furnace (DS-4 / fuel train), the purge / vent / blowdown facilities, and the gas detection & ESD system protecting the network.",
+  "exclusions": "Supplier pipeline upstream of ESDV-1001; burner internals and combustion inside the DRI reformer (covered by the DRI plant HAZOP); oxygen plant and O2 distribution (except the NG/O2 interface at oxy-fuel burners); plant N2 generation.",
+  "basis": "Receive natural gas at 35–42 barg (pipeline MAOP 50 barg), filter, meter and heat it, reduce it to 7 barg (MP header design 10 barg) and distribute it to the plant users at the pressure and quality they need, without loss of containment. All values are illustrative – confirm against the gas network design basis, P&IDs and relief / SIL studies.",
+  "modes": "Normal operation, start-up / re-pressurisation after supply interruption, regulator-run change-over, pigging, purging and gas-in / gas-out for maintenance, emergency shutdown",
+  "facilitator": "A. Facilitator",
+  "scribe": "B. Scribe"
+ },
+ "settings": {
+  "sev": [
+   "Negligible",
+   "Minor",
+   "Moderate",
+   "Major",
+   "Catastrophic"
+  ],
+  "sevDesc": [
+   "First aid; no lost time / minor on-site release / negligible damage",
+   "Medical treatment / reportable release contained on site / minor damage",
+   "Lost-time injury / off-site short-term impact / significant damage",
+   "Single fatality or permanent disability / significant off-site impact / major damage",
+   "Multiple fatalities / major off-site release / loss of unit"
+  ],
+  "lik": [
+   "Rare",
+   "Unlikely",
+   "Possible",
+   "Likely",
+   "Almost certain"
+  ],
+  "likDesc": [
+   "< 1 in 10 000 years",
+   "1 in 1 000 – 10 000 years",
+   "1 in 100 – 1 000 years",
+   "1 in 10 – 100 years",
+   "> 1 in 10 years"
+  ],
+  "grid": [
+   [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   [
+    2,
+    4,
+    6,
+    8,
+    10
+   ],
+   [
+    3,
+    6,
+    9,
+    12,
+    15
+   ],
+   [
+    4,
+    8,
+    12,
+    16,
+    20
+   ],
+   [
+    5,
+    10,
+    15,
+    20,
+    25
+   ]
+  ],
+  "bands": {
+   "Medium": 5,
+   "High": 10,
+   "Very High": 20
+  }
+ },
+ "team": [
+  {
+   "name": "A. Facilitator",
+   "company": "Istec",
+   "role": "Facilitator",
+   "attendance": "Days 1–3",
+   "id": "tm000164"
+  },
+  {
+   "name": "B. Scribe",
+   "company": "Istec",
+   "role": "Scribe",
+   "attendance": "Days 1–3",
+   "id": "tm000165"
+  },
+  {
+   "name": "C. Gas Network",
+   "company": "Utilities",
+   "role": "Process engineer",
+   "attendance": "Days 1–3",
+   "id": "tm000166"
+  },
+  {
+   "name": "D. Operator",
+   "company": "Utilities",
+   "role": "Operations representative",
+   "attendance": "Days 1–3",
+   "id": "tm000167"
+  },
+  {
+   "name": "E. Instrument",
+   "company": "Maintenance",
+   "role": "Instrument / control engineer",
+   "attendance": "Days 1–3",
+   "id": "tm000168"
+  },
+  {
+   "name": "F. Mechanical",
+   "company": "Maintenance",
+   "role": "Mechanical engineer",
+   "attendance": "Days 1–2",
+   "id": "tm000169"
+  },
+  {
+   "name": "G. Safety",
+   "company": "HSE",
+   "role": "HSE / process safety",
+   "attendance": "Days 1–3",
+   "id": "tm000170"
+  },
+  {
+   "name": "H. Furnace",
+   "company": "Rolling mill",
+   "role": "Operations representative",
+   "attendance": "Day 3",
+   "id": "tm000171"
+  },
+  {
+   "name": "I. DRI",
+   "company": "DRI plant",
+   "role": "Process engineer",
+   "attendance": "Day 2",
+   "id": "tm000172"
+  }
+ ],
+ "sessions": [
+  {
+   "id": "se000233",
+   "date": "2026-10-12",
+   "time": "08:00 – 16:00",
+   "nodeIds": [
+    "nd000173",
+    "nd000174",
+    "nd000175"
+   ],
+   "attendeeIds": [
+    "tm000164",
+    "tm000165",
+    "tm000166",
+    "tm000167",
+    "tm000168",
+    "tm000169",
+    "tm000170",
+    "tm000171",
+    "tm000172"
+   ],
+   "notes": "GRMS, PRS-1 and MP ring main. N02-02 referred for quantification (FT-GN-01); releases referred to BT-GN-01 / ETA-GN-01."
+  },
+  {
+   "id": "se000234",
+   "date": "2026-10-13",
+   "time": "08:00 – 16:00",
+   "nodeIds": [
+    "nd000176",
+    "nd000177",
+    "nd000179"
+   ],
+   "attendeeIds": [
+    "tm000164",
+    "tm000165",
+    "tm000166",
+    "tm000167",
+    "tm000168",
+    "tm000169",
+    "tm000170",
+    "tm000171",
+    "tm000172"
+   ],
+   "notes": "District stations DS-2 / DS-3 and purge / vent. NG back-flow into the N2 header (N07-03) linked to the hot DRI conveyor example."
+  },
+  {
+   "id": "se000235",
+   "date": "2026-10-14",
+   "time": "08:00 – 16:00",
+   "nodeIds": [
+    "nd000178",
+    "nd000180"
+   ],
+   "attendeeIds": [
+    "tm000164",
+    "tm000165",
+    "tm000166",
+    "tm000167",
+    "tm000168",
+    "tm000169",
+    "tm000170",
+    "tm000171",
+    "tm000172"
+   ],
+   "notes": "Reheat furnace BMS (FT-GN-03, ETA-GN-02, BT-GN-02) and gas detection / ESD (FT-GN-02). Study closed; FMECA scheduled 15–16 Oct."
+  }
+ ],
+ "psi": [
+  {
+   "ref": "PSI-01",
+   "category": "Drawings",
+   "docNo": "P&ID-GN-1001",
+   "title": "Gas receiving & metering station (GRMS) P&ID",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000181"
+  },
+  {
+   "ref": "PSI-02",
+   "category": "Drawings",
+   "docNo": "P&ID-GN-1101",
+   "title": "Gas heaters and pressure reduction station PRS-1 P&ID",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000183"
+  },
+  {
+   "ref": "PSI-03",
+   "category": "Drawings",
+   "docNo": "P&ID-GN-1201/1202",
+   "title": "MP ring main and pipe-rack routing",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000185"
+  },
+  {
+   "ref": "PSI-04",
+   "category": "Drawings",
+   "docNo": "P&ID-GN-2001",
+   "title": "DRI plant district station DS-2",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000187"
+  },
+  {
+   "ref": "PSI-05",
+   "category": "Drawings",
+   "docNo": "P&ID-GN-3001",
+   "title": "Melt shop district station DS-3, oxy-fuel burners and ladle preheaters",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000189"
+  },
+  {
+   "ref": "PSI-06",
+   "category": "Drawings",
+   "docNo": "P&ID-GN-4001",
+   "title": "Rolling-mill reheat furnace fuel gas train and BMS",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000191"
+  },
+  {
+   "ref": "PSI-07",
+   "category": "Drawings",
+   "docNo": "P&ID-GN-1301",
+   "title": "Vent stack, blowdown and N2 purge connections",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000193"
+  },
+  {
+   "ref": "PSI-08",
+   "category": "Drawings",
+   "docNo": "C&E-GN-1000",
+   "title": "ESD / F&G cause-and-effect charts",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000195"
+  },
+  {
+   "ref": "PSI-09",
+   "category": "Drawings",
+   "docNo": "HAC-GN-001",
+   "title": "Hazardous area classification – gas network",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000199"
+  },
+  {
+   "ref": "PSI-10",
+   "category": "Process technology",
+   "docNo": "DB-GN-001",
+   "title": "Gas network design basis (pressures, set points, MDMT)",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000204"
+  },
+  {
+   "ref": "PSI-11",
+   "category": "Equipment",
+   "docNo": "RS-GN-001",
+   "title": "Relief and overpressure protection study",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000208"
+  },
+  {
+   "ref": "PSI-12",
+   "category": "Equipment",
+   "docNo": "SRS-GN-001",
+   "title": "Safety requirements specification – gas ESD and furnace BMS",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000212"
+  },
+  {
+   "ref": "PSI-13",
+   "category": "Hazardous materials",
+   "docNo": "SDS-NG-001",
+   "title": "Natural gas safety data sheet; gas supply quality specification",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000215"
+  },
+  {
+   "ref": "PSI-14",
+   "category": "Procedures",
+   "docNo": "OP-GN-010",
+   "title": "Pigging procedure (pig receiver PR-1001)",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000217"
+  },
+  {
+   "ref": "PSI-15",
+   "category": "Procedures",
+   "docNo": "OP-GN-020",
+   "title": "Purging and gas-in / gas-out procedure",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000220"
+  },
+  {
+   "ref": "PSI-16",
+   "category": "Procedures",
+   "docNo": "OP-RM-040",
+   "title": "Reheat furnace light-off and shutdown procedure",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000223"
+  },
+  {
+   "ref": "PSI-17",
+   "category": "Previous studies",
+   "docNo": "HZ-GN-2019",
+   "title": "Previous gas network HAZOP (2019) and close-out status",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000225"
+  },
+  {
+   "ref": "PSI-18",
+   "category": "Previous studies",
+   "docNo": "INC-GN-LOG",
+   "title": "Gas incident / near-miss log (last 5 years)",
+   "rev": "A",
+   "status": "Available",
+   "id": "ps000229"
+  }
+ ],
+ "psiNodes": [
+  {
+   "id": "pn000182",
+   "psiId": "ps000181",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000184",
+   "psiId": "ps000183",
+   "nodeId": "nd000174"
+  },
+  {
+   "id": "pn000186",
+   "psiId": "ps000185",
+   "nodeId": "nd000175"
+  },
+  {
+   "id": "pn000188",
+   "psiId": "ps000187",
+   "nodeId": "nd000176"
+  },
+  {
+   "id": "pn000190",
+   "psiId": "ps000189",
+   "nodeId": "nd000177"
+  },
+  {
+   "id": "pn000192",
+   "psiId": "ps000191",
+   "nodeId": "nd000178"
+  },
+  {
+   "id": "pn000194",
+   "psiId": "ps000193",
+   "nodeId": "nd000179"
+  },
+  {
+   "id": "pn000196",
+   "psiId": "ps000195",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000197",
+   "psiId": "ps000195",
+   "nodeId": "nd000174"
+  },
+  {
+   "id": "pn000198",
+   "psiId": "ps000195",
+   "nodeId": "nd000180"
+  },
+  {
+   "id": "pn000200",
+   "psiId": "ps000199",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000201",
+   "psiId": "ps000199",
+   "nodeId": "nd000174"
+  },
+  {
+   "id": "pn000202",
+   "psiId": "ps000199",
+   "nodeId": "nd000175"
+  },
+  {
+   "id": "pn000203",
+   "psiId": "ps000199",
+   "nodeId": "nd000179"
+  },
+  {
+   "id": "pn000205",
+   "psiId": "ps000204",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000206",
+   "psiId": "ps000204",
+   "nodeId": "nd000174"
+  },
+  {
+   "id": "pn000207",
+   "psiId": "ps000204",
+   "nodeId": "nd000175"
+  },
+  {
+   "id": "pn000209",
+   "psiId": "ps000208",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000210",
+   "psiId": "ps000208",
+   "nodeId": "nd000174"
+  },
+  {
+   "id": "pn000211",
+   "psiId": "ps000208",
+   "nodeId": "nd000179"
+  },
+  {
+   "id": "pn000213",
+   "psiId": "ps000212",
+   "nodeId": "nd000178"
+  },
+  {
+   "id": "pn000214",
+   "psiId": "ps000212",
+   "nodeId": "nd000180"
+  },
+  {
+   "id": "pn000216",
+   "psiId": "ps000215",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000218",
+   "psiId": "ps000217",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000219",
+   "psiId": "ps000217",
+   "nodeId": "nd000179"
+  },
+  {
+   "id": "pn000221",
+   "psiId": "ps000220",
+   "nodeId": "nd000175"
+  },
+  {
+   "id": "pn000222",
+   "psiId": "ps000220",
+   "nodeId": "nd000179"
+  },
+  {
+   "id": "pn000224",
+   "psiId": "ps000223",
+   "nodeId": "nd000178"
+  },
+  {
+   "id": "pn000226",
+   "psiId": "ps000225",
+   "nodeId": "nd000173"
+  },
+  {
+   "id": "pn000227",
+   "psiId": "ps000225",
+   "nodeId": "nd000174"
+  },
+  {
+   "id": "pn000228",
+   "psiId": "ps000225",
+   "nodeId": "nd000175"
+  },
+  {
+   "id": "pn000230",
+   "psiId": "ps000229",
+   "nodeId": "nd000175"
+  },
+  {
+   "id": "pn000231",
+   "psiId": "ps000229",
+   "nodeId": "nd000177"
+  },
+  {
+   "id": "pn000232",
+   "psiId": "ps000229",
+   "nodeId": "nd000178"
+  }
+ ],
+ "nodes": [
+  {
+   "no": "N01",
+   "name": "Gas receiving & metering station (GRMS)",
+   "drawings": "P&ID-GN-1001",
+   "status": "Complete",
+   "batteryLimits": "From the supplier battery-limit insulating joint IJ-1001 through inlet ESD valve ESDV-1001, pig receiver PR-1001, filter-separators F-1002A/B and ultrasonic meter runs FT-1003A/B to the inlet of the gas heaters",
+   "description": "Receive natural gas from the supplier's pipeline, remove liquids and solids and meter it for custody transfer",
+   "designParams": "Design 50 barg / -10 to 60 °C (= pipeline MAOP); 2 x 100 % filter-separators; 2 x 100 % meter runs",
+   "operatingParams": "35–42 barg; 20–35 °C; up to 120 000 Sm3/h",
+   "materials": "Natural gas (methane > 90 %, extremely flammable, asphyxiant); traces of H2S, condensate, black powder",
+   "id": "nd000173"
+  },
+  {
+   "no": "N02",
+   "name": "Gas heaters H-1101A/B and pressure reduction station PRS-1",
+   "drawings": "P&ID-GN-1101",
+   "status": "Complete",
+   "batteryLimits": "From the heater inlet through water-bath heaters H-1101A/B and regulator runs A/B (slam-shut SSV-1102, monitor PCV-1103, active PCV-1104) to outlet ESD valve ESDV-1107, incl. token relief PSV-1105",
+   "description": "Pre-heat the gas to offset Joule–Thomson cooling (~0.5 °C per bar) and reduce it from 35–42 barg to 7 barg without exceeding the MP design pressure",
+   "designParams": "Inlet 50 barg; outlet piping 10 barg design; set points: active 7.0, monitor 7.5, SSV OPSO 8.5, PSV-1105 9.0 barg; outlet temperature ≥ 5 °C",
+   "operatingParams": "Outlet 6.8–7.2 barg; heater outlet 30–40 °C upstream of the regulators; run A duty / run B standby (set 0.3 bar lower)",
+   "materials": "Natural gas; hot water / glycol bath; heater flue gases",
+   "id": "nd000174"
+  },
+  {
+   "no": "N03",
+   "name": "MP ring main (7 barg) and pipe racks",
+   "drawings": "P&ID-GN-1201/1202",
+   "status": "Complete",
+   "batteryLimits": "From ESDV-1107 around the plant ring main (24\") with sectionalising valves XV-1201…1204 to the inlet isolation of each district station (DS-2, DS-3, DS-4); buried road crossings with cathodic protection CP-1200",
+   "description": "Distribute 7 barg gas to all plant users with sectional isolation and without loss of containment",
+   "designParams": "Design 10 barg; API 5L carbon steel; buried sections coated + impressed-current CP",
+   "operatingParams": "6.8–7.2 barg; ambient temperature",
+   "materials": "Natural gas",
+   "id": "nd000175"
+  },
+  {
+   "no": "N04",
+   "name": "DRI plant gas supply – district station DS-2",
+   "drawings": "P&ID-GN-2001",
+   "status": "Complete",
+   "batteryLimits": "From the DS-2 inlet ESDV-2001 via regulators PCV-2002A/B to the reformer fuel gas control valve FCV-2004 and the process-gas NG make-up point (XV-2008)",
+   "description": "Supply natural gas to the DRI reformer burners (fuel) and as make-up to the reducing-gas circuit at controlled pressure and flow",
+   "designParams": "Design 10 barg (full MP pressure); outlet 4.5 barg",
+   "operatingParams": "4.0–4.5 barg; flow on reformer firing demand",
+   "materials": "Natural gas; reducing / process gas (H2, CO – toxic, flammable) at the make-up point",
+   "id": "nd000176"
+  },
+  {
+   "no": "N05",
+   "name": "Melt shop gas supply – DS-3, EAF oxy-fuel burners and ladle preheaters",
+   "drawings": "P&ID-GN-3001",
+   "status": "Complete",
+   "batteryLimits": "From DS-3 inlet ESDV-3001 via PCV-3002A, slam-shut SSV-3003 and PSV-3004 to the EAF oxy-fuel burner skids (XV-3011, NRV-3010) and ladle preheaters LPH-3020",
+   "description": "Supply natural gas to the EAF oxy-fuel burners and ladle / tundish preheaters at controlled pressure",
+   "designParams": "Design 10 barg; outlet 2.0 barg; O2 supply to burners 10 barg",
+   "operatingParams": "1.8–2.0 barg; intermittent firing",
+   "materials": "Natural gas; oxygen (oxidiser); molten metal / slag nearby",
+   "id": "nd000177"
+  },
+  {
+   "no": "N06",
+   "name": "Rolling-mill reheat furnace fuel gas train and burner management",
+   "drawings": "P&ID-GN-4001",
+   "status": "Complete",
+   "batteryLimits": "From DS-4 regulator PCV-4001 through safety shut-off valves XV-4002A/B (with vent XV-4003 and valve proving VPS-4004) to the zone burners B-4020, incl. BMS-4000, flame scanners BS-4010 and combustion air fan FN-4007",
+   "description": "Deliver fuel gas to the reheat furnace burners only when safe to fire (purged, air proven, flame proven) and shut it off on any unsafe condition",
+   "designParams": "Design 10 barg upstream / 2 barg downstream of PCV-4001; SSOV closing time < 1 s",
+   "operatingParams": "0.3–1.5 barg at the burners; furnace 900–1250 °C; light-off from cold after outages",
+   "materials": "Natural gas; combustion air; flue gas (CO)",
+   "id": "nd000178"
+  },
+  {
+   "no": "N07",
+   "name": "Purge, vent, blowdown and maintenance isolation",
+   "drawings": "P&ID-GN-1301",
+   "status": "Complete",
+   "batteryLimits": "Vent stack VS-1301 and blowdown valve BDV-1302 at the PRS, spectacle blinds SB-1303 and N2 purge connections N2-1304 at GRMS, PRS and district stations",
+   "description": "Allow equipment to be depressurised, purged, isolated and returned to service without creating flammable mixtures, releases or asphyxiation hazards",
+   "designParams": "Vent stack 3 m above the highest platform within 15 m; N2 purge supply 8 barg",
+   "operatingParams": "Used during maintenance, pigging and gas-in / gas-out",
+   "materials": "Natural gas; nitrogen (asphyxiant); air",
+   "id": "nd000179"
+  },
+  {
+   "no": "N08",
+   "name": "Gas detection, F&G and ESD system",
+   "drawings": "C&E-GN-1000",
+   "status": "Complete",
+   "batteryLimits": "Gas detectors GD-1110A/B/C (PRS shelter, 2oo3), GRMS detectors, manual ESD stations HS-1000, SIS logic solver UCP-1000 and UPS-1000, acting on ESDV-1001 / ESDV-1107 and the district-station ESD valves",
+   "description": "Detect a gas release in the HP / MP system and isolate the gas inventory automatically or on manual demand",
+   "designParams": "SIS per SRS-GN-001; ESD valves fail-closed; UPS 30 min",
+   "operatingParams": "Normally on line; detectors 20 % / 40 % LEL alarm / trip",
+   "materials": "Natural gas",
+   "id": "nd000180"
+  }
+ ],
+ "deviations": [
+  {
+   "nodeId": "nd000173",
+   "seq": 1,
+   "parameter": "Flow",
+   "guideword": "NO",
+   "deviation": "No gas supply from the pipeline",
+   "devAuto": false,
+   "consequence": "Loss of gas to all users: reformer, reheat furnace, preheater and oxy-fuel burner flame-outs and trips; on uncontrolled restoration of supply, gas may enter burners that are not proven shut – accumulation and explosion on relight (see N06-01); production loss",
+   "sevB": "3",
+   "likB": "3",
+   "sevA": "3",
+   "likA": "2",
+   "comments": "Restoration after an interruption is the hazardous phase – see N06 and R-006.",
+   "id": "dv000320",
+   "ref": "N01-01"
+  },
+  {
+   "nodeId": "nd000173",
+   "seq": 2,
+   "parameter": "Pressure",
+   "guideword": "MORE",
+   "deviation": "Inlet pressure above GRMS design",
+   "devAuto": false,
+   "consequence": "Overpressure of filter-separators / meter runs only if their design pressure were below the pipeline MAOP; blocked-in sections heated by the sun – flange leak, release of high-pressure gas (bow tie BT-GN-01)",
+   "sevB": "5",
+   "likB": "2",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "GRMS designed for the pipeline MAOP (50 barg) – overpressure from the supplier not credible.",
+   "id": "dv000328",
+   "ref": "N01-02"
+  },
+  {
+   "nodeId": "nd000173",
+   "seq": 3,
+   "parameter": "Flow",
+   "guideword": "AS WELL AS",
+   "deviation": "Liquids / solids carried in the gas",
+   "devAuto": false,
+   "consequence": "Filter-separator overload; liquid / dust carry-over to meters and regulator pilots – active regulator may stick open (demand on overpressure protection, N02-02); erosion; liquid slugs cause flame instability at burners",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "Carry-over is one of the initiating causes in fault tree FT-GN-01 (active regulator fails open).",
+   "id": "dv000335",
+   "ref": "N01-03"
+  },
+  {
+   "nodeId": "nd000173",
+   "seq": 4,
+   "parameter": "Composition",
+   "guideword": "OTHER THAN",
+   "deviation": "Gas composition outside specification",
+   "devAuto": false,
+   "consequence": "H2S poisons the DRI reformer catalyst and is toxic on release; Wobbe index change alters burner heat release – over-firing or flame instability in the reheat furnace and preheaters",
+   "sevB": "3",
+   "likB": "3",
+   "sevA": "3",
+   "likA": "2",
+   "comments": "Composition is also reviewed for the DRI plant in N04-04.",
+   "id": "dv000342",
+   "ref": "N01-04"
+  },
+  {
+   "nodeId": "nd000173",
+   "seq": 5,
+   "parameter": "Process gas (CO, H2 – BFG, COG, LD gas, reducing gas)",
+   "guideword": "LEAK OF",
+   "deviation": "Leak of natural gas at the GRMS",
+   "devAuto": false,
+   "consequence": "High-pressure natural gas release fed from the pipeline inventory: jet fire if ignited immediately; flash fire or vapour cloud explosion if ignited later – potential multiple fatalities and loss of gas to the whole works (event tree ETA-GN-01)",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Quantified: bow tie BT-GN-01 (top event = loss of containment of the HP / MP system), event tree ETA-GN-01 (initiating event = BT-GN-01 top), fault tree FT-GN-02 (ESD). Likelihood after safeguards from the calculated frequency 4.3E-6 /yr.",
+   "id": "dv000348",
+   "ref": "N01-05"
+  },
+  {
+   "nodeId": "nd000173",
+   "seq": 6,
+   "parameter": "Corrosion / erosion",
+   "guideword": "MORE",
+   "deviation": "External corrosion of the buried inlet line / insulating joint",
+   "devAuto": false,
+   "consequence": "Wall loss leading to a leak or rupture of the buried section – gas migrates through soil into trenches / buildings (bow tie BT-GN-01 threat 2)",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "FMECA S03 CP-1200; bow tie BT-GN-01 threat T2.",
+   "id": "dv000360",
+   "ref": "N01-06"
+  },
+  {
+   "nodeId": "nd000173",
+   "seq": 7,
+   "parameter": "Maintenance",
+   "guideword": "INADEQUATE",
+   "deviation": "Unsafe pigging / maintenance on the GRMS",
+   "devAuto": false,
+   "consequence": "Pig receiver door blown open or gas release onto the operator; pyrophoric iron sulphide in pig debris ignites on exposure to air",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Bow tie BT-GN-01 threat T5 (maintenance error).",
+   "id": "dv000367",
+   "ref": "N01-07"
+  },
+  {
+   "nodeId": "nd000174",
+   "seq": 1,
+   "parameter": "Temperature",
+   "guideword": "LESS",
+   "deviation": "Gas temperature downstream of the regulators too low",
+   "devAuto": false,
+   "consequence": "Joule–Thomson cooling (~0.5 °C per bar, ~17 °C for 42 → 7 barg) – outlet below 0 °C: hydrate / ice in regulator pilots (active regulator may fail open – demand on N02-02 protection); piping below its MDMT – brittle fracture",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "Ice in the pilot is an initiating cause in fault tree FT-GN-01 (BE-001).",
+   "id": "dv000375",
+   "ref": "N02-01"
+  },
+  {
+   "nodeId": "nd000174",
+   "seq": 2,
+   "parameter": "Pressure",
+   "guideword": "MORE",
+   "deviation": "PRS outlet pressure above MP design pressure (10 barg)",
+   "devAuto": false,
+   "consequence": "Overpressure of the whole MP network (inlet up to 42 barg vs 10 barg design): flange leaks and possible rupture across the site, overpressure of district stations and burner trains – fires / explosions at several locations",
+   "sevB": "5",
+   "likB": "4",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Quantified: fault tree FT-GN-01 – top = MP header overpressure 3.6E-5 /yr; gate G-002 (monitor + slam-shut) PFDavg 2.0E-4; bow tie BT-GN-01 threat T1. PSV-1105 is a token relief and is not credited. Likelihood after safeguards from the calculated frequency 3.6E-5 /yr.",
+   "id": "dv000383",
+   "ref": "N02-02"
+  },
+  {
+   "nodeId": "nd000174",
+   "seq": 3,
+   "parameter": "Pressure",
+   "guideword": "LESS",
+   "deviation": "Low PRS outlet pressure",
+   "devAuto": false,
+   "consequence": "Low header pressure: flame-out at reheat furnace, preheaters and reformer burners; danger on relight if the burner shut-off is not proven (see N06)",
+   "sevB": "3",
+   "likB": "3",
+   "sevA": "3",
+   "likA": "2",
+   "comments": "Run B takes over automatically if run A closes.",
+   "id": "dv000394",
+   "ref": "N02-03"
+  },
+  {
+   "nodeId": "nd000174",
+   "seq": 4,
+   "parameter": "Flow",
+   "guideword": "MORE",
+   "deviation": "Gas demand above PRS capacity",
+   "devAuto": false,
+   "consequence": "Regulators fully open, outlet pressure sags, extra Joule–Thomson cooling, high velocity – noise, erosion and vibration of regulator runs",
+   "sevB": "2",
+   "likB": "3",
+   "sevA": "2",
+   "likA": "2",
+   "comments": "Operability issue – capacity check in the design basis.",
+   "id": "dv000402",
+   "ref": "N02-04"
+  },
+  {
+   "nodeId": "nd000174",
+   "seq": 5,
+   "parameter": "Process gas (CO, H2 – BFG, COG, LD gas, reducing gas)",
+   "guideword": "LEAK OF",
+   "deviation": "Gas release inside the PRS shelter",
+   "devAuto": false,
+   "consequence": "Gas accumulates in the partly enclosed shelter – confined explosion; jet fire on the regulator runs (event tree ETA-GN-01)",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Bow tie BT-GN-01 threat T6; event tree ETA-GN-01. Likelihood after safeguards from the calculated frequency 4.3E-6 /yr.",
+   "id": "dv000407",
+   "ref": "N02-05"
+  },
+  {
+   "nodeId": "nd000174",
+   "seq": 6,
+   "parameter": "Temperature",
+   "guideword": "MORE",
+   "deviation": "Heater bath over-temperature / dry firing",
+   "devAuto": false,
+   "consequence": "Fire-tube overheating and failure – heater fire; a gas-coil leak vents gas through the bath vent next to the firebox – fire / explosion at the heater",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "FMECA S02 H-1101A.",
+   "id": "dv000417",
+   "ref": "N02-06"
+  },
+  {
+   "nodeId": "nd000174",
+   "seq": 7,
+   "parameter": "Relief",
+   "guideword": "INADEQUATE",
+   "deviation": "Relief not sized for regulator failure",
+   "devAuto": false,
+   "consequence": "PSV-1105 is a token relief – full-flow regulator failure relies on the monitor regulator and slam-shut; vent discharge near the heaters could ignite",
+   "sevB": "5",
+   "likB": "2",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Accepted design practice for gas pressure regulating stations: two independent overpressure protections instead of full-flow relief.",
+   "id": "dv000424",
+   "ref": "N02-07"
+  },
+  {
+   "nodeId": "nd000175",
+   "seq": 1,
+   "parameter": "Process gas (CO, H2 – BFG, COG, LD gas, reducing gas)",
+   "guideword": "LEAK OF",
+   "deviation": "Leak from the MP ring main",
+   "devAuto": false,
+   "consequence": "Release in congested plant areas (melt shop, rolling mill): jet fire or vapour cloud explosion; gas migrating into cable trenches and building HVAC intakes – explosion inside buildings",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Bow tie BT-GN-01 threats T2 (corrosion), T3 (impact), T4 (flange / fitting failure).",
+   "id": "dv000432",
+   "ref": "N03-01"
+  },
+  {
+   "nodeId": "nd000175",
+   "seq": 2,
+   "parameter": "Pressure",
+   "guideword": "MORE",
+   "deviation": "MP header overpressure",
+   "devAuto": false,
+   "consequence": "As N02-02 – whole MP network above its 10 barg design pressure",
+   "sevB": "5",
+   "likB": "4",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Covered by N02-02 and fault tree FT-GN-01; recorded here so the node is complete. Likelihood after safeguards from the calculated frequency 3.6E-5 /yr.",
+   "id": "dv000445",
+   "ref": "N03-02"
+  },
+  {
+   "nodeId": "nd000175",
+   "seq": 3,
+   "parameter": "Air / oxygen in process gas",
+   "guideword": "AS WELL AS",
+   "deviation": "Air in the header after maintenance",
+   "devAuto": false,
+   "consequence": "Flammable gas / air mixture inside the header on gas-in – internal deflagration, flashback at the first burner lit",
+   "sevB": "5",
+   "likB": "2",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "See N07-01.",
+   "id": "dv000451",
+   "ref": "N03-03"
+  },
+  {
+   "nodeId": "nd000175",
+   "seq": 4,
+   "parameter": "Corrosion / erosion",
+   "guideword": "MORE",
+   "deviation": "Corrosion of the ring main",
+   "devAuto": false,
+   "consequence": "Wall loss – leak (as N03-01)",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "FMECA S03 L-1200 and CP-1200.",
+   "id": "dv000457",
+   "ref": "N03-04"
+  },
+  {
+   "nodeId": "nd000175",
+   "seq": 5,
+   "parameter": "Electrical safety / static",
+   "guideword": "INADEQUATE",
+   "deviation": "Stray currents and induced voltages on the gas pipework",
+   "devAuto": false,
+   "consequence": "Arcing at flanges during maintenance – ignition of a gas release; accelerated stray-current corrosion of buried sections",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "Steel-works specific – see FMECA S03.",
+   "id": "dv000464",
+   "ref": "N03-05"
+  },
+  {
+   "nodeId": "nd000175",
+   "seq": 6,
+   "parameter": "Operator action",
+   "guideword": "OTHER THAN",
+   "deviation": "Wrong sectionalising valve operated",
+   "devAuto": false,
+   "consequence": "Loss of gas to a whole plant area – flame-outs (as N02-03); maintenance on a section believed isolated but still live",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "",
+   "id": "dv000470",
+   "ref": "N03-06"
+  },
+  {
+   "nodeId": "nd000176",
+   "seq": 1,
+   "parameter": "Flow",
+   "guideword": "MORE",
+   "deviation": "Excess fuel gas to the reformer burners",
+   "devAuto": false,
+   "consequence": "Reformer over-firing: tube overheating and rupture – reducing-gas fire in the reformer box; CO in the flue gas",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "FMECA S04 FCV-2004; reformer covered in detail by the DRI plant HAZOP.",
+   "id": "dv000476",
+   "ref": "N04-01"
+  },
+  {
+   "nodeId": "nd000176",
+   "seq": 2,
+   "parameter": "Flow",
+   "guideword": "NO",
+   "deviation": "No natural gas to the DRI plant",
+   "devAuto": false,
+   "consequence": "Reformer flame-out and DRI module trip; loss of reducing gas quality; production loss",
+   "sevB": "3",
+   "likB": "3",
+   "sevA": "3",
+   "likA": "2",
+   "comments": "",
+   "id": "dv000481",
+   "ref": "N04-02"
+  },
+  {
+   "nodeId": "nd000176",
+   "seq": 3,
+   "parameter": "Flow",
+   "guideword": "REVERSE",
+   "deviation": "Reverse flow of process gas into the NG line",
+   "devAuto": false,
+   "consequence": "H2 / CO-rich reducing gas flows back into the NG system – CO toxic exposure at other users' burners and vents, flame instability",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "FMECA S04 XV-2008 (hidden failure – passing in the closed position).",
+   "id": "dv000485",
+   "ref": "N04-03"
+  },
+  {
+   "nodeId": "nd000176",
+   "seq": 4,
+   "parameter": "Composition",
+   "guideword": "AS WELL AS",
+   "deviation": "Sulphur / contaminants in the NG to the reformer",
+   "devAuto": false,
+   "consequence": "Reformer catalyst poisoning; fouling of burner nozzles",
+   "sevB": "3",
+   "likB": "3",
+   "sevA": "3",
+   "likA": "2",
+   "comments": "See N01-04.",
+   "id": "dv000491",
+   "ref": "N04-04"
+  },
+  {
+   "nodeId": "nd000176",
+   "seq": 5,
+   "parameter": "Pressure",
+   "guideword": "MORE",
+   "deviation": "DS-2 regulator fails open",
+   "devAuto": false,
+   "consequence": "Downstream piping exposed to full MP pressure (7 barg) – within its 10 barg design; burner pressure high, trip on high pressure",
+   "sevB": "2",
+   "likB": "3",
+   "sevA": "2",
+   "likA": "2",
+   "comments": "Inherently safe – downstream designed for MP pressure.",
+   "id": "dv000496",
+   "ref": "N04-05"
+  },
+  {
+   "nodeId": "nd000177",
+   "seq": 1,
+   "parameter": "Oxygen (lances, burners, pipelines)",
+   "guideword": "AS WELL AS",
+   "deviation": "Oxygen in the NG line at the oxy-fuel burners",
+   "devAuto": false,
+   "consequence": "Explosive NG / O2 mixture inside the NG line – flashback, detonation in the burner line, fire in the melt shop next to the EAF",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "FMECA S05 NRV-3010 (hidden failure).",
+   "id": "dv000500",
+   "ref": "N05-01"
+  },
+  {
+   "nodeId": "nd000177",
+   "seq": 2,
+   "parameter": "Process gas (CO, H2 – BFG, COG, LD gas, reducing gas)",
+   "guideword": "LEAK OF",
+   "deviation": "NG leak in the melt shop",
+   "devAuto": false,
+   "consequence": "Immediate ignition near molten metal – fire on the burner skid; gas in basements / cable tunnels – explosion",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "",
+   "id": "dv000507",
+   "ref": "N05-02"
+  },
+  {
+   "nodeId": "nd000177",
+   "seq": 3,
+   "parameter": "Pressure",
+   "guideword": "LESS",
+   "deviation": "Low gas pressure at the ladle preheaters",
+   "devAuto": false,
+   "consequence": "Flame-out at the preheater; gas accumulates in the ladle / tundish – explosion on relight",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "Same mechanism as N06-01 (smaller inventory).",
+   "id": "dv000516",
+   "ref": "N05-03"
+  },
+  {
+   "nodeId": "nd000177",
+   "seq": 4,
+   "parameter": "Operator action",
+   "guideword": "OTHER THAN",
+   "deviation": "Preheater lit manually with the BMS bypassed",
+   "devAuto": false,
+   "consequence": "Gas accumulation and explosion in the ladle; burns to the operator",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "PHBMS not credited as an IPL here because the cause is its bypass.",
+   "id": "dv000521",
+   "ref": "N05-04"
+  },
+  {
+   "nodeId": "nd000178",
+   "seq": 1,
+   "parameter": "Flow",
+   "guideword": "NO",
+   "deviation": "Loss of flame with fuel gas still flowing",
+   "devAuto": false,
+   "consequence": "Unburnt gas enters a furnace zone below auto-ignition temperature (start-up / low fire) – explosive mixture, furnace explosion: casing / door failure, fatalities on the furnace platforms",
+   "sevB": "5",
+   "likB": "5",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Quantified: fault tree FT-GN-03 (BMS flame-failure shut-off PFDavg 1.1E-2; top 9.2E-3 /yr), event tree ETA-GN-02 (explosion 9.2E-4 /yr vs target 1E-4), bow tie BT-GN-02 threat T1. Likelihood after safeguards from the calculated frequency 9.2E-4 /yr.",
+   "id": "dv000527",
+   "ref": "N06-01"
+  },
+  {
+   "nodeId": "nd000178",
+   "seq": 2,
+   "parameter": "Pressure",
+   "guideword": "MORE",
+   "deviation": "High fuel gas pressure at the burners",
+   "devAuto": false,
+   "consequence": "Flame lift-off and flame-out (then as N06-01); over-firing – skid / refractory damage",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "BMS not credited separately – the PSHH trip acts through the same logic solver.",
+   "id": "dv000536",
+   "ref": "N06-02"
+  },
+  {
+   "nodeId": "nd000178",
+   "seq": 3,
+   "parameter": "Flow",
+   "guideword": "LESS",
+   "deviation": "Low combustion air flow",
+   "devAuto": false,
+   "consequence": "Fuel-rich combustion – CO, unburnt gas accumulating in the furnace; explosion when air is restored",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Bow tie BT-GN-02 threat T4.",
+   "id": "dv000541",
+   "ref": "N06-03"
+  },
+  {
+   "nodeId": "nd000178",
+   "seq": 4,
+   "parameter": "Timing / sequence",
+   "guideword": "BEFORE",
+   "deviation": "Light-off before the pre-purge is complete",
+   "devAuto": false,
+   "consequence": "Light-off into a furnace containing gas from a previous attempt – explosion",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Bow tie BT-GN-02 threat T3.",
+   "id": "dv000546",
+   "ref": "N06-04"
+  },
+  {
+   "nodeId": "nd000178",
+   "seq": 5,
+   "parameter": "Process gas (CO, H2 – BFG, COG, LD gas, reducing gas)",
+   "guideword": "LEAK OF",
+   "deviation": "Safety shut-off valves passing into the idle furnace",
+   "devAuto": false,
+   "consequence": "Gas accumulates in a cold, idle furnace – explosion at the next light-off or hot work; asphyxiation / fire during furnace entry",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Bow tie BT-GN-02 threat T2; FMECA S06 XV-4002A (leakage in closed position).",
+   "id": "dv000552",
+   "ref": "N06-05"
+  },
+  {
+   "nodeId": "nd000178",
+   "seq": 6,
+   "parameter": "Process control / instrumentation",
+   "guideword": "LOSS OF",
+   "deviation": "BMS bypassed or modified without control",
+   "devAuto": false,
+   "consequence": "Flame-failure, purge or pressure trips not available – as N06-01 / N06-04",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Bypass of the BMS is event BE-009 in fault tree FT-GN-03.",
+   "id": "dv000558",
+   "ref": "N06-06"
+  },
+  {
+   "nodeId": "nd000178",
+   "seq": 7,
+   "parameter": "Maintenance",
+   "guideword": "INADEQUATE",
+   "deviation": "Furnace entry with fuel gas not positively isolated",
+   "devAuto": false,
+   "consequence": "Fire / explosion or asphyxiation of people inside the furnace",
+   "sevB": "5",
+   "likB": "2",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "",
+   "id": "dv000565",
+   "ref": "N06-07"
+  },
+  {
+   "nodeId": "nd000179",
+   "seq": 1,
+   "parameter": "Air / oxygen in process gas",
+   "guideword": "AS WELL AS",
+   "deviation": "Incomplete purge before gas-in",
+   "devAuto": false,
+   "consequence": "Flammable mixture in the line on gas-in – internal deflagration; flashback at the first burner lit",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "See N03-03.",
+   "id": "dv000573",
+   "ref": "N07-01"
+  },
+  {
+   "nodeId": "nd000179",
+   "seq": 2,
+   "parameter": "Inert gas (N2, Ar)",
+   "guideword": "LEAK OF",
+   "deviation": "N2 release into a shelter or pit during purging",
+   "devAuto": false,
+   "consequence": "Asphyxiation of people in the PRS shelter, valve pits or furnace",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "",
+   "id": "dv000578",
+   "ref": "N07-02"
+  },
+  {
+   "nodeId": "nd000179",
+   "seq": 3,
+   "parameter": "Flow",
+   "guideword": "REVERSE",
+   "deviation": "Natural gas back-flow into the plant N2 header",
+   "devAuto": false,
+   "consequence": "NG in the plant N2 system: flammable gas delivered wherever N2 is used for inerting – including the hot DRI conveyor N2 fire-protection system XS-210 (see the hot DRI conveyor example)",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "FMECA S07 N2-1304; interface with the hot DRI conveyor example.",
+   "id": "dv000583",
+   "ref": "N07-03"
+  },
+  {
+   "nodeId": "nd000179",
+   "seq": 4,
+   "parameter": "Relief",
+   "guideword": "INADEQUATE",
+   "deviation": "Vent / blowdown discharge unsafe",
+   "devAuto": false,
+   "consequence": "Cold-vented gas drifts to platforms or the heater flues – flash fire",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "",
+   "id": "dv000588",
+   "ref": "N07-04"
+  },
+  {
+   "nodeId": "nd000179",
+   "seq": 5,
+   "parameter": "Maintenance",
+   "guideword": "INADEQUATE",
+   "deviation": "Hot work / hot tapping on live gas lines",
+   "devAuto": false,
+   "consequence": "Ignition of gas at the work site – fire, burns",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "Bow tie BT-GN-01 threat T5.",
+   "id": "dv000593",
+   "ref": "N07-05"
+  },
+  {
+   "nodeId": "nd000179",
+   "seq": 6,
+   "parameter": "Operator action",
+   "guideword": "NO",
+   "deviation": "Vent left open / spectacle blind not reinstated",
+   "devAuto": false,
+   "consequence": "Gas released through an open vent or blind flange on gas-in",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "",
+   "id": "dv000599",
+   "ref": "N07-06"
+  },
+  {
+   "nodeId": "nd000180",
+   "seq": 1,
+   "parameter": "Process control / instrumentation",
+   "guideword": "LOSS OF",
+   "deviation": "Gas detection / ESD fails on demand",
+   "devAuto": false,
+   "consequence": "A gas release in the GRMS / PRS is not isolated – the pipeline and MP inventory feed the release: prolonged jet fire, larger vapour cloud (event tree ETA-GN-01)",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Quantified: fault tree FT-GN-02 PFDavg 2.6E-2 (RRF 38); used by event tree ETA-GN-01 heading H2 and bow tie BT-GN-01 mitigative barrier. Likelihood after safeguards from the calculated frequency 4.3E-6 /yr.",
+   "id": "dv000605",
+   "ref": "N08-01"
+  },
+  {
+   "nodeId": "nd000180",
+   "seq": 2,
+   "parameter": "Utilities / services",
+   "guideword": "LOSS OF",
+   "deviation": "Loss of power / UPS to the SIS and detectors",
+   "devAuto": false,
+   "consequence": "Fail-safe design closes the ESD valves – loss of gas to the whole works (flame-outs, see N02-03); if the UPS fails while a release occurs, no automatic isolation",
+   "sevB": "3",
+   "likB": "3",
+   "sevA": "3",
+   "likA": "2",
+   "comments": "FMECA S08 UPS-1000.",
+   "id": "dv000613",
+   "ref": "N08-02"
+  },
+  {
+   "nodeId": "nd000180",
+   "seq": 3,
+   "parameter": "Operator action",
+   "guideword": "NO",
+   "deviation": "Operator does not initiate the manual ESD",
+   "devAuto": false,
+   "consequence": "Release not isolated when the automatic function has failed (as N08-01)",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Fault tree FT-GN-02 gate G-004 (manual ESD) – operator failure 0.1.",
+   "id": "dv000618",
+   "ref": "N08-03"
+  },
+  {
+   "nodeId": "nd000180",
+   "seq": 4,
+   "parameter": "Maintenance",
+   "guideword": "INADEQUATE",
+   "deviation": "Gas detectors inhibited or out of calibration",
+   "devAuto": false,
+   "consequence": "Detection unavailable – as N08-01",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "FMECA S08 GD-1110A (drift); common-cause group CCF-001 in FT-GN-02.",
+   "id": "dv000623",
+   "ref": "N08-04"
+  }
+ ],
+ "causes": [
+  {
+   "id": "cz000321",
+   "deviationId": "dv000320",
+   "seq": 1,
+   "text": "Supplier pipeline trip / supplier ESD"
+  },
+  {
+   "id": "cz000322",
+   "deviationId": "dv000320",
+   "seq": 2,
+   "text": "Spurious closure of ESDV-1001 (solenoid, power or air failure)"
+  },
+  {
+   "id": "cz000323",
+   "deviationId": "dv000320",
+   "seq": 3,
+   "text": "Both filter-separators F-1002A/B blocked (black powder)"
+  },
+  {
+   "id": "cz000329",
+   "deviationId": "dv000328",
+   "seq": 1,
+   "text": "Failed-open pressure control valves (PCVs)"
+  },
+  {
+   "id": "cz000330",
+   "deviationId": "dv000328",
+   "seq": 2,
+   "text": "Supplier pressure excursion above normal operating range"
+  },
+  {
+   "id": "cz000331",
+   "deviationId": "dv000328",
+   "seq": 3,
+   "text": "Thermal expansion of trapped (blocked-in) liquid"
+  },
+  {
+   "id": "cz000336",
+   "deviationId": "dv000335",
+   "seq": 1,
+   "text": "Gas or air entrainment in liquid; liquid carry-over in gas"
+  },
+  {
+   "id": "cz000337",
+   "deviationId": "dv000335",
+   "seq": 2,
+   "text": "Pigging debris and black powder from the supplier pipeline"
+  },
+  {
+   "id": "cz000338",
+   "deviationId": "dv000335",
+   "seq": 3,
+   "text": "Condensate from the pipeline after cold weather / pigging"
+  },
+  {
+   "id": "cz000343",
+   "deviationId": "dv000342",
+   "seq": 1,
+   "text": "Wrong raw material delivered or unloaded"
+  },
+  {
+   "id": "cz000344",
+   "deviationId": "dv000342",
+   "seq": 2,
+   "text": "H2S / higher hydrocarbons above the supply specification"
+  },
+  {
+   "id": "cz000345",
+   "deviationId": "dv000342",
+   "seq": 3,
+   "text": "Wobbe index change (supplier gas source change)"
+  },
+  {
+   "id": "cz000349",
+   "deviationId": "dv000348",
+   "seq": 1,
+   "text": "Flange, valve or seal leak; water-seal blown"
+  },
+  {
+   "id": "cz000350",
+   "deviationId": "dv000348",
+   "seq": 2,
+   "text": "Small-bore fitting fatigue (meter-run vibration)"
+  },
+  {
+   "id": "cz000351",
+   "deviationId": "dv000348",
+   "seq": 3,
+   "text": "Pig receiver closure opened or leaking under pressure"
+  },
+  {
+   "id": "cz000361",
+   "deviationId": "dv000360",
+   "seq": 1,
+   "text": "Cathodic protection arrangements inadequate"
+  },
+  {
+   "id": "cz000362",
+   "deviationId": "dv000360",
+   "seq": 2,
+   "text": "Insulating joint IJ-1001 shorted (debris, bonding cable)"
+  },
+  {
+   "id": "cz000363",
+   "deviationId": "dv000360",
+   "seq": 3,
+   "text": "Coating damage at road crossings"
+  },
+  {
+   "id": "cz000368",
+   "deviationId": "dv000367",
+   "seq": 1,
+   "text": "Isolation, drainage, purging"
+  },
+  {
+   "id": "cz000369",
+   "deviationId": "dv000367",
+   "seq": 2,
+   "text": "Pig receiver opened before full depressurisation"
+  },
+  {
+   "id": "cz000370",
+   "deviationId": "dv000367",
+   "seq": 3,
+   "text": "Work permit system"
+  },
+  {
+   "id": "cz000376",
+   "deviationId": "dv000375",
+   "seq": 1,
+   "text": "Heater H-1101A trip (flame failure, low bath level)"
+  },
+  {
+   "id": "cz000377",
+   "deviationId": "dv000375",
+   "seq": 2,
+   "text": "Heater undersized at peak flow / TIC-1101 fault"
+  },
+  {
+   "id": "cz000378",
+   "deviationId": "dv000375",
+   "seq": 3,
+   "text": "Reducing pressure (auto-refrigeration of LPG, CO2, ammonia)"
+  },
+  {
+   "id": "cz000384",
+   "deviationId": "dv000383",
+   "seq": 1,
+   "text": "Failed-open pressure control valves (PCVs)"
+  },
+  {
+   "id": "cz000385",
+   "deviationId": "dv000383",
+   "seq": 2,
+   "text": "Regulator sensing line blocked or isolated"
+  },
+  {
+   "id": "cz000386",
+   "deviationId": "dv000383",
+   "seq": 3,
+   "text": "Ice / debris in the active regulator pilot"
+  },
+  {
+   "id": "cz000395",
+   "deviationId": "dv000394",
+   "seq": 1,
+   "text": "Slam-shut SSV-1102A spurious trip"
+  },
+  {
+   "id": "cz000396",
+   "deviationId": "dv000394",
+   "seq": 2,
+   "text": "Active and monitor regulators fail closed / filter blocked"
+  },
+  {
+   "id": "cz000397",
+   "deviationId": "dv000394",
+   "seq": 3,
+   "text": "Hydrate in regulator pilot"
+  },
+  {
+   "id": "cz000403",
+   "deviationId": "dv000402",
+   "seq": 1,
+   "text": "Control faults – control valve fails open, bypass left open, wrong set point"
+  },
+  {
+   "id": "cz000404",
+   "deviationId": "dv000402",
+   "seq": 2,
+   "text": "All users at maximum firing during DRI module start-up"
+  },
+  {
+   "id": "cz000408",
+   "deviationId": "dv000407",
+   "seq": 1,
+   "text": "Flange, valve or seal leak; water-seal blown"
+  },
+  {
+   "id": "cz000409",
+   "deviationId": "dv000407",
+   "seq": 2,
+   "text": "Regulator diaphragm rupture venting through the pilot vent"
+  },
+  {
+   "id": "cz000410",
+   "deviationId": "dv000407",
+   "seq": 3,
+   "text": "Gas detection inoperative or poorly located"
+  },
+  {
+   "id": "cz000418",
+   "deviationId": "dv000417",
+   "seq": 1,
+   "text": "Defective control (TIC fault, heater fails on)"
+  },
+  {
+   "id": "cz000419",
+   "deviationId": "dv000417",
+   "seq": 2,
+   "text": "Low bath level (evaporation, leak)"
+  },
+  {
+   "id": "cz000420",
+   "deviationId": "dv000417",
+   "seq": 3,
+   "text": "Gas coil leak into the water bath"
+  },
+  {
+   "id": "cz000425",
+   "deviationId": "dv000424",
+   "seq": 1,
+   "text": "Relief philosophy not defined for all scenarios (fire, blocked outlet, runaway, tube rupture)"
+  },
+  {
+   "id": "cz000426",
+   "deviationId": "dv000424",
+   "seq": 2,
+   "text": "Relief valve discharge location unsafe (to work areas, ignition sources)"
+  },
+  {
+   "id": "cz000433",
+   "deviationId": "dv000432",
+   "seq": 1,
+   "text": "Flange, valve or seal leak; water-seal blown"
+  },
+  {
+   "id": "cz000434",
+   "deviationId": "dv000432",
+   "seq": 2,
+   "text": "Mechanical impact by mobile cranes / vehicles at rack crossings"
+  },
+  {
+   "id": "cz000435",
+   "deviationId": "dv000432",
+   "seq": 3,
+   "text": "External corrosion of buried crossings or at pipe supports"
+  },
+  {
+   "id": "cz000436",
+   "deviationId": "dv000432",
+   "seq": 4,
+   "text": "Third-party excavation"
+  },
+  {
+   "id": "cz000446",
+   "deviationId": "dv000445",
+   "seq": 1,
+   "text": "Failed-open pressure control valves (PCVs)"
+  },
+  {
+   "id": "cz000447",
+   "deviationId": "dv000445",
+   "seq": 2,
+   "text": "Leakage from interconnected high-pressure system"
+  },
+  {
+   "id": "cz000452",
+   "deviationId": "dv000451",
+   "seq": 1,
+   "text": "Inadequate purging at start-up / shutdown"
+  },
+  {
+   "id": "cz000453",
+   "deviationId": "dv000451",
+   "seq": 2,
+   "text": "Air ingress through leaks at negative pressure"
+  },
+  {
+   "id": "cz000458",
+   "deviationId": "dv000457",
+   "seq": 1,
+   "text": "Internal / external corrosion protection"
+  },
+  {
+   "id": "cz000459",
+   "deviationId": "dv000457",
+   "seq": 2,
+   "text": "Corrosion at pipe supports on the racks"
+  },
+  {
+   "id": "cz000460",
+   "deviationId": "dv000457",
+   "seq": 3,
+   "text": "Cathodic protection arrangements inadequate"
+  },
+  {
+   "id": "cz000465",
+   "deviationId": "dv000464",
+   "seq": 1,
+   "text": "EAF / LF high-current systems inducing voltages on nearby pipework"
+  },
+  {
+   "id": "cz000466",
+   "deviationId": "dv000464",
+   "seq": 2,
+   "text": "Insulating joints bypassed; lightning"
+  },
+  {
+   "id": "cz000471",
+   "deviationId": "dv000470",
+   "seq": 1,
+   "text": "Isolation in error (wrong valve closed, LOTO on wrong equipment)"
+  },
+  {
+   "id": "cz000472",
+   "deviationId": "dv000470",
+   "seq": 2,
+   "text": "Valve line-up not checked"
+  },
+  {
+   "id": "cz000477",
+   "deviationId": "dv000476",
+   "seq": 1,
+   "text": "[S] Excess fuel gas to reheat furnace, ladle pre-heater or stove burners"
+  },
+  {
+   "id": "cz000478",
+   "deviationId": "dv000476",
+   "seq": 2,
+   "text": "FCV-2004 fails open"
+  },
+  {
+   "id": "cz000482",
+   "deviationId": "dv000481",
+   "seq": 1,
+   "text": "Equipment failure – control valve fails closed, isolation valve, pump or compressor trip, vessel failure"
+  },
+  {
+   "id": "cz000483",
+   "deviationId": "dv000481",
+   "seq": 2,
+   "text": "ESDV-2001 spurious closure"
+  },
+  {
+   "id": "cz000486",
+   "deviationId": "dv000485",
+   "seq": 1,
+   "text": "Defective or passing non-return valve"
+  },
+  {
+   "id": "cz000487",
+   "deviationId": "dv000485",
+   "seq": 2,
+   "text": "Two-way flow in common headers"
+  },
+  {
+   "id": "cz000488",
+   "deviationId": "dv000485",
+   "seq": 3,
+   "text": "Low NG pressure at the make-up point (supply loss)"
+  },
+  {
+   "id": "cz000492",
+   "deviationId": "dv000491",
+   "seq": 1,
+   "text": "[S] Hydrogen, CO or H2S in process gas above design values"
+  },
+  {
+   "id": "cz000493",
+   "deviationId": "dv000491",
+   "seq": 2,
+   "text": "Black powder carry-over from the GRMS"
+  },
+  {
+   "id": "cz000497",
+   "deviationId": "dv000496",
+   "seq": 1,
+   "text": "Failed-open pressure control valves (PCVs)"
+  },
+  {
+   "id": "cz000501",
+   "deviationId": "dv000500",
+   "seq": 1,
+   "text": "Burner flame-out with continued fuel supply"
+  },
+  {
+   "id": "cz000502",
+   "deviationId": "dv000500",
+   "seq": 2,
+   "text": "O2 back-flow through the burner when NG pressure is lost"
+  },
+  {
+   "id": "cz000503",
+   "deviationId": "dv000500",
+   "seq": 3,
+   "text": "Defective or passing non-return valve"
+  },
+  {
+   "id": "cz000508",
+   "deviationId": "dv000507",
+   "seq": 1,
+   "text": "Flange, valve or seal leak; water-seal blown"
+  },
+  {
+   "id": "cz000509",
+   "deviationId": "dv000507",
+   "seq": 2,
+   "text": "Molten-metal splash / radiant heat damaging NG hoses near the EAF"
+  },
+  {
+   "id": "cz000510",
+   "deviationId": "dv000507",
+   "seq": 3,
+   "text": "Confined spaces near gas mains"
+  },
+  {
+   "id": "cz000517",
+   "deviationId": "dv000516",
+   "seq": 1,
+   "text": "[S] Low fuel-gas pressure at burners (flame-out followed by re-ignition of accumulated gas)"
+  },
+  {
+   "id": "cz000518",
+   "deviationId": "dv000516",
+   "seq": 2,
+   "text": "DS-3 regulator / SSV-3003 trip"
+  },
+  {
+   "id": "cz000522",
+   "deviationId": "dv000521",
+   "seq": 1,
+   "text": "Auto / manual facility and human error"
+  },
+  {
+   "id": "cz000523",
+   "deviationId": "dv000521",
+   "seq": 2,
+   "text": "Alarm flooding; bypassed trips"
+  },
+  {
+   "id": "cz000528",
+   "deviationId": "dv000527",
+   "seq": 1,
+   "text": "Burner flame-out with continued fuel supply"
+  },
+  {
+   "id": "cz000529",
+   "deviationId": "dv000527",
+   "seq": 2,
+   "text": "[S] Low fuel-gas pressure at burners (flame-out followed by re-ignition of accumulated gas)"
+  },
+  {
+   "id": "cz000530",
+   "deviationId": "dv000527",
+   "seq": 3,
+   "text": "Failed light-off of a main burner"
+  },
+  {
+   "id": "cz000537",
+   "deviationId": "dv000536",
+   "seq": 1,
+   "text": "Failed-open pressure control valves (PCVs)"
+  },
+  {
+   "id": "cz000538",
+   "deviationId": "dv000536",
+   "seq": 2,
+   "text": "Incorrect operation"
+  },
+  {
+   "id": "cz000542",
+   "deviationId": "dv000541",
+   "seq": 1,
+   "text": "Line restriction; valve partly closed"
+  },
+  {
+   "id": "cz000543",
+   "deviationId": "dv000541",
+   "seq": 2,
+   "text": "Combustion air fan FN-4007 trip / damper closed"
+  },
+  {
+   "id": "cz000547",
+   "deviationId": "dv000546",
+   "seq": 1,
+   "text": "Purge interlock bypassed / forced"
+  },
+  {
+   "id": "cz000548",
+   "deviationId": "dv000546",
+   "seq": 2,
+   "text": "Auto / manual facility and human error"
+  },
+  {
+   "id": "cz000553",
+   "deviationId": "dv000552",
+   "seq": 1,
+   "text": "Poor isolation / passing valves"
+  },
+  {
+   "id": "cz000554",
+   "deviationId": "dv000552",
+   "seq": 2,
+   "text": "Isolation failure during maintenance (no double block and bleed, no blinding)"
+  },
+  {
+   "id": "cz000559",
+   "deviationId": "dv000558",
+   "seq": 1,
+   "text": "Alarm flooding; bypassed trips"
+  },
+  {
+   "id": "cz000560",
+   "deviationId": "dv000558",
+   "seq": 2,
+   "text": "Alarm and trip testing not done"
+  },
+  {
+   "id": "cz000561",
+   "deviationId": "dv000558",
+   "seq": 3,
+   "text": "Control philosophy unclear"
+  },
+  {
+   "id": "cz000566",
+   "deviationId": "dv000565",
+   "seq": 1,
+   "text": "Isolation, drainage, purging"
+  },
+  {
+   "id": "cz000567",
+   "deviationId": "dv000565",
+   "seq": 2,
+   "text": "Slip plates"
+  },
+  {
+   "id": "cz000568",
+   "deviationId": "dv000565",
+   "seq": 3,
+   "text": "Rescue plan"
+  },
+  {
+   "id": "cz000574",
+   "deviationId": "dv000573",
+   "seq": 1,
+   "text": "Inadequate purging at start-up / shutdown"
+  },
+  {
+   "id": "cz000575",
+   "deviationId": "dv000573",
+   "seq": 2,
+   "text": "Dead legs not purged"
+  },
+  {
+   "id": "cz000579",
+   "deviationId": "dv000578",
+   "seq": 1,
+   "text": "Leak or purge into enclosed or confined area"
+  },
+  {
+   "id": "cz000580",
+   "deviationId": "dv000578",
+   "seq": 2,
+   "text": "Pit, tunnel or bin atmosphere not tested before entry"
+  },
+  {
+   "id": "cz000584",
+   "deviationId": "dv000583",
+   "seq": 1,
+   "text": "Utility station connected to process (nitrogen hose left connected)"
+  },
+  {
+   "id": "cz000585",
+   "deviationId": "dv000583",
+   "seq": 2,
+   "text": "N2 header pressure below gas pressure (7 barg)"
+  },
+  {
+   "id": "cz000589",
+   "deviationId": "dv000588",
+   "seq": 1,
+   "text": "Relief valve discharge location unsafe (to work areas, ignition sources)"
+  },
+  {
+   "id": "cz000590",
+   "deviationId": "dv000588",
+   "seq": 2,
+   "text": "Pollution implications of discharge"
+  },
+  {
+   "id": "cz000594",
+   "deviationId": "dv000593",
+   "seq": 1,
+   "text": "Work permit system"
+  },
+  {
+   "id": "cz000595",
+   "deviationId": "dv000593",
+   "seq": 2,
+   "text": "Isolation, drainage, purging"
+  },
+  {
+   "id": "cz000596",
+   "deviationId": "dv000593",
+   "seq": 3,
+   "text": "[S] Hot work near gas mains or dust; work under suspended loads; work inside cooled-down furnaces"
+  },
+  {
+   "id": "cz000600",
+   "deviationId": "dv000599",
+   "seq": 1,
+   "text": "Drain or vent valves left open"
+  },
+  {
+   "id": "cz000601",
+   "deviationId": "dv000599",
+   "seq": 2,
+   "text": "Valve line-up not checked after maintenance"
+  },
+  {
+   "id": "cz000606",
+   "deviationId": "dv000605",
+   "seq": 1,
+   "text": "Alarm and trip testing not done"
+  },
+  {
+   "id": "cz000607",
+   "deviationId": "dv000605",
+   "seq": 2,
+   "text": "Location of instruments unsuitable"
+  },
+  {
+   "id": "cz000608",
+   "deviationId": "dv000605",
+   "seq": 3,
+   "text": "Fire protection of instruments and cables"
+  },
+  {
+   "id": "cz000614",
+   "deviationId": "dv000613",
+   "seq": 1,
+   "text": "Power"
+  },
+  {
+   "id": "cz000615",
+   "deviationId": "dv000613",
+   "seq": 2,
+   "text": "UPS battery failure"
+  },
+  {
+   "id": "cz000619",
+   "deviationId": "dv000618",
+   "seq": 1,
+   "text": "Time available for operator intervention"
+  },
+  {
+   "id": "cz000620",
+   "deviationId": "dv000618",
+   "seq": 2,
+   "text": "Alarm flooding; bypassed trips"
+  },
+  {
+   "id": "cz000624",
+   "deviationId": "dv000623",
+   "seq": 1,
+   "text": "Calibration"
+  },
+  {
+   "id": "cz000625",
+   "deviationId": "dv000623",
+   "seq": 2,
+   "text": "Training"
+  },
+  {
+   "id": "cz000626",
+   "deviationId": "dv000623",
+   "seq": 3,
+   "text": "Condition monitoring"
+  }
+ ],
+ "safeguards": [
+  {
+   "tag": "",
+   "description": "GRMS piping, filter-separators and meter runs designed for the pipeline MAOP (no overpressure from the supplier)",
+   "type": "Inherent design",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000236",
+   "key": "DESIGN_GRMS"
+  },
+  {
+   "tag": "PSV-1006A/B",
+   "description": "Filter-separator fire-case / thermal relief valves",
+   "type": "Relief device (PSV / rupture disc / vent)",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000237",
+   "key": "PSV1006"
+  },
+  {
+   "tag": "PT-1005",
+   "description": "GRMS inlet pressure high alarm PAH-1005 with operator response",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000238",
+   "key": "PAH1005"
+  },
+  {
+   "tag": "F-1002A/B",
+   "description": "Duty / standby filter-separators with LSH-1002 high-liquid alarm and PDIT-1002 differential-pressure alarm",
+   "type": "Mechanical device (check valve, RO, limiter)",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000239",
+   "key": "FSEP"
+  },
+  {
+   "tag": "AT-1004",
+   "description": "Gas chromatograph – composition, Wobbe index and H2S monitoring with alarm",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000240",
+   "key": "GC"
+  },
+  {
+   "tag": "",
+   "description": "Gas supply agreement quality specification; supplier notification of off-spec gas and supply interruptions",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000241",
+   "key": "SPEC"
+  },
+  {
+   "tag": "PR-1001",
+   "description": "Pig receiver quick-opening closure with pressure-warning / locking device (key interlock with vent valve)",
+   "type": "Mechanical device (check valve, RO, limiter)",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000242",
+   "key": "PIGINT"
+  },
+  {
+   "tag": "",
+   "description": "Pigging procedure OP-GN-010: depressurise, N2 purge and gas test before opening the pig receiver",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000243",
+   "key": "PIGPROC"
+  },
+  {
+   "tag": "",
+   "description": "Ignition source control – hazardous area classification with Ex equipment, hot-work permit, vehicle control",
+   "type": "Inherent design",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000244",
+   "key": "IGN"
+  },
+  {
+   "tag": "",
+   "description": "Separation distances and fire-proofing of supports in the GRMS / PRS",
+   "type": "Physical containment / bund / dyke",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000245",
+   "key": "FIREPROOF"
+  },
+  {
+   "tag": "CP-1200",
+   "description": "Coating and impressed-current cathodic protection of buried sections; annual CP / DCVG survey",
+   "type": "Inspection / maintenance / testing",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000246",
+   "key": "CP"
+  },
+  {
+   "tag": "",
+   "description": "Piping inspection programme – thickness monitoring at supports, rack crossings and low points",
+   "type": "Inspection / maintenance / testing",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000247",
+   "key": "INSP"
+  },
+  {
+   "tag": "H-1101A/B",
+   "description": "Duty / standby water-bath gas heaters with outlet temperature control TIC-1101",
+   "type": "BPCS control loop",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000248",
+   "key": "HEATERS"
+  },
+  {
+   "tag": "TT-1101",
+   "description": "Low gas outlet temperature alarm TSL-1101 (+5 °C) with operator response",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000249",
+   "key": "TSL1101"
+  },
+  {
+   "tag": "H-1101A/B",
+   "description": "Heater burner management: flame failure, low bath level LSLL and high bath temperature TSHH trips",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000250",
+   "key": "HBMS"
+  },
+  {
+   "tag": "PCV-1103A/B",
+   "description": "Monitor regulator takes over on active-regulator failure (set 7.5 barg)",
+   "type": "Mechanical device (check valve, RO, limiter)",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000251",
+   "key": "MON"
+  },
+  {
+   "tag": "SSV-1102A/B",
+   "description": "Slam-shut valve with over-pressure shut-off (OPSO 8.5 barg) on each regulator run",
+   "type": "Mechanical device (check valve, RO, limiter)",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000252",
+   "key": "SSV"
+  },
+  {
+   "tag": "PSV-1105",
+   "description": "Token relief valve (9.0 barg) to VS-1301 – lock-up creep / small leaks only, not sized for full regulator failure",
+   "type": "Relief device (PSV / rupture disc / vent)",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000253",
+   "key": "PSV1105"
+  },
+  {
+   "tag": "PT-1106",
+   "description": "PRS outlet high-pressure alarm PAH-1106 (7.8 barg) with operator response",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000254",
+   "key": "PAH1106"
+  },
+  {
+   "tag": "",
+   "description": "Regulator-run bypass valves car-sealed / locked closed (CSC register)",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000255",
+   "key": "CSC"
+  },
+  {
+   "tag": "",
+   "description": "Standby regulator run B on automatic (set 0.3 bar lower) – takes over if run A closes",
+   "type": "BPCS control loop",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000256",
+   "key": "RUNB"
+  },
+  {
+   "tag": "VS-1301",
+   "description": "Regulator pilot / diaphragm vents and PSV discharges piped to vent stack VS-1301 outside the PRS shelter",
+   "type": "Inherent design",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000257",
+   "key": "VENTS"
+  },
+  {
+   "tag": "",
+   "description": "PRS shelter natural ventilation (louvres at high and low level)",
+   "type": "Inherent design",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000258",
+   "key": "SHELTERVENT"
+  },
+  {
+   "tag": "UCP-1000",
+   "description": "Gas detection GD-1110A/B/C (2oo3) and ESD isolation of the HP / MP system – ESDV-1001 and ESDV-1107 close (SIS UCP-1000)",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000259",
+   "key": "ESD"
+  },
+  {
+   "tag": "HS-1000",
+   "description": "Manual ESD push buttons (control room and field) – operator response to gas alarms and reports",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000260",
+   "key": "MANESD"
+  },
+  {
+   "tag": "",
+   "description": "Emergency response team / fire brigade; emergency response plan for gas releases and fires",
+   "type": "Emergency response / mitigation",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000261",
+   "key": "ERT"
+  },
+  {
+   "tag": "PSLL-2006 / PSLL-4005",
+   "description": "Low-low gas pressure trips in the user burner management systems (reformer, reheat furnace, preheaters)",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000262",
+   "key": "PSLL_USERS"
+  },
+  {
+   "tag": "",
+   "description": "Crash barriers and height gantries at pipe-rack road crossings; lift plans for cranes near racks",
+   "type": "Physical containment / bund / dyke",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000263",
+   "key": "CRASH"
+  },
+  {
+   "tag": "",
+   "description": "Ground-disturbance / excavation permit with buried-services drawing",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000264",
+   "key": "EXCAV"
+  },
+  {
+   "tag": "PT-1210",
+   "description": "MP header low-pressure alarm PAL-1210 (leak / supply-loss indication)",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000265",
+   "key": "PAL1210"
+  },
+  {
+   "tag": "XV-1201…1204",
+   "description": "Remote-operated sectionalising valves on the MP ring main",
+   "type": "Emergency response / mitigation",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000266",
+   "key": "SECTV"
+  },
+  {
+   "tag": "",
+   "description": "Written purge plan OP-GN-020: N2 purge to O2 < 2 % before gas-in and gas > 90 % at the vent before relight (portable analyser)",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000267",
+   "key": "PURGE"
+  },
+  {
+   "tag": "",
+   "description": "Bonding / earthing of pipe racks, lightning protection and insulating joints at building entries",
+   "type": "Inherent design",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000268",
+   "key": "BOND"
+  },
+  {
+   "tag": "",
+   "description": "Operator rounds with portable gas detector; annual acoustic leak survey",
+   "type": "Inspection / maintenance / testing",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000269",
+   "key": "ROUNDS"
+  },
+  {
+   "tag": "",
+   "description": "District-station downstream piping designed for full MP header pressure (10 barg)",
+   "type": "Inherent design",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000270",
+   "key": "DSDESIGN"
+  },
+  {
+   "tag": "",
+   "description": "Reformer burner management – high fuel flow and high tube-wall temperature trips",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000271",
+   "key": "REFBMS"
+  },
+  {
+   "tag": "XV-2008",
+   "description": "Double non-return valves + XV-2008 closes on low NG / process-gas differential pressure PDALL-2009",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000272",
+   "key": "NRV2008"
+  },
+  {
+   "tag": "NRV-3010",
+   "description": "Non-return valves and flashback arrestors on the NG and O2 lines at each oxy-fuel burner and preheater",
+   "type": "Mechanical device (check valve, RO, limiter)",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000273",
+   "key": "NRV3010"
+  },
+  {
+   "tag": "XV-3011",
+   "description": "Burner management: O2 and NG shut off on low NG pressure PSLL-3012; N2 purge of burner after shutdown",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000274",
+   "key": "O2INT"
+  },
+  {
+   "tag": "LPH-3020",
+   "description": "Ladle preheater burner management – UV flame scanner, flame-failure shut-off, pre-purge timer",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000275",
+   "key": "PHBMS"
+  },
+  {
+   "tag": "",
+   "description": "Heat shields and routing of NG lines away from molten-metal splash zones; hose inspection",
+   "type": "Physical containment / bund / dyke",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000276",
+   "key": "SHIELD"
+  },
+  {
+   "tag": "BMS-4000",
+   "description": "Reheat furnace BMS flame-failure shut-off (scanners BS-4010, logic BMS-4000, SSOVs XV-4002A/B)",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000277",
+   "key": "BMS"
+  },
+  {
+   "tag": "",
+   "description": "Furnace draught / post-purge removes unburnt gas through the stack before it can ignite",
+   "type": "Inherent design",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000278",
+   "key": "DRAUGHT"
+  },
+  {
+   "tag": "",
+   "description": "Furnace explosion relief doors; no-go zone around burner platforms during light-off",
+   "type": "Physical containment / bund / dyke",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000279",
+   "key": "EXPDOORS"
+  },
+  {
+   "tag": "PSHH-4006",
+   "description": "High-high fuel gas pressure trip to BMS-4000",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000280",
+   "key": "PSHH4006"
+  },
+  {
+   "tag": "PSLL-4005",
+   "description": "Low-low fuel gas pressure trip to BMS-4000",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000281",
+   "key": "PSLL4005"
+  },
+  {
+   "tag": "FSLL-4008",
+   "description": "Low-low combustion air flow trip (fan FN-4007) to BMS-4000",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000282",
+   "key": "FSLL4008"
+  },
+  {
+   "tag": "",
+   "description": "Cross-limited air / fuel ratio control",
+   "type": "BPCS control loop",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000283",
+   "key": "RATIO"
+  },
+  {
+   "tag": "BMS-4000 purge",
+   "description": "BMS pre-purge interlock (≥ 4 volume changes with proven air flow) before light-off",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000284",
+   "key": "PURGEINT"
+  },
+  {
+   "tag": "",
+   "description": "Light-off procedure OP-RM-040 and checklist; no manual torch lighting",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000285",
+   "key": "LIGHTPROC"
+  },
+  {
+   "tag": "VPS-4004",
+   "description": "Valve proving system – tightness test of XV-4002A/B before light-off; DBB vent XV-4003",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "sg000286",
+   "key": "VPS"
+  },
+  {
+   "tag": "",
+   "description": "Positive isolation (spade / spectacle blind) of fuel gas for furnace entry and extended shutdowns; gas test before entry",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000287",
+   "key": "SPADE"
+  },
+  {
+   "tag": "",
+   "description": "Bypass / override management – authorised, time-limited, logged; monthly audit",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000288",
+   "key": "BYPASS"
+  },
+  {
+   "tag": "",
+   "description": "Management of change for BMS / SIS logic and set-point changes",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000289",
+   "key": "MOC"
+  },
+  {
+   "tag": "N2-1304",
+   "description": "N2 purge connections by removable spool / hose with check valve and double block & bleed; disconnected after use",
+   "type": "Mechanical device (check valve, RO, limiter)",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000290",
+   "key": "N2SPOOL"
+  },
+  {
+   "tag": "",
+   "description": "Personal O2 monitors; confined-space entry permit for shelters, pits and furnaces",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000291",
+   "key": "O2MON"
+  },
+  {
+   "tag": "VS-1301",
+   "description": "Vent stack VS-1301 3 m above the nearest platform, away from heater flues; N2 snuffing",
+   "type": "Inherent design",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000292",
+   "key": "VENTSTACK"
+  },
+  {
+   "tag": "",
+   "description": "Permit-to-work with isolation verification (DBB / spades), gas-free test and fire watch",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000293",
+   "key": "PTW"
+  },
+  {
+   "tag": "",
+   "description": "Hot-tapping procedure (minimum flow, wall-thickness check, specialist contractor)",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000294",
+   "key": "HOTTAP"
+  },
+  {
+   "tag": "",
+   "description": "Valve line-up checklist and spectacle-blind register",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000295",
+   "key": "LINEUP"
+  },
+  {
+   "tag": "",
+   "description": "Proof testing – quarterly gas detector bump tests, annual full-stroke ESD valve tests, annual logic test",
+   "type": "Inspection / maintenance / testing",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000296",
+   "key": "PROOF"
+  },
+  {
+   "tag": "UPS-1000",
+   "description": "UPS for SIS / F&G (30 min) with alarm; de-energise-to-trip (fail-safe) design",
+   "type": "Inherent design",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000297",
+   "key": "UPS"
+  },
+  {
+   "tag": "",
+   "description": "Gas alarm response procedure and emergency drills",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "sg000298",
+   "key": "ALARMRESP"
+  }
+ ],
+ "devSafeguards": [
+  {
+   "id": "ds000324",
+   "deviationId": "dv000320",
+   "safeguardId": "sg000262",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000325",
+   "deviationId": "dv000320",
+   "safeguardId": "sg000239",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000326",
+   "deviationId": "dv000320",
+   "safeguardId": "sg000241",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000332",
+   "deviationId": "dv000328",
+   "safeguardId": "sg000236",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000333",
+   "deviationId": "dv000328",
+   "safeguardId": "sg000237",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000334",
+   "deviationId": "dv000328",
+   "safeguardId": "sg000238",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000339",
+   "deviationId": "dv000335",
+   "safeguardId": "sg000239",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000340",
+   "deviationId": "dv000335",
+   "safeguardId": "sg000269",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000346",
+   "deviationId": "dv000342",
+   "safeguardId": "sg000240",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000347",
+   "deviationId": "dv000342",
+   "safeguardId": "sg000241",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000352",
+   "deviationId": "dv000348",
+   "safeguardId": "sg000259",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000353",
+   "deviationId": "dv000348",
+   "safeguardId": "sg000244",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000354",
+   "deviationId": "dv000348",
+   "safeguardId": "sg000242",
+   "ipl": true,
+   "seq": 3
+  },
+  {
+   "id": "ds000355",
+   "deviationId": "dv000348",
+   "safeguardId": "sg000245",
+   "ipl": false,
+   "seq": 4
+  },
+  {
+   "id": "ds000356",
+   "deviationId": "dv000348",
+   "safeguardId": "sg000261",
+   "ipl": false,
+   "seq": 5
+  },
+  {
+   "id": "ds000364",
+   "deviationId": "dv000360",
+   "safeguardId": "sg000246",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000365",
+   "deviationId": "dv000360",
+   "safeguardId": "sg000247",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000371",
+   "deviationId": "dv000367",
+   "safeguardId": "sg000242",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000372",
+   "deviationId": "dv000367",
+   "safeguardId": "sg000243",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000373",
+   "deviationId": "dv000367",
+   "safeguardId": "sg000293",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000379",
+   "deviationId": "dv000375",
+   "safeguardId": "sg000248",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000380",
+   "deviationId": "dv000375",
+   "safeguardId": "sg000249",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000381",
+   "deviationId": "dv000375",
+   "safeguardId": "sg000250",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000387",
+   "deviationId": "dv000383",
+   "safeguardId": "sg000251",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000388",
+   "deviationId": "dv000383",
+   "safeguardId": "sg000252",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000389",
+   "deviationId": "dv000383",
+   "safeguardId": "sg000253",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000390",
+   "deviationId": "dv000383",
+   "safeguardId": "sg000254",
+   "ipl": false,
+   "seq": 4
+  },
+  {
+   "id": "ds000391",
+   "deviationId": "dv000383",
+   "safeguardId": "sg000255",
+   "ipl": false,
+   "seq": 5
+  },
+  {
+   "id": "ds000398",
+   "deviationId": "dv000394",
+   "safeguardId": "sg000256",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000399",
+   "deviationId": "dv000394",
+   "safeguardId": "sg000262",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000400",
+   "deviationId": "dv000394",
+   "safeguardId": "sg000265",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000405",
+   "deviationId": "dv000402",
+   "safeguardId": "sg000256",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000406",
+   "deviationId": "dv000402",
+   "safeguardId": "sg000265",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000411",
+   "deviationId": "dv000407",
+   "safeguardId": "sg000257",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000412",
+   "deviationId": "dv000407",
+   "safeguardId": "sg000258",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000413",
+   "deviationId": "dv000407",
+   "safeguardId": "sg000259",
+   "ipl": true,
+   "seq": 3
+  },
+  {
+   "id": "ds000414",
+   "deviationId": "dv000407",
+   "safeguardId": "sg000244",
+   "ipl": false,
+   "seq": 4
+  },
+  {
+   "id": "ds000421",
+   "deviationId": "dv000417",
+   "safeguardId": "sg000250",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000422",
+   "deviationId": "dv000417",
+   "safeguardId": "sg000269",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000427",
+   "deviationId": "dv000424",
+   "safeguardId": "sg000251",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000428",
+   "deviationId": "dv000424",
+   "safeguardId": "sg000252",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000429",
+   "deviationId": "dv000424",
+   "safeguardId": "sg000292",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000437",
+   "deviationId": "dv000432",
+   "safeguardId": "sg000246",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000438",
+   "deviationId": "dv000432",
+   "safeguardId": "sg000263",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000439",
+   "deviationId": "dv000432",
+   "safeguardId": "sg000264",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000440",
+   "deviationId": "dv000432",
+   "safeguardId": "sg000265",
+   "ipl": false,
+   "seq": 4
+  },
+  {
+   "id": "ds000441",
+   "deviationId": "dv000432",
+   "safeguardId": "sg000266",
+   "ipl": false,
+   "seq": 5
+  },
+  {
+   "id": "ds000442",
+   "deviationId": "dv000432",
+   "safeguardId": "sg000244",
+   "ipl": false,
+   "seq": 6
+  },
+  {
+   "id": "ds000448",
+   "deviationId": "dv000445",
+   "safeguardId": "sg000251",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000449",
+   "deviationId": "dv000445",
+   "safeguardId": "sg000252",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000454",
+   "deviationId": "dv000451",
+   "safeguardId": "sg000267",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000455",
+   "deviationId": "dv000451",
+   "safeguardId": "sg000295",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000461",
+   "deviationId": "dv000457",
+   "safeguardId": "sg000246",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000462",
+   "deviationId": "dv000457",
+   "safeguardId": "sg000247",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000467",
+   "deviationId": "dv000464",
+   "safeguardId": "sg000268",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000468",
+   "deviationId": "dv000464",
+   "safeguardId": "sg000246",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000473",
+   "deviationId": "dv000470",
+   "safeguardId": "sg000295",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000474",
+   "deviationId": "dv000470",
+   "safeguardId": "sg000293",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000475",
+   "deviationId": "dv000470",
+   "safeguardId": "sg000262",
+   "ipl": true,
+   "seq": 3
+  },
+  {
+   "id": "ds000479",
+   "deviationId": "dv000476",
+   "safeguardId": "sg000271",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000480",
+   "deviationId": "dv000476",
+   "safeguardId": "sg000283",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000484",
+   "deviationId": "dv000481",
+   "safeguardId": "sg000262",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000489",
+   "deviationId": "dv000485",
+   "safeguardId": "sg000272",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000494",
+   "deviationId": "dv000491",
+   "safeguardId": "sg000240",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000495",
+   "deviationId": "dv000491",
+   "safeguardId": "sg000239",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000498",
+   "deviationId": "dv000496",
+   "safeguardId": "sg000270",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000499",
+   "deviationId": "dv000496",
+   "safeguardId": "sg000271",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000504",
+   "deviationId": "dv000500",
+   "safeguardId": "sg000273",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000505",
+   "deviationId": "dv000500",
+   "safeguardId": "sg000274",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000511",
+   "deviationId": "dv000507",
+   "safeguardId": "sg000276",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000512",
+   "deviationId": "dv000507",
+   "safeguardId": "sg000274",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000513",
+   "deviationId": "dv000507",
+   "safeguardId": "sg000269",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000519",
+   "deviationId": "dv000516",
+   "safeguardId": "sg000275",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000524",
+   "deviationId": "dv000521",
+   "safeguardId": "sg000275",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000525",
+   "deviationId": "dv000521",
+   "safeguardId": "sg000288",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000531",
+   "deviationId": "dv000527",
+   "safeguardId": "sg000277",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000532",
+   "deviationId": "dv000527",
+   "safeguardId": "sg000278",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000533",
+   "deviationId": "dv000527",
+   "safeguardId": "sg000279",
+   "ipl": true,
+   "seq": 3
+  },
+  {
+   "id": "ds000539",
+   "deviationId": "dv000536",
+   "safeguardId": "sg000280",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000540",
+   "deviationId": "dv000536",
+   "safeguardId": "sg000277",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000544",
+   "deviationId": "dv000541",
+   "safeguardId": "sg000282",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000545",
+   "deviationId": "dv000541",
+   "safeguardId": "sg000283",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000549",
+   "deviationId": "dv000546",
+   "safeguardId": "sg000284",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000550",
+   "deviationId": "dv000546",
+   "safeguardId": "sg000285",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000555",
+   "deviationId": "dv000552",
+   "safeguardId": "sg000286",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "ds000556",
+   "deviationId": "dv000552",
+   "safeguardId": "sg000287",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000562",
+   "deviationId": "dv000558",
+   "safeguardId": "sg000288",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000563",
+   "deviationId": "dv000558",
+   "safeguardId": "sg000289",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000569",
+   "deviationId": "dv000565",
+   "safeguardId": "sg000287",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000570",
+   "deviationId": "dv000565",
+   "safeguardId": "sg000293",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000571",
+   "deviationId": "dv000565",
+   "safeguardId": "sg000291",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "ds000576",
+   "deviationId": "dv000573",
+   "safeguardId": "sg000267",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000581",
+   "deviationId": "dv000578",
+   "safeguardId": "sg000291",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000582",
+   "deviationId": "dv000578",
+   "safeguardId": "sg000258",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000586",
+   "deviationId": "dv000583",
+   "safeguardId": "sg000290",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000591",
+   "deviationId": "dv000588",
+   "safeguardId": "sg000292",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000597",
+   "deviationId": "dv000593",
+   "safeguardId": "sg000293",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000598",
+   "deviationId": "dv000593",
+   "safeguardId": "sg000294",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000602",
+   "deviationId": "dv000599",
+   "safeguardId": "sg000295",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000603",
+   "deviationId": "dv000599",
+   "safeguardId": "sg000269",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000609",
+   "deviationId": "dv000605",
+   "safeguardId": "sg000296",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000610",
+   "deviationId": "dv000605",
+   "safeguardId": "sg000260",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "ds000616",
+   "deviationId": "dv000613",
+   "safeguardId": "sg000297",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000617",
+   "deviationId": "dv000613",
+   "safeguardId": "sg000262",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "ds000621",
+   "deviationId": "dv000618",
+   "safeguardId": "sg000298",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000627",
+   "deviationId": "dv000623",
+   "safeguardId": "sg000296",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "ds000628",
+   "deviationId": "dv000623",
+   "safeguardId": "sg000288",
+   "ipl": false,
+   "seq": 2
+  }
+ ],
+ "recs": [
+  {
+   "no": "R-001",
+   "text": "Verify the HP / MP gas detection & ESD function against the required risk reduction. Fault tree FT-GN-02 gives PFDavg 2.6E-2 (RRF 38); test the effect of six-monthly partial-stroke testing of ESDV-1001 / ESDV-1107 and quarterly detector bump tests (FMECA S01 / S08).",
+   "responsible": "Instrument engineer",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000299"
+  },
+  {
+   "no": "R-002",
+   "text": "Confirm and record PRS-1 set-point staggering (active 7.0 / monitor 7.5 / SSV OPSO 8.5 / PSV-1105 9.0 barg; MP design 10 barg) in the PRS data sheet; add the regulator-run bypass valves to the car-seal (CSC) register.",
+   "responsible": "Process engineer",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000300"
+  },
+  {
+   "no": "R-003",
+   "text": "Introduce an annual lock-up / take-over test of monitor regulators PCV-1103A/B and a six-monthly trip test of slam-shut valves SSV-1102A/B – these intervals are the basis of fault tree FT-GN-01 (protection PFDavg 2.0E-4).",
+   "responsible": "Instrument engineer",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000301"
+  },
+  {
+   "no": "R-004",
+   "text": "Confirm the minimum PRS outlet gas temperature against the MDMT of the downstream piping; add automatic change-over to the standby heater on TSL-1101 and an alarm on heater trip.",
+   "responsible": "Process engineer",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000302"
+  },
+  {
+   "no": "R-005",
+   "text": "Route all regulator pilot / diaphragm vents and the PSV-1105 discharge to vent stack VS-1301 outside the PRS shelter; confirm by dispersion check that the vent is clear of heater flues and platforms.",
+   "responsible": "Process engineer",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000303"
+  },
+  {
+   "no": "R-006",
+   "text": "Agree a supply-interruption and restoration protocol with the gas supplier: users isolated before re-pressurisation, controlled restoration sequence, BMS re-start only after confirmed header pressure.",
+   "responsible": "Utilities manager",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000304"
+  },
+  {
+   "no": "R-007",
+   "text": "Install gas detection at the HVAC intakes and cable-trench entries of buildings near the MP header (substations, control rooms) with HVAC trip.",
+   "responsible": "HSE / process safety",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000305"
+  },
+  {
+   "no": "R-008",
+   "text": "Survey stray currents and induced voltages on gas pipework near the EAF / LF high-current systems; verify insulating joints and bonding; include in CP interference testing.",
+   "responsible": "Electrical engineer",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000306"
+  },
+  {
+   "no": "R-009",
+   "text": "Include buried gas-line routes in the ground-disturbance permit; mark crossings on site; review crash protection and height gantries at pipe-rack road crossings.",
+   "responsible": "Civil engineer",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000307"
+  },
+  {
+   "no": "R-010",
+   "text": "Upgrade the reheat furnace flame-failure shut-off to meet SIL 2 (fault tree FT-GN-03 PFDavg 1.1E-2 = SIL 1 band; event tree ETA-GN-02 explosion frequency 9.2E-4 /yr vs target 1E-4): self-checking UV scanners 1oo2 per burner, proof-tested SSOVs, BMS logic solver to IEC 61511 / EN 746-2.",
+   "responsible": "Instrument engineer",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000308"
+  },
+  {
+   "no": "R-011",
+   "text": "Valve proving (VPS-4004) of XV-4002A/B before every light-off; positive isolation (spade) for furnace entry and extended shutdowns (bow tie BT-GN-02 threat 2).",
+   "responsible": "Rolling-mill superintendent",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000309"
+  },
+  {
+   "no": "R-012",
+   "text": "Bypass / override management for BMS, SIS and gas detectors: authorisation, time limit, logging and monthly audit; BMS logic changes only under MOC.",
+   "responsible": "HSE / process safety",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000310"
+  },
+  {
+   "no": "R-013",
+   "text": "Fit / verify non-return valves and flashback arrestors on the NG and O2 lines at every EAF oxy-fuel burner and ladle preheater; prove the 'low NG pressure closes O2' interlock annually.",
+   "responsible": "Melt shop maintenance",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000311"
+  },
+  {
+   "no": "R-014",
+   "text": "N2 purge connections to the gas system by removable spool / hose only, with check valve and double block & bleed; disconnect after use (prevents NG back-flow into the plant N2 header that also feeds the hot DRI conveyor N2 system XS-210).",
+   "responsible": "Utilities manager",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000312"
+  },
+  {
+   "no": "R-015",
+   "text": "Purge plan for every gas-in / gas-out: N2 purge with O2 < 2 % confirmed before gas-in and gas > 90 % confirmed at the vent before relight; calibrated portable analysers.",
+   "responsible": "Operations superintendent",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000313"
+  },
+  {
+   "no": "R-016",
+   "text": "Route the filter-separator drains to a closed drain vessel instead of an open drain; review the LSH-1002 alarm response.",
+   "responsible": "Process engineer",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000314"
+  },
+  {
+   "no": "R-017",
+   "text": "Verify the pig-receiver quick-opening closure safety device (pressure-warning / key interlock with the vent valve) and include it in the pigging procedure and its training.",
+   "responsible": "Mechanical engineer",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000315"
+  },
+  {
+   "no": "R-018",
+   "text": "Provide reverse-flow protection at the DRI process-gas NG make-up point: double check valves plus a PDALL-2009 trip closing XV-2008; annual reverse-flow leak test.",
+   "responsible": "DRI process engineer",
+   "priority": "High",
+   "dueDate": "2027-03-31",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000316"
+  },
+  {
+   "no": "R-019",
+   "text": "Heat-shield and re-route NG lines and hoses near the EAF and ladle area; six-monthly hose inspection and replacement on condition.",
+   "responsible": "Melt shop maintenance",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000317"
+  },
+  {
+   "no": "R-020",
+   "text": "Gas alarm response procedure and drills – the manual ESD is credited in fault tree FT-GN-02 (gate G-004) with an operator failure probability of 0.1.",
+   "responsible": "Operations superintendent",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000318"
+  },
+  {
+   "no": "R-021",
+   "text": "Assess the vapour cloud explosion overpressure at the PRS / GRMS and verify the siting of the utilities control room (bow tie BT-GN-01 / event tree ETA-GN-01 VCE end state).",
+   "responsible": "HSE / process safety",
+   "priority": "Medium",
+   "dueDate": "2027-06-30",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "rc000319"
+  }
+ ],
+ "devRecs": [
+  {
+   "id": "dr000327",
+   "deviationId": "dv000320",
+   "recId": "rc000304"
+  },
+  {
+   "id": "dr000341",
+   "deviationId": "dv000335",
+   "recId": "rc000314"
+  },
+  {
+   "id": "dr000357",
+   "deviationId": "dv000348",
+   "recId": "rc000299"
+  },
+  {
+   "id": "dr000358",
+   "deviationId": "dv000348",
+   "recId": "rc000315"
+  },
+  {
+   "id": "dr000359",
+   "deviationId": "dv000348",
+   "recId": "rc000319"
+  },
+  {
+   "id": "dr000366",
+   "deviationId": "dv000360",
+   "recId": "rc000306"
+  },
+  {
+   "id": "dr000374",
+   "deviationId": "dv000367",
+   "recId": "rc000315"
+  },
+  {
+   "id": "dr000382",
+   "deviationId": "dv000375",
+   "recId": "rc000302"
+  },
+  {
+   "id": "dr000392",
+   "deviationId": "dv000383",
+   "recId": "rc000300"
+  },
+  {
+   "id": "dr000393",
+   "deviationId": "dv000383",
+   "recId": "rc000301"
+  },
+  {
+   "id": "dr000401",
+   "deviationId": "dv000394",
+   "recId": "rc000304"
+  },
+  {
+   "id": "dr000415",
+   "deviationId": "dv000407",
+   "recId": "rc000303"
+  },
+  {
+   "id": "dr000416",
+   "deviationId": "dv000407",
+   "recId": "rc000299"
+  },
+  {
+   "id": "dr000423",
+   "deviationId": "dv000417",
+   "recId": "rc000302"
+  },
+  {
+   "id": "dr000430",
+   "deviationId": "dv000424",
+   "recId": "rc000300"
+  },
+  {
+   "id": "dr000431",
+   "deviationId": "dv000424",
+   "recId": "rc000303"
+  },
+  {
+   "id": "dr000443",
+   "deviationId": "dv000432",
+   "recId": "rc000305"
+  },
+  {
+   "id": "dr000444",
+   "deviationId": "dv000432",
+   "recId": "rc000307"
+  },
+  {
+   "id": "dr000450",
+   "deviationId": "dv000445",
+   "recId": "rc000301"
+  },
+  {
+   "id": "dr000456",
+   "deviationId": "dv000451",
+   "recId": "rc000313"
+  },
+  {
+   "id": "dr000463",
+   "deviationId": "dv000457",
+   "recId": "rc000307"
+  },
+  {
+   "id": "dr000469",
+   "deviationId": "dv000464",
+   "recId": "rc000306"
+  },
+  {
+   "id": "dr000490",
+   "deviationId": "dv000485",
+   "recId": "rc000316"
+  },
+  {
+   "id": "dr000506",
+   "deviationId": "dv000500",
+   "recId": "rc000311"
+  },
+  {
+   "id": "dr000514",
+   "deviationId": "dv000507",
+   "recId": "rc000317"
+  },
+  {
+   "id": "dr000515",
+   "deviationId": "dv000507",
+   "recId": "rc000305"
+  },
+  {
+   "id": "dr000520",
+   "deviationId": "dv000516",
+   "recId": "rc000310"
+  },
+  {
+   "id": "dr000526",
+   "deviationId": "dv000521",
+   "recId": "rc000310"
+  },
+  {
+   "id": "dr000534",
+   "deviationId": "dv000527",
+   "recId": "rc000308"
+  },
+  {
+   "id": "dr000535",
+   "deviationId": "dv000527",
+   "recId": "rc000310"
+  },
+  {
+   "id": "dr000551",
+   "deviationId": "dv000546",
+   "recId": "rc000310"
+  },
+  {
+   "id": "dr000557",
+   "deviationId": "dv000552",
+   "recId": "rc000309"
+  },
+  {
+   "id": "dr000564",
+   "deviationId": "dv000558",
+   "recId": "rc000310"
+  },
+  {
+   "id": "dr000572",
+   "deviationId": "dv000565",
+   "recId": "rc000309"
+  },
+  {
+   "id": "dr000577",
+   "deviationId": "dv000573",
+   "recId": "rc000313"
+  },
+  {
+   "id": "dr000587",
+   "deviationId": "dv000583",
+   "recId": "rc000312"
+  },
+  {
+   "id": "dr000592",
+   "deviationId": "dv000588",
+   "recId": "rc000303"
+  },
+  {
+   "id": "dr000604",
+   "deviationId": "dv000599",
+   "recId": "rc000313"
+  },
+  {
+   "id": "dr000611",
+   "deviationId": "dv000605",
+   "recId": "rc000299"
+  },
+  {
+   "id": "dr000612",
+   "deviationId": "dv000605",
+   "recId": "rc000318"
+  },
+  {
+   "id": "dr000622",
+   "deviationId": "dv000618",
+   "recId": "rc000318"
+  },
+  {
+   "id": "dr000629",
+   "deviationId": "dv000623",
+   "recId": "rc000310"
+  },
+  {
+   "id": "dr000630",
+   "deviationId": "dv000623",
+   "recId": "rc000299"
+  }
+ ],
+ "customCauses": []
+}

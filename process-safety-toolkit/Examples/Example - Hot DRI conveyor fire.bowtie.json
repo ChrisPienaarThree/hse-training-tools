@@ -1,0 +1,1206 @@
+{
+ "app": "Bow Tie Analysis",
+ "schema": 1,
+ "title": "Hot DRI conveyor fire – bow tie (example)",
+ "description": "Bow tie for fire on the enclosed hot DRI transfer conveyor. Threat frequencies, conditional probabilities and barrier PFDs are illustrative. The N2 inerting / extinguishing barrier takes its PFDavg from gate G-002 of the linked fault tree; the trip / stoppage threat and the fire outcomes match the event tree example.",
+ "modified": null,
+ "hazard": "Hot DRI on an enclosed belt conveyor (self-heating / re-oxidation, pyrophoric fines, combustible belt)",
+ "top": "Fire / smouldering of hot DRI on the conveyor belt",
+ "threats": [
+  {
+   "id": "muvlm576uby9x5",
+   "name": "Conveyor trip / stoppage under load – hot DRI stationary on the belt",
+   "freq": 6,
+   "cond": 0.2,
+   "notes": "6 stops under load per year; 0.2 = probability the stationary DRI ignites (as event tree H2)",
+   "barrierIds": [
+    "muvlm576y20x0e"
+   ]
+  },
+  {
+   "id": "muvlm5764e5imv",
+   "name": "Over-temperature DRI discharged onto the conveyor (reduction / cooling upset)",
+   "freq": 0.5,
+   "cond": 0.3,
+   "notes": "Illustrative",
+   "barrierIds": [
+    "muvlm5760vvkgx",
+    "muvlm576uuzr0e"
+   ]
+  },
+  {
+   "id": "muvlm5769bgejt",
+   "name": "Seized idler, misalignment or drive hot spot (friction)",
+   "freq": 0.2,
+   "cond": 0.2,
+   "notes": "Illustrative",
+   "barrierIds": [
+    "muvlm5765iyrvf",
+    "muvlm576l7vej6"
+   ]
+  },
+  {
+   "id": "muvlm576dgqde9",
+   "name": "Hot work on or near the conveyor",
+   "freq": 2,
+   "cond": 0.05,
+   "notes": "Illustrative",
+   "barrierIds": [
+    "muvlm576rktclc",
+    "muvlm57677t9dl"
+   ]
+  },
+  {
+   "id": "muvlm576rtqbkr",
+   "name": "Accumulation of DRI fines / spillage in the enclosure (re-oxidation)",
+   "freq": 1,
+   "cond": 0.1,
+   "notes": "Illustrative",
+   "barrierIds": [
+    "muvlm576v3bx2d",
+    "muvlm576kjuqa9"
+   ]
+  }
+ ],
+ "consequences": [
+  {
+   "id": "muvlm57611xgx0",
+   "name": "Major belt fire in the gallery – extended outage",
+   "cond": 1,
+   "sev": {
+    "P": 2,
+    "E": 2,
+    "A": 4,
+    "R": 3
+   },
+   "notes": "Illustrative",
+   "barrierIds": [
+    "muvlm576hi88sj",
+    "muvlm576lpwx7i"
+   ]
+  },
+  {
+   "id": "muvlm576k1vxk9",
+   "name": "Fire spreads to transfer tower / DRI silo – potential fatality",
+   "cond": 1,
+   "sev": {
+    "P": 5,
+    "E": 3,
+    "A": 5,
+    "R": 4
+   },
+   "notes": "Illustrative",
+   "barrierIds": [
+    "muvlm576hi88sj",
+    "muvlm576lpwx7i",
+    "muvlm576wju6ah"
+   ]
+  },
+  {
+   "id": "muvlm576lfxyl0",
+   "name": "Personnel exposed to smoke / CO in the gallery",
+   "cond": 0.1,
+   "sev": {
+    "P": 4,
+    "E": 1,
+    "A": 1,
+    "R": 3
+   },
+   "notes": "0.1 = probability that people are in the gallery",
+   "barrierIds": [
+    "muvlm576huux2j",
+    "muvlm576sjbxn0"
+   ]
+  },
+  {
+   "id": "muvlm5765ukndl",
+   "name": "Personnel asphyxiated after N2 release into the enclosure",
+   "cond": 0.05,
+   "sev": {
+    "P": 5,
+    "E": 1,
+    "A": 1,
+    "R": 4
+   },
+   "notes": "Hazard introduced by the barrier itself; 0.05 = probability of entry soon after a release",
+   "barrierIds": [
+    "muvlm576quv9zm",
+    "muvlm576hq2ckj"
+   ]
+  }
+ ],
+ "barriers": [
+  {
+   "id": "muvlm576y20x0e",
+   "name": "Restart / emergency discharge of hot DRI within safe time",
+   "type": "Active human-hardware",
+   "pfd": 0.25,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Shift supervisor",
+   "performance": "Belt restarted or DRI discharged to the emergency chute within the safe stoppage time",
+   "verification": "Monthly emergency discharge drill; trip review",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm5760vvkgx",
+   "name": "DRI discharge high-temperature trip (stops feed)",
+   "type": "Active hardware",
+   "pfd": 0.01,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Instrument engineer",
+   "performance": "Stops discharge onto the conveyor at the high-high temperature set point",
+   "verification": "Annual proof test",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576uuzr0e",
+   "name": "Operator response to high DRI temperature alarm",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Control room operator",
+   "performance": "Reduce / divert discharge within the alarm response time",
+   "verification": "Alarm response procedure, training records",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm5765iyrvf",
+   "name": "Idler / belt condition monitoring (thermography, rounds)",
+   "type": "Continuous / procedural",
+   "pfd": 0.3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Maintenance planner",
+   "performance": "Hot idlers and misalignment found before failure",
+   "verification": "Monthly thermography route",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576l7vej6",
+   "name": "Belt-sway / speed-difference trip",
+   "type": "Active hardware",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Electrical engineer",
+   "performance": "Stops belt on misalignment or slip",
+   "verification": "Six-monthly function test",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576rktclc",
+   "name": "Permit-to-work with fines removal, isolation and fire watch",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Area owner",
+   "performance": "No hot work without cleaning, isolation and fire watch",
+   "verification": "PTW audits",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm57677t9dl",
+   "name": "DRI fines cleaned from work area before hot work",
+   "type": "Active human",
+   "pfd": 0.3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Area owner",
+   "performance": "Work area free of fines and DRI",
+   "verification": "PTW checklist",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576v3bx2d",
+   "name": "Housekeeping – fines / spillage removal schedule",
+   "type": "Continuous / procedural",
+   "pfd": 0.3,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Operations",
+   "performance": "No fines accumulation in the enclosure",
+   "verification": "Weekly housekeeping inspection",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576kjuqa9",
+   "name": "Dust extraction from the conveyor hood",
+   "type": "Active hardware",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Maintenance",
+   "performance": "Design extraction flow maintained",
+   "verification": "Quarterly flow check, ΔP alarm",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576hi88sj",
+   "name": "N2 fire detection & inerting / extinguishing system",
+   "type": "Active hardware",
+   "pfd": 0.0285,
+   "source": "ft",
+   "ftId": "muvlm5771c6cr8",
+   "gateId": "muvjeyqf4e8kp4",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Fire protection engineer",
+   "performance": "Detects and floods the enclosure with N2 within the design time on stoppage under load or fire",
+   "verification": "Six-monthly function and discharge tests (see fault tree)",
+   "critical": "Yes",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576lpwx7i",
+   "name": "Manual fire fighting (hydrants / monitors)",
+   "type": "Active human-hardware",
+   "pfd": 0.2,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Emergency response team",
+   "performance": "Fire attack within the response time",
+   "verification": "Fire drills; fire water system tests",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576wju6ah",
+   "name": "Fire separation of the gallery (fire breaks / dampers)",
+   "type": "Passive hardware",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Civil / fire engineer",
+   "performance": "Prevents fire spread to the transfer tower and silo",
+   "verification": "Annual inspection of fire breaks and dampers",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576huux2j",
+   "name": "CO detection, alarm and evacuation of the gallery",
+   "type": "Active human-hardware",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Operations",
+   "performance": "Personnel alerted and evacuated before exposure",
+   "verification": "Detector bump tests; evacuation drills",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576sjbxn0",
+   "name": "Restricted access and gas testing before gallery entry",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Area owner",
+   "performance": "No entry without gas test and permit",
+   "verification": "Permit audits",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576quv9zm",
+   "name": "N2 release warning beacons and enclosure access lock-out",
+   "type": "Active hardware",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Fire protection engineer",
+   "performance": "Access prevented while N2 is being or has been released",
+   "verification": "Function test with the N2 system",
+   "critical": "",
+   "notes": ""
+  },
+  {
+   "id": "muvlm576hq2ckj",
+   "name": "O2 monitoring and confined-space entry permit",
+   "type": "Active human",
+   "pfd": 0.1,
+   "source": "manual",
+   "ftId": "",
+   "gateId": "",
+   "status": "Available",
+   "degradeFactor": 10,
+   "owner": "Area owner",
+   "performance": "No entry until O2 is confirmed safe",
+   "verification": "Permit audits; O2 meter calibration",
+   "critical": "",
+   "notes": ""
+  }
+ ],
+ "efs": [
+  {
+   "id": "muvlm5777i0ept",
+   "barrierId": "muvlm576hi88sj",
+   "name": "Low N2 buffer pressure / plant N2 supply interrupted",
+   "notes": "",
+   "controls": [
+    {
+     "id": "muvlm5776heo5o",
+     "name": "PSL-205 low-pressure alarm with operator response",
+     "type": "Active human-hardware",
+     "owner": ""
+    },
+    {
+     "id": "muvlm577dfmwa0",
+     "name": "Locked-open N2 isolation valve with line-up check",
+     "type": "Continuous / procedural",
+     "owner": ""
+    }
+   ]
+  },
+  {
+   "id": "muvlm577duo5az",
+   "barrierId": "muvlm576hi88sj",
+   "name": "Enclosure doors open / hood damaged – inerting ineffective",
+   "notes": "",
+   "controls": [
+    {
+     "id": "muvlm577ds13c9",
+     "name": "Door position monitoring and inspection rounds",
+     "type": "Continuous / procedural",
+     "owner": ""
+    }
+   ]
+  },
+  {
+   "id": "muvlm5779klzh1",
+   "barrierId": "muvlm576y20x0e",
+   "name": "Power failure prevents restart",
+   "notes": "",
+   "controls": [
+    {
+     "id": "muvlm577sdj0ey",
+     "name": "Emergency discharge chute operable without power",
+     "type": "Passive hardware",
+     "owner": ""
+    }
+   ]
+  },
+  {
+   "id": "muvlm577allqcs",
+   "barrierId": "muvlm576lpwx7i",
+   "name": "Fire water supply impaired",
+   "notes": "",
+   "controls": [
+    {
+     "id": "muvlm577yjwxzc",
+     "name": "Fire water pump weekly test and ring-main inspection",
+     "type": "Continuous / procedural",
+     "owner": ""
+    }
+   ]
+  },
+  {
+   "id": "muvlm577ws8cxd",
+   "barrierId": "muvlm576rktclc",
+   "name": "Contractor unfamiliar with DRI hazards",
+   "notes": "",
+   "controls": [
+    {
+     "id": "muvlm577dlw0lz",
+     "name": "Site induction with DRI hazard briefing",
+     "type": "Continuous / procedural",
+     "owner": ""
+    }
+   ]
+  }
+ ],
+ "fts": [
+  {
+   "id": "muvlm5771c6cr8",
+   "name": "Hot DRI conveyor – N2 fire detection & extinguishing",
+   "project": {
+    "app": "Fault Tree & PFD Calculator",
+    "schema": 1,
+    "title": "Hot DRI conveyor – N2 fire detection & extinguishing (example)",
+    "description": "Example: hot DRI transfer conveyor (enclosed) protected by an automatic nitrogen inerting / extinguishing system. Demand = conveyor trip or stoppage under load, leaving hot DRI stationary on the belt (self-heating / re-oxidation, belt ignition). Release is initiated automatically by the stoppage-under-load logic or by fire detection (linear heat detection + CO detectors), or manually from the control room. Top event frequency = uncontrolled conveyor fire per year; gate G-002 gives the PFDavg of the N2 system. All failure data are illustrative – replace with site / vendor data before use.",
+    "modified": null,
+    "top": "muvjeyqfdusk5z",
+    "gates": [
+     {
+      "id": "muvjeyqfdusk5z",
+      "code": "G-001",
+      "name": "Uncontrolled fire on hot DRI conveyor following trip / stoppage under load",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqf8yehyo"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfdtxex0"
+       },
+       {
+        "kind": "g",
+        "id": "muvjeyqf4e8kp4"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqf4e8kp4",
+      "code": "G-002",
+      "name": "N2 fire detection & extinguishing system fails to inert / extinguish on demand",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "muvjeyqf9vedl3"
+       },
+       {
+        "kind": "g",
+        "id": "muvjeyqf4wl0xt"
+       },
+       {
+        "kind": "g",
+        "id": "muvjeyqfbqvndg"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqf1fsa4j"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqffryrv8"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqf9vedl3",
+      "code": "G-003",
+      "name": "N2 release not initiated",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "muvjeyqf3u76zt"
+       },
+       {
+        "kind": "g",
+        "id": "muvjeyqfcn31vg"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqf3u76zt",
+      "code": "G-004",
+      "name": "Automatic initiation fails",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "muvjeyqf4oht87"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfd16c99"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqf4oht87",
+      "code": "G-005",
+      "name": "Stoppage-under-load and fire detection both fail to call for release",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "muvjeyqfr98ncx"
+       },
+       {
+        "kind": "g",
+        "id": "muvjeyqfxttbs3"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqfr98ncx",
+      "code": "G-006",
+      "name": "Stoppage-under-load signal fails",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqfdkqs5s"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqf41qapw"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqfxttbs3",
+      "code": "G-007",
+      "name": "Fire detection fails",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqfqu1oxw"
+       },
+       {
+        "kind": "g",
+        "id": "muvjeyqfm21bia"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqfm21bia",
+      "code": "G-008",
+      "name": "Both CO detectors in conveyor hood fail (1oo2)",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqf2tcset"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqf6r7vnv"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqfcn31vg",
+      "code": "G-009",
+      "name": "Manual release not achieved",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqftiuqld"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfop4vxj"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqf4wl0xt",
+      "code": "G-010",
+      "name": "Sufficient N2 not available at the conveyor",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "muvjeyqf5r0tct"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqf0vktnp"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqf5r0tct",
+      "code": "G-011",
+      "name": "N2 buffer inventory low and not restored",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqfegv7hp"
+       },
+       {
+        "kind": "g",
+        "id": "muvjeyqfsks7c8"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqfsks7c8",
+      "code": "G-012",
+      "name": "Low N2 pressure not alarmed or not acted on",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqf38phk5"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfd16c99"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfilzjvs"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqfbqvndg",
+      "code": "G-013",
+      "name": "N2 not delivered into the conveyor enclosure",
+      "type": "OR",
+      "k": 2,
+      "children": [
+       {
+        "kind": "g",
+        "id": "muvjeyqfc5y4jx"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfs38qjf"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfm5niaq"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqf98vwh1"
+       }
+      ],
+      "collapsed": false
+     },
+     {
+      "id": "muvjeyqfc5y4jx",
+      "code": "G-014",
+      "name": "Both N2 release valves fail to open (1oo2)",
+      "type": "AND",
+      "k": 2,
+      "children": [
+       {
+        "kind": "e",
+        "id": "muvjeyqfbx97pw"
+       },
+       {
+        "kind": "e",
+        "id": "muvjeyqfyi4k1h"
+       }
+      ],
+      "collapsed": false
+     }
+    ],
+    "events": [
+     {
+      "id": "muvjeyqf8yehyo",
+      "code": "BE-001",
+      "name": "Conveyor trip / stoppage under load (hot DRI left on belt)",
+      "model": "freq",
+      "q": 0.01,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 6,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative: ~6 stops under load per year (power dips, belt drift / pull-cord trips, downstream blockage)"
+     },
+     {
+      "id": "muvjeyqfdtxex0",
+      "code": "BE-002",
+      "name": "Fire / smouldering develops on stationary hot DRI before restart",
+      "model": "prob",
+      "q": 0.05,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 5,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Conditional probability – depends on stoppage duration, DRI temperature and fines; illustrative"
+     },
+     {
+      "id": "muvjeyqfdkqs5s",
+      "code": "BE-003",
+      "name": "Zero-speed switch SS-201 fails to detect belt stop",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000002,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative data"
+     },
+     {
+      "id": "muvjeyqf41qapw",
+      "code": "BE-004",
+      "name": "Belt weigher WT-201 fails to indicate load (reads empty)",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000003,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative data"
+     },
+     {
+      "id": "muvjeyqfqu1oxw",
+      "code": "BE-005",
+      "name": "Linear heat detection cable LHD-201 fails to detect",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000001,
+      "lamDD": 0.000001,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Supervised cable – open-circuit faults detected (λDD); illustrative"
+     },
+     {
+      "id": "muvjeyqf2tcset",
+      "code": "BE-006",
+      "name": "CO detector GD-201A fails to detect",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000002,
+      "lamDD": 0.000002,
+      "TI": 4380,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "muvjeyqf76vcdt",
+      "undeveloped": false,
+      "notes": "6-monthly bump test; illustrative"
+     },
+     {
+      "id": "muvjeyqf6r7vnv",
+      "code": "BE-007",
+      "name": "CO detector GD-201B fails to detect",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000002,
+      "lamDD": 0.000002,
+      "TI": 4380,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "muvjeyqf76vcdt",
+      "undeveloped": false,
+      "notes": "6-monthly bump test; illustrative"
+     },
+     {
+      "id": "muvjeyqfd16c99",
+      "code": "BE-008",
+      "name": "Extinguishing control panel / F&G logic fails dangerous",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-7,
+      "lamDD": 0.0000045,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Shared: also processes the N2 low-pressure alarm; illustrative"
+     },
+     {
+      "id": "muvjeyqftiuqld",
+      "code": "BE-009",
+      "name": "Operator fails to initiate manual N2 release in time",
+      "model": "prob",
+      "q": 0.1,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 5,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "HEP with alarm, high stress, limited time; illustrative"
+     },
+     {
+      "id": "muvjeyqfop4vxj",
+      "code": "BE-010",
+      "name": "Manual release station / circuit fails",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 5e-7,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative data"
+     },
+     {
+      "id": "muvjeyqfegv7hp",
+      "code": "BE-011",
+      "name": "N2 buffer vessel pressure low at time of demand",
+      "model": "prob",
+      "q": 0.02,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 5,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Plant N2 interruptions / leakage; illustrative"
+     },
+     {
+      "id": "muvjeyqf38phk5",
+      "code": "BE-012",
+      "name": "Low-pressure switch PSL-205 fails",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000002,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative data"
+     },
+     {
+      "id": "muvjeyqfilzjvs",
+      "code": "BE-013",
+      "name": "Operator does not restore N2 supply after low-pressure alarm",
+      "model": "prob",
+      "q": 0.05,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 5,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative – judgement / HRA"
+     },
+     {
+      "id": "muvjeyqf0vktnp",
+      "code": "BE-014",
+      "name": "Manual N2 isolation valve left closed after maintenance",
+      "model": "prob",
+      "q": 0.003,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Line-up error; illustrative"
+     },
+     {
+      "id": "muvjeyqfbx97pw",
+      "code": "BE-015",
+      "name": "N2 release valve XV-210A fails to open",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000003,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "muvjeyqfyhw1a6",
+      "undeveloped": false,
+      "notes": "Illustrative data"
+     },
+     {
+      "id": "muvjeyqfyi4k1h",
+      "code": "BE-016",
+      "name": "N2 release valve XV-210B fails to open",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000003,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "muvjeyqfyhw1a6",
+      "undeveloped": false,
+      "notes": "Illustrative data"
+     },
+     {
+      "id": "muvjeyqfs38qjf",
+      "code": "BE-017",
+      "name": "N2 pressure regulator PCV-211 fails closed",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.0000015,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative data"
+     },
+     {
+      "id": "muvjeyqfm5niaq",
+      "code": "BE-018",
+      "name": "Distribution header / nozzles blocked by DRI fines",
+      "model": "tested",
+      "q": 0.01,
+      "lamDU": 0.000002,
+      "lamDD": 0,
+      "TI": 4380,
+      "MTTR": 24,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "6-monthly flow / blow-through test; illustrative"
+     },
+     {
+      "id": "muvjeyqf98vwh1",
+      "code": "BE-019",
+      "name": "24 V DC supply to release solenoids lost",
+      "model": "repair",
+      "q": 0.01,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000005,
+      "freq": 0.1,
+      "house": true,
+      "ef": 3,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Revealed (supervised) failure; energise-to-release design"
+     },
+     {
+      "id": "muvjeyqf1fsa4j",
+      "code": "BE-020",
+      "name": "Conveyor enclosure not adequately sealed (doors open / hood damaged) – inerting ineffective",
+      "model": "prob",
+      "q": 0.01,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": true,
+      "notes": "Illustrative – judgement / HRA"
+     },
+     {
+      "id": "muvjeyqffryrv8",
+      "code": "BE-021",
+      "name": "Extinguishing system isolated / locked off (left in maintenance mode)",
+      "model": "prob",
+      "q": 0.002,
+      "lamDU": 0.000001,
+      "lamDD": 0,
+      "TI": 8760,
+      "MTTR": 8,
+      "lam": 0.000001,
+      "freq": 0.1,
+      "house": true,
+      "ef": 10,
+      "ccf": "",
+      "undeveloped": false,
+      "notes": "Illustrative – judgement / HRA"
+     }
+    ],
+    "ccf": [
+     {
+      "id": "muvjeyqf76vcdt",
+      "code": "CCF-001",
+      "name": "CO detectors",
+      "beta": 0.1,
+      "betaD": ""
+     },
+     {
+      "id": "muvjeyqfyhw1a6",
+      "code": "CCF-002",
+      "name": "N2 release valves",
+      "beta": 0.1,
+      "betaD": ""
+     }
+    ],
+    "settings": {
+     "mission": 8760,
+     "points": 400,
+     "maxOrder": 8,
+     "cutoff": 1e-15,
+     "maxCS": 20000,
+     "mcSamples": 2000,
+     "demandMode": "low"
+    }
+   }
+  }
+ ],
+ "matrix": {
+  "sev": [
+   "Negligible",
+   "Minor",
+   "Moderate",
+   "Major",
+   "Catastrophic"
+  ],
+  "lik": [
+   "Rare",
+   "Unlikely",
+   "Possible",
+   "Likely",
+   "Frequent"
+  ],
+  "likBands": [
+   0.0001,
+   0.001,
+   0.01,
+   0.1
+  ],
+  "bands": {
+   "Medium": 5,
+   "High": 10,
+   "Very High": 20
+  },
+  "tol": [
+   "",
+   "",
+   "1",
+   "0.01",
+   "1e-4"
+  ]
+ },
+ "settings": {
+  "health": false
+ }
+}
