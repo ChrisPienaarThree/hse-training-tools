@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S23 — Roadmap / readiness generator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>S23 · Roadmap / readiness generator</h1>
+      <p class="sub">Pick a candidate AI use case, score its readiness yourself, watch the roadmap reorder around whatever's weakest.</p>
+    </div>
+    <div>
+      <label class="field" for="scenarioSelect">Team</label>
+      <select id="scenarioSelect"></select>
+    </div>
+    <button id="themeBtn" class="ghost theme-toggle">Theme: system</button>
+  </div>
+  <div id="app"><p>Loading…</p></div>
+  <footer class="notes">
+    Part of <em>Integrating AI in Workplace Safety Practices</em> — Day 5, closing workshop. This is not a
+    model and does not score anything for you: <code>app.js</code> only averages the five slider positions
+    you set, picks a band, and sorts the roadmap — live, in your browser.
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/manufacturing-hse-team/dataset.js"></script>
+<script src="data/construction-hse-team/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

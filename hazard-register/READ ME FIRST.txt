@@ -1,0 +1,38 @@
+HAZARD REGISTER – OFFLINE (USB) EDITION
+=======================================
+
+What this is
+  A standalone copy of the Hazard Register / risk-assessment app. Everything – the app,
+  the full register (1,520 hazards incl. refinery and mineral-processing gap-fills, 12 retired),
+  the existing studies and actions, and the Excel library – is inside ONE file:
+      Hazard Register.html
+  No internet connection, installation or sign-in is needed. Nothing is sent anywhere.
+
+How to start
+  Windows : double-click  "Start Hazard Register - Windows.cmd"   (opens in Microsoft Edge)
+  Mac     : double-click  "Start Hazard Register - Mac.command"   (opens in Chrome or Edge)
+  Or simply double-click "Hazard Register.html" – Chrome or Edge recommended.
+  (First time on a Mac: if the .command file is blocked, right-click it > Open.)
+
+Where your work is saved – IMPORTANT
+  * By default the app saves automatically inside the browser on the computer you are using
+    (the bar under the title shows "Saved in this browser"). It is NOT written onto the USB
+    stick, and it will not be there if you plug the stick into another computer.
+  * To keep your work ON THE USB STICK (Chrome / Edge):
+      click "Save to data file…" and create e.g.  My data\Hazard Register data.json
+      on the stick. From then on every change is written to that file automatically.
+      On another computer, click "Open data file…" and pick the same file.
+      If the bar says "Data file needs reconnecting", click "Reconnect data file".
+  * Any browser: click "Save backup" to download a .json copy of everything, and
+    "Restore backup…" to load one. Keep backups in the "My data" folder.
+  * "Reset" returns to the register exactly as shipped (save a backup first!).
+
+Excel
+  Register > "Export to Excel" exports the whole register; each study can be exported from
+  its Summary step. "Import from Excel" adds hazards from a spreadsheet.
+
+Notes
+  * This copy is separate from the shared claude.ai version – changes here do not appear
+    there, and vice versa. Exported on 8 Oct 2026 from the live register.
+  * Severity ratings are first-pass ratings for review; Hazardous Substances minimum controls
+    should be checked against current SDSs before being relied on for compliance.

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S15 — Risk-based inspection scheduler</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>S15 · Risk-based inspection scheduler</h1>
+      <p class="sub">AI-assisted prioritisation vs a uniform inspection rotation, under a fixed inspector-day budget.</p>
+    </div>
+    <div>
+      <label class="field" for="scenarioSelect">Scenario</label>
+      <select id="scenarioSelect"></select>
+    </div>
+    <button id="themeBtn" class="ghost theme-toggle">Theme: system</button>
+  </div>
+  <div id="app"><p>Loading…</p></div>
+  <footer class="notes">
+    Part of <em>Integrating AI in Workplace Safety Practices</em> — Day 3, risk-based inspection prioritisation. No AI model runs in this
+    page; <code>app.js</code> simulates a seeded random sequence of arising faults and two scheduling strategies against it, live, in
+    your browser.
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/refinery-units/dataset.js"></script>
+<script src="data/warehouse-portfolio/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

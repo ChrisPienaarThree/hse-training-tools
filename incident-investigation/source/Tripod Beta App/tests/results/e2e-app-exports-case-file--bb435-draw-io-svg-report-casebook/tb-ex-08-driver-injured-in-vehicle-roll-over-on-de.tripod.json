@@ -1,0 +1,1085 @@
+{
+ "format": "tripod-beta-case",
+ "version": 1,
+ "exportedAt": "2026-10-15T15:25:01.110Z",
+ "app": "Istec Training Tripod Beta Investigator",
+ "case": {
+  "id": "tb-yk3ragwspb",
+  "version": 1,
+  "meta": {
+   "title": "Driver injured in vehicle roll-over on delivery run (practice copy)",
+   "ref": "TB-EX-08",
+   "date": "2026-03-12",
+   "time": "08:00 to 18:30",
+   "location": "Remote delivery route, 40 km from the Area Production Centre",
+   "site": "Area Production Centre, Logistics",
+   "client": "Worked example (Tripod Beta User Guide, Annex 8)",
+   "incidentType": "People",
+   "actualSeverity": 4,
+   "potentialSeverity": 5,
+   "status": "Draft",
+   "practitioner": "Course facilitator",
+   "description": "A driver delivering goods to a remote location left the Area Production Centre on schedule at 08:00 and was due back at 12:30. His failure to return was not reported until 15:00. A search along his Journey Management route started at 16:30 without success; he was found off the designated route at 18:30. The vehicle had left the road and rolled over. Local villagers had pulled the driver from the vehicle while he waited for rescue; doctors believe this contributed to a spinal injury that will probably cause permanent disability.",
+   "summary": "Five trios describe the incident, from the need to transport goods to the permanent disability of the driver. Seven barriers failed. The Tripod causation paths point to weaknesses in journey management, driver fitness and rest control, driver training, seat-belt enforcement and emergency response staffing.",
+   "lessons": "Journey management must cover driver fitness and rest, not only the route.\nUrgency on transport requisitions should be challenged and loads combined.\nSeat-belt use is a company rule regardless of local law and must be enforced from induction onwards.",
+   "reviewer": "",
+   "reviewDate": "",
+   "logo": ""
+  },
+  "team": [
+   {
+    "name": "Lead investigator (Tripod Beta Practitioner)",
+    "role": "Team leader"
+   },
+   {
+    "name": "Logistics superintendent",
+    "role": "Process knowledge"
+   },
+   {
+    "name": "HSE adviser",
+    "role": "Investigator"
+   },
+   {
+    "name": "Driver representative",
+    "role": "Workforce representative"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "a1",
+    "type": "agent",
+    "label": "Need for transportation of goods",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 40,
+    "y": 270
+   },
+   {
+    "id": "o1",
+    "type": "object",
+    "label": "Vehicle in parking lot",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 450,
+    "y": 390
+   },
+   {
+    "id": "eo1",
+    "type": "eventObject",
+    "label": "Vehicle on the road",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 660,
+    "y": 340
+   },
+   {
+    "id": "b1",
+    "type": "failed",
+    "label": "Combining load with other loads",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 250,
+    "y": 300
+   },
+   {
+    "id": "b2",
+    "type": "failed",
+    "label": "Stop non-rested driver to drive",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 450,
+    "y": 300
+   },
+   {
+    "id": "a2",
+    "type": "agent",
+    "label": "Sideways forces on vehicle from wind or convex road",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 860,
+    "y": 150
+   },
+   {
+    "id": "b3",
+    "type": "failed",
+    "label": "Alert and correct steering",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 860,
+    "y": 360
+   },
+   {
+    "id": "ea2",
+    "type": "eventAgent",
+    "label": "Tyres hit shoulder of road",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1070,
+    "y": 250
+   },
+   {
+    "id": "o3",
+    "type": "object",
+    "label": "Vehicle stability",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1270,
+    "y": 610
+   },
+   {
+    "id": "b4",
+    "type": "failed",
+    "label": "Correct reaction on hitting shoulder of road",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1270,
+    "y": 270
+   },
+   {
+    "id": "ea3",
+    "type": "eventAgent",
+    "label": "Roll-over of vehicle",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1480,
+    "y": 380
+   },
+   {
+    "id": "o4",
+    "type": "object",
+    "label": "Driver",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1270,
+    "y": 690
+   },
+   {
+    "id": "b5",
+    "type": "failed",
+    "label": "Use of seatbelt",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1480,
+    "y": 650
+   },
+   {
+    "id": "eo4",
+    "type": "eventObject",
+    "label": "Driver with back injury",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "mainEvent": true,
+    "x": 1680,
+    "y": 510
+   },
+   {
+    "id": "a5",
+    "type": "agent",
+    "label": "(potential for) Incorrect extraction of driver",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1270,
+    "y": 30
+   },
+   {
+    "id": "b7",
+    "type": "failed",
+    "label": "Effective search",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1480,
+    "y": 60
+   },
+   {
+    "id": "b6",
+    "type": "failed",
+    "label": "Rapid mobilisation of search team",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1680,
+    "y": 60
+   },
+   {
+    "id": "e5",
+    "type": "event",
+    "label": "Permanent disability from spinal injury",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1890,
+    "y": 270
+   },
+   {
+    "id": "ic1",
+    "type": "ic",
+    "label": "Journey manager misses opportunity to combine loads",
+    "notes": "A knowledge-based mistake that has become commonplace.",
+    "evidence": "",
+    "verified": true,
+    "act": "act",
+    "errorType": "mistakeKnow",
+    "x": 250,
+    "y": 780
+   },
+   {
+    "id": "ic2",
+    "type": "ic",
+    "label": "Journey manager does not stop non-rested driver",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "act": "act",
+    "errorType": "routine",
+    "x": 450,
+    "y": 780
+   },
+   {
+    "id": "ic3",
+    "type": "ic",
+    "label": "Driver fades on and off behind the wheel",
+    "notes": "A lapse and possible violation of the \"pull off and stop\" policy.",
+    "evidence": "",
+    "verified": true,
+    "act": "act",
+    "errorType": "lapse",
+    "x": 860,
+    "y": 780
+   },
+   {
+    "id": "ic4",
+    "type": "ic",
+    "label": "Driver over-steers vehicle",
+    "notes": "An instinctive reaction on waking, difficult to resolve by training alone.",
+    "evidence": "",
+    "verified": true,
+    "act": "act",
+    "errorType": "slip",
+    "x": 1400,
+    "y": 780
+   },
+   {
+    "id": "ic5",
+    "type": "ic",
+    "label": "Driver refuses to wear seatbelt",
+    "notes": "",
+    "evidence": "Driver statement; induction trainer interview",
+    "verified": true,
+    "act": "act",
+    "errorType": "routine",
+    "x": 1790,
+    "y": 780
+   },
+   {
+    "id": "ic6",
+    "type": "ic",
+    "label": "Emergency team mobilises after 75 minutes",
+    "notes": "Journey Management Procedure requires a search within 45 minutes of the overdue alert.",
+    "evidence": "",
+    "verified": true,
+    "act": "act",
+    "errorType": "situational",
+    "x": 2160,
+    "y": 780
+   },
+   {
+    "id": "ic7",
+    "type": "ic",
+    "label": "Search team makes detour before finding crashed vehicle",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "act": "act",
+    "errorType": "uvAwareness",
+    "x": 1600,
+    "y": 780
+   },
+   {
+    "id": "pc1",
+    "type": "pc",
+    "label": "Belief that delivery cannot wait",
+    "notes": "Requisition stated \"immediate\"; almost all requests do.",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 250,
+    "y": 910
+   },
+   {
+    "id": "pc2",
+    "type": "pc",
+    "label": "Checking driver on fitness not common practice",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 450,
+    "y": 910
+   },
+   {
+    "id": "pc3",
+    "type": "pc",
+    "label": "Driver believes he is rested with few hours pre-trip sleep",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 860,
+    "y": 910
+   },
+   {
+    "id": "pc4",
+    "type": "pc",
+    "label": "Driver does not know of the need for a 20 minute nap",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 1030,
+    "y": 910
+   },
+   {
+    "id": "pc5",
+    "type": "pc",
+    "label": "Driver does not know how to steer out of trouble",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 1400,
+    "y": 910
+   },
+   {
+    "id": "pc6",
+    "type": "pc",
+    "label": "Drivers consider use of seatbelts as \"childish\"",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 1790,
+    "y": 910
+   },
+   {
+    "id": "pc7",
+    "type": "pc",
+    "label": "Control-room operator charged with outdoor duties",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 2160,
+    "y": 910
+   },
+   {
+    "id": "pc8",
+    "type": "pc",
+    "label": "Emergency room team not on call due to company party",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 2330,
+    "y": 910
+   },
+   {
+    "id": "pc9",
+    "type": "pc",
+    "label": "Search team not sure about actual incident site",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "scope": "org",
+    "x": 1600,
+    "y": 910
+   },
+   {
+    "id": "uc1",
+    "type": "uc",
+    "label": "Inadequate communication about urgency of the delivery",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "CO",
+    "x": 250,
+    "y": 1040
+   },
+   {
+    "id": "uc2",
+    "type": "uc",
+    "label": "Fitness of drivers is no issue in journey management procedure",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "PR",
+    "x": 450,
+    "y": 1040
+   },
+   {
+    "id": "uc3",
+    "type": "uc",
+    "label": "Resting is not controlled; drivers are on call",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "OR",
+    "x": 860,
+    "y": 1040
+   },
+   {
+    "id": "uc4",
+    "type": "uc",
+    "label": "Too few drivers on this job",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "IG",
+    "x": 1030,
+    "y": 1040
+   },
+   {
+    "id": "uc5",
+    "type": "uc",
+    "label": "Company does not require advanced driving course",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "TR",
+    "x": 1200,
+    "y": 1040
+   },
+   {
+    "id": "uc6",
+    "type": "uc",
+    "label": "Local culture stimulates \"macho driving\"",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "EC",
+    "x": 1790,
+    "y": 1040
+   },
+   {
+    "id": "uc7",
+    "type": "uc",
+    "label": "Management does not enforce use of seatbelts",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "IG",
+    "x": 1960,
+    "y": 1040
+   },
+   {
+    "id": "uc8",
+    "type": "uc",
+    "label": "Shortage of operators due to cost-cutting drive",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "OR",
+    "x": 2160,
+    "y": 1040
+   },
+   {
+    "id": "uc9",
+    "type": "uc",
+    "label": "Management does not enforce duty procedures",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "IG",
+    "x": 2330,
+    "y": 1040
+   },
+   {
+    "id": "uc10",
+    "type": "uc",
+    "label": "Ineffective tracking system for road transport",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "brf": "DF",
+    "x": 1600,
+    "y": 1040
+   },
+   {
+    "id": "n1",
+    "type": "narrative",
+    "label": "Vehicle design excluded: fit for purpose, did well in crash tests; rollover write-off is rare (fewer than 1 in 20).",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 1270,
+    "y": 480
+   }
+  ],
+  "edges": [
+   {
+    "id": "x1",
+    "from": "a1",
+    "to": "b1"
+   },
+   {
+    "id": "x2",
+    "from": "b1",
+    "to": "b2"
+   },
+   {
+    "id": "x3",
+    "from": "b2",
+    "to": "eo1"
+   },
+   {
+    "id": "x4",
+    "from": "o1",
+    "to": "eo1"
+   },
+   {
+    "id": "x5",
+    "from": "a2",
+    "to": "ea2"
+   },
+   {
+    "id": "x6",
+    "from": "eo1",
+    "to": "b3"
+   },
+   {
+    "id": "x7",
+    "from": "b3",
+    "to": "ea2"
+   },
+   {
+    "id": "x8",
+    "from": "ea2",
+    "to": "b4"
+   },
+   {
+    "id": "x9",
+    "from": "b4",
+    "to": "ea3"
+   },
+   {
+    "id": "x10",
+    "from": "o3",
+    "to": "ea3"
+   },
+   {
+    "id": "x11",
+    "from": "ea3",
+    "to": "eo4"
+   },
+   {
+    "id": "x12",
+    "from": "o4",
+    "to": "b5"
+   },
+   {
+    "id": "x13",
+    "from": "b5",
+    "to": "eo4"
+   },
+   {
+    "id": "x14",
+    "from": "a5",
+    "to": "b7"
+   },
+   {
+    "id": "x15",
+    "from": "b7",
+    "to": "b6"
+   },
+   {
+    "id": "x16",
+    "from": "b6",
+    "to": "e5"
+   },
+   {
+    "id": "x17",
+    "from": "eo4",
+    "to": "e5"
+   },
+   {
+    "id": "x18",
+    "from": "ic1",
+    "to": "b1"
+   },
+   {
+    "id": "x19",
+    "from": "ic2",
+    "to": "b2"
+   },
+   {
+    "id": "x20",
+    "from": "ic3",
+    "to": "b3"
+   },
+   {
+    "id": "x21",
+    "from": "ic4",
+    "to": "b4"
+   },
+   {
+    "id": "x22",
+    "from": "ic5",
+    "to": "b5"
+   },
+   {
+    "id": "x23",
+    "from": "ic6",
+    "to": "b6"
+   },
+   {
+    "id": "x24",
+    "from": "ic7",
+    "to": "b7"
+   },
+   {
+    "id": "x25",
+    "from": "pc1",
+    "to": "ic1"
+   },
+   {
+    "id": "x26",
+    "from": "pc1",
+    "to": "ic2"
+   },
+   {
+    "id": "x27",
+    "from": "pc2",
+    "to": "ic2"
+   },
+   {
+    "id": "x28",
+    "from": "pc3",
+    "to": "ic3"
+   },
+   {
+    "id": "x29",
+    "from": "pc4",
+    "to": "ic3"
+   },
+   {
+    "id": "x30",
+    "from": "pc5",
+    "to": "ic4"
+   },
+   {
+    "id": "x31",
+    "from": "pc6",
+    "to": "ic5"
+   },
+   {
+    "id": "x32",
+    "from": "pc7",
+    "to": "ic6"
+   },
+   {
+    "id": "x33",
+    "from": "pc8",
+    "to": "ic6"
+   },
+   {
+    "id": "x34",
+    "from": "pc9",
+    "to": "ic7"
+   },
+   {
+    "id": "x35",
+    "from": "uc1",
+    "to": "pc1"
+   },
+   {
+    "id": "x36",
+    "from": "uc2",
+    "to": "pc2"
+   },
+   {
+    "id": "x37",
+    "from": "uc3",
+    "to": "pc3"
+   },
+   {
+    "id": "x38",
+    "from": "uc4",
+    "to": "pc3"
+   },
+   {
+    "id": "x39",
+    "from": "uc5",
+    "to": "pc4"
+   },
+   {
+    "id": "x40",
+    "from": "uc5",
+    "to": "pc5"
+   },
+   {
+    "id": "x41",
+    "from": "uc6",
+    "to": "pc6"
+   },
+   {
+    "id": "x42",
+    "from": "uc7",
+    "to": "pc6"
+   },
+   {
+    "id": "x43",
+    "from": "uc8",
+    "to": "pc7"
+   },
+   {
+    "id": "x44",
+    "from": "uc9",
+    "to": "pc8"
+   },
+   {
+    "id": "x45",
+    "from": "uc10",
+    "to": "pc9"
+   },
+   {
+    "id": "x46",
+    "from": "n1",
+    "to": "o4"
+   }
+  ],
+  "actions": [
+   {
+    "id": "act1",
+    "target": "b1",
+    "text": "Logistics planners to check delivery urgency with the requester before dispatch and combine non-urgent loads with scheduled truck runs.",
+    "owner": "Logistics Superintendent",
+    "due": "2026-04-11",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act2",
+    "target": "b2",
+    "text": "Add a documented driver fitness and rest check to the journey management pre-departure briefing; Journey Manager to stop any driver who fails it.",
+    "owner": "Journey Management owner",
+    "due": "2026-04-11",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act3",
+    "target": "b3",
+    "text": "Brief every driver before departure on fatigue: when drowsy, pull off and take a 20-minute nap. Record the briefing on the Journey Management Plan.",
+    "owner": "Transport Manager",
+    "due": "2026-03-26",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act4",
+    "target": "b4",
+    "text": "Add recovery from running off the road (slow down, steer back gently) to the practical module of the advanced driving course.",
+    "owner": "Training Manager",
+    "due": "2026-06-10",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act5",
+    "target": "b7",
+    "text": "Require the planned route to be written on the Journey Management Plan and any deviation to be reported to base before it is taken.",
+    "owner": "Journey Management owner",
+    "due": "2026-04-11",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act6",
+    "target": "b5",
+    "text": "Make seat-belt use a stated condition of driving company vehicles and check it at gate exits for three months.",
+    "owner": "Transport Manager",
+    "due": "2026-03-26",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act7",
+    "target": "b6",
+    "text": "Rehearse overdue-vehicle search mobilisation against the 45-minute target at random times, quarterly.",
+    "owner": "Emergency Response Coordinator",
+    "due": "2026-06-10",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act8",
+    "target": "uc1",
+    "text": "Agree delivery priority definitions with customers and hold a monthly delivery planning meeting.",
+    "owner": "Logistics Superintendent",
+    "due": "2026-05-11",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act9",
+    "target": "uc2",
+    "text": "Revise the Journey Management Procedure to include driver fitness, rest and alertness criteria.",
+    "owner": "HSE Manager",
+    "due": "2026-05-11",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act10",
+    "target": "uc3",
+    "text": "Introduce duty-hour and minimum-rest rules for drivers and monitor them through the roster.",
+    "owner": "Transport Manager",
+    "due": "2026-06-10",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act11",
+    "target": "uc4",
+    "text": "Review driver numbers against trip demand and recruit or reschedule to remove the shortfall.",
+    "owner": "Operations Manager",
+    "due": "2026-07-10",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act12",
+    "target": "uc5",
+    "text": "Require an advanced driving course (alertness, fatigue and vehicle recovery skills) for all drivers.",
+    "owner": "Training Manager",
+    "due": "2026-09-08",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act13",
+    "target": "uc7",
+    "text": "Correct the induction material on seat belts and brief all induction trainers on the company rule.",
+    "owner": "HSE Manager",
+    "due": "2026-04-11",
+    "priority": "High",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act14",
+    "target": "uc6",
+    "text": "Run a line-manager-led driving culture programme with recognition for compliant driving and visible follow-up of risk-taking.",
+    "owner": "Operations Manager",
+    "due": "2026-07-10",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act15",
+    "target": "uc9",
+    "text": "Audit compliance with emergency duty and on-call procedures monthly and report results to the management team.",
+    "owner": "Operations Manager",
+    "due": "2026-05-11",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act16",
+    "target": "uc8",
+    "text": "Remove outdoor duties from control-room operators while on emergency watch, or add a relief operator.",
+    "owner": "Operations Manager",
+    "due": "2026-05-11",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   },
+   {
+    "id": "act17",
+    "target": "uc10",
+    "text": "Fit in-vehicle tracking to field vehicles and monitor positions from the control room.",
+    "owner": "Transport Manager",
+    "due": "2026-09-08",
+    "priority": "Medium",
+    "status": "Open",
+    "smart": {
+     "S": true,
+     "M": true,
+     "A": true,
+     "R": true,
+     "T": true
+    },
+    "agreed": true,
+    "closeNote": ""
+   }
+  ],
+  "log": [
+   {
+    "t": "2026-10-15T15:24:59.087Z",
+    "who": "local:This device",
+    "what": "Created a practice copy of the Annex 8 worked example",
+    "key": ""
+   }
+  ],
+  "updatedAt": "2026-10-15T15:24:59.087Z",
+  "updatedBy": "local:This device",
+  "createdAt": "2026-10-15T15:24:59.087Z"
+ }
+}

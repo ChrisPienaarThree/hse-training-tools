@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Incident Investigation Toolkit</title>
+<style>
+/* Layout: investigation dashboard. Navy brand band, three tool cards, then the case register (the working view) and saving guidance. */
+:root {
+  --bg: #eef1f4; --surface: #ffffff; --surface-2: #f5f7f9; --ink: #142132; --muted: #5a6779; --line: #d3dae2;
+  --accent: #1d4ea3; --accent-ink: #ffffff; --accent-soft: #e3ebf8; --brand: #0f2a4d;
+  --err: #b42318; --err-soft: #fdecea; --warn: #9a5b00; --warn-soft: #fff3dc; --ok: #1f7a45; --ok-soft: #e3f3e9;
+  --f-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e141b; --surface: #161f2a; --surface-2: #1c2633; --ink: #e3e9f0; --muted: #96a3b4; --line: #2b3746;
+  --accent: #82a8ff; --accent-ink: #0b1220; --accent-soft: #1d2c47; --brand: #0a1d36;
+  --err: #ff8a80; --err-soft: #3a1d1d; --warn: #f5b74e; --warn-soft: #362a14; --ok: #6fd39c; --ok-soft: #14301f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e141b; --surface: #161f2a; --surface-2: #1c2633; --ink: #e3e9f0; --muted: #96a3b4; --line: #2b3746;
+  --accent: #82a8ff; --accent-ink: #0b1220; --accent-soft: #1d2c47; --brand: #0a1d36;
+  --err: #ff8a80; --err-soft: #3a1d1d; --warn: #f5b74e; --warn-soft: #362a14; --ok: #6fd39c; --ok-soft: #14301f; color-scheme: dark }
+[hidden] { display: none !important; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.15; margin: 0; text-wrap: balance; }
+p { margin: 0; } a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); } .small { font-size: .86rem; }
+.eyebrow { font-family: var(--f-display); text-transform: uppercase; letter-spacing: .1em; font-size: .8rem; font-weight: 600; color: var(--muted); }
+header { background: var(--brand); color: #fff; padding-block: 28px 30px; padding-inline: 16px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+header .co { font-family: var(--f-display); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: .85rem; color: #9fc0ff; }
+header h1 { font-size: 2.4rem; margin: 6px 0 8px; }
+header p { color: #cfdcf0; max-width: 70ch; }
+main { padding-inline: 16px; padding-block: 24px 60px; }
+.stack { display: flex; flex-direction: column; gap: 22px; }
+.tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.tool { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tool .step { font-family: var(--f-mono); font-size: .75rem; color: var(--muted); }
+.tool h2 { font-size: 1.45rem; }
+.tool ul { margin: 0; padding-left: 18px; font-size: .9rem; color: var(--muted); }
+.tool .row { margin-top: auto; padding-top: 6px; }
+.glyph { width: 44px; height: 44px; border-radius: 8px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; } .spacer { flex: 1; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 7px 14px; border-radius: 6px; cursor: pointer; font: inherit; font-weight: 500; font-size: .92rem; text-decoration: none; white-space: nowrap; }
+.btn:hover { background: var(--surface-2); } .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.sm { padding: 3px 9px; font-size: .84rem; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; min-width: 0; }
+.panel h2 { font-size: 1.45rem; margin-bottom: 4px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 14px 0; }
+.stat { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface-2); }
+.stat b { display: block; font-family: var(--f-display); font-size: 1.9rem; font-weight: 600; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .82rem; color: var(--muted); }
+.stat.warn b { color: var(--warn); } .stat.err b { color: var(--err); }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th { text-align: left; font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; background: var(--surface-2); padding: 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 9px; font-size: .75rem; font-weight: 600; white-space: nowrap; background: var(--surface-2); color: var(--muted); }
+.chip.tripod { background: #fdeaea; color: #a61f25; } .chip.rcaft { background: #e3ebf8; color: #1d4ea3; } .chip.casebook { background: #e6f4ec; color: #1f7a45; }
+.chip.final, .chip.closed { background: var(--ok-soft); color: var(--ok); } .chip.warn { background: var(--warn-soft); color: var(--warn); } .chip.err { background: var(--err-soft); color: var(--err); }
+.where { font-size: .84rem; } .where.local { color: var(--warn); font-weight: 600; }
+.empty { border: 1px dashed var(--line); border-radius: 8px; padding: 22px; text-align: center; color: var(--muted); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.flow div { border-left: 3px solid var(--accent); padding-left: 10px; font-size: .92rem; }
+.note { background: var(--warn-soft); border-radius: 8px; padding: 12px 14px; font-size: .92rem; }
+ul.tight { margin: 6px 0 0; padding-left: 20px; } ul.tight li { margin: 3px 0; }
+input[type=search], select { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 6px 9px; font: inherit; font-size: .9rem; min-width: 0; }
+.toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 6px; font-size: .9rem; z-index: 50; max-width: calc(100% - 32px); }
+@media (max-width: 640px) { header h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="co">Istec Training</div><h1>Incident Investigation Toolkit</h1>
+<p>Three offline investigation tools that run straight from this folder: no installation, no internet. Open a tool, or pick up an investigation from the case register below.</p></div></header>
+<main><div class="wrap stack">
+  <section class="tools" aria-label="Tools">
+    <article class="tool"><div class="row"><div class="glyph" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26"><rect x="2" y="5" width="7" height="5" rx="1" fill="#1f7a45"/><rect x="11" y="5" width="7" height="5" rx="1" fill="#1f7a45"/><rect x="20" y="5" width="4" height="5" rx="1" fill="#1f7a45"/><ellipse cx="9" cy="18" rx="4" ry="2.6" fill="none" stroke="#1f7a45" stroke-width="1.6"/><path d="M5 10v4M14 10v6" stroke="#1f7a45" stroke-width="1.4"/></svg></div><span class="step">Collect &amp; sequence</span></div>
+      <h2>Storyline Casebook</h2><p class="muted">The investigation file: initial report, evidence register with photos, ECFA+ events-and-conditions storyline, ICAM coding, root causes, corrective actions and the report.</p>
+      <ul><li>Built-in sample case</li><li>Imports packages from Tripod Beta and the RCA Fault Tree</li><li>Storyline export to draw.io</li></ul>
+      <div class="row"><a class="btn primary" href="Tools/Storyline Casebook.html">Open tool</a><a class="btn sm" href="Guides/Incident Investigation Toolkit - Quick guide.pdf">Quick guide (PDF)</a></div></article>
+    <article class="tool"><div class="row"><div class="glyph" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26"><rect x="1" y="3" width="8" height="6" fill="#ffd200" stroke="#161616"/><rect x="1" y="16" width="8" height="6" fill="none" stroke="#1f8f4e" stroke-width="2"/><rect x="17" y="9.5" width="8" height="6" fill="none" stroke="#d7262e" stroke-width="2"/><path d="M9 6 C13 6 13 12.5 17 12.5 M9 19 C13 19 13 12.5 17 12.5" fill="none" stroke="#3a3f47"/><rect x="11.5" y="5" width="2" height="3" fill="#161616"/><rect x="14" y="5" width="2" height="3" fill="#161616"/></svg></div><span class="step">Barrier analysis</span></div>
+      <h2>Tripod Beta Investigator</h2><p class="muted">Model what happened (trios), how the barriers failed and why: Immediate Cause, Precondition, Underlying Cause with Basic Risk Factors. Live tree-rules check.</p>
+      <ul><li>Annex 8 vehicle roll-over worked example</li><li>BRF profile, SMART actions</li><li>Word report, draw.io, Casebook package</li></ul>
+      <div class="row"><a class="btn primary" href="Tools/Tripod Beta Investigator.html">Open tool</a><a class="btn sm" href="Guides/Incident Investigation Toolkit - Quick guide.pdf">Quick guide (PDF)</a></div></article>
+    <article class="tool"><div class="row"><div class="glyph" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26"><rect x="8" y="1" width="10" height="5" rx="1" fill="none" stroke="#1d4ea3" stroke-width="1.6"/><path d="M8.5 13 Q9 9 13 7.5 Q17 9 17.5 13 Q13 11 8.5 13Z" fill="none" stroke="#1d4ea3" stroke-width="1.5"/><path d="M13 13v3M5 16h16M5 16v3M21 16v3" stroke="#1d4ea3" stroke-width="1.4"/><circle cx="5" cy="22" r="3" fill="none" stroke="#1f7a45" stroke-width="1.6"/><circle cx="21" cy="22" r="3" fill="none" stroke="#b42318" stroke-width="1.6"/></svg></div><span class="step">Test hypotheses</span></div>
+      <h2>RCA Fault Tree</h2><p class="muted">Cause-and-effect fault tree for root cause analysis. Every branch is a hypothesis to confirm or rule out with evidence. Optional probabilities rank the open hypotheses.</p>
+      <ul><li>Look-up library: IPL PFDs, human error, equipment failure, initiating frequencies; every value editable</li><li>Credible causal combinations, P(cause | incident)</li><li>Tank overfill worked example</li></ul>
+      <div class="row"><a class="btn primary" href="Tools/RCA Fault Tree.html">Open tool</a><a class="btn sm" href="Guides/RCA Fault Tree - User guide.pdf">User guide (PDF)</a></div></article>
+  </section>
+
+  <section class="panel" aria-labelledby="reg-h">
+    <div class="row"><div><span class="eyebrow">Case register</span><h2 id="reg-h">Investigations</h2><p class="muted small">Files in your <b>My cases</b> folder, plus cases kept in this computer’s browser. Open any of them in its tool.</p></div><span class="spacer"></span>
+      <button class="btn primary" id="pick">Choose the My cases folder…</button><button class="btn" id="refresh" hidden>Refresh</button></div>
+    <div class="stats" id="stats"></div>
+    <div class="row" style="margin-bottom:10px"><input type="search" id="q" placeholder="Search title or reference" aria-label="Search" style="flex:1 1 220px"><select id="ft" aria-label="Tool"><option value="">All tools</option><option value="casebook">Storyline Casebook</option><option value="tripod">Tripod Beta</option><option value="rcaft">RCA Fault Tree</option></select><select id="fs" aria-label="Status"><option value="">Any status</option><option value="open">Open</option><option value="closed">Final / closed</option></select><label class="small"><input type="checkbox" id="fx"> Include worked examples</label></div>
+    <div id="reg"><div class="empty">Loading…</div></div>
+    <p class="small muted" id="folder-note" style="margin-top:8px"></p>
+  </section>
+
+  <section class="panel"><span class="eyebrow">Which tool when</span><h2>A typical investigation</h2>
+    <div class="flow" style="margin-top:12px">
+      <div><b>1. Storyline Casebook</b><br>Record the initial report, secure and log evidence, and build the events-and-conditions storyline. Code causal factors with ICAM.</div>
+      <div><b>2. Tripod Beta</b><br>For a barrier-failure view: trios, failed and missing barriers, and the human-factors path from Immediate Cause to Underlying Cause and BRF.</div>
+      <div><b>3. RCA Fault Tree</b><br>For technical failures or several competing explanations: lay out every way the event could occur, test each branch, and use probabilities to decide what to test first.</div>
+      <div><b>4. Back to the Casebook</b><br>Export a Casebook package from Tripod or the fault tree and import it, so the root causes and actions sit in one case file and report.</div>
+    </div></section>
+
+  <section class="panel"><span class="eyebrow">Important</span><h2>Saving your work on this USB stick</h2>
+    <ul class="tight">
+      <li>Each tool keeps your work automatically in the browser of the computer you are using. That copy <b>does not travel</b> with the stick.</li>
+      <li>To keep a case on the stick, use <b>Save to file</b> (Tripod), <b>File ▸ Save as</b> (RCA Fault Tree) or <b>Save to file</b> in the workspace bar (Casebook), and choose the <b>My cases</b> folder. From then on every change is written to that file.</li>
+      <li>On another computer, open the tool from the stick and open the file from <b>My cases</b>, or open it from the case register here. If a tool shows <b>Reconnect file</b>, click it: the browser asks for permission again after a restart.</li>
+      <li>Rows marked <b>This computer only</b> below are not on the stick yet.</li>
+      <li>Use Google Chrome or Microsoft Edge. Firefox and Safari run the tools, but they can only download and re-open copies, not keep a file linked.</li>
+      <li>Eject the USB stick safely before removing it.</li>
+    </ul>
+    <p class="small muted" id="browser" style="margin-top:10px"></p></section>
+</div></main>
+<script>/* Incident Investigation Toolkit — shared offline helpers (Istec Training).
+   Inlined into every tool and the START HERE dashboard at build time.
+
+   KitStore    tiny IndexedDB key/value store (db "iikit", store "kv"), shared by every page opened from file://
+   FileLink    save to / open from a real file on the USB stick (File System Access API in Chrome/Edge),
+               remembers file handles so later saves write straight to the file; download / file-input fallback
+   KitRegistry list of investigations known on this computer (localStorage "iikit.registry"), shown on the dashboard
+   KitHandoff  dashboard -> tool: "open this file" (passes a file handle through IndexedDB)
+
+   Chrome and Edge give all file:// pages one shared storage area, which is what makes the registry and the hand-off
+   work. Firefox/Safari keep storage per file, so there the tools still work but the dashboard only sees the folder. */
+var KIT = (function () {
+  'use strict';
+  const VERSION = '1.0';
+  const hasFSA = typeof window !== 'undefined' && typeof window.showSaveFilePicker === 'function' && typeof window.showOpenFilePicker === 'function';
+  const hasDirPicker = typeof window !== 'undefined' && typeof window.showDirectoryPicker === 'function';
+
+  /* ---------- IndexedDB key/value ---------- */
+  let dbp = null;
+  function db() {
+    if (dbp) return dbp;
+    dbp = new Promise((res, rej) => {
+      let done = false;
+      const t = setTimeout(() => { if (!done) { done = true; rej(new Error('IndexedDB timeout')); } }, 4000);
+      try {
+        const r = indexedDB.open('iikit', 1);
+        r.onupgradeneeded = () => { r.result.createObjectStore('kv'); };
+        r.onsuccess = () => { if (!done) { done = true; clearTimeout(t); res(r.result); } };
+        r.onerror = () => { if (!done) { done = true; clearTimeout(t); rej(r.error); } };
+      } catch (e) { done = true; clearTimeout(t); rej(e); }
+    });
+    dbp.catch(() => { dbp = null; });
+    return dbp;
+  }
+  const KitStore = {
+    async get(k) { try { const d = await db(); return await new Promise((res, rej) => { const q = d.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); }); } catch (e) { return undefined; } },
+    async set(k, v) { try { const d = await db(); await new Promise((res, rej) => { const t = d.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }); return true; } catch (e) { return false; } },
+    async del(k) { try { const d = await db(); await new Promise((res) => { const t = d.transaction('kv', 'readwrite'); t.objectStore('kv').delete(k); t.oncomplete = res; t.onerror = res; }); } catch (e) {} },
+    async keys(prefix) { try { const d = await db(); return await new Promise((res) => { const q = d.transaction('kv').objectStore('kv').getAllKeys(); q.onsuccess = () => res((q.result || []).filter(k => typeof k === 'string' && (!prefix || k.startsWith(prefix)))); q.onerror = () => res([]); }); } catch (e) { return []; } }
+  };
+
+  /* ---------- files ---------- */
+  function download(name, data, mime) {
+    const blob = data instanceof Blob ? data : new Blob([data], { type: mime || 'application/octet-stream' });
+    const url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = name; a.style.display = 'none'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+  function pickWithInput(accept) {
+    return new Promise(res => {
+      const i = document.createElement('input'); i.type = 'file'; if (accept) i.accept = accept; i.style.display = 'none';
+      i.onchange = () => { const f = i.files && i.files[0]; i.remove(); res(f || null); };
+      document.body.appendChild(i); i.click();
+    });
+  }
+  async function permission(handle, ask) {
+    if (!handle || !handle.queryPermission) return 'denied';
+    try {
+      let s = await handle.queryPermission({ mode: 'readwrite' });
+      if (s !== 'granted' && ask) s = await handle.requestPermission({ mode: 'readwrite' });
+      return s;
+    } catch (e) { return 'denied'; }
+  }
+  /* opts: {tool, ext, label, mime} e.g. {tool:'tripod', ext:'.tripod.json', label:'Tripod Beta case'} */
+  function FileLink(opts) {
+    const types = [{ description: opts.label, accept: { [opts.mime || 'application/json']: [opts.ext.slice(opts.ext.lastIndexOf('.'))] } }];
+    const key = id => 'handle:' + opts.tool + ':' + id;
+    return {
+      supported: hasFSA,
+      /* Ask where to save; returns {handle, name} or null when cancelled. */
+      async saveAs(id, suggested, text) {
+        if (!hasFSA) { download(suggested, text, opts.mime || 'application/json'); return { handle: null, name: suggested, downloaded: true }; }
+        let h;
+        try { h = await window.showSaveFilePicker({ suggestedName: suggested, types, id: 'iikit-cases' }); }
+        catch (e) { if (e && e.name === 'AbortError') return null; throw e; }
+        await this.write(h, text);
+        await KitStore.set(key(id), h);
+        return { handle: h, name: h.name };
+      },
+      async write(h, text) { const w = await h.createWritable(); await w.write(text); await w.close(); },
+      /* Open a file; returns {handle|null, name, text} or null. */
+      async open() {
+        if (hasFSA) {
+          let hs;
+          try { hs = await window.showOpenFilePicker({ types, multiple: false, id: 'iikit-cases' }); }
+          catch (e) { if (e && e.name === 'AbortError') return null; throw e; }
+          const f = await hs[0].getFile();
+          return { handle: hs[0], name: f.name, text: await f.text(), modified: f.lastModified };
+        }
+        const f = await pickWithInput(opts.ext + ',.json,application/json');
+        return f ? { handle: null, name: f.name, text: await f.text(), modified: f.lastModified } : null;
+      },
+      async link(id, h) { if (h) await KitStore.set(key(id), h); },
+      async unlink(id) { await KitStore.del(key(id)); },
+      async handleFor(id) { return await KitStore.get(key(id)); },
+      permission,
+      download: (name, text) => download(name, text, opts.mime || 'application/json')
+    };
+  }
+
+  /* ---------- registry of investigations on this computer ---------- */
+  const RK = 'iikit.registry';
+  const KitRegistry = {
+    list() { try { return JSON.parse(localStorage.getItem(RK) || '[]'); } catch (e) { return []; } },
+    upsert(entry) {
+      try {
+        const L = this.list().filter(x => !(x.tool === entry.tool && x.id === entry.id));
+        L.push(Object.assign({ seenAt: new Date().toISOString() }, entry));
+        localStorage.setItem(RK, JSON.stringify(L.slice(-500)));
+      } catch (e) {}
+    },
+    remove(tool, id) { try { localStorage.setItem(RK, JSON.stringify(this.list().filter(x => !(x.tool === tool && x.id === id)))); } catch (e) {} }
+  };
+  /* action summary helper: items [{status, due}] with open statuses */
+  function actionStats(items, isOpen, dueOf) {
+    const today = new Date().toISOString().slice(0, 10);
+    let open = 0, overdue = 0; const dues = [];
+    (items || []).forEach(a => { if (isOpen(a)) { open++; const d = dueOf(a); if (d) dues.push(String(d).slice(0, 10)); if (d && d < today) overdue++; } });
+    return { total: (items || []).length, open, overdue, dues };
+  }
+
+  /* ---------- dashboard -> tool hand-off ---------- */
+  const KitHandoff = {
+    async put(tool, handle, name) { return KitStore.set('handoff:' + tool, { handle, name, at: Date.now() }); },
+    async take(tool) { const v = await KitStore.get('handoff:' + tool); await KitStore.del('handoff:' + tool); return v && Date.now() - v.at < 10 * 60000 ? v : null; }
+  };
+
+  return { VERSION, hasFSA, hasDirPicker, KitStore, FileLink, KitRegistry, KitHandoff, actionStats, download, pickWithInput, permission };
+})();
+if (typeof module !== 'undefined') module.exports = KIT;
+</script>
+<script>
+(function () {
+  'use strict';
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const today = () => new Date().toISOString().slice(0, 10);
+  const TOOLS = { tripod: { name: 'Tripod Beta', file: 'Tools/Tripod Beta Investigator.html' }, rcaft: { name: 'RCA Fault Tree', file: 'Tools/RCA Fault Tree.html' }, casebook: { name: 'Storyline Casebook', file: 'Tools/Storyline Casebook.html' } };
+  const STATUS = { open: 'Open', investigating: 'Investigating', review: 'In review', closed: 'Closed', Draft: 'Draft', 'In review': 'In review', Final: 'Final' };
+  const isClosed = s => s === 'Final' || s === 'closed';
+  let files = [], dirHandle = null, dirName = '';
+  function toast(m) { let t = $('.toast'); if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); } t.textContent = m; t.hidden = false; clearTimeout(t._t); t._t = setTimeout(() => t.hidden = true, 3500); }
+  const overdueOf = dues => (dues || []).filter(d => d && d < today()).length;
+
+  /* ---------- parse case files ---------- */
+  function stats(items, isOpen, due) { const o = KIT.actionStats(items, isOpen, due); o.overdue = overdueOf(o.dues); return o; }
+  function parse(name, text, handle, modified) {
+    let o; try { o = JSON.parse(text); } catch (e) { return []; }
+    if (o && o.format === 'tripod-beta-case' && o.case) { const c = o.case; return [{ tool: 'tripod', id: c.id, example: !!c.example, title: c.meta && c.meta.title, ref: c.meta && c.meta.ref, status: c.meta && c.meta.status, date: c.meta && c.meta.date, updatedAt: c.updatedAt, file: name, handle, modified, actions: stats(c.actions, a => a.status === 'Open' || a.status === 'In progress', a => a.due) }]; }
+    if (o && o.format === 'rca-fault-tree') return [{ tool: 'rcaft', id: o.id, title: o.meta && o.meta.title, ref: o.meta && o.meta.ref, status: o.meta && o.meta.status, date: o.meta && o.meta.date, updatedAt: o.updatedAt, file: name, handle, modified, example: !!o.example, actions: stats(o.actions, a => a.status === 'Open' || a.status === 'In progress', a => a.due) }];
+    if (o && o.format === 'storyline-casebook-workspace' && o.docs) {
+      return Object.keys(o.docs).filter(k => /^cases\/[^/]+$/.test(k)).map(k => {
+        const id = k.slice(6), c = o.docs[k] || {}, acts = Object.keys(o.docs).filter(x => x.startsWith(k + '/correctiveActions/')).map(x => o.docs[x]);
+        return { tool: 'casebook', id, title: c.caseTitle, ref: c.caseRef || '', status: c.status, date: c.dateOccurred, updatedAt: c.updatedAt, file: name, handle, modified, actions: stats(acts, () => true, a => a.targetDate) };
+      });
+    }
+    return [];
+  }
+  const WANT = /\.(tripod\.json|rcaft\.json|casebook-ws\.json)$/i;
+  async function scanDir(dir) {
+    const out = [];
+    for await (const [name, h] of dir.entries()) {
+      if (h.kind === 'file' && WANT.test(name)) { try { const f = await h.getFile(); out.push(...parse(name, await f.text(), h, f.lastModified)); } catch (e) {} }
+      else if (h.kind === 'directory' && !name.startsWith('.')) { for await (const [n2, h2] of h.entries()) if (h2.kind === 'file' && WANT.test(n2)) { try { const f = await h2.getFile(); out.push(...parse(name + '/' + n2, await f.text(), h2, f.lastModified)); } catch (e) {} } }
+    }
+    return out;
+  }
+  async function pick() {
+    if (KIT.hasDirPicker) {
+      try { dirHandle = await window.showDirectoryPicker({ id: 'iikit-mycases', mode: 'read' }); }
+      catch (e) { if (e && e.name !== 'AbortError') toast('Could not open the folder: ' + e.message); return; }
+      await KIT.KitStore.set('dir:mycases', dirHandle); dirName = dirHandle.name;
+      files = await scanDir(dirHandle); render(); return;
+    }
+    const i = document.createElement('input'); i.type = 'file'; i.webkitdirectory = true; i.multiple = true; i.style.display = 'none';
+    i.onchange = async () => { files = []; for (const f of Array.from(i.files || [])) if (WANT.test(f.name)) files.push(...parse(f.webkitRelativePath || f.name, await f.text(), null, f.lastModified)); dirName = (i.files[0] && (i.files[0].webkitRelativePath || '').split('/')[0]) || 'folder'; i.remove(); render(); };
+    document.body.appendChild(i); i.click();
+  }
+  async function refresh(ask) {
+    if (!dirHandle) return;
+    let p = 'denied'; try { p = await dirHandle.queryPermission({ mode: 'read' }); if (p !== 'granted' && ask) p = await dirHandle.requestPermission({ mode: 'read' }); } catch (e) {}
+    if (p === 'granted') { files = await scanDir(dirHandle); render(); } else { $('#refresh').textContent = 'Allow reading ' + dirName; render(); }
+  }
+
+  /* ---------- merge files with this computer's registry ---------- */
+  function rows() {
+    const reg = KIT.KitRegistry.list(), map = {};
+    files.forEach(f => { map[f.tool + ':' + f.id] = Object.assign({ where: 'file' }, f); });
+    reg.forEach(r => {
+      const k = r.tool + ':' + r.id, f = map[k];
+      const rr = Object.assign({}, r, { actions: Object.assign({}, r.actions || {}, { overdue: overdueOf((r.actions || {}).dues) }) });
+      if (f) { if ((r.updatedAt || '') > (f.updatedAt || '')) f.newerHere = true; return; }
+      map[k] = Object.assign({ where: r.file ? 'linked' : 'local' }, rr);
+    });
+    return Object.values(map);
+  }
+  function render() {
+    const all = rows(), q = ($('#q').value || '').toLowerCase(), ft = $('#ft').value, fs = $('#fs').value, fx = $('#fx').checked;
+    const L = all.filter(r => (fx || !r.example) && (!ft || r.tool === ft) && (!fs || (fs === 'closed' ? isClosed(r.status) : !isClosed(r.status))) && (!q || ((r.title || '') + ' ' + (r.ref || '')).toLowerCase().includes(q)))
+      .sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
+    const real = all.filter(r => !r.example);
+    const sum = k => real.reduce((a, r) => a + ((r.actions || {})[k] || 0), 0);
+    const local = real.filter(r => r.where === 'local').length;
+    $('#stats').innerHTML = `<div class="stat"><b>${real.length}</b><span>investigations</span></div><div class="stat"><b>${real.filter(r => !isClosed(r.status)).length}</b><span>open investigations</span></div><div class="stat"><b>${sum('open')}</b><span>open actions</span></div><div class="stat${sum('overdue') ? ' err' : ''}"><b>${sum('overdue')}</b><span>overdue actions</span></div><div class="stat${local ? ' warn' : ''}"><b>${local}</b><span>on this computer only</span></div>`;
+    $('#reg').innerHTML = L.length ? `<div class="tbl-wrap"><table><thead><tr><th>Investigation</th><th>Tool</th><th>Incident date</th><th>Status</th><th>Actions open / overdue</th><th>Last updated</th><th>Saved in</th><th></th></tr></thead><tbody>${L.map((r, i) => `<tr>
+        <td><b>${esc(r.title || 'Untitled')}</b>${r.ref ? `<div class="small muted mono">${esc(r.ref)}</div>` : ''}${r.example ? '<div class="small muted">Worked example</div>' : ''}</td>
+        <td><span class="chip ${r.tool}">${esc(TOOLS[r.tool].name)}</span></td><td class="mono small">${esc(r.date || '–')}</td>
+        <td><span class="chip${isClosed(r.status) ? ' final' : ''}">${esc(STATUS[r.status] || r.status || 'Draft')}</span></td>
+        <td class="mono">${(r.actions || {}).open || 0} / <span${(r.actions || {}).overdue ? ' style="color:var(--err);font-weight:600"' : ''}>${(r.actions || {}).overdue || 0}</span></td>
+        <td class="small">${esc((r.updatedAt || '').slice(0, 10) || '–')}</td>
+        <td class="where${r.where === 'local' ? ' local' : ''}">${r.where === 'file' ? esc(r.file) + (r.newerHere ? '<br><span class="chip warn">newer copy in this browser</span>' : '') : r.where === 'linked' ? esc(r.file) + '<br><span class="muted">(linked, folder not scanned)</span>' : 'This computer only'}</td>
+        <td><button class="btn sm primary" data-open="${i}">Open</button></td></tr>`).join('')}</tbody></table></div>`
+      : `<div class="empty">${all.length ? 'No investigations match the filter.' : 'No investigations yet. Choose the <b>My cases</b> folder on the stick to list saved cases, or open a tool to start one.'}</div>`;
+    $('#reg').querySelectorAll('[data-open]').forEach(b => { b.onclick = () => open(L[+b.dataset.open]); });
+    $('#refresh').hidden = !dirHandle;
+    $('#folder-note').textContent = dirName ? `Folder: ${dirName} · ${files.length} case(s) found in files.` : (KIT.hasDirPicker ? '' : 'This browser can list the folder but cannot pass files to the tools: open the file from inside the tool.');
+  }
+  async function open(r) {
+    const t = TOOLS[r.tool];
+    if (r.handle) {
+      if (r.newerHere && r.tool !== 'casebook') { location.href = t.file + '#case-' + encodeURIComponent(r.id); return; }
+      await KIT.KitHandoff.put(r.tool, r.handle, r.file.split('/').pop());
+      location.href = t.file + '#handoff'; return;
+    }
+    location.href = t.file + (r.tool === 'casebook' ? '' : '#case-' + encodeURIComponent(r.id));
+  }
+
+  /* ---------- boot ---------- */
+  $('#pick').onclick = pick;
+  $('#refresh').onclick = () => refresh(true);
+  ['q', 'ft', 'fs', 'fx'].forEach(id => $('#' + id).addEventListener('input', render));
+  $('#browser').textContent = KIT.hasFSA ? 'This browser can keep files on the stick linked to the tools.' : 'This browser cannot link files. Use Google Chrome or Microsoft Edge for automatic saving to the stick.';
+  render();
+  KIT.KitStore.get('dir:mycases').then(h => { if (h && h.kind === 'directory') { dirHandle = h; dirName = h.name; $('#pick').textContent = 'Choose another folder…'; refresh(false); } });
+  window.addEventListener('focus', () => render());
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Incident Investigation Toolkit – Quick guide</title>
+<style>
+@page { size: A4; margin: 16mm 15mm; }
+body { font: 10.5pt/1.5 Arial, Helvetica, sans-serif; color: #141c26; margin: 0; }
+.brand { border-top: 8px solid #0f2a4d; padding-top: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: 9pt; color: #1d4ea3; }
+h1 { font-size: 22pt; color: #0f2a4d; margin: 6px 0 4px; } h2 { font-size: 13.5pt; color: #0f2a4d; border-bottom: 1.5px solid #0f2a4d; padding-bottom: 3px; margin: 18px 0 8px; break-after: avoid; }
+h3 { font-size: 11pt; margin: 12px 0 4px; color: #1d4ea3; break-after: avoid; }
+p { margin: 4px 0 8px; } ul, ol { margin: 4px 0 8px; padding-left: 20px; } li { margin: 2px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 9.5pt; margin: 6px 0 10px; } th, td { border: 1px solid #b9c1cc; padding: 4px 6px; text-align: left; vertical-align: top; } th { background: #e4eaf3; }
+.muted { color: #5b6573; } .box { background: #fff3dc; border-radius: 6px; padding: 8px 10px; margin: 8px 0; break-inside: avoid; }
+code { font-family: Menlo, Consolas, monospace; font-size: 9pt; background: #f1f3f6; padding: 0 3px; }
+.pb { break-before: page; }
+</style></head><body>
+<div class="brand">Istec Training · Incident Investigation Toolkit</div>
+<h1>Quick guide</h1>
+<p class="muted">Three offline investigation tools on one USB stick: Storyline Casebook, Tripod Beta Investigator and RCA Fault Tree, with a START HERE dashboard and case register. Version __VERSION__.</p>
+
+<h2>1. Starting</h2>
+<ol>
+<li>Copy the whole <code>Incident Investigation Toolkit</code> folder to the USB stick and keep the folder structure.</li>
+<li>Open <code>START HERE.html</code>, or double-click <code>Start Toolkit - Windows.cmd</code> (opens Microsoft Edge) or <code>Start Toolkit - Mac.command</code> (opens Chrome or Edge). On a Mac, the first time, right-click the file and choose Open.</li>
+<li>Choose a tool. Each tool also opens directly from the <code>Tools</code> folder.</li>
+</ol>
+<p>Use <b>Google Chrome</b> or <b>Microsoft Edge</b>. They can keep a case file on the stick linked to the tool, so every change is saved to it. Firefox and Safari run the tools, but there you download a copy and open it again later.</p>
+
+<h2>2. Saving on the stick</h2>
+<table><tr><th>Tool</th><th>Save to the stick</th><th>File type</th></tr>
+<tr><td>Storyline Casebook</td><td>Workspace bar at the bottom: <b>Save to file…</b>. One workspace file can hold several cases.</td><td><code>.casebook-ws.json</code></td></tr>
+<tr><td>Tripod Beta Investigator</td><td>Header button <b>Save to file…</b> while a case is open.</td><td><code>.tripod.json</code></td></tr>
+<tr><td>RCA Fault Tree</td><td><b>File ▸ Save as…</b></td><td><code>.rcaft.json</code></td></tr></table>
+<ul>
+<li>Save into the <code>My cases</code> folder. After that, the tool writes every change to the file and the header shows <b>Saved to …</b>.</li>
+<li>Each tool also keeps a copy in the browser of the computer you are using. That copy stays on that computer.</li>
+<li>On another computer, open the file from <code>My cases</code> (in the tool, or from the case register). If the tool shows <b>Reconnect file</b>, click it: after a restart the browser asks for permission again.</li>
+<li>Take a spare copy now and then (Download backup), and eject the stick safely.</li>
+</ul>
+
+<h2>3. The dashboard and case register</h2>
+<ul>
+<li><b>Choose the My cases folder</b> once; the dashboard remembers it on that computer. It lists every case file in the folder, plus cases that exist only in this computer’s browser (marked <b>This computer only</b>: save them to the stick).</li>
+<li>Summary tiles show open investigations, open and overdue actions (due date before today), and how many cases are not yet on the stick.</li>
+<li><b>Open</b> passes the file to the right tool. The tool asks you to confirm with one click, because the browser needs permission to write to the file.</li>
+</ul>
+
+<h2>4. Which tool when</h2>
+<table><tr><th>Tool</th><th>Use it to</th><th>Key outputs</th></tr>
+<tr><td>Storyline Casebook</td><td>Run the investigation file: initial report, evidence register with photos, ECFA+ storyline of events and conditions, ICAM coding, root causes, corrective actions.</td><td>Case report, draw.io storyline</td></tr>
+<tr><td>Tripod Beta Investigator</td><td>Model the incident as trios (Agent, Object, Event), place failed, missing and effective barriers, and trace each failure to Immediate Cause, Precondition and Underlying Cause (BRF).</td><td>Tripod tree, BRF profile, SMART actions, Word report, Casebook package</td></tr>
+<tr><td>RCA Fault Tree</td><td>Lay out every way the top event could occur, confirm or rule out each branch with evidence, and use optional probabilities to rank the open hypotheses.</td><td>Fault tree, credible causal combinations, P(cause | incident), Word report, Casebook package</td></tr></table>
+<p>Tripod Beta and the RCA Fault Tree both export a <b>Storyline Casebook package</b>. Import it in the Casebook (Import Case Package on the case list), so root causes and actions end up in one case file.</p>
+
+<h2 class="pb">5. Storyline Casebook</h2>
+<ul>
+<li>Cases follow eight stages: initial report, evidence, description, storyline, ICAM, root causes, corrective actions, report.</li>
+<li>The built-in sample case shows a complete investigation. The example workspace in <code>Examples</code> holds the Tripod Annex 8 vehicle roll-over imported as a Casebook case.</li>
+<li>Opening a workspace file replaces the cases in this browser with those in the file. Save the current workspace first if it holds work that is not in a file.</li>
+</ul>
+
+<h2>6. Tripod Beta Investigator</h2>
+<ul>
+<li>Drag elements from the palette onto the canvas. To link two elements, drag the round handle on one onto the other; links the tree rules forbid are refused with the reason.</li>
+<li>Select a line to insert a barrier on it. The inspector has quick-add buttons for the next element (Immediate Cause → Precondition → Underlying Cause).</li>
+<li>The <b>Rules check</b> tab lists errors, warnings and tips against the Tripod Beta tree rules (User Guide Annex 2 and 6). Each Failed or Missing Barrier and each Underlying Cause needs an action.</li>
+<li>The Annex 8 worked example opens read only; <b>Make a practice copy</b> to edit it.</li>
+</ul>
+
+<h2>7. RCA Fault Tree</h2>
+<ul>
+<li>The top event is the incident. Add gates (OR: any input causes it; AND: all inputs needed; INHIBIT: input plus enabling condition; VOTE: k of n) and events.</li>
+<li>Every element is a hypothesis: <b>Confirmed</b>, <b>Likely</b>, <b>Unverified</b> or <b>Ruled out</b>, with evidence and a planned test.</li>
+<li>Probabilities are optional. Each event picks its own source: safeguard/IPL PFD, human error probability, equipment failure on demand, initiating event frequency, manual value or site data. A looked-up value can be edited for one event (record why), or overridden for the whole case on the Data library tab.</li>
+<li><b>Results</b> ranks the open hypotheses by P(contributed | incident) and lists the credible causal combinations (minimal cut sets) left after the ruled-out causes are removed.</li>
+<li>See <code>Guides/RCA Fault Tree - User guide.pdf</code> for the method and formulas.</li>
+</ul>
+
+<h2>8. Troubleshooting</h2>
+<table><tr><th>What you see</th><th>What to do</th></tr>
+<tr><td>“Not saved to a file” / “Save to file…”</td><td>The case is only in this browser. Save it into <code>My cases</code>.</td></tr>
+<tr><td>“Reconnect file”</td><td>Click it and allow access. The browser forgets permissions when it restarts.</td></tr>
+<tr><td>A case is missing on another computer</td><td>It was only in the first computer’s browser. Open that computer again and save the case to the stick.</td></tr>
+<tr><td>The case register is empty</td><td>Click <b>Choose the My cases folder</b> and select the folder on the stick. In Chrome or Edge, click <b>Refresh</b> after saving new files.</td></tr>
+<tr><td>Double-clicking the .command file does nothing (Mac)</td><td>Right-click it, choose Open, and confirm.</td></tr></table>
+<p class="muted">The screening values in the RCA Fault Tree library are generic, order-of-magnitude values for ranking hypotheses, not design data. The Tripod Beta method is summarised from the Tripod Beta User Guide (Stichting Tripod Foundation).</p>
+</body></html>

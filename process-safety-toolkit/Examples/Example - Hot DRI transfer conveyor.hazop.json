@@ -1,0 +1,878 @@
+{
+ "app": "HAZOP Study Manager",
+ "schema": 1,
+ "created": "2026-10-05T19:33:18.681Z",
+ "modified": "2026-10-05T19:33:18.685Z",
+ "study": {
+  "title": "HAZOP – Hot DRI transfer conveyor and N2 fire protection (example)",
+  "company": "Integrated DRI-EAF Steel Complex (example)",
+  "unit": "DRI plant – hot DRI transfer to EAF",
+  "project": "MOC – hot DRI transfer conveyor",
+  "type": "HAZOP – modification / MOC",
+  "docNo": "HZ-EX-DRI-001",
+  "rev": "A",
+  "start": "2026-10-05",
+  "end": "",
+  "venue": "DRI plant training room",
+  "scope": "Hot DRI transfer from the reduction shaft discharge to the EAF hot-charging bin: enclosed belt conveyor, hood and gallery, dust extraction, and the N2 fire detection / inerting / extinguishing system that protects it.",
+  "exclusions": "Reduction shaft furnace internals; EAF charging bin and EAF (covered by separate studies); plant N2 generation (air separation unit).",
+  "basis": "Transfer hot DRI continuously in an enclosed conveyor to preserve heat and prevent re-oxidation and fire. DRI discharge temperature, belt temperature rating and N2 system design basis to be confirmed from the process design documents.",
+  "modes": "Normal transfer, conveyor trip / stoppage under load, start-up after stoppage, shutdown and emptying, maintenance (hot work, belt change)",
+  "facilitator": "A. Facilitator",
+  "scribe": "B. Scribe"
+ },
+ "settings": {
+  "sev": [
+   "Negligible",
+   "Minor",
+   "Moderate",
+   "Major",
+   "Catastrophic"
+  ],
+  "sevDesc": [
+   "First aid; no lost time / minor on-site release / negligible damage",
+   "Medical treatment / reportable release contained on site / minor damage",
+   "Lost-time injury / off-site short-term impact / significant damage",
+   "Single fatality or permanent disability / significant off-site impact / major damage",
+   "Multiple fatalities / major off-site release / loss of unit"
+  ],
+  "lik": [
+   "Rare",
+   "Unlikely",
+   "Possible",
+   "Likely",
+   "Almost certain"
+  ],
+  "likDesc": [
+   "< 1 in 10 000 years",
+   "1 in 1 000 – 10 000 years",
+   "1 in 100 – 1 000 years",
+   "1 in 10 – 100 years",
+   "> 1 in 10 years"
+  ],
+  "grid": [
+   [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   [
+    2,
+    4,
+    6,
+    8,
+    10
+   ],
+   [
+    3,
+    6,
+    9,
+    12,
+    15
+   ],
+   [
+    4,
+    8,
+    12,
+    16,
+    20
+   ],
+   [
+    5,
+    10,
+    15,
+    20,
+    25
+   ]
+  ],
+  "bands": {
+   "Medium": 5,
+   "High": 10,
+   "Very High": 20
+  }
+ },
+ "team": [
+  {
+   "name": "A. Facilitator",
+   "company": "Istec",
+   "role": "Facilitator",
+   "attendance": "Day 1",
+   "id": "muvndmmyl2j909"
+  },
+  {
+   "name": "B. Scribe",
+   "company": "Istec",
+   "role": "Scribe",
+   "attendance": "Day 1",
+   "id": "muvndmmy9h99mf"
+  },
+  {
+   "name": "C. Process",
+   "company": "Site",
+   "role": "Process engineer",
+   "attendance": "Day 1",
+   "id": "muvndmmy84oy0t"
+  },
+  {
+   "name": "D. Shift Supervisor",
+   "company": "Site",
+   "role": "Operations representative",
+   "attendance": "Day 1",
+   "id": "muvndmmyisv4i2"
+  },
+  {
+   "name": "E. Instrument",
+   "company": "Site",
+   "role": "Instrument / control engineer",
+   "attendance": "Day 1",
+   "id": "muvndmmy7u1wig"
+  },
+  {
+   "name": "F. Fire",
+   "company": "Site",
+   "role": "HSE / process safety",
+   "attendance": "Day 1",
+   "id": "muvndmmy25mmjr"
+  },
+  {
+   "name": "G. Maintenance",
+   "company": "Site",
+   "role": "Maintenance",
+   "attendance": "Day 1",
+   "id": "muvndmmyuuwp8r"
+  }
+ ],
+ "sessions": [
+  {
+   "id": "muvndmn1zm9b7b",
+   "date": "2026-10-05",
+   "time": "08:00 – 16:00",
+   "nodeIds": [
+    "muvndmmyaizbv9",
+    "muvndmmyr8wywv"
+   ],
+   "attendeeIds": [
+    "muvndmmyl2j909",
+    "muvndmmy9h99mf",
+    "muvndmmy84oy0t",
+    "muvndmmyisv4i2",
+    "muvndmmy7u1wig",
+    "muvndmmy25mmjr",
+    "muvndmmyuuwp8r"
+   ],
+   "notes": "Nodes N01 and N02 reviewed; N01 deviations on stoppage under load referred for quantification (R-001)."
+  }
+ ],
+ "psi": [
+  {
+   "ref": "PSI-01",
+   "category": "Drawings",
+   "docNo": "P&ID-DRI-301",
+   "title": "Hot DRI transfer conveyor P&IDs",
+   "rev": "A",
+   "status": "Available",
+   "id": "muvndmmzfss171"
+  },
+  {
+   "ref": "PSI-02",
+   "category": "Drawings",
+   "docNo": "P&ID-N2-305",
+   "title": "N2 inerting / extinguishing system P&ID",
+   "rev": "A",
+   "status": "Available",
+   "id": "muvndmmzylssfl"
+  },
+  {
+   "ref": "PSI-03",
+   "category": "Process technology",
+   "docNo": "DB-DRI-01",
+   "title": "Process design basis – DRI discharge temperature, conveyor and belt rating",
+   "rev": "A",
+   "status": "Outstanding",
+   "id": "muvndmmzrawz6v"
+  },
+  {
+   "ref": "PSI-04",
+   "category": "Equipment",
+   "docNo": "FP-N2-01",
+   "title": "Fire-protection design basis and cause & effect for the N2 system",
+   "rev": "A",
+   "status": "Available",
+   "id": "muvndmmzzji11a"
+  },
+  {
+   "ref": "PSI-05",
+   "category": "Hazardous materials",
+   "docNo": "",
+   "title": "Hot DRI / HBI handling hazards (self-heating, H2 generation with water) and N2 SDS",
+   "rev": "A",
+   "status": "Available",
+   "id": "muvndmmzh1zfjw"
+  },
+  {
+   "ref": "PSI-06",
+   "category": "Previous studies",
+   "docNo": "",
+   "title": "Conveyor fire incident reports and trip records (stoppages under load)",
+   "rev": "A",
+   "status": "Outstanding",
+   "id": "muvndmmzmtwl4r"
+  }
+ ],
+ "psiNodes": [
+  {
+   "id": "muvndmmzc7f9yo",
+   "psiId": "muvndmmzfss171",
+   "nodeId": "muvndmmyaizbv9"
+  },
+  {
+   "id": "muvndmmzo3mgfd",
+   "psiId": "muvndmmzylssfl",
+   "nodeId": "muvndmmyr8wywv"
+  },
+  {
+   "id": "muvndmmzh9d3zr",
+   "psiId": "muvndmmzrawz6v",
+   "nodeId": "muvndmmyaizbv9"
+  },
+  {
+   "id": "muvndmmz35gucl",
+   "psiId": "muvndmmzzji11a",
+   "nodeId": "muvndmmyr8wywv"
+  },
+  {
+   "id": "muvndmmzn9p18e",
+   "psiId": "muvndmmzh1zfjw",
+   "nodeId": "muvndmmyaizbv9"
+  },
+  {
+   "id": "muvndmmznxgoy6",
+   "psiId": "muvndmmzh1zfjw",
+   "nodeId": "muvndmmyr8wywv"
+  },
+  {
+   "id": "muvndmmzmyl05r",
+   "psiId": "muvndmmzmtwl4r",
+   "nodeId": "muvndmmyaizbv9"
+  }
+ ],
+ "nodes": [
+  {
+   "no": "N01",
+   "name": "Hot DRI transfer conveyor – shaft discharge to EAF charging bin",
+   "drawings": "P&ID-DRI-301, 302",
+   "status": "In progress",
+   "batteryLimits": "From the reduction shaft hot DRI discharge chute to the inlet of the EAF hot-charging bin, including the belt conveyor, drive, hood enclosure, gallery, dust extraction and emergency discharge chute",
+   "description": "Transfer hot DRI continuously from the reduction shaft to the EAF charging bin in an enclosed conveyor, preserving its heat and preventing re-oxidation, self-heating and fire",
+   "designParams": "Example: belt capacity 250 t/h; belt speed 2 m/s; enclosed hood with N2 inerting connection. DRI discharge temperature and belt temperature rating – to be confirmed from the design basis",
+   "operatingParams": "Example: 150–200 t/h hot DRI; continuous operation; hood under slight negative pressure (dust extraction)",
+   "materials": "Hot DRI / HBI and fines (self-heating, pyrophoric fines, H2 with water); combustible conveyor belt; CO from re-oxidation / combustion; N2 (asphyxiant)",
+   "id": "muvndmmyaizbv9"
+  },
+  {
+   "no": "N02",
+   "name": "N2 fire detection, inerting & extinguishing system for the conveyor",
+   "drawings": "P&ID-N2-305",
+   "status": "In progress",
+   "batteryLimits": "From the plant N2 header isolation valve through the buffer vessel, pressure regulator PCV-211 and release valves XV-210A/B to the distribution header and nozzles in the conveyor hood; detection (SS-201, WT-201, LHD-201, GD-201A/B) and the extinguishing control panel",
+   "description": "Detect a stoppage under load or a fire and flood the conveyor enclosure with N2 to prevent or extinguish a fire",
+   "designParams": "Example: buffer vessel 10 barg; delivery to hood at regulated pressure; design discharge time per fire-protection design basis",
+   "operatingParams": "Example: buffer vessel 6–8 barg; system on automatic; manual release from control room and local station",
+   "materials": "Nitrogen (asphyxiant, stored under pressure)",
+   "id": "muvndmmyr8wywv"
+  }
+ ],
+ "deviations": [
+  {
+   "nodeId": "muvndmmyaizbv9",
+   "seq": 1,
+   "parameter": "Flow",
+   "guideword": "NO",
+   "deviation": "No flow",
+   "devAuto": true,
+   "consequence": "Conveyor stops under load: hot DRI stationary on the belt self-heats and re-oxidises; smouldering and belt fire; CO generation; fire may spread through the gallery to the transfer tower / DRI silo – potential fatality and extended outage",
+   "sevB": "5",
+   "likB": "4",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Trips under load about 6 per year (plant records). Scenario quantified in the fault tree / event tree / bow tie examples.",
+   "id": "muvndmn1omb9x6"
+  },
+  {
+   "nodeId": "muvndmmyaizbv9",
+   "seq": 2,
+   "parameter": "Hot DRI / HBI temperature",
+   "guideword": "MORE",
+   "deviation": "More hot DRI / HBI temperature",
+   "devAuto": true,
+   "consequence": "Belt damage or ignition; smouldering DRI carried to the EAF charging bin; conveyor fire",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "1",
+   "comments": "N2 system not claimed as IPL here – already credited for the stoppage scenario and shares the detection.",
+   "id": "muvndmn101omfr"
+  },
+  {
+   "nodeId": "muvndmmyaizbv9",
+   "seq": 3,
+   "parameter": "Composition",
+   "guideword": "AS WELL AS",
+   "deviation": "As well as composition",
+   "devAuto": true,
+   "consequence": "Water on hot DRI generates heat and hydrogen; air ingress re-oxidises the DRI – fire or hydrogen explosion inside the hood",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "",
+   "id": "muvndmn1vtrkp3"
+  },
+  {
+   "nodeId": "muvndmmyaizbv9",
+   "seq": 4,
+   "parameter": "Combustible dust",
+   "guideword": "MORE",
+   "deviation": "More combustible dust",
+   "devAuto": true,
+   "consequence": "DRI fines accumulate in the enclosure and gallery and re-oxidise; smouldering fire; dust ignition during hot work",
+   "sevB": "4",
+   "likB": "3",
+   "sevA": "4",
+   "likA": "2",
+   "comments": "",
+   "id": "muvndmn15yl4xt"
+  },
+  {
+   "nodeId": "muvndmmyr8wywv",
+   "seq": 1,
+   "parameter": "Flow",
+   "guideword": "NO",
+   "deviation": "No flow",
+   "devAuto": true,
+   "consequence": "N2 not delivered to the conveyor enclosure on demand – a fire after a stoppage under load is not prevented or extinguished; escalation to a major gallery fire",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "Dominant contributors in the fault tree example (gate G-002): enclosure not sealed, PCV-211 fails closed, nozzles blocked, isolation valve left closed.",
+   "id": "muvndmn1n01i0t"
+  },
+  {
+   "nodeId": "muvndmmyr8wywv",
+   "seq": 2,
+   "parameter": "Utilities / services",
+   "guideword": "LOSS OF",
+   "deviation": "Loss of utilities / services",
+   "devAuto": true,
+   "consequence": "N2 buffer inventory low or lost – system cannot inert / extinguish when demanded",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "2",
+   "comments": "",
+   "id": "muvndmn1jphlws"
+  },
+  {
+   "nodeId": "muvndmmyr8wywv",
+   "seq": 3,
+   "parameter": "Inert gas (N2, Ar)",
+   "guideword": "LEAK OF",
+   "deviation": "Leak of inert gas (N2, Ar)",
+   "devAuto": true,
+   "consequence": "Personnel enter the hood or gallery during or soon after an N2 release (or a leak) – asphyxiation, potential fatality",
+   "sevB": "5",
+   "likB": "3",
+   "sevA": "5",
+   "likA": "1",
+   "comments": "Hazard introduced by the protection system itself (see the bow tie example).",
+   "id": "muvndmn1fjn246"
+  }
+ ],
+ "causes": [
+  {
+   "id": "muvndmn1b4qsqw",
+   "deviationId": "muvndmn1omb9x6",
+   "seq": 1,
+   "text": "[S] Conveyor, feeder or vibratory feeder stopped (belt tear, drive trip, chute blockage)"
+  },
+  {
+   "id": "muvndmn1pve0fz",
+   "deviationId": "muvndmn1omb9x6",
+   "seq": 2,
+   "text": "Power failure; instrument air failure (valves go to fail position)"
+  },
+  {
+   "id": "muvndmn1k21po4",
+   "deviationId": "muvndmn1omb9x6",
+   "seq": 3,
+   "text": "Pull-cord or belt-drift trip; EAF charging bin full / downstream blockage"
+  },
+  {
+   "id": "muvndmn194iw4p",
+   "deviationId": "muvndmn101omfr",
+   "seq": 1,
+   "text": "Re-oxidation in air (insufficient inerting or cooling)"
+  },
+  {
+   "id": "muvndmn1fogmyc",
+   "deviationId": "muvndmn101omfr",
+   "seq": 2,
+   "text": "Conveyor or transport vessel over-temperature"
+  },
+  {
+   "id": "muvndmn1yeawwk",
+   "deviationId": "muvndmn101omfr",
+   "seq": 3,
+   "text": "Reduction / cooling upset – over-temperature DRI discharged onto the belt"
+  },
+  {
+   "id": "muvndmn1od4upx",
+   "deviationId": "muvndmn1vtrkp3",
+   "seq": 1,
+   "text": "Ingress of air, water or lubricant"
+  },
+  {
+   "id": "muvndmn1z1nx7c",
+   "deviationId": "muvndmn1vtrkp3",
+   "seq": 2,
+   "text": "Rain ingress through a damaged hood or open inspection doors"
+  },
+  {
+   "id": "muvndmn1xnb9t8",
+   "deviationId": "muvndmn1vtrkp3",
+   "seq": 3,
+   "text": "[S] Oxygen or air ingress into reducing gas or inerted systems"
+  },
+  {
+   "id": "muvndmn1l9acxv",
+   "deviationId": "muvndmn15yl4xt",
+   "seq": 1,
+   "text": "Dust accumulation on structures; poor housekeeping"
+  },
+  {
+   "id": "muvndmn1syjgfq",
+   "deviationId": "muvndmn15yl4xt",
+   "seq": 2,
+   "text": "Hot surfaces, sparks, static, hot work"
+  },
+  {
+   "id": "muvndmn1pzhf5g",
+   "deviationId": "muvndmn1n01i0t",
+   "seq": 1,
+   "text": "Equipment failure – control valve fails closed, isolation valve, pump or compressor trip, vessel failure"
+  },
+  {
+   "id": "muvndmn123xslt",
+   "deviationId": "muvndmn1n01i0t",
+   "seq": 2,
+   "text": "Blockage, gas lock or vapour lock"
+  },
+  {
+   "id": "muvndmn1ltxa97",
+   "deviationId": "muvndmn1n01i0t",
+   "seq": 3,
+   "text": "Both N2 release valves XV-210A/B fail to open (common cause)"
+  },
+  {
+   "id": "muvndmn1p9cl8q",
+   "deviationId": "muvndmn1n01i0t",
+   "seq": 4,
+   "text": "Distribution header / nozzles blocked by DRI fines"
+  },
+  {
+   "id": "muvndmn17evsqd",
+   "deviationId": "muvndmn1n01i0t",
+   "seq": 5,
+   "text": "Isolation in error (wrong valve closed, LOTO on wrong equipment)"
+  },
+  {
+   "id": "muvndmn1q0jxdq",
+   "deviationId": "muvndmn1jphlws",
+   "seq": 1,
+   "text": "Failure of steam / nitrogen / cooling water"
+  },
+  {
+   "id": "muvndmn1yq2a7t",
+   "deviationId": "muvndmn1jphlws",
+   "seq": 2,
+   "text": "Failure of hydraulic power / electric power"
+  },
+  {
+   "id": "muvndmn1lsiqj6",
+   "deviationId": "muvndmn1fjn246",
+   "seq": 1,
+   "text": "Leak or purge into enclosed or confined area"
+  },
+  {
+   "id": "muvndmn119xyxl",
+   "deviationId": "muvndmn1fjn246",
+   "seq": 2,
+   "text": "Pit, tunnel or bin atmosphere not tested before entry"
+  }
+ ],
+ "safeguards": [
+  {
+   "tag": "",
+   "description": "Restart / emergency discharge of hot DRI within safe time (procedure + discharge chute)",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmmz0zp4s1"
+  },
+  {
+   "tag": "XS-210",
+   "description": "N2 fire detection & inerting / extinguishing system – auto-initiated on stoppage under load or fire detection",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "muvndmmz731g8i"
+  },
+  {
+   "tag": "",
+   "description": "Manual fire fighting (hydrants / monitors) by the emergency response team",
+   "type": "Emergency response / mitigation",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmmzt1cjfx"
+  },
+  {
+   "tag": "",
+   "description": "Fire separation of the conveyor gallery (fire breaks / dampers)",
+   "type": "Physical containment / bund / dyke",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "muvndmmzmtit1p"
+  },
+  {
+   "tag": "TSHH-202",
+   "description": "DRI discharge high-high temperature trip – stops feed onto the conveyor",
+   "type": "SIF / SIS trip",
+   "iplCandidate": "Yes",
+   "notes": "",
+   "id": "muvndmmz5ye80t"
+  },
+  {
+   "tag": "TAH-202",
+   "description": "High DRI temperature alarm with operator response",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0yvdvp0"
+  },
+  {
+   "tag": "",
+   "description": "Hood inspection rounds and inspection-door position monitoring",
+   "type": "Inspection / maintenance / testing",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0zaye49"
+  },
+  {
+   "tag": "",
+   "description": "Dust extraction from the conveyor hood",
+   "type": "Mechanical device (check valve, RO, limiter)",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0b0uiu7"
+  },
+  {
+   "tag": "",
+   "description": "Housekeeping – fines / spillage removal schedule",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0g9v793"
+  },
+  {
+   "tag": "",
+   "description": "Six-monthly function and blow-through test of the N2 system",
+   "type": "Inspection / maintenance / testing",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0kdegjr"
+  },
+  {
+   "tag": "PSL-205",
+   "description": "Low N2 buffer pressure alarm with operator response",
+   "type": "Alarm with operator response",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn05tlc5o"
+  },
+  {
+   "tag": "",
+   "description": "N2 isolation valve locked open; line-up check after maintenance",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0j52u20"
+  },
+  {
+   "tag": "",
+   "description": "N2 release warning beacons and enclosure access lock-out",
+   "type": "Detection (gas / fire / leak)",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0sx6on6"
+  },
+  {
+   "tag": "",
+   "description": "O2 monitoring and confined-space entry permit for the hood / gallery",
+   "type": "Procedure / administrative control",
+   "iplCandidate": "No",
+   "notes": "",
+   "id": "muvndmn0dlsfcj"
+  }
+ ],
+ "devSafeguards": [
+  {
+   "id": "muvndmn1fzdojz",
+   "deviationId": "muvndmn1omb9x6",
+   "safeguardId": "muvndmmz0zp4s1",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "muvndmn11w7koa",
+   "deviationId": "muvndmn1omb9x6",
+   "safeguardId": "muvndmmz731g8i",
+   "ipl": true,
+   "seq": 2
+  },
+  {
+   "id": "muvndmn1d1a50l",
+   "deviationId": "muvndmn1omb9x6",
+   "safeguardId": "muvndmmzt1cjfx",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "muvndmn1bc4rs1",
+   "deviationId": "muvndmn1omb9x6",
+   "safeguardId": "muvndmmzmtit1p",
+   "ipl": true,
+   "seq": 4
+  },
+  {
+   "id": "muvndmn14tls6o",
+   "deviationId": "muvndmn101omfr",
+   "safeguardId": "muvndmmz5ye80t",
+   "ipl": true,
+   "seq": 1
+  },
+  {
+   "id": "muvndmn1tnekkz",
+   "deviationId": "muvndmn101omfr",
+   "safeguardId": "muvndmn0yvdvp0",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "muvndmn1v5xnp6",
+   "deviationId": "muvndmn101omfr",
+   "safeguardId": "muvndmmz731g8i",
+   "ipl": false,
+   "seq": 3
+  },
+  {
+   "id": "muvndmn1xlqtad",
+   "deviationId": "muvndmn1vtrkp3",
+   "safeguardId": "muvndmn0zaye49",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "muvndmn1h38g6c",
+   "deviationId": "muvndmn1vtrkp3",
+   "safeguardId": "muvndmn0b0uiu7",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "muvndmn15smdl5",
+   "deviationId": "muvndmn15yl4xt",
+   "safeguardId": "muvndmn0g9v793",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "muvndmn125fgiz",
+   "deviationId": "muvndmn15yl4xt",
+   "safeguardId": "muvndmn0b0uiu7",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "muvndmn1we5ohd",
+   "deviationId": "muvndmn1n01i0t",
+   "safeguardId": "muvndmn0kdegjr",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "muvndmn1s10u3y",
+   "deviationId": "muvndmn1n01i0t",
+   "safeguardId": "muvndmmzt1cjfx",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "muvndmn1dhhkz4",
+   "deviationId": "muvndmn1jphlws",
+   "safeguardId": "muvndmn05tlc5o",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "muvndmn1mod6et",
+   "deviationId": "muvndmn1jphlws",
+   "safeguardId": "muvndmn0j52u20",
+   "ipl": false,
+   "seq": 2
+  },
+  {
+   "id": "muvndmn12icxlx",
+   "deviationId": "muvndmn1fjn246",
+   "safeguardId": "muvndmn0sx6on6",
+   "ipl": false,
+   "seq": 1
+  },
+  {
+   "id": "muvndmn1t25syy",
+   "deviationId": "muvndmn1fjn246",
+   "safeguardId": "muvndmn0dlsfcj",
+   "ipl": false,
+   "seq": 2
+  }
+ ],
+ "recs": [
+  {
+   "no": "R-001",
+   "text": "Quantify the PFDavg of the N2 system (XS-210) by fault tree and the fire escalation by event tree; confirm the required risk reduction (see the fault tree / event tree examples).",
+   "responsible": "F. Fire",
+   "priority": "High",
+   "dueDate": "",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "muvndmn0cc69lx"
+  },
+  {
+   "no": "R-002",
+   "text": "Make the emergency discharge chute operable without power (or put the drive control on UPS) so hot DRI can be cleared after a power failure.",
+   "responsible": "C. Process",
+   "priority": "High",
+   "dueDate": "",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "muvndmn0j0ic89"
+  },
+  {
+   "no": "R-003",
+   "text": "Review the fire separation of the gallery to the transfer tower / DRI silo; the fire-spread scenario is above the tolerable frequency.",
+   "responsible": "F. Fire",
+   "priority": "Medium",
+   "dueDate": "",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "muvndmn03fd55l"
+  },
+  {
+   "no": "R-004",
+   "text": "Confirm the design DRI discharge temperature and the belt material temperature rating – the values in the project documents differ.",
+   "responsible": "C. Process",
+   "priority": "High",
+   "dueDate": "",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "muvndmn0ne2qpa"
+  },
+  {
+   "no": "R-005",
+   "text": "Install inspection-door position switches with alarm in the control room; review the need for H2 detection in the hood.",
+   "responsible": "E. Instrument",
+   "priority": "Medium",
+   "dueDate": "",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "muvndmn06qoo9h"
+  },
+  {
+   "no": "R-006",
+   "text": "Add the N2 delivery path (release valves, PCV-211, nozzles) to the FMECA and the proof-test plan; consider a redundant pressure regulator.",
+   "responsible": "G. Maintenance",
+   "priority": "Medium",
+   "dueDate": "",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "muvndmn0xcj60v"
+  },
+  {
+   "no": "R-007",
+   "text": "Lock out access to the conveyor enclosure during and after an N2 release; require an O2 check before entry.",
+   "responsible": "D. Shift Supervisor",
+   "priority": "High",
+   "dueDate": "",
+   "status": "Open",
+   "closeout": "",
+   "closeDate": "",
+   "id": "muvndmn0iytffw"
+  }
+ ],
+ "devRecs": [
+  {
+   "id": "muvndmn1tai15a",
+   "deviationId": "muvndmn1omb9x6",
+   "recId": "muvndmn0cc69lx"
+  },
+  {
+   "id": "muvndmn12pdrnn",
+   "deviationId": "muvndmn1omb9x6",
+   "recId": "muvndmn0j0ic89"
+  },
+  {
+   "id": "muvndmn15veouy",
+   "deviationId": "muvndmn1omb9x6",
+   "recId": "muvndmn03fd55l"
+  },
+  {
+   "id": "muvndmn199oqwx",
+   "deviationId": "muvndmn101omfr",
+   "recId": "muvndmn0ne2qpa"
+  },
+  {
+   "id": "muvndmn15sbdbh",
+   "deviationId": "muvndmn1vtrkp3",
+   "recId": "muvndmn06qoo9h"
+  },
+  {
+   "id": "muvndmn1o4zbd8",
+   "deviationId": "muvndmn1n01i0t",
+   "recId": "muvndmn0xcj60v"
+  },
+  {
+   "id": "muvndmn1vph24c",
+   "deviationId": "muvndmn1n01i0t",
+   "recId": "muvndmn0cc69lx"
+  },
+  {
+   "id": "muvndmn1ozu2rw",
+   "deviationId": "muvndmn1jphlws",
+   "recId": "muvndmn0xcj60v"
+  },
+  {
+   "id": "muvndmn1q6joce",
+   "deviationId": "muvndmn1fjn246",
+   "recId": "muvndmn0iytffw"
+  }
+ ],
+ "customCauses": []
+}

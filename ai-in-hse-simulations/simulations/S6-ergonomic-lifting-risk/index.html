@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S6 · Ergonomic lifting risk</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S6 &middot; Pose estimation &rarr; ergonomic lifting risk</h1>
+  <p class="sub">Simulation 6 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 2, Topic 4.
+     A camera estimates the worker's posture; a REBA-style score and the NIOSH Lifting Equation turn it
+     into a risk rating &mdash; with every step of the sum shown.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No pose model runs. The input ranges, the REBA lookup tables and the NIOSH multiplier tables are
+    pre-authored standard rubrics. The joint-angle derivation, every band lookup, the REBA score and
+    the NIOSH lifting index are computed live from the sliders &mdash; and are checkable by hand.
+  </div>
+
+  <div id="task" class="task"></div>
+
+  <div class="stage">
+    <section class="card">
+      <div id="skel"></div>
+
+      <div class="grp" style="margin-top:12px">
+        <div class="glabel" style="font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:5px">Camera</div>
+        <div class="viewtoggle" id="viewSeg">
+          <button data-v="front" type="button" aria-pressed="true">Front-on</button>
+          <button data-v="oblique" type="button" aria-pressed="false">Oblique (~30&deg;)</button>
+        </div>
+        <label class="chk" style="display:inline-flex;gap:6px;align-items:center;margin-left:12px;font-size:.84rem;cursor:pointer">
+          <input type="checkbox" id="occChk"> Load / body occludes joints
+        </label>
+        <div class="hint">a worse camera view widens the joint-angle uncertainty &mdash; and can move the REBA score by a whole action level</div>
+      </div>
+
+      <div id="inputs" class="inputs"></div>
+    </section>
+
+    <section class="card">
+      <div id="reba"></div>
+      <div id="niosh" style="margin-top:16px"></div>
+    </section>
+  </div>
+
+  <div id="extra" class="card"></div>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 2 Topic 4
+       (computer vision / pose estimation for ergonomic and MSD risk).</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/warehouse-carton-lift/dataset.js"></script>
+<script src="data/patient-reposition/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

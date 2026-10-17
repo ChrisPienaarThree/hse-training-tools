@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S11 · Incident investigation assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S11 &middot; AI-assisted incident investigation</h1>
+  <p class="sub">Simulation 11 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 3, Topic 2.
+     One narrative in, a full draft investigation out &mdash; timeline, causes, actions, an executive summary,
+     and a search for similar past incidents. One of those similar incidents does not exist.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No model runs. The narrative, every drafted section, the similar-incident search results and the
+    repository are pre-authored. Checking a case reference against the repository, your review
+    checkboxes, the include/exclude decision and the finalize gate are all computed live.
+  </div>
+
+  <div id="narrative" class="narrative"></div>
+
+  <div id="sections"></div>
+
+  <div id="gate"></div>
+
+  <section class="card" style="margin-top:18px">
+    <h2>What this pattern is (and isn't)</h2>
+    <div id="callouts" class="callouts"></div>
+  </section>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 3 Topic 2
+       (AI-assisted incident investigation; the COMET pattern; hallucinated "similar incident" risk).</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/forklift-collision/dataset.js"></script>
+<script src="data/chemical-splash/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

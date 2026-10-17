@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S13 · Heat &amp; fatigue wearable</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>S13 &middot; Heat-stress &amp; fatigue wearable</h1>
+  <p class="sub">Simulation 13 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 3, Topic 3.
+    A predictive heat-strain alert vs true symptom onset — and what a medication-affected HR reading does
+    to that early warning — alongside a shift-fatigue estimate.</p>
+
+  <div class="topbar">
+    <div><label class="field" for="scenario">Scenario</label><select id="scenario"></select></div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner"><strong>Teaching simulation.</strong> No model runs. Slider ranges, the heat-model
+    coefficient, both temperature thresholds and the medication-bias size are pre-authored. The
+    core-temperature curve, both crossing times, the lead time, the fatigue curve and the risk band
+    are computed live.</div>
+
+  <div id="context" class="context"></div>
+  <div id="tiles" class="tiles"></div>
+
+  <div class="stage">
+    <section class="card">
+      <h2>Heat strain</h2>
+      <div class="chart" id="heatChart"></div>
+      <div class="legend3"><span><i style="border-color:var(--red)"></i>true core temp</span><span><i style="border-color:var(--blue);border-top-style:dashed"></i>wearable reading</span></div>
+      <div class="ctl" style="margin-top:10px"><div class="ch"><span>Ambient temperature</span><span class="cv" id="ambientVal"></span></div><input type="range" id="ambientInp"></div>
+      <div class="ctl"><div class="ch"><span>Humidity</span><span class="cv" id="humidityVal"></span></div><input type="range" id="humidityInp"></div>
+      <div class="ctl"><div class="ch"><span>Workload intensity</span><span class="cv" id="workloadVal"></span></div><input type="range" id="workloadInp"></div>
+      <label class="switchrow"><input type="checkbox" id="medicationChk"> Worker on medication affecting HR reading</label>
+    </section>
+    <section class="card">
+      <h2>Fatigue over the shift</h2>
+      <div class="chart" id="fatigueChart"></div>
+      <div class="legend3"><span><i style="border-color:var(--purple)"></i>error likelihood</span></div>
+      <div class="ctl" style="margin-top:10px"><div class="ch"><span>Hours awake at shift start</span><span class="cv" id="awakeVal"></span></div><input type="range" id="awakeInp"></div>
+      <div class="ctl"><div class="ch"><span>Shift start (hour of day)</span><span class="cv" id="startVal"></span></div><input type="range" id="startInp"></div>
+      <div class="ctl"><div class="ch"><span>Consecutive night shifts</span><span class="cv" id="nightsVal"></span></div><input type="range" id="nightsInp"></div>
+    </section>
+  </div>
+
+  <section class="card"><h2>What this demonstrates</h2><div id="callouts" class="callouts"></div></section>
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes:</strong> see <code>README.md</code>. <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>, register it.</p>
+    <p>Source: <code>../../AI_Workplace_Safety_Research_1.md</code> — Day 3 Topic 3 (predictive safety &amp; early-warning systems).</p>
+  </footer>
+</div>
+<script src="data/manifest.js"></script>
+<script src="data/warehouse-summer-shift/dataset.js"></script>
+<script src="data/steel-plant-night-shift/dataset.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

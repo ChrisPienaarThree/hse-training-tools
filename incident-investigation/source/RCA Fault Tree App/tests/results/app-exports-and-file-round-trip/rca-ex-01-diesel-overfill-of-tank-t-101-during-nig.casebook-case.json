@@ -1,0 +1,194 @@
+{
+ "format": "storyline-casebook-case",
+ "version": 1,
+ "exportedAt": "2026-10-15T15:25:20.101Z",
+ "source": "RCA Fault Tree (Istec Training)",
+ "case": {
+  "caseTitle": "Diesel overfill of tank T-101 during night transfer",
+  "facility": "Coastal Fuel Terminal (fictional)",
+  "location": "Tank T-101, bund B-1",
+  "incidentType": "",
+  "dateOccurred": "2026-09-18",
+  "timeOccurred": "03:40",
+  "reportedBy": "Lead investigator",
+  "initialDescription": "During a night ship-to-tank transfer, diesel overflowed from tank T-101 into bund B-1. About 14 m³ was contained in the bund and recovered; no injuries and no off-site release.",
+  "refinedDescription": "The transfer was not stopped because the level gauge LT-101 froze at 78 % and the single night-shift operator, busy with a ship arrival, did not cross-check the level. The independent high-high trip LSHH-101 failed because its float was seized; proof testing had dropped out of the maintenance system. The independent alarm LAH-102 was probably missed in an alarm flood (still being confirmed).",
+  "actualSeverity": 1,
+  "potentialSeverity": 1,
+  "status": "review"
+ },
+ "investigationTeam": [
+  {
+   "name": "Lead investigator",
+   "role": "Lead Investigator",
+   "customRole": "",
+   "organization": "Coastal Fuel Terminal (fictional)",
+   "contact": "",
+   "notes": ""
+  },
+  {
+   "name": "Operations superintendent",
+   "role": "Co-Investigator",
+   "customRole": "",
+   "organization": "Coastal Fuel Terminal (fictional)",
+   "contact": "",
+   "notes": ""
+  },
+  {
+   "name": "Instrument technician",
+   "role": "Co-Investigator",
+   "customRole": "",
+   "organization": "Coastal Fuel Terminal (fictional)",
+   "contact": "",
+   "notes": ""
+  },
+  {
+   "name": "HSE adviser",
+   "role": "Co-Investigator",
+   "customRole": "",
+   "organization": "Coastal Fuel Terminal (fictional)",
+   "contact": "",
+   "notes": ""
+  }
+ ],
+ "involvedPersons": [],
+ "evidence": [],
+ "events": [
+  {
+   "id": "e1",
+   "time": "03:40",
+   "text": "Diesel overflowed from tank T-101 into the bund during a night transfer",
+   "status": "proven",
+   "evidenceIds": []
+  }
+ ],
+ "conditions": [
+  {
+   "id": "c1",
+   "eventId": "e1",
+   "text": "E-01 Ship-to-tank transfer into T-101 under way (demand on the overfill controls)",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c2",
+   "eventId": "e1",
+   "text": "E-04 LT-101 servo gauge displacer stuck (frozen reading)",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c3",
+   "eventId": "e1",
+   "text": "E-03 Level cross-check not done during the transfer",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c4",
+   "eventId": "e1",
+   "text": "H-01 Single operator on night shift, also handling a ship arrival",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c5",
+   "eventId": "e1",
+   "text": "E-06 LSHH-101 level switch failed on demand (float stuck)",
+   "status": "proven",
+   "evidenceIds": []
+  }
+ ],
+ "icamFactors": [],
+ "contributingFactors": [
+  {
+   "id": "cf1",
+   "text": "Single operator on night shift, also handling a ship arrival"
+  }
+ ],
+ "rootCauses": [
+  {
+   "id": "rc1",
+   "text": "LSHH-101 level switch failed on demand (float stuck) — Proof testing of tank overfill switches dropped from the CMMS schedule; no tracking of overdue SIS tests."
+  }
+ ],
+ "keyLearnings": [
+  {
+   "id": "kl1",
+   "text": "Independent overfill protection is only independent if it is tested."
+  },
+  {
+   "id": "kl2",
+   "text": "Manning changes need a management-of-change review that covers peak workload, such as a ship arrival during a transfer."
+  }
+ ],
+ "correctiveActions": [
+  {
+   "id": "a1",
+   "finding": "Addresses E-06: LSHH-101 level switch failed on demand (float stuck)",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc1",
+   "action": "Restore proof testing of all tank overfill switches (LSHH) in the CMMS and test LSHH-101/201/301 within 14 days.",
+   "timeframe": "longterm",
+   "hocLevel": "engineering",
+   "owner": "Maintenance Manager",
+   "targetDate": "2026-10-31"
+  },
+  {
+   "id": "a2",
+   "finding": "Addresses E-06: LSHH-101 level switch failed on demand (float stuck)",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc1",
+   "action": "Add an overdue-SIS-test KPI to the monthly management review.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Terminal Manager",
+   "targetDate": "2026-12-15"
+  },
+  {
+   "id": "a3",
+   "finding": "Addresses E-04: LT-101 servo gauge displacer stuck (frozen reading)",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Add servo gauge LT-101 (and sister gauges) to the planned maintenance system with a 6-monthly displacer inspection.",
+   "timeframe": "intermediate",
+   "hocLevel": "engineering",
+   "owner": "Instrument Supervisor",
+   "targetDate": "2026-11-15"
+  },
+  {
+   "id": "a4",
+   "finding": "Addresses E-03: Level cross-check not done during the transfer",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Add a level cross-check hold point (radar vs servo, at 85 % and 95 %) to the transfer procedure.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Operations Superintendent",
+   "targetDate": "2026-11-01"
+  },
+  {
+   "id": "a5",
+   "finding": "Addresses H-01: Single operator on night shift, also handling a ship arrival",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Carry out a management-of-change review of single-operator night manning during ship arrivals.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Terminal Manager",
+   "targetDate": "2026-11-30"
+  },
+  {
+   "id": "a6",
+   "finding": "Addresses E-08: Control-room operator did not respond to the independent high-level alarm LAH-102",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Re-prioritise LAH-102 and other independent overfill alarms as high priority; rationalise nuisance alarms.",
+   "timeframe": "intermediate",
+   "hocLevel": "engineering",
+   "owner": "Control Systems Engineer",
+   "targetDate": "2027-01-31"
+  }
+ ],
+ "photos": []
+}

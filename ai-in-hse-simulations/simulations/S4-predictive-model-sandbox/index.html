@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S4 · Predictive-model sandbox</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1>S4 &middot; Four predictive models, one dataset</h1>
+  <p class="sub">Simulation 4 for <em>Integrating AI in Workplace Safety Practices</em> &mdash; Day 1, Topic 2b.
+     The same structured data scored by a regression, one decision tree, a boosted-stump ensemble and an
+     anomaly detector &mdash; to see how each makes its prediction and how explainable each one is.</p>
+
+  <div class="topbar">
+    <div>
+      <label class="field" for="scenario">Scenario</label>
+      <select id="scenario"></select>
+    </div>
+    <button id="theme" class="ghost theme-toggle" type="button">Theme: system</button>
+  </div>
+
+  <div class="banner">
+    <strong>Teaching simulation.</strong>
+    No model was trained. The weights, the tree, the rules and the feature means/SDs are pre-authored.
+    Every prediction, contribution bar and z-score is computed <em>live</em> from the sliders by the
+    standard maths &mdash; sigmoid, tree traversal, a sum of rules, z-scores.
+  </div>
+
+  <div id="target" class="target"></div>
+
+  <div class="controls">
+    <div class="row1">
+      <div>
+        <label class="field">Preset case</label>
+        <div id="casebar" class="casebtns"></div>
+      </div>
+    </div>
+    <div id="feats" class="feats"></div>
+    <div style="font-size:.76rem;color:var(--ink-soft);margin-top:8px">
+      Drag any slider to build your own case &mdash; all four models update as you go.
+    </div>
+  </div>
+
+  <div id="cards" class="modelcards"></div>
+
+  <div id="detail" class="detail"></div>
+
+  <div id="score"></div>
+
+  <div id="static"></div>
+
+  <footer class="notes">
+    <p><strong>Facilitator notes, walkthrough and discussion questions:</strong> see <code>README.md</code> in this folder.
+       <strong>Add a scenario:</strong> copy <code>data/_TEMPLATE/</code>, fill <code>dataset.js</code>,
+       then add a <code>&lt;script&gt;</code> line below and a row in <code>data/manifest.js</code>.</p>
+    <p>Source material: <code>../../AI_Workplace_Safety_Research_1.md</code> &mdash; Day 1 Topic 2b
+       (regression, decision trees, random forests / gradient boosting, anomaly detection).</p>
+  </footer>
+
+</div>
+
+<script src="data/manifest.js"></script>
+<script src="data/crew-incident-risk/dataset.js"></script>
+<script src="data/equipment-failure-risk/dataset.js"></script>
+<!-- <script src="data/YOUR-SCENARIO/dataset.js"></script> -->
+<script src="app.js"></script>
+</body>
+</html>

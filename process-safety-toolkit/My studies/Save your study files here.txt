@@ -1,0 +1,3 @@
+Use File > Save as... (link file) in each tool and choose this folder.
+File types: .hazop.json  .fta.json  .eta.json  .bowtie.json
+Filled-in Excel workbooks (File > Save As) can be kept here too.

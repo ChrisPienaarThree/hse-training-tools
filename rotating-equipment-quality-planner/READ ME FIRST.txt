@@ -1,0 +1,42 @@
+ROTATING EQUIPMENT QUALITY PLANNER - USB / STANDALONE VERSION
+================================================================
+
+What is in this folder
+  Rotating Equipment Quality Planner.html   the app (single file, works offline, nothing to install)
+  Rotating Equipment Quality Plans.xlsx     the register file the app saves your plans into
+  Start Quality Planner.cmd                 Windows shortcut that opens the app in your default browser
+
+Copy the whole folder to the USB stick (or any folder). Keep the two files together.
+
+First use
+  1. Open the app: double-click "Start Quality Planner.cmd" (Windows) or the .html file. Use Google Chrome or Microsoft Edge.
+  2. In the amber bar at the top click "Connect Excel register..." and choose "Rotating Equipment Quality Plans.xlsx" from this folder.
+     The browser asks once for permission to read and write the file. Allow it.
+  3. Build a plan, press "File in register". The row appears in the Plan register tab and the workbook is saved within a second.
+     The status pill at the top right shows the file name and the time of the last save.
+
+Next time
+  Open the app and click "Reconnect to Rotating Equipment Quality Plans.xlsx" in the amber bar (the browser asks for permission again).
+  If the button is not there (for example on a different computer) use "Connect Excel register..." and pick the file.
+
+Sheets in the workbook
+  Quality plans    one row per plan (the app reads plans back from here - keep the header row)
+  Task schedule    one row per requirement with its frequency band and rank - sort or filter it in Excel; the app rewrites it
+  Frequency bands  the standard scale (1 = continuous ... 15 = not defined) used for sorting
+  Tags, Register (source), Read me
+
+Rules for the workbook
+  - Do not rename the sheet "Quality plans" or change its header row - the app reads plans back by the header names.
+  - Close the workbook in Excel before filing plans. If Excel has it open the app cannot write it and shows a warning;
+    the plans are kept in the browser and are written the next time a save succeeds.
+  - You may add your own sheets; the app keeps them when it saves. Cell formatting inside the app's sheets is regenerated.
+  - Site tags must be unique. To change a filed plan, open it from the Plan register tab; the app refuses a second plan with the same tag.
+
+Other browsers (Firefox, Safari)
+  Direct file saving is not available. Use "Import from Excel" at start and "Export to Excel" when you finish, then copy the
+  exported file over the register file on the USB. Plans are also kept in that browser between sessions.
+
+Data source
+  The plans are generated from the Rotating Equipment Maintenance & Inspection Requirement Register (starting point only).
+  Standards, intervals and acceptance values are typical industry practice - reconcile them with the site engineering
+  specifications, OEM manuals, sparing philosophy, criticality register and regulatory framework before use.

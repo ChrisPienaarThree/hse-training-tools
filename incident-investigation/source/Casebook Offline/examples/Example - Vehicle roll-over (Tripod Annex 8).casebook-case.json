@@ -1,0 +1,740 @@
+{
+ "format": "storyline-casebook-case",
+ "version": 1,
+ "exportedAt": "2026-10-14T13:17:59.512Z",
+ "source": "Tripod Beta Investigator (Istec Training)",
+ "case": {
+  "caseTitle": "Driver injured in vehicle roll-over on delivery run",
+  "facility": "Area Production Centre, Logistics",
+  "location": "Remote delivery route, 40 km from the Area Production Centre",
+  "incidentType": "Personal Injury",
+  "dateOccurred": "2026-03-12",
+  "timeOccurred": "08:00 to 18:30",
+  "reportedBy": "Course facilitator",
+  "initialDescription": "A driver delivering goods to a remote location left the Area Production Centre on schedule at 08:00 and was due back at 12:30. His failure to return was not reported until 15:00. A search along his Journey Management route started at 16:30 without success; he was found off the designated route at 18:30. The vehicle had left the road and rolled over. Local villagers had pulled the driver from the vehicle while he waited for rescue; doctors believe this contributed to a spinal injury that will probably cause permanent disability.",
+  "refinedDescription": "Five trios describe the incident, from the need to transport goods to the permanent disability of the driver. Seven barriers failed. The Tripod causation paths point to weaknesses in journey management, driver fitness and rest control, driver training, seat-belt enforcement and emergency response staffing.",
+  "actualSeverity": 4,
+  "potentialSeverity": 5,
+  "status": "closed",
+  "rootCause": {
+   "immediateCauses": "Journey manager misses opportunity to combine loads; Journey manager does not stop non-rested driver; Driver fades on and off behind the wheel; Driver over-steers vehicle; Driver refuses to wear seatbelt; Emergency team mobilises after 75 minutes; Search team makes detour before finding crashed vehicle"
+  }
+ },
+ "investigationTeam": [
+  {
+   "name": "Lead investigator (Tripod Beta Practitioner)",
+   "role": "Lead Investigator",
+   "customRole": "Team leader",
+   "organization": "Worked example (Tripod Beta User Guide, Annex 8)",
+   "contact": "",
+   "notes": "Team leader"
+  },
+  {
+   "name": "Logistics superintendent",
+   "role": "Co-Investigator",
+   "customRole": "Process knowledge",
+   "organization": "Worked example (Tripod Beta User Guide, Annex 8)",
+   "contact": "",
+   "notes": "Process knowledge"
+  },
+  {
+   "name": "HSE adviser",
+   "role": "Co-Investigator",
+   "customRole": "Investigator",
+   "organization": "Worked example (Tripod Beta User Guide, Annex 8)",
+   "contact": "",
+   "notes": "Investigator"
+  },
+  {
+   "name": "Driver representative",
+   "role": "Co-Investigator",
+   "customRole": "Workforce representative",
+   "organization": "Worked example (Tripod Beta User Guide, Annex 8)",
+   "contact": "",
+   "notes": "Workforce representative"
+  }
+ ],
+ "involvedPersons": [],
+ "evidence": [],
+ "events": [
+  {
+   "id": "e1",
+   "time": "",
+   "text": "Vehicle on the road",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "e2",
+   "time": "",
+   "text": "Tyres hit shoulder of road",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "e3",
+   "time": "",
+   "text": "Roll-over of vehicle",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "e4",
+   "time": "",
+   "text": "Driver with back injury",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "e5",
+   "time": "",
+   "text": "Permanent disability from spinal injury",
+   "status": "proven",
+   "evidenceIds": []
+  }
+ ],
+ "conditions": [
+  {
+   "id": "c1",
+   "eventId": null,
+   "text": "Belief that delivery cannot wait",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c2",
+   "eventId": null,
+   "text": "Checking driver on fitness not common practice",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c3",
+   "eventId": null,
+   "text": "Driver believes he is rested with few hours pre-trip sleep",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c4",
+   "eventId": null,
+   "text": "Driver does not know of the need for a 20 minute nap",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c5",
+   "eventId": null,
+   "text": "Driver does not know how to steer out of trouble",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c6",
+   "eventId": null,
+   "text": "Drivers consider use of seatbelts as \"childish\"",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c7",
+   "eventId": null,
+   "text": "Control-room operator charged with outdoor duties",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c8",
+   "eventId": null,
+   "text": "Emergency room team not on call due to company party",
+   "status": "proven",
+   "evidenceIds": []
+  },
+  {
+   "id": "c9",
+   "eventId": null,
+   "text": "Search team not sure about actual incident site",
+   "status": "proven",
+   "evidenceIds": []
+  }
+ ],
+ "icamFactors": [
+  {
+   "id": "i1",
+   "category": "defences",
+   "description": "Combining load with other loads",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Failed Barrier",
+   "codeStatus": ""
+  },
+  {
+   "id": "i2",
+   "category": "defences",
+   "description": "Stop non-rested driver to drive",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Failed Barrier",
+   "codeStatus": ""
+  },
+  {
+   "id": "i3",
+   "category": "defences",
+   "description": "Alert and correct steering",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Failed Barrier",
+   "codeStatus": ""
+  },
+  {
+   "id": "i4",
+   "category": "defences",
+   "description": "Correct reaction on hitting shoulder of road",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Failed Barrier",
+   "codeStatus": ""
+  },
+  {
+   "id": "i5",
+   "category": "defences",
+   "description": "Use of seatbelt",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Failed Barrier",
+   "codeStatus": ""
+  },
+  {
+   "id": "i6",
+   "category": "defences",
+   "description": "Effective search",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Failed Barrier",
+   "codeStatus": ""
+  },
+  {
+   "id": "i7",
+   "category": "defences",
+   "description": "Rapid mobilisation of search team",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Failed Barrier",
+   "codeStatus": ""
+  },
+  {
+   "id": "i8",
+   "category": "actions",
+   "description": "Journey manager misses opportunity to combine loads",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Immediate Cause",
+   "codeStatus": ""
+  },
+  {
+   "id": "i9",
+   "category": "actions",
+   "description": "Journey manager does not stop non-rested driver",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Immediate Cause",
+   "codeStatus": ""
+  },
+  {
+   "id": "i10",
+   "category": "actions",
+   "description": "Driver fades on and off behind the wheel",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Immediate Cause",
+   "codeStatus": ""
+  },
+  {
+   "id": "i11",
+   "category": "actions",
+   "description": "Driver over-steers vehicle",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Immediate Cause",
+   "codeStatus": ""
+  },
+  {
+   "id": "i12",
+   "category": "actions",
+   "description": "Driver refuses to wear seatbelt",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Immediate Cause",
+   "codeStatus": ""
+  },
+  {
+   "id": "i13",
+   "category": "actions",
+   "description": "Emergency team mobilises after 75 minutes",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Immediate Cause",
+   "codeStatus": ""
+  },
+  {
+   "id": "i14",
+   "category": "actions",
+   "description": "Search team makes detour before finding crashed vehicle",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "",
+   "codeLabel": "Immediate Cause",
+   "codeStatus": ""
+  },
+  {
+   "id": "i15",
+   "category": "conditions",
+   "description": "Belief that delivery cannot wait",
+   "linkedType": "condition",
+   "linkedId": "c1",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i16",
+   "category": "conditions",
+   "description": "Checking driver on fitness not common practice",
+   "linkedType": "condition",
+   "linkedId": "c2",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i17",
+   "category": "conditions",
+   "description": "Driver believes he is rested with few hours pre-trip sleep",
+   "linkedType": "condition",
+   "linkedId": "c3",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i18",
+   "category": "conditions",
+   "description": "Driver does not know of the need for a 20 minute nap",
+   "linkedType": "condition",
+   "linkedId": "c4",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i19",
+   "category": "conditions",
+   "description": "Driver does not know how to steer out of trouble",
+   "linkedType": "condition",
+   "linkedId": "c5",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i20",
+   "category": "conditions",
+   "description": "Drivers consider use of seatbelts as \"childish\"",
+   "linkedType": "condition",
+   "linkedId": "c6",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i21",
+   "category": "conditions",
+   "description": "Control-room operator charged with outdoor duties",
+   "linkedType": "condition",
+   "linkedId": "c7",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i22",
+   "category": "conditions",
+   "description": "Emergency room team not on call due to company party",
+   "linkedType": "condition",
+   "linkedId": "c8",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i23",
+   "category": "conditions",
+   "description": "Search team not sure about actual incident site",
+   "linkedType": "condition",
+   "linkedId": "c9",
+   "code": "",
+   "codeLabel": "Precondition",
+   "codeStatus": ""
+  },
+  {
+   "id": "i24",
+   "category": "organizational",
+   "description": "Inadequate communication about urgency of the delivery",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "CO",
+   "codeLabel": "Tripod BRF: Communication",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i25",
+   "category": "organizational",
+   "description": "Fitness of drivers is no issue in journey management procedure",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "PR",
+   "codeLabel": "Tripod BRF: Procedures",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i26",
+   "category": "organizational",
+   "description": "Resting is not controlled; drivers are on call",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "OR",
+   "codeLabel": "Tripod BRF: Organisation",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i27",
+   "category": "organizational",
+   "description": "Too few drivers on this job",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "IG",
+   "codeLabel": "Tripod BRF: Incompatible Goals",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i28",
+   "category": "organizational",
+   "description": "Company does not require advanced driving course",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "TR",
+   "codeLabel": "Tripod BRF: Training",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i29",
+   "category": "organizational",
+   "description": "Local culture stimulates \"macho driving\"",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "EC",
+   "codeLabel": "Tripod BRF: Error-enforcing Conditions",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i30",
+   "category": "organizational",
+   "description": "Management does not enforce use of seatbelts",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "IG",
+   "codeLabel": "Tripod BRF: Incompatible Goals",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i31",
+   "category": "organizational",
+   "description": "Shortage of operators due to cost-cutting drive",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "OR",
+   "codeLabel": "Tripod BRF: Organisation",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i32",
+   "category": "organizational",
+   "description": "Management does not enforce duty procedures",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "IG",
+   "codeLabel": "Tripod BRF: Incompatible Goals",
+   "codeStatus": "Contributing"
+  },
+  {
+   "id": "i33",
+   "category": "organizational",
+   "description": "Ineffective tracking system for road transport",
+   "linkedType": "general",
+   "linkedId": null,
+   "code": "DF",
+   "codeLabel": "Tripod BRF: Defences",
+   "codeStatus": "Contributing"
+  }
+ ],
+ "contributingFactors": [],
+ "rootCauses": [
+  {
+   "id": "rc1",
+   "text": "Inadequate communication about urgency of the delivery (BRF CO: Communication)"
+  },
+  {
+   "id": "rc2",
+   "text": "Fitness of drivers is no issue in journey management procedure (BRF PR: Procedures)"
+  },
+  {
+   "id": "rc3",
+   "text": "Resting is not controlled; drivers are on call (BRF OR: Organisation)"
+  },
+  {
+   "id": "rc4",
+   "text": "Too few drivers on this job (BRF IG: Incompatible Goals)"
+  },
+  {
+   "id": "rc5",
+   "text": "Company does not require advanced driving course (BRF TR: Training)"
+  },
+  {
+   "id": "rc6",
+   "text": "Local culture stimulates \"macho driving\" (BRF EC: Error-enforcing Conditions)"
+  },
+  {
+   "id": "rc7",
+   "text": "Management does not enforce use of seatbelts (BRF IG: Incompatible Goals)"
+  },
+  {
+   "id": "rc8",
+   "text": "Shortage of operators due to cost-cutting drive (BRF OR: Organisation)"
+  },
+  {
+   "id": "rc9",
+   "text": "Management does not enforce duty procedures (BRF IG: Incompatible Goals)"
+  },
+  {
+   "id": "rc10",
+   "text": "Ineffective tracking system for road transport (BRF DF: Defences)"
+  }
+ ],
+ "keyLearnings": [
+  {
+   "id": "kl1",
+   "text": "Journey management must cover driver fitness and rest, not only the route."
+  },
+  {
+   "id": "kl2",
+   "text": "Urgency on transport requisitions should be challenged and loads combined."
+  },
+  {
+   "id": "kl3",
+   "text": "Seat-belt use is a company rule regardless of local law and must be enforced from induction onwards."
+  }
+ ],
+ "correctiveActions": [
+  {
+   "id": "a1",
+   "finding": "Addresses Failed Barrier: Combining load with other loads",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Logistics planners to check delivery urgency with the requester before dispatch and combine non-urgent loads with scheduled truck runs.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Logistics Superintendent",
+   "targetDate": "2026-04-11"
+  },
+  {
+   "id": "a2",
+   "finding": "Addresses Failed Barrier: Stop non-rested driver to drive",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Add a documented driver fitness and rest check to the journey management pre-departure briefing; Journey Manager to stop any driver who fails it.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Journey Management owner",
+   "targetDate": "2026-04-11"
+  },
+  {
+   "id": "a3",
+   "finding": "Addresses Failed Barrier: Alert and correct steering",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Brief every driver before departure on fatigue: when drowsy, pull off and take a 20-minute nap. Record the briefing on the Journey Management Plan.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Transport Manager",
+   "targetDate": "2026-03-26"
+  },
+  {
+   "id": "a4",
+   "finding": "Addresses Failed Barrier: Correct reaction on hitting shoulder of road",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Add recovery from running off the road (slow down, steer back gently) to the practical module of the advanced driving course.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Training Manager",
+   "targetDate": "2026-06-10"
+  },
+  {
+   "id": "a5",
+   "finding": "Addresses Failed Barrier: Effective search",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Require the planned route to be written on the Journey Management Plan and any deviation to be reported to base before it is taken.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Journey Management owner",
+   "targetDate": "2026-04-11"
+  },
+  {
+   "id": "a6",
+   "finding": "Addresses Failed Barrier: Use of seatbelt",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Make seat-belt use a stated condition of driving company vehicles and check it at gate exits for three months.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Transport Manager",
+   "targetDate": "2026-03-26"
+  },
+  {
+   "id": "a7",
+   "finding": "Addresses Failed Barrier: Rapid mobilisation of search team",
+   "linkedCauseType": "additional",
+   "linkedCauseId": null,
+   "action": "Rehearse overdue-vehicle search mobilisation against the 45-minute target at random times, quarterly.",
+   "timeframe": "intermediate",
+   "hocLevel": "administrative",
+   "owner": "Emergency Response Coordinator",
+   "targetDate": "2026-06-10"
+  },
+  {
+   "id": "a8",
+   "finding": "Addresses Underlying Cause: Inadequate communication about urgency of the delivery",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc1",
+   "action": "Agree delivery priority definitions with customers and hold a monthly delivery planning meeting.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Logistics Superintendent",
+   "targetDate": "2026-05-11"
+  },
+  {
+   "id": "a9",
+   "finding": "Addresses Underlying Cause: Fitness of drivers is no issue in journey management procedure",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc2",
+   "action": "Revise the Journey Management Procedure to include driver fitness, rest and alertness criteria.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "HSE Manager",
+   "targetDate": "2026-05-11"
+  },
+  {
+   "id": "a10",
+   "finding": "Addresses Underlying Cause: Resting is not controlled; drivers are on call",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc3",
+   "action": "Introduce duty-hour and minimum-rest rules for drivers and monitor them through the roster.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Transport Manager",
+   "targetDate": "2026-06-10"
+  },
+  {
+   "id": "a11",
+   "finding": "Addresses Underlying Cause: Too few drivers on this job",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc4",
+   "action": "Review driver numbers against trip demand and recruit or reschedule to remove the shortfall.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Operations Manager",
+   "targetDate": "2026-07-10"
+  },
+  {
+   "id": "a12",
+   "finding": "Addresses Underlying Cause: Company does not require advanced driving course",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc5",
+   "action": "Require an advanced driving course (alertness, fatigue and vehicle recovery skills) for all drivers.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Training Manager",
+   "targetDate": "2026-09-08"
+  },
+  {
+   "id": "a13",
+   "finding": "Addresses Underlying Cause: Management does not enforce use of seatbelts",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc7",
+   "action": "Correct the induction material on seat belts and brief all induction trainers on the company rule.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "HSE Manager",
+   "targetDate": "2026-04-11"
+  },
+  {
+   "id": "a14",
+   "finding": "Addresses Underlying Cause: Local culture stimulates \"macho driving\"",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc6",
+   "action": "Run a line-manager-led driving culture programme with recognition for compliant driving and visible follow-up of risk-taking.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Operations Manager",
+   "targetDate": "2026-07-10"
+  },
+  {
+   "id": "a15",
+   "finding": "Addresses Underlying Cause: Management does not enforce duty procedures",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc9",
+   "action": "Audit compliance with emergency duty and on-call procedures monthly and report results to the management team.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Operations Manager",
+   "targetDate": "2026-05-11"
+  },
+  {
+   "id": "a16",
+   "finding": "Addresses Underlying Cause: Shortage of operators due to cost-cutting drive",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc8",
+   "action": "Remove outdoor duties from control-room operators while on emergency watch, or add a relief operator.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Operations Manager",
+   "targetDate": "2026-05-11"
+  },
+  {
+   "id": "a17",
+   "finding": "Addresses Underlying Cause: Ineffective tracking system for road transport",
+   "linkedCauseType": "root",
+   "linkedCauseId": "rc10",
+   "action": "Fit in-vehicle tracking to field vehicles and monitor positions from the control room.",
+   "timeframe": "longterm",
+   "hocLevel": "administrative",
+   "owner": "Transport Manager",
+   "targetDate": "2026-09-08"
+  }
+ ],
+ "photos": []
+}
