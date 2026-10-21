@@ -3,7 +3,7 @@ HAZARD REGISTER – OFFLINE (USB) EDITION
 
 What this is
   A standalone copy of the Hazard Register / risk-assessment app. Everything – the app,
-  the full register (1,520 hazards incl. refinery and mineral-processing gap-fills, 12 retired),
+  the full register (1,580 hazards incl. refinery, mineral-processing and SABIC petrochemical gap-fills, 12 retired),
   the existing studies and actions, and the Excel library – is inside ONE file:
       Hazard Register.html
   No internet connection, installation or sign-in is needed. Nothing is sent anywhere.
