@@ -294,10 +294,54 @@ function addNode(type, x, y, label) {
   renderTree(); renderInspector(); focusLabel();
   return n;
 }
+/* Links the tree rules do not allow directly but that have one correct Tripod path:
+   Precondition -> Failed Barrier goes through the barrier's Immediate Cause (added if missing),
+   Underlying Cause -> Immediate Cause through a new Precondition, Underlying Cause -> Failed Barrier through both. */
+function routePlan(a, b) {
+  const ix = R.index(S.c), icOf = fb => ix.inN(fb.id, m => m.type === 'ic')[0];
+  const mk = (type, near) => { const n = mkNode(type, '', 0, 0), g = X.geom(n), p = findSpot(Math.round(near.x / 10) * 10, Math.round((near.y + 120) / 10) * 10, g.w, g.h); n.x = p.x; n.y = p.y; S.c.nodes.push(n); return n; };
+  const edge = (f, t) => { if (!S.c.edges.some(e => e.from === f.id && e.to === t.id)) S.c.edges.push({ id: uid('x'), from: f.id, to: t.id }); };
+  if (a.type === 'pc' && b.type === 'failed') {
+    const ic = icOf(b);
+    if (ic) return { label: 'via its Immediate Cause', apply: () => { edge(a, ic); return { msg: 'Linked to the Immediate Cause of that barrier. In Tripod Beta a Precondition acts on a Failed Barrier through its Immediate Cause.' }; } };
+    return { label: 'via a new Immediate Cause', apply: () => { const n = mk('ic', b); edge(n, b); edge(a, n); return { msg: 'Added an Immediate Cause between them: a Precondition acts on a Failed Barrier through the Immediate Cause. Describe the act or condition that defeated the barrier.', focus: n.id }; } };
+  }
+  if (a.type === 'uc' && b.type === 'ic') return { label: 'via a new Precondition', apply: () => { const n = mk('pc', b); edge(n, b); edge(a, n); return { msg: 'Added a Precondition between them: an Underlying Cause acts on an Immediate Cause through a Precondition. Describe it.', focus: n.id }; } };
+  if (a.type === 'uc' && b.type === 'failed') {
+    const ic = icOf(b);
+    return { label: ic ? 'via a new Precondition on its Immediate Cause' : 'via a new Immediate Cause and Precondition', apply: () => {
+      let i = ic; if (!i) { i = mk('ic', b); edge(i, b); }
+      const p = mk('pc', i); edge(p, i); edge(a, p);
+      return { msg: 'Linked through ' + (ic ? 'a new Precondition on the barrier’s Immediate Cause' : 'a new Immediate Cause and Precondition') + '. If nobody could have prevented the failure, make it a Missing or Inadequate Barrier instead.', focus: p.id };
+    } };
+  }
+  return null;
+}
+function applyRoute(r, a, b, quiet) {
+  const res = r.apply();
+  changed('Linked ' + TY[a.type].name + ' to ' + TY[b.type].name + ' ' + r.label, 'link');
+  if (res.focus) { S.sel = new Set([res.focus]); S.selEdge = null; }
+  if (!quiet) toast(res.msg);
+  return true;
+}
+/* Link with an explicit direction: fromId is the preceding element, toId the following one. */
+function linkDir(fromId, toId, quiet) {
+  const a = node(fromId), b = node(toId); if (!a || !b || a === b) return false;
+  const ok = R.canConnect(a.type, b.type);
+  if (!ok.ok) { const r = routePlan(a, b); if (r) return applyRoute(r, a, b, quiet); if (!quiet) toast(ok.reason); return false; }
+  if (S.c.edges.some(e => (e.from === a.id && e.to === b.id) || (e.from === b.id && e.to === a.id))) { if (!quiet) toast('Those two are already linked.'); return false; }
+  S.c.edges.push({ id: uid('x'), from: a.id, to: b.id });
+  changed('Linked ' + TY[a.type].name + ' to ' + TY[b.type].name, 'link');
+  return true;
+}
 function link(aId, bId, quiet) {
   const a = node(aId), b = node(bId); if (!a || !b) return false;
   const o = R.orient(a, b);
-  if (!o.ok) { if (!quiet) toast(o.reason); return false; }
+  if (!o.ok) {
+    const r = routePlan(a, b) ? [a, b] : routePlan(b, a) ? [b, a] : null;
+    if (r) return applyRoute(routePlan(r[0], r[1]), r[0], r[1], quiet);
+    if (!quiet) toast(o.reason); return false;
+  }
   if (S.c.edges.some(e => (e.from === o.from && e.to === o.to) || (e.from === o.to && e.to === o.from))) { if (!quiet) toast('Those two are already linked.'); return false; }
   S.c.edges.push({ id: uid('x'), from: o.from, to: o.to });
   changed('Linked ' + TY[node(o.from).type].name + ' to ' + TY[node(o.to).type].name, 'link');
@@ -388,7 +432,7 @@ function setType(id, type) {
   changed('Changed an element to ' + TY[type].name);
   renderTree(); renderInspector();
 }
-function focusLabel() { setTimeout(() => { const t = $('#f-label'); if (t) { t.focus(); t.select(); } }, 30); }
+function focusLabel() { setTimeout(() => { const t = $('#f-label'); if (t) { editUndoArmed = t; t.focus(); t.select(); } }, 30); }   // the change that created the element already holds the undo step
 
 /* ---------- rendering: shell -------------------------------------------- */
 const TABS = [
@@ -958,7 +1002,12 @@ function renderInspector() {
   const t = TY[n.type], ix = R.index(S.c);
   const sib = siblingsOf(n.type);
   const ins = ix.ins[n.id].map(e => ({ e, o: node(e.from), dir: 'from' })), outs = ix.outs[n.id].map(e => ({ e, o: node(e.to), dir: 'to' }));
-  const linkable = S.c.nodes.filter(m => m.id !== n.id && R.orient(n, m).ok && !S.c.edges.some(e => (e.from === n.id && e.to === m.id) || (e.to === n.id && e.from === m.id)));
+  const isLinked = m => S.c.edges.some(e => (e.from === n.id && e.to === m.id) || (e.to === n.id && e.from === m.id));
+  const others = S.c.nodes.filter(m => m.id !== n.id && !isLinked(m));
+  const cand = (from, to) => R.canConnect(from.type, to.type).ok ? '' : (routePlan(from, to) || {}).label;
+  const before = others.map(m => ({ m, via: cand(m, n) })).filter(x => x.via !== undefined);
+  const after = others.map(m => ({ m, via: cand(n, m) })).filter(x => x.via !== undefined);
+  const linkOpts = list => list.map(({ m, via }) => `<option value="${esc(m.id)}">${esc(TY[m.type].short)}: ${esc((m.label || '(no label)').slice(0, 60))}${via ? ' (' + esc(via) + ')' : ''}</option>`).join('');
   const acts = S.c.actions.filter(a => a.target === n.id);
   let typeFields = '';
   if (n.type === 'ic') {
@@ -998,7 +1047,8 @@ function renderInspector() {
     ${nodeIssuesHTML(n.id)}
     ${R.ACTIONABLE[n.type] ? `<div><span class="lbl">Recommended actions</span>${acts.length ? `<ul class="small" style="margin:4px 0;padding-left:18px">${acts.map(a => `<li>${esc(a.text || '(no text)')} <span class="muted">${esc(a.owner || '')}${a.due ? ' · ' + esc(a.due) : ''}</span></li>`).join('')}</ul>` : '<p class="small muted">None yet.</p>'}${S.readonly ? '' : `<button class="btn sm" data-act="addActionFor" data-id="${esc(n.id)}">Add action</button>`}</div>` : ''}
     <div><span class="lbl">Links</span><div class="links">${ins.concat(outs).map(lr).join('') || '<p class="small muted">Not linked yet. Drag the round handle on the node onto another element.</p>'}</div>
-    ${linkable.length && !S.readonly ? `<label class="field" style="margin-top:6px"><span>Link to</span><select id="f-linkto" data-act-change="linkTo"><option value="">Choose an element…</option>${linkable.map(m => `<option value="${esc(m.id)}">${esc(TY[m.type].short)}: ${esc((m.label || '(no label)').slice(0, 60))}</option>`).join('')}</select></label>` : ''}</div>
+    ${!S.readonly && before.length ? `<label class="field" style="margin-top:6px"><span>Link a preceding element (it leads into this one)</span><select id="f-linkfrom" data-act-change="linkFrom"><option value="">Choose an element\u2026</option>${linkOpts(before)}</select></label>` : ''}
+    ${!S.readonly && after.length ? `<label class="field" style="margin-top:6px"><span>Link a following element (this one leads into it)</span><select id="f-linkto" data-act-change="linkTo"><option value="">Choose an element\u2026</option>${linkOpts(after)}</select></label>` : ''}</div>
     <label class="field"><span>Notes</span><textarea id="f-notes" data-nf="notes" rows="2"${ro}>${esc(n.notes || '')}</textarea></label>
     <label class="field"><span>Evidence / source</span><input id="f-ev" data-nf="evidence" value="${esc(n.evidence || '')}" placeholder="e.g. Witness statement W3, PTW 2231, photo P12"${ro}></label>
     ${n.type !== 'narrative' ? `<label class="check"><input type="checkbox" id="f-ver" data-nf="verified"${n.verified !== false ? ' checked' : ''}${sd}> Confirmed by evidence (clear to mark as assumed)</label>` : ''}
@@ -1302,7 +1352,11 @@ document.addEventListener('change', ev => {
   const t = ev.target;
   if (!S.c || S.readonly) return;
   if (t.dataset.actChange === 'setType') return setType(Array.from(S.sel)[0], t.value);
-  if (t.dataset.actChange === 'linkTo') { if (!t.value) return; pushUndo(); if (!link(Array.from(S.sel)[0], t.value)) S.undo.pop(); renderTree(); renderInspector(); return; }
+  if (t.dataset.actChange === 'linkTo' || t.dataset.actChange === 'linkFrom') {
+    if (!t.value) return; const me = Array.from(S.sel)[0]; pushUndo();
+    const ok = t.dataset.actChange === 'linkTo' ? linkDir(me, t.value) : linkDir(t.value, me);
+    if (!ok) S.undo.pop(); renderTree(); renderInspector(); if (ok && S.sel.size === 1 && Array.from(S.sel)[0] !== me) focusLabel(); return;
+  }
   if (t.dataset.ev && (t.type === 'checkbox' || t.tagName === 'SELECT' || t.type === 'date')) { evEdit(t); return; }
   if (t.dataset.meta && t.tagName === 'SELECT') { S.c.meta[t.dataset.meta] = t.value; changed(t.dataset.meta === 'status' ? 'Set the report status to ' + t.value : 'Edited the incident details', t.dataset.meta === 'status' ? '' : 'meta'); return; }
   if (t.dataset.nf && (t.type === 'checkbox' || t.tagName === 'SELECT')) {
@@ -1334,7 +1388,7 @@ window.addEventListener('beforeunload', () => flushSave());
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushSave(); });
 
 /* test hook for the automated tests */
-window.TBApp = { EV, LINK, register, openLinkedFile, centreOn: ids => centreOn(ids), S, Store, X, R, C, openCase, exampleCase, newCase, link, addNode, insertBarrier, quickAdd, deleteSelection, issues, render, save: () => save(), flushSave };
+window.TBApp = { EV, LINK, linkDir, register, openLinkedFile, centreOn: ids => centreOn(ids), S, Store, X, R, C, openCase, exampleCase, newCase, link, addNode, insertBarrier, quickAdd, deleteSelection, issues, render, save: () => save(), flushSave };
 
 /* ---------- boot ------------------------------------------------------------- */
 if (!HAS_RUNTIME) Store.list = localList();
