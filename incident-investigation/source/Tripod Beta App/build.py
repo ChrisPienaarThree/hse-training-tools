@@ -19,11 +19,14 @@ const X = require(process.argv[1] + '/export.js');
 const ex = JSON.parse(JSON.stringify(C.EXAMPLE));
 const iss = R.check(ex).filter(i => i.sev !== 'tip');
 X.tidy(ex); X.treeSVG(ex); X.docx(ex, []); X.casebookPackage(ex); X.drawioXML(ex);
+const E = require(process.argv[1] + '/evidence.js'), nm = t => C.TYPES[t].name;
+ex.evidence = Object.assign(E.normalise({ narrative: 'I assume the driver was tired. Therefore speed caused the roll-over.' }), E.starter(ex, 'I assume the driver was tired.', nm));
+E.prompt(ex, 'x', nm); E.xlsx(ex, X.zip, nm); E.fromAnswer(E.parseText('{"items":[{"item":"a"}]}'), []);
 console.log(JSON.stringify({ issues: iss.map(i => i.code + ' ' + i.msg), trios: R.trios(ex).length, nodes: ex.nodes.length }));
 """
 
 def main():
-    for f in ['content.js', 'rules.js', 'export.js', 'app.js']:
+    for f in ['content.js', 'rules.js', 'export.js', 'evidence.js', 'app.js']:
         r = subprocess.run(['node', '--check', str(SRC / f)], capture_output=True, text=True)
         if r.returncode:
             sys.exit(f'syntax error in {f}:\n{r.stderr}')
@@ -36,7 +39,7 @@ def main():
     print('worked example ok:', info['trios'], 'trios,', info['nodes'], 'nodes')
     tpl = (SRC / 'template.html').read_text()
     body = tpl
-    for key, f in [('CONTENT', 'content.js'), ('RULES', 'rules.js'), ('EXPORT', 'export.js'), ('APP', 'app.js')]:
+    for key, f in [('CONTENT', 'content.js'), ('RULES', 'rules.js'), ('EXPORT', 'export.js'), ('EVIDENCE', 'evidence.js'), ('APP', 'app.js')]:
         body = body.replace('/*' + key + '*/', (SRC / f).read_text().replace('</script', '<\\/script'))
     kit = (ROOT.parent / '_kit_shared' / 'kit.js').read_text().replace('</script', '<\\/script')
     (ROOT / 'dist').mkdir(exist_ok=True)

@@ -205,6 +205,19 @@ dl.gl dt { font-weight: 600; } dl.gl dd { margin: 0; }
 .modal-bg { position: fixed; inset: 0; background: rgba(10,18,30,.45); display: flex; align-items: center; justify-content: center; z-index: 40; padding: 16px; }
 .modal { background: var(--surface); border-radius: 10px; padding: 20px; width: min(560px, 100%); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
 
+/* evidence plan */
+.ev-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.ev-status { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 9px 12px; border-radius: 6px; font-size: .9rem; }
+.ev-status:empty { display: none; }
+.ev-status.busy { background: var(--tip-soft); } .ev-status.err { background: var(--err-soft); } .ev-status.ok { background: var(--ok-soft); }
+.spin { width: 14px; height: 14px; border: 2px solid var(--tip); border-right-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; flex: 0 0 auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.tbl tr.urgent td:first-child { box-shadow: inset 3px 0 0 var(--err); }
+.tbl td.num { font-family: var(--f-mono); color: var(--muted); white-space: nowrap; }
+.tbl td .xbtn + .xbtn { margin-left: 2px; }
+.ev-note { white-space: pre-wrap; }
+.pill.urgent { color: var(--err); }
+
 @media (max-width: 1100px) { .bench { grid-template-columns: 170px minmax(0, 1fr) 290px; } }
 @media (max-width: 860px) {
   .bench { grid-template-columns: 1fr; height: auto; }
@@ -225,4 +238,5 @@ dl.gl dt { font-weight: 600; } dl.gl dd { margin: 0; }
 <script>/*CONTENT*/</script>
 <script>/*RULES*/</script>
 <script>/*EXPORT*/</script>
+<script>/*EVIDENCE*/</script>
 <script>/*APP*/</script>
