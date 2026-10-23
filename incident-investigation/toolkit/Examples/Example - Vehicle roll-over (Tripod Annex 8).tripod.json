@@ -1,7 +1,7 @@
 {
  "format": "tripod-beta-case",
  "version": 1,
- "exportedAt": "2026-10-23T08:40:59.639Z",
+ "exportedAt": "2026-10-23T09:14:55.826Z",
  "app": "Istec Training Tripod Beta Investigator",
  "case": {
   "id": "example-annex8",
@@ -1072,6 +1072,7 @@
    }
   ],
   "log": [],
-  "updatedAt": "2026-10-23T08:40:59.639Z"
+  "exampleNote": "The vehicle roll-over case from Annex 8 of the Tripod Beta User Guide, read only.",
+  "updatedAt": "2026-10-23T09:14:55.826Z"
  }
 }

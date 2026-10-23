@@ -25,6 +25,22 @@ E.prompt(ex, 'x', nm); E.xlsx(ex, X.zip, nm); E.fromAnswer(E.parseText('{"items"
 console.log(JSON.stringify({ issues: iss.map(i => i.code + ' ' + i.msg), trios: R.trios(ex).length, nodes: ex.nodes.length }));
 """
 
+FAC = r"""
+const C = require(process.argv[1] + '/src/content.js'), R = require(process.argv[1] + '/src/rules.js'); R.setNames(t => C.TYPES[t].name);
+const X = require(process.argv[1] + '/src/export.js'), fs = require('fs');
+const learner = JSON.parse(JSON.stringify(C.DAM));
+const lbad = R.check(learner).filter(i => i.sev === 'error');
+if (lbad.length) { console.error('training case core diagram breaks the rules:\n  ' + lbad.map(i => i.code + ' ' + i.msg).join('\n  ')); process.exit(1); }
+const c = require(process.argv[1] + '/facilitator/dam_full.js')(C); X.tidy(c);
+c.actions.forEach(a => { if (/^\+\d+$/.test(a.due)) { const d = new Date(c.meta.date + 'T12:00:00'); d.setDate(d.getDate() + +a.due.slice(1)); a.due = d.toISOString().slice(0, 10); } });
+const bad = R.check(c).filter(i => i.sev !== 'tip');
+if (bad.length) { console.error('facilitator answer breaks the rules:\n  ' + bad.map(i => i.code + ' ' + i.msg).join('\n  ')); process.exit(1); }
+const base = process.argv[1] + '/facilitator/TB-EX-09 Dam drowning - facilitator answer';
+fs.writeFileSync(base + '.tripod.json', JSON.stringify({ format: 'tripod-beta-case', version: 1, exportedAt: new Date().toISOString(), app: 'Istec Training Tripod Beta Investigator', case: c }, null, 1));
+fs.writeFileSync(base + ' (report).html', X.reportHTML(c, X.treeSVG(c, { noTitle: true })));
+console.log(c.nodes.length + ' nodes, ' + c.actions.length + ' actions');
+"""
+
 def main():
     for f in ['content.js', 'rules.js', 'export.js', 'evidence.js', 'app.js']:
         r = subprocess.run(['node', '--check', str(SRC / f)], capture_output=True, text=True)
@@ -37,6 +53,10 @@ def main():
     if info['issues']:
         sys.exit('worked example breaks the rules:\n  ' + '\n  '.join(info['issues']))
     print('worked example ok:', info['trios'], 'trios,', info['nodes'], 'nodes')
+    fac = subprocess.run(['node', '-e', FAC, str(ROOT)], capture_output=True, text=True)
+    if fac.returncode:
+        sys.exit(fac.stderr)
+    print('training case ok; facilitator answer:', fac.stdout.strip())
     tpl = (SRC / 'template.html').read_text()
     body = tpl
     for key, f in [('CONTENT', 'content.js'), ('RULES', 'rules.js'), ('EXPORT', 'export.js'), ('EVIDENCE', 'evidence.js'), ('APP', 'app.js')]:

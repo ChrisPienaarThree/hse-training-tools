@@ -13,6 +13,7 @@ A standalone application for documenting an incident with the **Tripod Beta** me
 | `src/export.js` | Tree drawing, tidy layout, SVG / draw.io / Word (.docx) / HTML report / Storyline Casebook package. |
 | `src/evidence.js` | Evidence plan and draft tree: the prompts for Claude, tolerant parsing of Claude's answers, the offline starter plan (standard lists + keyword packs), the draft-tree converter, and the Excel (.xlsx) workbook. |
 | `src/app.js`, `src/template.html` | The app and its page shell and styles. |
+| `facilitator/` | TB-EX-09 facilitator answer: `dam_full.js` (full tree built on the learner case), the generated `.tripod.json` and report, and the facilitator guide. Not built into the app; keep out of learner material. |
 | `build.py` | Checks syntax, checks the worked example passes every rule, then writes the two HTML outputs. |
 | `tests/` | `rules.spec.js` (rules, docx, Casebook format) and `e2e/` (Playwright: building a tree by hand, rules, persistence, exports, import, mocked shared-database session, evidence plan and draft tree with a mocked Claude). |
 
@@ -20,12 +21,12 @@ Edit files in `src/`, never the built HTML. Then:
 
 ```
 python3 build.py
-npx playwright test        # 25 tests; uses installed Google Chrome
+npx playwright test        # 28 tests; uses installed Google Chrome
 ```
 
 ## What it does
 
-1. **Cases**: list, new, duplicate, delete (with confirmation), open or save a case file (`.tripod.json`). The Annex 8 vehicle roll-over case is built in as a read-only reference, with **Make a practice copy**.
+1. **Cases**: list, new, duplicate, delete (with confirmation), open or save a case file (`.tripod.json`). Two reference cases are built in, read only, each with **Make a practice copy**: the Annex 8 vehicle roll-over (complete tree) and **TB-EX-09**, an anonymised training case of two contractor workers drowning at an overflowing return-water dam (core diagram and a sparse-evidence evidence plan only; learners add the barriers, causation paths and actions).
 2. **Incident**: details, severity, team, practitioner, summary, lessons learned, review/sign-off, client logo, activity log.
 3. **Evidence plan**: the investigator writes a free-text account, including assumptions and early conclusions. It becomes an **evidence checklist** (Position, People, Parts, Paper, Electronic data; perishable items marked Urgent; where to find each item and what it tests; owner, due date, status, evidence ref), a **photography schedule** in shooting order (overview → mid-range → close-up with scale, camera position, what each photo must show, taken / photo no.) and a list of **assumptions and conclusions to test** (with the evidence that would confirm or refute each, linked to tree elements). The Tripod tree can be included, so assumed elements become statements to test. Sources: **Write the plan with Claude** (artifact: uses the viewer's own Claude account through the `sample` capability), **Build starter plan** (works offline: standard lists plus incident-specific packs for vehicles, machinery/isolation, electrical, work at height, chemicals, fire, lifting, hand tools, slips/trips, contractors, fatigue, alcohol/drugs, weather and communication), or **Copy prompt for Claude / Paste Claude's answer** (offline round trip through any Claude chat). Everything stays editable; **Export to Excel** writes a real .xlsx (Plan, Evidence checklist, Photography schedule, Assumptions to test; filters, frozen headers, drop-down lists, landscape print setup).
    **Draft Tripod tree**: from the same account, Claude drafts trios, barriers and causation paths (Immediate Cause → Precondition → Underlying Cause with BRF), including plausible theoretical causes. The answer is converted into a tree that follows the tree rules; every drafted element is marked assumed with a note that it is a hypothesis. A starter tree is replaced; an existing tree is replaced (undoable) or the draft is placed beside it. Offline: copy the tree prompt into Claude and paste the reply back.
