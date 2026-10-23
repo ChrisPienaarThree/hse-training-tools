@@ -1,7 +1,7 @@
 {
  "format": "tripod-beta-case",
  "version": 1,
- "exportedAt": "2026-10-23T08:13:27.912Z",
+ "exportedAt": "2026-10-23T08:40:59.639Z",
  "app": "Istec Training Tripod Beta Investigator",
  "case": {
   "id": "example-annex8",
@@ -1072,6 +1072,6 @@
    }
   ],
   "log": [],
-  "updatedAt": "2026-10-23T08:13:27.912Z"
+  "updatedAt": "2026-10-23T08:40:59.639Z"
  }
 }
