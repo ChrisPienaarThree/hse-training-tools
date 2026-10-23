@@ -1,0 +1,795 @@
+{
+ "format": "tripod-beta-case",
+ "version": 1,
+ "exportedAt": "2026-10-23T09:14:55.826Z",
+ "app": "Istec Training Tripod Beta Investigator",
+ "case": {
+  "id": "example-dam-drowning",
+  "example": true,
+  "version": 1,
+  "exampleNote": "Training case (anonymised, based on a real event): the core diagram and evidence plan are given. Make a practice copy, then add the barriers, Immediate Causes, Preconditions, Underlying Causes and actions.",
+  "meta": {
+   "title": "Two contractor workers drowned at an overflowing return-water dam",
+   "ref": "TB-EX-09",
+   "date": "2026-02-14",
+   "time": "about 15:40",
+   "location": "North return-water dam and pump installation",
+   "site": "Ridgeview Vanadium Mine (fictional), Mpumalanga",
+   "client": "Training case study (anonymised; based on a real event)",
+   "incidentType": "People",
+   "actualSeverity": 5,
+   "potentialSeverity": 5,
+   "status": "Draft",
+   "practitioner": "",
+   "description": "After heavy rain higher up in the catchment, the mine's north return-water dam rose quickly and began to overflow. The mine became aware of the rising level too late, and the pump installation at the dam was being flooded. The engineering manager asked the owner of a small contracting company working on site to help save the pumps. The contractor and two of his workers, none of whom had done work on water before, took an old boat that had been stored on site unused for many years to reach the flooded equipment, with one person on the bank holding a line. The current and wind pushed the boat away faster than the shore attendant could hold it, and it drifted towards the high overflow. Afraid of being carried over the wall, the two workers left the boat to reach the bank. Neither could swim; they underestimated the distance to the dam side and their work clothes and boots hampered them. Both drowned. There was no pre-task risk assessment or job plan, no life jackets or rescue equipment at the dam, and the workers had no training for work on or near water, water rescue or first aid for drowning.",
+   "summary": "",
+   "lessons": "",
+   "reviewer": "",
+   "reviewDate": "",
+   "logo": ""
+  },
+  "team": [
+   {
+    "name": "Lead investigator (Tripod Beta practitioner)",
+    "role": "Team leader"
+   },
+   {
+    "name": "Engineering superintendent (not involved in the event)",
+    "role": "Process knowledge: dam and pumps"
+   },
+   {
+    "name": "Contractor management officer",
+    "role": "Contractor process"
+   },
+   {
+    "name": "Workforce safety representative",
+    "role": "Workforce representative"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "d_a1",
+    "type": "agent",
+    "label": "Heavy rainfall higher up in the dam's catchment area",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 40,
+    "y": 150
+   },
+   {
+    "id": "d_o1",
+    "type": "object",
+    "label": "North return-water dam and its pump installation",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 40,
+    "y": 270
+   },
+   {
+    "id": "d_ea1",
+    "type": "eventAgent",
+    "label": "Dam overflows with strong flow towards the spillway; pump installation flooded",
+    "notes": "The mine became aware of the rising level too late. The time of the first alert is not yet known.",
+    "evidence": "",
+    "verified": true,
+    "x": 250,
+    "y": 200
+   },
+   {
+    "id": "d_o2",
+    "type": "object",
+    "label": "Old boat with two contractor workers on the dam, held by a line from the bank",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 250,
+    "y": 380
+   },
+   {
+    "id": "d_ea2",
+    "type": "eventAgent",
+    "label": "Boat drifts out of control towards the overflowing spillway",
+    "notes": "Current and wind direction reported by the shore attendant; not measured.",
+    "evidence": "",
+    "verified": false,
+    "x": 450,
+    "y": 300
+   },
+   {
+    "id": "d_o3",
+    "type": "object",
+    "label": "Two contractor workers in the boat (non-swimmers, in work clothes and boots)",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 450,
+    "y": 490
+   },
+   {
+    "id": "d_eo3",
+    "type": "eventObject",
+    "label": "Workers leave the boat and enter the water",
+    "notes": "Shore attendant's account only. Whether they jumped or were thrown out is not confirmed.",
+    "evidence": "",
+    "verified": false,
+    "x": 660,
+    "y": 400
+   },
+   {
+    "id": "d_a4",
+    "type": "agent",
+    "label": "Deep, moving water between the boat and the bank",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 660,
+    "y": 30
+   },
+   {
+    "id": "d_e4",
+    "type": "event",
+    "label": "Both workers drown",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "mainEvent": true,
+    "x": 860,
+    "y": 220
+   },
+   {
+    "id": "d_n1",
+    "type": "narrative",
+    "label": "Evidence is sparse: no dam drawings, measurements, positions of the boat and people, or wind direction yet. Treat distances and timings as assumed until surveyed.",
+    "notes": "",
+    "evidence": "",
+    "verified": true,
+    "x": 450,
+    "y": 140
+   }
+  ],
+  "edges": [
+   {
+    "id": "dx1",
+    "from": "d_a1",
+    "to": "d_ea1"
+   },
+   {
+    "id": "dx2",
+    "from": "d_o1",
+    "to": "d_ea1"
+   },
+   {
+    "id": "dx3",
+    "from": "d_ea1",
+    "to": "d_ea2"
+   },
+   {
+    "id": "dx4",
+    "from": "d_o2",
+    "to": "d_ea2"
+   },
+   {
+    "id": "dx5",
+    "from": "d_ea2",
+    "to": "d_eo3"
+   },
+   {
+    "id": "dx6",
+    "from": "d_o3",
+    "to": "d_eo3"
+   },
+   {
+    "id": "dx7",
+    "from": "d_eo3",
+    "to": "d_e4"
+   },
+   {
+    "id": "dx8",
+    "from": "d_a4",
+    "to": "d_e4"
+   },
+   {
+    "id": "dx9",
+    "from": "d_n1",
+    "to": "d_ea2"
+   }
+  ],
+  "actions": [],
+  "evidence": {
+   "useTree": true,
+   "source": "Worked example",
+   "generatedAt": "2026-02-15T08:00:00.000Z",
+   "narrative": "On the afternoon of 14 February, after heavy rain higher up in the catchment, the north return-water dam rose fast and started to overflow. As far as I can tell the control room only noticed when the pump installation was already being flooded; I assume there was no warning from upstream. The engineering manager phoned the owner of the civils contractor who was on site for other work and asked him to help get the pumps out. I believe this was a one-off request in the emergency, but contractors here are often asked to do odd jobs outside their scope because the contractor process is slow.\n\nThe contractor and two of his workers used an old aluminium boat that had been lying behind the pump station for years. Nobody I spoke to knows when it was last used or checked. One worker stayed on the bank holding a rope tied to the boat. The shore attendant says the current and the wind pushed the boat towards the spillway and the rope was pulled out of his hands. The two in the boat probably panicked when they saw they were heading for the overflow wall, and they went into the water to swim to the bank. Neither could swim. I think they misjudged the distance to the bank, which looks like 15 to 20 m, and their overalls and safety boots would have dragged them down. There were no life jackets, ring buoys or throw lines at the dam. Nobody did a risk assessment or planned the job, and as far as we know none of them had any training for working on water, rescue or first aid for drowning.\n\nWhat we do not have yet: drawings of the dam with depths and levels, the spillway height, the positions of the boat and the people, the time line of the alarm and the phone calls, and the wind direction and speed at the time.",
+   "notes": "The scene changes fast once the dam level drops: survey the water line, the debris line and the boat position first. Secure the control room level records, phone records and any CCTV today. Interview the shore attendant, the contractor owner and the engineering manager separately and as soon as possible, and record the time line before anything else.",
+   "items": [
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "position",
+     "item": "Surveyed plan and cross-section of the dam: depths, water levels, spillway crest height, pump station position and the bank where the line was held",
+     "source": "Survey team; dam design drawings",
+     "purpose": "There are no drawings or measurements yet; needed for distances and the drift path",
+     "priority": "Urgent",
+     "method": "Measure",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "position",
+     "item": "Flood debris line and high-water marks around the dam, spillway and pump station",
+     "source": "Dam walls and banks",
+     "purpose": "Fixes the peak level; disappears as the water drops",
+     "priority": "Urgent",
+     "method": "Measure",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "position",
+     "item": "Position where the boat was found, where the line was held, and where each worker was recovered, with distances",
+     "source": "Recovery team; shore attendant; police",
+     "purpose": "Reconstructs the drift path and the swim distance (assumed 15 to 20 m)",
+     "priority": "Urgent",
+     "method": "Measure",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "position",
+     "item": "Wind direction and speed, and flow at the spillway at the time",
+     "source": "Site weather station; national weather service; pump records",
+     "purpose": "Tests the account that current and wind pushed the boat",
+     "priority": "Urgent",
+     "method": "Download",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "people",
+     "item": "Interview the shore attendant (separately, as soon as fit)",
+     "source": "Shore attendant",
+     "purpose": "Only eyewitness to the drift and to the workers leaving the boat",
+     "priority": "Urgent",
+     "method": "Interview",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "people",
+     "item": "Interview the contractor owner",
+     "source": "Contractor owner",
+     "purpose": "What was asked, what he agreed to, how the boat was chosen, briefing given",
+     "priority": "Urgent",
+     "method": "Interview",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "people",
+     "item": "Interview the engineering manager",
+     "source": "Engineering manager",
+     "purpose": "Why the request was made, what alternatives were considered, who else knew",
+     "priority": "Urgent",
+     "method": "Interview",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "people",
+     "item": "Interview the control room operator(s) on shift",
+     "source": "Control room",
+     "purpose": "When the rising level and the flooding were first noticed and reported",
+     "priority": "Urgent",
+     "method": "Interview",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "people",
+     "item": "Interview the recovery and emergency team and the first responders",
+     "source": "Emergency team; security",
+     "purpose": "Response times, rescue equipment available, first aid given",
+     "priority": "High",
+     "method": "Interview",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "people",
+     "item": "Post-mortem results and medical reports",
+     "source": "SAPS; mortuary; clinic",
+     "purpose": "Confirms cause of death; any other factors",
+     "priority": "High",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "parts",
+     "item": "The boat: quarantine it; record condition, leaks, oars or motor, capacity plate, rope attachment point",
+     "source": "Recovery site",
+     "purpose": "Was the boat fit for use? Was it ever inspected?",
+     "priority": "Urgent",
+     "method": "Preserve",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "parts",
+     "item": "The rope or line used from the bank: length, type, condition, how it was held or tied",
+     "source": "Recovery site; shore attendant",
+     "purpose": "Tests whether the shore control could ever have held the boat",
+     "priority": "Urgent",
+     "method": "Preserve",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "parts",
+     "item": "Clothing, boots and PPE worn by the two workers",
+     "source": "SAPS; mortuary; family",
+     "purpose": "Tests the account that PPE hampered swimming",
+     "priority": "High",
+     "method": "Collect",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "parts",
+     "item": "Any life jackets, ring buoys or throw lines anywhere on site, and where they are kept",
+     "source": "Stores; emergency team",
+     "purpose": "Was life-saving equipment available at all?",
+     "priority": "High",
+     "method": "Observe",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Dam operating manual or procedure, including flood trigger levels and the emergency plan for the dam",
+     "source": "Engineering; document control",
+     "purpose": "Was a flood response defined?",
+     "priority": "High",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Contract, scope of work, site appointment and induction records of the contractor and the two workers",
+     "source": "Contractor management office",
+     "purpose": "Tests scope creep: was this work within the contract?",
+     "priority": "High",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Records of other jobs asked of contractors outside their scope in the last 12 months",
+     "source": "Contractor management office; purchase orders; job cards",
+     "purpose": "Tests the belief that scope creep is routine",
+     "priority": "Normal",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Contractor management procedure and how long onboarding and approval normally take",
+     "source": "Contractor management office",
+     "purpose": "Tests \"the contractor process is slow\"",
+     "priority": "Normal",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Any risk assessment, permit or job plan for the task, and the site rule for work on or near water",
+     "source": "SHE office; permit office",
+     "purpose": "Confirms that no pre-task risk assessment was done",
+     "priority": "High",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Training records of the contractor and workers: water safety, rescue, first aid, swimming ability",
+     "source": "Contractor; training department",
+     "purpose": "Tests the account that nobody was trained",
+     "priority": "High",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Asset or stores records for the old boat: when it came to site, last use, any inspection",
+     "source": "Stores; engineering",
+     "purpose": "Why was an unused boat available for use?",
+     "priority": "Normal",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "paper",
+     "item": "Previous incidents, near misses or audit findings for the dam, the pump station or work on water",
+     "source": "SHE incident database",
+     "purpose": "Was the risk known before?",
+     "priority": "Normal",
+     "method": "Request copy",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "electronic",
+     "item": "Dam level, pump and alarm logs (SCADA/telemetry) for the day",
+     "source": "Control room; engineering",
+     "purpose": "Time line: when the level rose and when the alarm (if any) went off",
+     "priority": "Urgent",
+     "method": "Download",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "electronic",
+     "item": "Phone and radio records of the calls between the control room, engineering manager and contractor owner",
+     "source": "IT; mobile records; radio logs",
+     "purpose": "Time line of the request and the response",
+     "priority": "Urgent",
+     "method": "Download",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "electronic",
+     "item": "Rainfall data for the upper catchment for the 24 hours before (weather service, upstream gauges)",
+     "source": "Weather service; water authority",
+     "purpose": "Tests the assumption that no upstream warning was available",
+     "priority": "High",
+     "method": "Download",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "electronic",
+     "item": "CCTV covering the dam, pump station or access road",
+     "source": "Security",
+     "purpose": "Independent record of the boat drift and the time line",
+     "priority": "Urgent",
+     "method": "Download",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "electronic",
+     "item": "Photos or videos taken by anyone on site during the event, on phones",
+     "source": "Witnesses; recovery team",
+     "purpose": "May show positions, conditions and wind",
+     "priority": "High",
+     "method": "Collect",
+     "status": "To collect"
+    }
+   ],
+   "photos": [
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Overview of the whole dam from the highest point available",
+     "position": "Elevated point above the dam (or drone)",
+     "view": "Elevated / aerial",
+     "purpose": "Dam, spillway, pump station, bank where the line was held, and where the boat ended up",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Overview from the bank where the line was held, looking towards the spillway",
+     "position": "At the shore attendant's position",
+     "view": "Overview",
+     "purpose": "What the shore attendant saw; distance to the spillway",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Overview from the spillway back towards the pump station",
+     "position": "On the spillway side, safely back from the edge",
+     "view": "Overview",
+     "purpose": "The drift path in reverse",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Overview of the pump installation and the flooded equipment",
+     "position": "From the access road",
+     "view": "Overview",
+     "purpose": "What the job was meant to recover",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Spillway crest and the drop on the downstream side",
+     "position": "Beside the spillway, and from downstream",
+     "view": "Mid-range",
+     "purpose": "Height of the wall the workers feared going over",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Flood debris line and high-water marks, with a scale",
+     "position": "At the pump station and on the dam wall",
+     "view": "Detail with scale",
+     "purpose": "Peak water level",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Where the line was held or tied on the bank",
+     "position": "Close to the bank",
+     "view": "Mid-range",
+     "purpose": "Anchor point, ground conditions, footing for the attendant",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Distance from the boat's last position to the nearest bank (with a person or pole for scale)",
+     "position": "From the bank",
+     "view": "Mid-range",
+     "purpose": "The swim distance the workers misjudged",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "The boat as recovered, all four sides",
+     "position": "Around the boat on land",
+     "view": "Overview",
+     "purpose": "General condition",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Boat details: capacity plate, hull damage or leaks, rope attachment, oars",
+     "position": "Close up",
+     "view": "Detail with scale",
+     "purpose": "Fitness for use",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Rope or line used, laid out full length with a tape",
+     "position": "On a clean surface",
+     "view": "Detail with scale",
+     "purpose": "Length, type and condition",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Where the boat was stored before the event",
+     "position": "Behind the pump station",
+     "view": "Mid-range",
+     "purpose": "How accessible and uncontrolled it was",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Clothing, boots and PPE of the workers",
+     "position": "On a neutral background",
+     "view": "Detail with scale",
+     "purpose": "Type and weight of clothing; any buoyancy",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Location of the nearest life-saving equipment (or its absence) at the dam",
+     "position": "At the dam access points",
+     "view": "Mid-range",
+     "purpose": "Shows no ring buoy or throw line at the dam",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Signs and access control at the dam (warnings, fences, gates)",
+     "position": "At each access point",
+     "view": "Mid-range",
+     "purpose": "Whether access to the water was controlled",
+     "taken": false
+    },
+    {
+     "ref": "",
+     "notes": "",
+     "subject": "Weather station or wind indicator, and the sky and water surface conditions on the day after",
+     "position": "At the weather station; across the dam",
+     "view": "Mid-range",
+     "purpose": "Supports the wind and current account",
+     "taken": false
+    }
+   ],
+   "tests": [
+    {
+     "statement": "There was no early warning of the inflow from the upper catchment",
+     "kind": "Assumption",
+     "evidence": "Weather service and upstream gauge data; control room log; any flood warning sent",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "The control room noticed the rising level only when the pumps were already flooding",
+     "kind": "Assumption",
+     "evidence": "SCADA level and alarm log; control room interview; time line",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "The request to the contractor was a one-off decision in the emergency (exceptional violation)",
+     "kind": "Conclusion",
+     "evidence": "Engineering manager and contractor owner interviews; phone records",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "Contractors are routinely asked to do work outside their scope because the contractor process is slow (routine scope creep)",
+     "kind": "Assumption",
+     "evidence": "Records of out-of-scope jobs; contractor management procedure and approval times; interviews with other contractors",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "The boat had not been used or inspected for years",
+     "kind": "Assumption",
+     "evidence": "Stores and asset records; boat condition; interviews",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "The current and wind pushed the boat faster than the shore attendant could hold it",
+     "kind": "Assumption",
+     "evidence": "Wind data; spillway flow; rope condition and anchor; shore attendant interview; phone video",
+     "status": "Untested",
+     "node": "d_ea2"
+    },
+    {
+     "statement": "The workers left the boat because they feared going over the spillway",
+     "kind": "Assumption",
+     "evidence": "Shore attendant account; position of the boat when found; any video",
+     "status": "Untested",
+     "node": "d_eo3"
+    },
+    {
+     "statement": "The swim distance to the bank was 15 to 20 m",
+     "kind": "Open question",
+     "evidence": "Survey of the boat position and the bank",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "Their clothing and boots hampered swimming",
+     "kind": "Assumption",
+     "evidence": "Clothing and boots recovered; post-mortem; expert opinion",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "Neither worker could swim and none had water-safety, rescue or first-aid training",
+     "kind": "Assumption",
+     "evidence": "Training records; contractor and family interviews",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "No risk assessment, permit or job plan was made for the task",
+     "kind": "Conclusion",
+     "evidence": "Permit office and SHE records; interviews",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "No life jackets, ring buoys or throw lines were available at the dam",
+     "kind": "Conclusion",
+     "evidence": "Site inspection; stores records; emergency team interview",
+     "status": "Untested",
+     "node": ""
+    }
+   ]
+  },
+  "log": [],
+  "updatedAt": "2026-10-23T09:14:55.826Z"
+ }
+}

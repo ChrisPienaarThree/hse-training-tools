@@ -8,7 +8,7 @@ const ex = n => fs.readFileSync(path.join(KIT, 'Examples', n), 'utf8');
 test('kit layout is complete', () => {
   ['START HERE.html', 'READ ME FIRST.txt', 'Start Toolkit - Mac.command', 'Start Toolkit - Windows.cmd', 'Tools/Storyline Casebook.html', 'Tools/Tripod Beta Investigator.html', 'Tools/RCA Fault Tree.html',
     'Guides/Incident Investigation Toolkit - Quick guide.pdf', 'Guides/RCA Fault Tree - User guide.pdf', 'My cases/README.txt'].forEach(f => expect(fs.existsSync(path.join(KIT, f)), f).toBe(true));
-  expect(fs.readdirSync(path.join(KIT, 'Examples')).length).toBe(3);
+  expect(fs.readdirSync(path.join(KIT, 'Examples')).length).toBe(4);   // Annex 8 (Tripod + Casebook), T-101 fault tree, TB-EX-09 training case
   // no external resources: everything must run offline
   ['START HERE.html', 'Tools/Storyline Casebook.html', 'Tools/Tripod Beta Investigator.html', 'Tools/RCA Fault Tree.html'].forEach(f => expect(fs.readFileSync(path.join(KIT, f), 'utf8')).not.toMatch(/<script[^>]+src=["']https?:/));
 });
@@ -38,7 +38,8 @@ test('dashboard: folder scan lists the case files (directory input fallback)', a
   const [fc] = await Promise.all([page.waitForEvent('filechooser'), page.click('#pick')]);
   await fc.setFiles(path.join(KIT, 'Examples'));
   await page.check('#fx');
-  await expect(page.locator('#reg tbody tr')).toHaveCount(3);
+  await expect(page.locator('#reg tbody tr')).toHaveCount(4);
+  await expect(page.locator('#reg')).toContainText('drowned at an overflowing return-water dam');
   await expect(page.locator('#reg')).toContainText('Diesel overfill of tank T-101');
   await expect(page.locator('#reg')).toContainText('Storyline Casebook');
   await page.uncheck('#fx');

@@ -62,7 +62,8 @@ function normalise(c) {
   if (c.nodes.some(n => !n.x && !n.y)) X.tidy(c);
   return c;
 }
-function exampleCase() { const c = normalise(clone(C.EXAMPLE)); X.tidy(c); return c; }
+const exampleOf = id => C.EXAMPLES.find(e => e.id === id) || C.EXAMPLE;
+function exampleCase(id) { const c = normalise(clone(exampleOf(id))); X.tidy(c); return c; }
 
 /* ---------- storage ------------------------------------------------------- */
 const Store = {
@@ -261,13 +262,14 @@ async function deleteCase(id) {
   S.confirmDel = null; toast('Investigation deleted.'); render();
 }
 function loadCase(id) {
-  if (id === C.EXAMPLE.id) return openCase(exampleCase(), { readonly: true });
+  if (C.EXAMPLES.some(e => e.id === id)) return openCase(exampleCase(id), { readonly: true });
   if (Store.mode === 'db') { const d = Store.remote[id]; if (d && d.data) openCase(clone(d.data), { rev: d.rev || 0 }); return; }
   const c = localGet(id); if (c) openCase(c); else toast('That case could not be read from this browser.');
 }
-function copyExample() {
-  const c = exampleCase(); c.id = uid('tb-'); delete c.example; c.meta.title = c.meta.title + ' (practice copy)'; c.meta.status = 'Draft'; c.log = [];
-  createCase(c, 'Created a practice copy of the Annex 8 worked example');
+function copyExample(id) {
+  const src = exampleOf(id || (S.c && S.c.example ? S.c.id : C.EXAMPLE.id));
+  const c = exampleCase(src.id); c.id = uid('tb-'); delete c.example; delete c.exampleNote; c.meta.title = c.meta.title + ' (practice copy)'; c.meta.status = 'Draft'; c.log = [];
+  createCase(c, 'Created a practice copy of the ' + (src.meta.ref || 'worked') + ' example');
 }
 
 /* ---------- undo -------------------------------------------------------- */
@@ -479,7 +481,7 @@ function renderTop() {
 }
 function bannersHTML() {
   let s = '';
-  if (S.c && S.c.example) s += `<div class="banner info"><b>Worked example.</b> The vehicle roll-over case from Annex 8 of the Tripod Beta User Guide, read only. <button class="btn sm primary" data-act="copyExample">Make a practice copy</button></div>`;
+  if (S.c && S.c.example) s += `<div class="banner info"><b>${exampleOf(S.c.id).exampleNote && /^Training/.test(exampleOf(S.c.id).exampleNote) ? 'Training case.' : 'Worked example.'}</b> ${esc(exampleOf(S.c.id).exampleNote || 'Read only.')} <button class="btn sm primary" data-act="copyExample" data-id="${esc(S.c.id)}">Make a practice copy</button></div>`;
   else if (S.c && S.readonly) s += `<div class="banner warn">You can view this investigation but not change it. Ask the artifact owner for edit access.</div>`;
   if (S.handoff) s += `<div class="banner info">The dashboard asked to open <b>${esc(S.handoff.name)}</b>.<button class="btn sm primary" data-act="takeHandoff">Open ${esc(S.handoff.name)}</button><button class="btn sm" data-act="dropHandoff">Not now</button></div>`;
   if (OFF && S.c && !S.c.example && LINK.handle && LINK.perm !== 'granted') s += `<div class="banner warn">This case is linked to <b>${esc(LINK.name)}</b>, but the browser needs permission again before it can write to it.<button class="btn sm primary" data-act="reconnectFile">Reconnect file</button></div>`;
@@ -500,7 +502,6 @@ function casesHTML() {
       <div class="meta">Updated ${esc(fmtWhen(x.updatedAt))}${x.updatedBy ? ' by ' + esc(whoName(x.updatedBy)) : ''}</div>${del}
       <div class="row"><button class="btn primary sm" data-act="open" data-id="${esc(x.id)}">Open</button><button class="btn sm" data-act="dupCase" data-id="${esc(x.id)}">Duplicate</button><button class="btn sm" data-act="exportCaseId" data-id="${esc(x.id)}">Save as file</button>${Store.mode !== 'db' || Store.canWrite ? `<span class="spacer"></span><button class="btn sm ghost" data-act="delAsk" data-id="${esc(x.id)}" aria-label="Delete">Delete</button>` : ''}</div></article>`;
   };
-  const ex = C.EXAMPLE.meta;
   const list = Store.mode === 'connecting' ? `<div class="empty">Connecting to the shared team cases…</div>`
     : L.length ? `<div class="cases">${L.map(card).join('')}</div>`
     : `<div class="empty">No investigations yet${Store.mode === 'db' ? ' in the shared team database' : ' in this browser'}. Start a new one, or make a practice copy of the worked example below.</div>`;
@@ -510,10 +511,11 @@ function casesHTML() {
       <button class="btn" data-act="importCase">Open case file…</button><button class="btn primary" data-act="newCase">New investigation</button></div></div>
     <form class="row" data-form="new" id="new-form" hidden><input id="f-newtitle" type="text" placeholder="Short title of the incident, e.g. Hand injury at conveyor tail pulley" style="flex:1 1 320px"><button class="btn primary" type="submit">Create</button><button class="btn" type="button" data-act="newCancel">Cancel</button></form>
     ${list}
-    <section><span class="eyebrow">Reference case</span>
-      <article class="case-card example" style="margin-top:8px"><div class="row"><span class="eyebrow mono">${esc(ex.ref)}</span><span class="spacer"></span><span class="pill">Worked example</span></div>
-      <h3>${esc(ex.title)}</h3><p class="small muted">${esc(ex.client)}. Five trios, seven failed barriers, ten underlying causes classified by BRF, with a full action plan. Use it to see a finished tree or to practise.</p>
-      <div class="row"><button class="btn primary sm" data-act="open" data-id="${C.EXAMPLE.id}">Open read only</button><button class="btn sm" data-act="copyExample">Make a practice copy</button></div></article></section>
+    <section><span class="eyebrow">Reference cases</span>
+      <div class="cases" style="margin-top:8px">${C.EXAMPLES.map(e => { const ex = e.meta, exercise = e.id !== C.EXAMPLE.id;
+        return `<article class="case-card example"><div class="row"><span class="eyebrow mono">${esc(ex.ref)}</span><span class="spacer"></span><span class="pill">${exercise ? 'Training case' : 'Worked example'}</span></div>
+      <h3>${esc(ex.title)}</h3><p class="small muted">${exercise ? 'Anonymised training case. The core diagram and a pre-filled evidence plan (sparse evidence, assumptions to test) are given; learners add the barriers, causation paths and actions in a practice copy.' : esc(ex.client) + '. Five trios, seven failed barriers, ten underlying causes classified by BRF, with a full action plan. Use it to see a finished tree or to practise.'}</p>
+      <div class="row"><button class="btn primary sm" data-act="open" data-id="${esc(e.id)}">Open read only</button><button class="btn sm" data-act="copyExample" data-id="${esc(e.id)}">Make a practice copy</button></div></article>`; }).join('')}</div></section>
   </div>`;
 }
 
@@ -1270,7 +1272,7 @@ const ACT = Object.assign({
   newCase: () => { const f = $('#new-form'); f.hidden = false; $('#f-newtitle').focus(); },
   newCancel: () => { $('#new-form').hidden = true; },
   open: d => loadCase(d.id),
-  copyExample: () => copyExample(),
+  copyExample: d => copyExample(d && d.id),
   dupCase: d => { let c = Store.mode === 'db' ? (Store.remote[d.id] && clone(Store.remote[d.id].data)) : localGet(d.id); if (!c) return; c.id = uid('tb-'); c.meta.title += ' (copy)'; c.log = []; createCase(normalise(c), 'Duplicated from ' + (c.meta.ref || 'another case')); },
   exportCaseId: d => { const c = Store.mode === 'db' ? (Store.remote[d.id] && Store.remote[d.id].data) : localGet(d.id); if (c) saveFile(slug((c.meta.ref ? c.meta.ref + '-' : '') + c.meta.title) + '.tripod.json', caseFile(c), 'application/json'); },
   importCase: async () => {

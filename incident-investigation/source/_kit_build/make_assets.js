@@ -8,6 +8,9 @@ const ex = JSON.parse(JSON.stringify(C.EXAMPLE)); X.tidy(ex);
 ex.actions.forEach(a => { if (/^\+\d+$/.test(a.due)) { const d = new Date(ex.meta.date + 'T12:00:00'); d.setDate(d.getDate() + +a.due.slice(1)); a.due = d.toISOString().slice(0, 10); } });
 ex.updatedAt = new Date().toISOString();
 fs.writeFileSync(path.join(kit, 'Examples', 'Example - Vehicle roll-over (Tripod Annex 8).tripod.json'), JSON.stringify({ format: 'tripod-beta-case', version: 1, exportedAt: ex.updatedAt, app: 'Istec Training Tripod Beta Investigator', case: ex }, null, 1));
+// Tripod training case TB-EX-09 (learner version: core diagram + evidence plan)
+const dam = JSON.parse(JSON.stringify(C.DAM)); X.tidy(dam); dam.updatedAt = ex.updatedAt;
+fs.writeFileSync(path.join(kit, 'Examples', 'Training case - Dam drowning (Tripod TB-EX-09).tripod.json'), JSON.stringify({ format: 'tripod-beta-case', version: 1, exportedAt: dam.updatedAt, app: 'Istec Training Tripod Beta Investigator', case: dam }, null, 1));
 // RCA example
 const RX = require(path.join(rcaSrc, 'example.js'));
 const rc = JSON.parse(JSON.stringify(RX)); rc.updatedAt = new Date().toISOString();
