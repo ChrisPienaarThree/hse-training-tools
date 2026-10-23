@@ -1,4 +1,4 @@
-INCIDENT INVESTIGATION TOOLKIT  (Istec Training, version 1.0 (2026-10-15))
+INCIDENT INVESTIGATION TOOLKIT  (Istec Training, version 1.0 (2026-10-23))
 =====================================================================
 
 Three offline investigation tools that run directly from this folder - no

@@ -2,7 +2,7 @@
    or as a claude.ai artifact (shared `db` collection "cases", one document per investigation). */
 (function () {
 'use strict';
-const C = TBC, R = TBR, X = TBX, TY = C.TYPES;
+const C = TBC, R = TBR, X = TBX, EV = TBE, TY = C.TYPES;
 R.setNames(t => (TY[t] || {}).name || t);
 const HAS_RUNTIME = !!(window.claude && typeof window.claude.use === 'function');
 
@@ -58,6 +58,7 @@ function normalise(c) {
   c.actions = (c.actions || []).map(a => Object.assign({ id: uid('act'), target: '', text: '', owner: '', due: '', priority: 'Medium', status: 'Open', smart: {}, agreed: false, closeNote: '' }, a));
   c.actions.forEach(a => { if (/^\+\d+$/.test(a.due || '')) a.due = addDays(c.meta.date, +a.due.slice(1)); });
   c.log = Array.isArray(c.log) ? c.log.slice(-200) : [];
+  c.evidence = EV.normalise(c.evidence);
   if (c.nodes.some(n => !n.x && !n.y)) X.tidy(c);
   return c;
 }
@@ -66,7 +67,7 @@ function exampleCase() { const c = normalise(clone(C.EXAMPLE)); X.tidy(c); retur
 /* ---------- storage ------------------------------------------------------- */
 const Store = {
   mode: HAS_RUNTIME ? 'connecting' : 'local',   // 'connecting' | 'db' | 'local'
-  db: null, user: null, dl: null, me: null, canWrite: true, session: uid('s'), err: '',
+  db: null, user: null, dl: null, sample: null, me: null, canWrite: true, session: uid('s'), err: '',
   list: [],          // [{id,title,ref,status,date,updatedAt,updatedBy}]
   remote: {},        // db mode: id -> doc body
   names: {}          // user id -> display name
@@ -140,9 +141,10 @@ async function openLinkedFile(handle, name, text) {
 
 async function initRuntime() {
   if (!HAS_RUNTIME) { Store.list = localList(); return; }
-  let db = null, user = null, dl = null;
-  try { [db, user, dl] = await Promise.all([window.claude.use('db'), window.claude.use('user'), window.claude.use('downloads')]); } catch (e) {}
-  Store.user = user; Store.dl = dl;
+  let db = null, user = null, dl = null, smp = null;
+  try { [db, user, dl, smp] = await Promise.all([window.claude.use('db'), window.claude.use('user'), window.claude.use('downloads'), window.claude.use('sample').catch(() => null)]); } catch (e) {}
+  Store.user = user; Store.dl = dl; Store.sample = typeof smp === 'function' ? smp : null;
+  if (S.tab === 'evidence' && S.c) render();
   if (!db) { Store.mode = 'local'; Store.err = 'no-db'; Store.list = localList(); render(); return; }
   Store.db = db; Store.mode = 'db';
   try { Store.me = user ? await user.id() : null; } catch (e) {}
@@ -171,7 +173,8 @@ const whoName = id => { if (!id) return ''; if (id.startsWith('local:')) return 
 const S = {
   tab: 'cases', c: null, readonly: false, dirty: false, baseRev: 0, saving: false, again: false, conflict: null,
   sel: new Set(), selEdge: null, view: { x: 40, y: 70, k: 0.8 }, undo: [], redo: [], hl: new Set(),
-  confirmDel: null, issueFilter: 'all', actFilter: 'all', grid: prefs.grid !== false
+  confirmDel: null, issueFilter: 'all', actFilter: 'all', grid: prefs.grid !== false,
+  ev: { busy: false, ctl: null, msg: '', err: '', ask: null, askTree: null, modal: null, aiOff: false, filter: 'all', pasteErr: '' }
 };
 let issuesCache = null;
 const issues = () => issuesCache || (issuesCache = S.c ? R.check(S.c) : []);
@@ -389,7 +392,7 @@ function focusLabel() { setTimeout(() => { const t = $('#f-label'); if (t) { t.f
 
 /* ---------- rendering: shell -------------------------------------------- */
 const TABS = [
-  ['cases', 'Cases'], ['incident', 'Incident'], ['tree', 'Tripod tree'], ['checks', 'Rules check'], ['actions', 'Actions'], ['brf', 'BRF profile'], ['report', 'Report'], ['guide', 'Method guide']
+  ['cases', 'Cases'], ['incident', 'Incident'], ['evidence', 'Evidence plan'], ['tree', 'Tripod tree'], ['checks', 'Rules check'], ['actions', 'Actions'], ['brf', 'BRF profile'], ['report', 'Report'], ['guide', 'Method guide']
 ];
 function render() {
   const app = $('#app');
@@ -397,7 +400,7 @@ function render() {
   app.innerHTML = `<div id="hidden-defs" aria-hidden="true"><svg width="0" height="0" style="position:absolute">${X.defs('tb')}</svg></div><header class="top" id="top"></header>${tabsHTML()}<div id="banners"></div><main id="main"></main>`;
   renderTop();
   const main = $('#main');
-  const view = { cases: casesHTML, incident: incidentHTML, tree: benchHTML, checks: checksHTML, actions: actionsHTML, brf: brfHTML, report: reportHTML, guide: guideHTML }[S.tab];
+  const view = { cases: casesHTML, incident: incidentHTML, evidence: evidenceHTML, tree: benchHTML, checks: checksHTML, actions: actionsHTML, brf: brfHTML, report: reportHTML, guide: guideHTML }[S.tab];
   main.innerHTML = view();
   if (S.tab === 'tree') mountCanvas();
   if (S.tab === 'report') mountReport();
@@ -504,6 +507,247 @@ function incidentHTML() {
     <section class="panel"><h2>Activity</h2>${log.length ? `<div class="tbl-wrap"><table class="tbl"><tbody>${log.map(l => `<tr><td class="mono small" style="white-space:nowrap">${esc(fmtWhen(l.t))}</td><td>${esc(whoName(l.who))}</td><td>${esc(l.what)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="muted">No activity recorded yet.</p>'}</section>
   </div>`;
 }
+
+/* ---------- Evidence plan tab ------------------------------------------- */
+/* The investigator writes an account (assumptions and early conclusions included); Claude (artifact) or the
+   starter lists (offline) turn it into an evidence checklist, a photography schedule and statements to test. */
+const evNames = t => (TY[t] || {}).name || t;
+const XLSX_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const evAI = () => !!Store.sample && !S.ev.aiOff;
+const evOpt = (list, v, labels) => list.map((o, j) => `<option value="${esc(o)}"${o === v ? ' selected' : ''}>${esc(labels ? labels[j] : o)}</option>`).join('');
+function evStatsHTML() {
+  const E = S.c.evidence, got = E.items.filter(x => x.status === 'Collected').length, urg = E.items.filter(x => x.priority === 'Urgent' && x.status === 'To collect').length;
+  return `<div class="stats" id="ev-stats"><div class="stat"><b>${got}/${E.items.length}</b><span>evidence items collected</span></div><div class="stat"><b style="${urg ? 'color:var(--err)' : ''}">${urg}</b><span>urgent items still to collect</span></div><div class="stat"><b>${E.photos.filter(p => p.taken).length}/${E.photos.length}</b><span>photos taken</span></div><div class="stat"><b>${E.tests.filter(t => t.status !== 'Untested').length}/${E.tests.length}</b><span>statements tested</span></div></div>`;
+}
+function evStatusHTML() {
+  const v = S.ev;
+  if (v.busy) return `<span class="spin" aria-hidden="true"></span><span>${esc(v.msg)}</span><button class="btn sm" data-act="evStop">Stop</button>`;
+  return esc(v.err || v.msg || '');
+}
+function renderEvStatus() { const el = $('#ev-status'); if (!el) return; el.className = 'ev-status ' + (S.ev.busy ? 'busy' : S.ev.err ? 'err' : S.ev.msg ? 'ok' : ''); el.innerHTML = evStatusHTML(); }
+function evidenceHTML() {
+  const E = S.c.evidence, ro = fieldDis(), sd = selDis(), v = S.ev, edit = !S.readonly && !S.c.example;
+  const has = E.items.length + E.photos.length + E.tests.length > 0;
+  const del = (list, i) => edit ? `<button class="xbtn" data-act="evDel" data-list="${list}" data-i="${i}" aria-label="Delete row">×</button>` : '';
+  const f = v.filter;
+  const items = E.items.map((r, i) => ({ r, i })).filter(x => f === 'all' || (f === 'todo' ? x.r.status === 'To collect' : f === 'urgent' ? x.r.priority === 'Urgent' && x.r.status === 'To collect' : x.r.cat === f));
+  const nodeOpts = r => `<option value="">—</option>${S.c.nodes.filter(n => n.label).map(n => `<option value="${esc(n.id)}"${r.node === n.id ? ' selected' : ''}>${esc((TY[n.type].short || TY[n.type].name) + ': ' + n.label.slice(0, 60))}</option>`).join('')}`;
+  const ask = v.ask ? `<div class="confirm" style="background:var(--warn-soft)">This case already has an evidence plan.<button class="btn sm primary" data-act="evGo" data-mode="add">Add the new suggestions</button><button class="btn sm" data-act="evGo" data-mode="replace">Replace the plan</button><button class="btn sm ghost" data-act="evCancelAsk">Cancel</button></div>` : '';
+  const modal = v.modal === 'prompt' ? `<div class="modal-bg" role="dialog" aria-modal="true" aria-label="Prompt for Claude"><div class="modal"><h3>Prompt for Claude</h3><p class="small muted">Copy all of this text into a chat with Claude (claude.ai or the Claude app). Then copy Claude's whole reply and use <b>Paste Claude's answer</b>.</p><textarea id="ev-prompt" rows="14" readonly>${esc(EV.prompt(S.c, E.narrative, evNames))}</textarea><div class="row"><span class="spacer"></span><button class="btn primary" data-act="evModalClose">Done</button></div></div></div>`
+    : v.modal === 'paste' ? `<div class="modal-bg" role="dialog" aria-modal="true" aria-label="Paste Claude's answer"><div class="modal"><h3>Paste Claude's answer</h3><p class="small muted">Paste Claude's complete reply (the JSON plan). Anything before or after the plan is ignored.</p><textarea id="ev-paste" rows="12" placeholder='{"items":[...], "photos":[...], "tests":[...], "notes":"..."}'></textarea>${v.pasteErr ? `<p class="small" style="color:var(--err)">${esc(v.pasteErr)}</p>` : ''}${has ? `<div class="row small"><label class="check"><input type="radio" name="ev-pmode" value="add" checked> Add to the current plan</label><label class="check"><input type="radio" name="ev-pmode" value="replace"> Replace the current plan</label></div>` : ''}<div class="row"><span class="spacer"></span><button class="btn" data-act="evModalClose">Cancel</button><button class="btn primary" data-act="evPasteUse">Use this answer</button></div></div></div>` : '';
+  return `<div class="page">
+    <div class="page-head"><div><span class="eyebrow">Step 1 · Collect the evidence</span><h1>Evidence plan</h1><p class="muted">Write down everything you know or believe about the incident, including your assumptions and early conclusions. ${evAI() ? 'Claude turns it into' : 'The app turns it into'} an evidence checklist, a photography schedule and a list of statements to test.</p></div>
+      <div class="row"><button class="btn" data-act="exportEvidence"${has ? '' : ' disabled'}>Export to Excel</button></div></div>
+    <section class="panel"><h2>Investigator's account</h2>
+      <label class="field wide"><span>What happened, as far as you know: sequence, people, equipment, conditions, what you think caused it and what you are not sure about. Write "I assume…" or "probably…" for anything not yet confirmed.</span>
+      <textarea id="ev-narrative" data-ev="narrative" rows="10" placeholder="e.g. At about 14:20 the operator went to clear spillage at the tail pulley of conveyor CV-07. I assume the conveyor was not isolated because no lock was found on the isolator afterwards. The guard on the tail end was probably removed during the night shift…"${ro}>${esc(E.narrative)}</textarea></label>
+      <div class="row" style="margin-top:8px"><label class="check small"><input type="checkbox" data-ev="useTree"${E.useTree ? ' checked' : ''}${sd}> Include the Tripod tree (${S.c.nodes.filter(n => n.label).length} elements; assumed elements become statements to test)</label></div>
+      ${edit ? `<div class="ev-actions" style="margin-top:12px">
+        ${evAI() ? `<button class="btn primary" data-act="evClaude"${v.busy ? ' disabled' : ''}>Write the plan with Claude</button>` : ''}
+        <button class="btn${evAI() ? '' : ' primary'}" data-act="evStarter"${v.busy ? ' disabled' : ''}>Build starter plan</button>
+        <button class="btn ghost" data-act="evCopyPrompt"${v.busy ? ' disabled' : ''}>Copy prompt for Claude</button>
+        <button class="btn ghost" data-act="evPaste"${v.busy ? ' disabled' : ''}>Paste Claude's answer…</button></div>
+        <p class="small muted" style="margin-top:6px">${evAI() ? 'Claude uses your own Claude account; the first time, claude.ai asks you to allow it. ' : HAS_RUNTIME ? '' : 'Offline: the starter plan uses standard evidence lists plus incident-specific packs found in your text. For a plan written by Claude, copy the prompt into Claude and paste the answer back. '}Everything stays editable.</p>` : ''}
+      ${ask}<div id="ev-status" class="ev-status ${v.busy ? 'busy' : v.err ? 'err' : v.msg ? 'ok' : ''}" role="status">${evStatusHTML()}</div>
+      ${E.notes ? `<div class="coach" style="margin-top:12px"><b>Preserving the scene and order of collection</b><p class="ev-note">${esc(E.notes)}</p>${E.generatedAt ? `<span class="ref">Plan built ${esc(fmtWhen(E.generatedAt))}${E.source ? ' · ' + esc(E.source) : ''}</span>` : ''}</div>` : ''}
+    </section>
+    ${edit ? `<section class="panel"><h2>Draft Tripod tree</h2><p class="muted small" style="margin-bottom:10px">Turn the account into a first Tripod tree: trios, barriers and the causation paths, including plausible theoretical causes where the facts are not known yet. Every drafted element is marked <b>assumed</b>, so it shows up as something to test. Check the Rules check tab afterwards.</p>
+      <div class="ev-actions">${evAI() ? `<button class="btn primary" data-act="evTreeClaude"${v.busy ? ' disabled' : ''}>Draft the tree with Claude</button>` : ''}
+        <button class="btn${evAI() ? ' ghost' : ''}" data-act="evTreeCopy"${v.busy ? ' disabled' : ''}>Copy tree prompt for Claude</button>
+        <button class="btn ghost" data-act="evTreePaste"${v.busy ? ' disabled' : ''}>Paste Claude's tree\u2026</button></div>
+      ${v.askTree ? `<div class="confirm" style="background:var(--warn-soft);margin-top:10px">This case already has a tree (${S.c.nodes.length} elements).<button class="btn sm primary" data-act="evTreeGo" data-mode="add">Put the draft beside it</button><button class="btn sm" data-act="evTreeGo" data-mode="replace">Replace the tree (you can undo)</button><button class="btn sm ghost" data-act="evTreeCancel">Cancel</button></div>` : ''}
+    </section>` : ''}
+    ${has ? evStatsHTML() : ''}
+    <section class="panel"><div class="row" style="margin-bottom:10px"><h2>Evidence checklist</h2><span class="spacer"></span>
+      ${[['all', 'All'], ['urgent', 'Urgent to collect'], ['todo', 'To collect']].concat(EV.CATS.map(([k, n]) => [k, n.split(' (')[0]])).map(([k, l]) => `<button class="btn sm${f === k ? ' primary' : ''}" data-act="evFilter" data-f="${k}">${esc(l)}</button>`).join('')}</div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Category</th><th style="min-width:240px">Evidence to collect</th><th style="min-width:160px">Where / from whom</th><th style="min-width:200px">Why (what it tests)</th><th>Priority</th><th>Method</th><th>Owner</th><th>Due</th><th>Status</th><th>Ref</th><th></th></tr></thead><tbody>
+      ${items.map(({ r, i }) => `<tr data-evrow="${i}"${r.priority === 'Urgent' && r.status === 'To collect' ? ' class="urgent"' : ''}><td class="num">${i + 1}</td>
+        <td><select id="ev-items-cat-${i}" data-ev="items" data-i="${i}" data-k="cat"${sd}>${evOpt(EV.CATS.map(x => x[0]), r.cat, EV.CATS.map(x => x[1].split(' (')[0]))}</select></td>
+        <td><textarea id="ev-items-item-${i}" data-ev="items" data-i="${i}" data-k="item" rows="2"${ro}>${esc(r.item)}</textarea></td>
+        <td><textarea data-ev="items" data-i="${i}" data-k="source" rows="2"${ro}>${esc(r.source)}</textarea></td>
+        <td><textarea data-ev="items" data-i="${i}" data-k="purpose" rows="2"${ro}>${esc(r.purpose)}</textarea></td>
+        <td><select data-ev="items" data-i="${i}" data-k="priority"${sd}>${evOpt(EV.PRIORITY, r.priority)}</select></td>
+        <td><select data-ev="items" data-i="${i}" data-k="method"${sd}>${evOpt(EV.METHODS, r.method)}</select></td>
+        <td><input data-ev="items" data-i="${i}" data-k="owner" value="${esc(r.owner)}"${ro}></td>
+        <td><input type="date" data-ev="items" data-i="${i}" data-k="due" value="${esc(r.due)}"${ro}></td>
+        <td><select id="ev-items-status-${i}" data-ev="items" data-i="${i}" data-k="status"${sd}>${evOpt(EV.ITEM_STATUS, r.status)}</select></td>
+        <td><input data-ev="items" data-i="${i}" data-k="ref" value="${esc(r.ref)}" placeholder="E-01" style="min-width:70px"${ro}></td>
+        <td>${del('items', i)}</td></tr>`).join('') || `<tr><td colspan="12" class="muted">${E.items.length ? 'No items in this filter.' : 'No evidence items yet. Write the account above and build the plan, or add items by hand.'}</td></tr>`}
+      </tbody></table></div>${edit ? '<div class="row" style="margin-top:8px"><button class="btn sm" data-act="evAdd" data-list="items">Add evidence item</button></div>' : ''}
+    </section>
+    <section class="panel"><h2>Photography schedule</h2><p class="small muted" style="margin-bottom:10px">Shoot in this order: overviews from every side first, then mid-range, then close-ups with a scale. Write the photo number against each line.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Shot</th><th style="min-width:220px">Subject</th><th style="min-width:180px">Camera position / direction</th><th>View</th><th style="min-width:200px">What it must show</th><th>Taken</th><th>Photo no. / file</th><th></th></tr></thead><tbody>
+      ${E.photos.map((r, i) => `<tr><td class="num">${i + 1}</td>
+        <td><textarea id="ev-photos-subject-${i}" data-ev="photos" data-i="${i}" data-k="subject" rows="2"${ro}>${esc(r.subject)}</textarea></td>
+        <td><textarea data-ev="photos" data-i="${i}" data-k="position" rows="2"${ro}>${esc(r.position)}</textarea></td>
+        <td><select data-ev="photos" data-i="${i}" data-k="view"${sd}>${evOpt(EV.VIEWS, r.view)}</select></td>
+        <td><textarea data-ev="photos" data-i="${i}" data-k="purpose" rows="2"${ro}>${esc(r.purpose)}</textarea></td>
+        <td style="text-align:center"><input type="checkbox" id="ev-photos-taken-${i}" data-ev="photos" data-i="${i}" data-k="taken" aria-label="Photo ${i + 1} taken"${r.taken ? ' checked' : ''}${sd}></td>
+        <td><input data-ev="photos" data-i="${i}" data-k="ref" value="${esc(r.ref)}" placeholder="IMG_0412" style="min-width:90px"${ro}></td>
+        <td style="white-space:nowrap">${edit ? `<button class="xbtn" data-act="evMove" data-i="${i}" data-d="-1" aria-label="Move up"${i ? '' : ' disabled'}>↑</button><button class="xbtn" data-act="evMove" data-i="${i}" data-d="1" aria-label="Move down"${i < E.photos.length - 1 ? '' : ' disabled'}>↓</button>` : ''}${del('photos', i)}</td></tr>`).join('') || '<tr><td colspan="8" class="muted">No photos planned yet.</td></tr>'}
+      </tbody></table></div>${edit ? '<div class="row" style="margin-top:8px"><button class="btn sm" data-act="evAdd" data-list="photos">Add photo</button></div>' : ''}
+      ${prefs.coach ? `<div class="coach" style="margin-top:12px"><b>Photography good practice</b><ul>${EV.PHOTO_TIPS.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
+    </section>
+    <section class="panel"><h2>Assumptions and conclusions to test</h2><p class="small muted" style="margin-bottom:10px">Nothing goes into the tree or the report as a fact until the evidence supports it. When a statement is supported, mark the tree element confirmed.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th style="min-width:240px">Statement</th><th>Type</th><th style="min-width:240px">Evidence that would confirm or refute it</th><th>Tripod tree element</th><th>Status</th><th></th></tr></thead><tbody>
+      ${E.tests.map((r, i) => `<tr><td class="num">${i + 1}</td>
+        <td><textarea id="ev-tests-statement-${i}" data-ev="tests" data-i="${i}" data-k="statement" rows="2"${ro}>${esc(r.statement)}</textarea></td>
+        <td><select data-ev="tests" data-i="${i}" data-k="kind"${sd}>${evOpt(EV.KINDS, r.kind)}</select></td>
+        <td><textarea data-ev="tests" data-i="${i}" data-k="evidence" rows="2"${ro}>${esc(r.evidence)}</textarea></td>
+        <td><select data-ev="tests" data-i="${i}" data-k="node" style="max-width:220px"${sd}>${nodeOpts(r)}</select>${r.node && node(r.node) ? `<button class="btn sm ghost" data-act="showIssue" data-ids="${esc(r.node)}" style="margin-top:4px">Show on tree</button>` : ''}</td>
+        <td><select id="ev-tests-status-${i}" data-ev="tests" data-i="${i}" data-k="status"${sd}>${evOpt(EV.TEST_STATUS, r.status)}</select></td>
+        <td>${del('tests', i)}</td></tr>`).join('') || '<tr><td colspan="7" class="muted">No statements to test yet.</td></tr>'}
+      </tbody></table></div>${edit ? '<div class="row" style="margin-top:8px"><button class="btn sm" data-act="evAdd" data-list="tests">Add statement</button></div>' : ''}
+    </section>${modal}${v.modal === 'treePrompt' ? `<div class="modal-bg" role="dialog" aria-modal="true" aria-label="Tree prompt for Claude"><div class="modal"><h3>Tree prompt for Claude</h3><p class="small muted">Copy all of this text into a chat with Claude. Then copy Claude's whole reply and use <b>Paste Claude's tree</b>.</p><textarea id="ev-tprompt" rows="14" readonly>${esc(EV.treePrompt(S.c, E.narrative, C))}</textarea><div class="row"><span class="spacer"></span><button class="btn primary" data-act="evModalClose">Done</button></div></div></div>`
+      : v.modal === 'treePaste' ? `<div class="modal-bg" role="dialog" aria-modal="true" aria-label="Paste Claude's tree"><div class="modal"><h3>Paste Claude's tree</h3><p class="small muted">Paste Claude's complete reply (the JSON with "trios"). Anything before or after it is ignored.</p><textarea id="ev-tpaste" rows="12" placeholder='{"trios":[...], "notes":"..."}'></textarea>${v.pasteErr ? `<p class="small" style="color:var(--err)">${esc(v.pasteErr)}</p>` : ''}${isStarterTree() ? '' : `<div class="row small"><label class="check"><input type="radio" name="ev-tmode" value="add" checked> Put the draft beside the current tree</label><label class="check"><input type="radio" name="ev-tmode" value="replace"> Replace the current tree</label></div>`}<div class="row"><span class="spacer"></span><button class="btn" data-act="evModalClose">Cancel</button><button class="btn primary" data-act="evTreePasteUse">Use this tree</button></div></div></div>` : ''}
+  </div>`;
+}
+function evEdit(t) {
+  const E = S.c.evidence, k = t.dataset.k, val = t.type === 'checkbox' ? t.checked : t.value;
+  if (t.dataset.ev === 'narrative') E.narrative = val;
+  else if (t.dataset.ev === 'useTree') E.useTree = val;
+  else { const r = (E[t.dataset.ev] || [])[+t.dataset.i]; if (!r) return; r[k] = val; }
+  changed('Edited the evidence plan', 'evidence');
+  if (t.type === 'checkbox' || t.tagName === 'SELECT') { const st = $('#ev-stats'); if (st) st.outerHTML = evStatsHTML(); }
+  if (t.dataset.k === 'node') render();
+}
+function evApply(plan, mode, source) {
+  const E = S.c.evidence;
+  if (mode === 'add') { E.items = E.items.concat(plan.items); E.photos = E.photos.concat(plan.photos); E.tests = E.tests.concat(plan.tests); if (plan.notes) E.notes = [E.notes, plan.notes].filter(Boolean).join('\n\n'); }
+  else { E.items = plan.items; E.photos = plan.photos; E.tests = plan.tests; E.notes = plan.notes || ''; }
+  E.generatedAt = nowISO(); E.source = source;
+  changed((mode === 'add' ? 'Added to' : 'Built') + ' the evidence plan (' + source + ')');
+  S.ev.err = ''; S.ev.filter = 'all';
+  S.ev.msg = `${mode === 'add' ? 'Added' : 'Plan ready'}: ${plan.items.length} evidence items, ${plan.photos.length} photos, ${plan.tests.length} statements to test.${source === 'Claude' ? ' Written by Claude: check every line against what you know before you use it.' : ''}`;
+  render();
+}
+const EV_FAIL = { rate_limited: 'Claude is busy or your usage limit has been reached. Try again later.', invalid_json: "Claude's answer could not be read as a plan. Try again.", refused: 'Claude declined this request. Rephrase the account and try again.',
+  empty_completion: 'Claude returned nothing. Shorten the account and try again.', prompt_too_large: 'The account is too long for one request. Shorten it and try again.', session_expired: 'Your claude.ai session has expired. Sign in again and try again.' };
+async function evRun(how, mode) {
+  S.ev.ask = null;
+  const E = S.c.evidence, nar = E.narrative || '';
+  if (how === 'starter') { evApply(EV.starter(S.c, nar, evNames), mode, 'starter plan'); return; }
+  if (!evAI()) { S.ev.err = 'Claude is not available in this view. Use Build starter plan, or Copy prompt for Claude and paste the answer back.'; render(); return; }
+  if (nar.trim().length < 40) { S.ev.err = 'Write a few sentences about the incident first: what happened, what you think caused it, and what you are not sure about.'; S.ev.msg = ''; render(); return; }
+  const sample = Store.sample, ctl = new AbortController(), caseId = S.c.id, input = EV.prompt(S.c, nar, evNames);
+  Object.assign(S.ev, { busy: true, ctl, err: '', msg: 'Asking Claude… the first words can take up to a minute or two.' });
+  render();
+  const opts = { signal: ctl.signal, onText: ({ text }) => { S.ev.msg = 'Claude is writing the plan… ' + (text.length / 1000).toFixed(1) + 'k characters'; renderEvStatus(); } };
+  try {
+    const ans = typeof sample.json === 'function' ? await sample.json(input, opts) : EV.parseText((await sample(input, opts)).text);
+    S.ev.busy = false; S.ev.ctl = null;
+    if (!S.c || S.c.id !== caseId) return;
+    let plan; try { plan = EV.fromAnswer(ans, S.c.nodes.map(n => n.id)); } catch (e) { S.ev.err = "Claude's answer could not be read as a plan (" + e.message + ') Try again.'; S.ev.msg = ''; render(); return; }
+    evApply(plan, mode, 'Claude');
+  } catch (e) {
+    S.ev.busy = false; S.ev.ctl = null;
+    const code = e && e.code;
+    if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].indexOf(code) >= 0) {
+      S.ev.aiOff = true; S.ev.msg = '';
+      S.ev.err = 'Claude is not available to this artifact in your account, so it cannot write the plan here. Use Build starter plan, or Copy prompt for Claude and paste the answer back.';
+    } else if (code === 'cancelled') { S.ev.err = ''; S.ev.msg = 'Stopped. Nothing was changed.'; }
+    else { S.ev.msg = ''; S.ev.err = EV_FAIL[code] || 'Something went wrong while asking Claude. Try again.'; }
+    if (S.c && S.c.id === caseId && S.tab === 'evidence') render();
+  }
+}
+function evStart(how) {
+  const E = S.c.evidence;
+  if (E.items.length + E.photos.length + E.tests.length) { S.ev.ask = how; S.ev.msg = ''; S.ev.err = ''; render(); return; }
+  evRun(how, 'replace');
+}
+const STARTER_LABELS = ['Main event: describe the damage, injury or loss', 'Agent of Change that acted on the Object', 'Object that was changed or harmed'];
+const isStarterTree = () => !S.c.nodes.length || (S.c.nodes.length <= 3 && S.c.nodes.every(n => STARTER_LABELS.indexOf(n.label) >= 0 || !n.label));
+function treeApply(d, mode, source) {
+  pushUndo();
+  if (mode === 'replace' || isStarterTree()) { S.c.nodes = d.nodes; S.c.edges = d.edges; X.tidy(S.c); }
+  else {
+    const tmp = { nodes: d.nodes, edges: d.edges }; X.tidy(tmp);
+    const right = Math.max(...S.c.nodes.map(n => n.x + X.geom(n).w)), left = Math.min(...d.nodes.map(n => n.x));
+    const hasMain = S.c.nodes.some(n => n.mainEvent);
+    d.nodes.forEach(n => { n.x += right + 220 - left; if (hasMain) delete n.mainEvent; });
+    S.c.nodes = S.c.nodes.concat(d.nodes); S.c.edges = S.c.edges.concat(d.edges);
+  }
+  if (d.notes) addLog('Draft tree notes: ' + d.notes.slice(0, 300));
+  changed('Drafted the Tripod tree (' + source + ')');
+  const errs = R.check(S.c).filter(i => i.sev === 'error').length;
+  S.ev.msg = `Draft tree added: ${d.nodes.length} elements, all marked assumed.${errs ? ' ' + errs + ' rule error' + (errs > 1 ? 's' : '') + ' to fix: see Rules check.' : ''}${d.notes ? ' Claude notes: ' + d.notes : ''}`;
+  S.ev.err = ''; S.ev.askTree = null;
+  S.tab = 'tree'; S.sel.clear(); S.fitPending = true; render();
+  toast('Draft tree added. Every element is marked assumed until the evidence confirms it.');
+}
+async function treeRun(mode) {
+  S.ev.askTree = null;
+  const nar = (S.c.evidence.narrative || '').trim();
+  if (nar.length < 40) { S.ev.err = 'Write a few sentences about the incident first, in the account above.'; S.ev.msg = ''; render(); return; }
+  const sample = Store.sample, ctl = new AbortController(), caseId = S.c.id;
+  Object.assign(S.ev, { busy: true, ctl, err: '', msg: 'Asking Claude to draft the tree\u2026 this usually takes one to two minutes.' });
+  render();
+  const opts = { signal: ctl.signal, onText: ({ text }) => { S.ev.msg = 'Claude is drafting the tree\u2026 ' + (text.length / 1000).toFixed(1) + 'k characters'; renderEvStatus(); } };
+  try {
+    const input = EV.treePrompt(S.c, nar, C);
+    const ans = typeof sample.json === 'function' ? await sample.json(input, opts) : EV.parseText((await sample(input, opts)).text);
+    S.ev.busy = false; S.ev.ctl = null;
+    if (!S.c || S.c.id !== caseId) return;
+    let d; try { d = EV.treeFromAnswer(ans, C); } catch (e) { S.ev.err = "Claude's answer could not be read as a tree (" + e.message + ') Try again.'; S.ev.msg = ''; render(); return; }
+    treeApply(d, mode, 'Claude');
+  } catch (e) {
+    S.ev.busy = false; S.ev.ctl = null;
+    const code = e && e.code;
+    if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].indexOf(code) >= 0) { S.ev.aiOff = true; S.ev.msg = ''; S.ev.err = 'Claude is not available to this artifact in your account. Use Copy tree prompt for Claude and paste the answer back.'; }
+    else if (code === 'cancelled') { S.ev.err = ''; S.ev.msg = 'Stopped. The tree was not changed.'; }
+    else { S.ev.msg = ''; S.ev.err = EV_FAIL[code] || 'Something went wrong while asking Claude. Try again.'; }
+    if (S.c && S.c.id === caseId && S.tab === 'evidence') render();
+  }
+}
+const EV_ACT = {
+  evTreeClaude: () => { if (!evAI()) return; if (isStarterTree()) treeRun('replace'); else { S.ev.askTree = true; render(); } },
+  evTreeGo: d => treeRun(d.mode),
+  evTreeCancel: () => { S.ev.askTree = null; render(); },
+  evTreeCopy: async () => {
+    const text = EV.treePrompt(S.c, S.c.evidence.narrative, C);
+    try { await navigator.clipboard.writeText(text); toast("Tree prompt copied. Paste it into Claude, then bring the reply back with Paste Claude's tree."); }
+    catch (e) { S.ev.modal = 'treePrompt'; render(); const t = $('#ev-tprompt'); if (t) { t.focus(); t.select(); } }
+  },
+  evTreePaste: () => { S.ev.modal = 'treePaste'; S.ev.pasteErr = ''; render(); const t = $('#ev-tpaste'); if (t) t.focus(); },
+  evTreePasteUse: () => {
+    const t = $('#ev-tpaste'), m = document.querySelector('input[name=ev-tmode]:checked');
+    let d;
+    try { d = EV.treeFromAnswer(EV.parseText(t ? t.value : ''), C); }
+    catch (e) { S.ev.pasteErr = 'That is not a tree this app can read: ' + e.message; const keep = t ? t.value : ''; render(); const n = $('#ev-tpaste'); if (n) { n.value = keep; n.focus(); } return; }
+    S.ev.modal = null; S.ev.pasteErr = '';
+    treeApply(d, m ? m.value : 'replace', 'Claude (pasted)');
+  },
+  evClaude: () => evStart('claude'),
+  evStarter: () => evStart('starter'),
+  evGo: d => evRun(S.ev.ask, d.mode),
+  evCancelAsk: () => { S.ev.ask = null; render(); },
+  evStop: () => { if (S.ev.ctl) S.ev.ctl.abort(); },
+  evCopyPrompt: async () => {
+    const text = EV.prompt(S.c, S.c.evidence.narrative, evNames);
+    try { await navigator.clipboard.writeText(text); toast("Prompt copied. Paste it into Claude, then bring Claude's reply back with Paste Claude's answer."); }
+    catch (e) { S.ev.modal = 'prompt'; render(); const t = $('#ev-prompt'); if (t) { t.focus(); t.select(); } }
+  },
+  evPaste: () => { S.ev.modal = 'paste'; S.ev.pasteErr = ''; render(); const t = $('#ev-paste'); if (t) t.focus(); },
+  evModalClose: () => { S.ev.modal = null; S.ev.pasteErr = ''; render(); },
+  evPasteUse: () => {
+    const t = $('#ev-paste'), m = document.querySelector('input[name=ev-pmode]:checked');
+    let plan;
+    try { plan = EV.fromAnswer(EV.parseText(t ? t.value : ''), S.c.nodes.map(n => n.id)); }
+    catch (e) { S.ev.pasteErr = 'That is not a plan this app can read: ' + e.message; const keep = t ? t.value : ''; render(); const n = $('#ev-paste'); if (n) { n.value = keep; n.focus(); } return; }
+    S.ev.modal = null; S.ev.pasteErr = '';
+    evApply(plan, m ? m.value : 'replace', "Claude (pasted)");
+  },
+  evFilter: d => { S.ev.filter = d.f; render(); },
+  evAdd: d => {
+    const E = S.c.evidence, L = d.list;
+    const mk = { items: () => EV.mkItem({ cat: ['position', 'people', 'parts', 'paper', 'electronic'].indexOf(S.ev.filter) >= 0 ? S.ev.filter : 'position', priority: 'Normal' }), photos: () => EV.mkPhoto({}), tests: () => EV.mkTest({}) }[L];
+    E[L].push(mk()); if (L === 'items') S.ev.filter = ['position', 'people', 'parts', 'paper', 'electronic'].indexOf(S.ev.filter) >= 0 ? S.ev.filter : 'all';
+    changed('Added a line to the evidence plan', 'evidence'); render();
+    const k = { items: 'item', photos: 'subject', tests: 'statement' }[L], el = $(`#ev-${L}-${k}-${E[L].length - 1}`); if (el) { el.focus(); el.scrollIntoView({ block: 'center' }); }
+  },
+  evDel: d => { S.c.evidence[d.list].splice(+d.i, 1); changed('Deleted a line from the evidence plan', 'evidence'); render(); },
+  evMove: d => { const P = S.c.evidence.photos, i = +d.i, j = i + (+d.d); if (j < 0 || j >= P.length) return; [P[i], P[j]] = [P[j], P[i]]; changed('Reordered the photography schedule', 'evidence'); render(); }
+};
 
 /* ---------- Tree workbench ---------------------------------------------- */
 function symIcon(type, w, h) {
@@ -957,6 +1201,10 @@ const EXPORTS = {
     const bytes = X.docx(S.c, imgs);
     saveFile(fileBase() + '-report.docx', new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
   },
+  exportEvidence: () => {
+    const bytes = EV.xlsx(S.c, X.zip, evNames);
+    saveFile(fileBase() + '-evidence-plan.xlsx', new Blob([bytes], { type: XLSX_MIME }), XLSX_MIME);
+  },
   print: () => {
     const f = document.createElement('iframe'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
     document.body.appendChild(f);
@@ -1010,7 +1258,7 @@ const ACT = Object.assign({
   addAction: () => addAction(''),
   addActionFor: d => addAction(d.id),
   actDel: d => { pushUndo(); S.c.actions.splice(+d.i, 1); changed('Deleted an action'); render(); }
-}, EXPORTS);
+}, EXPORTS, EV_ACT);
 function addAction(target) {
   pushUndo();
   S.c.actions.push({ id: uid('act'), target, text: '', owner: '', due: addDays(today(), 30), priority: 'Medium', status: 'Open', smart: {}, agreed: false, closeNote: '' });
@@ -1042,6 +1290,7 @@ document.addEventListener('input', ev => {
   if (!S.c || S.readonly) return;
   if (t.dataset.meta) { S.c.meta[t.dataset.meta] = t.value; changed('Edited the incident details', 'meta'); if (t.dataset.meta === 'title' || t.dataset.meta === 'ref') renderTop(); return; }
   if (t.dataset.team != null) { S.c.team[+t.dataset.team][t.dataset.k] = t.value; changed('Edited the team', 'team'); return; }
+  if (t.dataset.ev && t.type !== 'checkbox' && t.tagName !== 'SELECT') { evEdit(t); return; }
   if (t.dataset.nf && t.type !== 'checkbox' && t.tagName !== 'SELECT') {
     const n = node(Array.from(S.sel)[0]); if (!n) return;
     n[t.dataset.nf] = t.value; changed('Edited ' + TY[n.type].name + ' text', 'text-' + n.id); renderTree(); return;
@@ -1054,6 +1303,7 @@ document.addEventListener('change', ev => {
   if (!S.c || S.readonly) return;
   if (t.dataset.actChange === 'setType') return setType(Array.from(S.sel)[0], t.value);
   if (t.dataset.actChange === 'linkTo') { if (!t.value) return; pushUndo(); if (!link(Array.from(S.sel)[0], t.value)) S.undo.pop(); renderTree(); renderInspector(); return; }
+  if (t.dataset.ev && (t.type === 'checkbox' || t.tagName === 'SELECT' || t.type === 'date')) { evEdit(t); return; }
   if (t.dataset.meta && t.tagName === 'SELECT') { S.c.meta[t.dataset.meta] = t.value; changed(t.dataset.meta === 'status' ? 'Set the report status to ' + t.value : 'Edited the incident details', t.dataset.meta === 'status' ? '' : 'meta'); return; }
   if (t.dataset.nf && (t.type === 'checkbox' || t.tagName === 'SELECT')) {
     const n = node(Array.from(S.sel)[0]); if (!n) return;
@@ -1084,7 +1334,7 @@ window.addEventListener('beforeunload', () => flushSave());
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushSave(); });
 
 /* test hook for the automated tests */
-window.TBApp = { LINK, register, openLinkedFile, centreOn: ids => centreOn(ids), S, Store, X, R, C, openCase, exampleCase, newCase, link, addNode, insertBarrier, quickAdd, deleteSelection, issues, render, save: () => save(), flushSave };
+window.TBApp = { EV, LINK, register, openLinkedFile, centreOn: ids => centreOn(ids), S, Store, X, R, C, openCase, exampleCase, newCase, link, addNode, insertBarrier, quickAdd, deleteSelection, issues, render, save: () => save(), flushSave };
 
 /* ---------- boot ------------------------------------------------------------- */
 if (!HAS_RUNTIME) Store.list = localList();

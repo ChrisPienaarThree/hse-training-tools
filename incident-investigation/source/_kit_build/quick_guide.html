@@ -46,7 +46,7 @@ code { font-family: Menlo, Consolas, monospace; font-size: 9pt; background: #f1f
 <h2>4. Which tool when</h2>
 <table><tr><th>Tool</th><th>Use it to</th><th>Key outputs</th></tr>
 <tr><td>Storyline Casebook</td><td>Run the investigation file: initial report, evidence register with photos, ECFA+ storyline of events and conditions, ICAM coding, root causes, corrective actions.</td><td>Case report, draw.io storyline</td></tr>
-<tr><td>Tripod Beta Investigator</td><td>Model the incident as trios (Agent, Object, Event), place failed, missing and effective barriers, and trace each failure to Immediate Cause, Precondition and Underlying Cause (BRF).</td><td>Tripod tree, BRF profile, SMART actions, Word report, Casebook package</td></tr>
+<tr><td>Tripod Beta Investigator</td><td>Model the incident as trios (Agent, Object, Event), place failed, missing and effective barriers, and trace each failure to Immediate Cause, Precondition and Underlying Cause (BRF).</td><td>Evidence plan (Excel checklist, photography schedule, assumptions to test), draft tree, Tripod tree, BRF profile, SMART actions, Word report, Casebook package</td></tr>
 <tr><td>RCA Fault Tree</td><td>Lay out every way the top event could occur, confirm or rule out each branch with evidence, and use optional probabilities to rank the open hypotheses.</td><td>Fault tree, credible causal combinations, P(cause | incident), Word report, Casebook package</td></tr></table>
 <p>Tripod Beta and the RCA Fault Tree both export a <b>Storyline Casebook package</b>. Import it in the Casebook (Import Case Package on the case list), so root causes and actions end up in one case file.</p>
 
@@ -59,6 +59,8 @@ code { font-family: Menlo, Consolas, monospace; font-size: 9pt; background: #f1f
 
 <h2>6. Tripod Beta Investigator</h2>
 <ul>
+<li>Start on the <b>Evidence plan</b> tab: write everything you know or believe about the incident, including assumptions ("I assume…") and early conclusions. <b>Build starter plan</b> turns it into an evidence checklist (Position, People, Parts, Paper, Electronic data; perishable items marked Urgent), a photography schedule in shooting order and a list of statements to test. <b>Export to Excel</b> gives a printable workbook for the field.</li>
+<li>For a plan or a first tree written by Claude, use <b>Copy prompt for Claude</b> (or <b>Copy tree prompt</b>), paste it into a Claude chat, then bring the reply back with <b>Paste Claude's answer</b> (or <b>Paste Claude's tree</b>). Every drafted tree element is marked assumed until the evidence confirms it.</li>
 <li>Drag elements from the palette onto the canvas. To link two elements, drag the round handle on one onto the other; links the tree rules forbid are refused with the reason.</li>
 <li>Select a line to insert a barrier on it. The inspector has quick-add buttons for the next element (Immediate Cause → Precondition → Underlying Cause).</li>
 <li>The <b>Rules check</b> tab lists errors, warnings and tips against the Tripod Beta tree rules (User Guide Annex 2 and 6). Each Failed or Missing Barrier and each Underlying Cause needs an action.</li>
