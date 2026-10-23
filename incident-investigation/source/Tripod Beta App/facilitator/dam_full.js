@@ -5,7 +5,7 @@ module.exports = function damFull(C) {
   const c = JSON.parse(JSON.stringify(C.DAM));
   c.id = 'facilitator-dam-drowning'; delete c.example; delete c.exampleNote;
   c.meta.title += ' (facilitator answer)'; c.meta.status = 'Final'; c.meta.practitioner = 'Course facilitator';
-  c.meta.summary = 'Four trios describe the event: the catchment flood overflows the dam and floods the pumps; the decision to recover the pumps puts an old boat with two inexperienced contractor workers on the overflowing dam; the boat drifts towards the spillway and the workers leave it; and, with no life-saving equipment, swimming ability or rescue capability, both drown. Six barriers failed and seven were missing or inadequate. The Underlying Causes sit in flood defences and dam procedures, competing goals in an emergency, a contractor management process so cumbersome that managers routinely bypass it, uncontrolled disused equipment, and the absence of any requirement, training or equipment for work on or near water.';
+  c.meta.summary = 'Four trios describe the event: the catchment flood overflows the dam and floods the pumps; the decision to recover the pumps puts an old boat with two inexperienced contractor workers on the overflowing dam; the boat drifts towards the spillway and the workers leave it; and, with no life-saving equipment, rescue capability or (for one of them) swimming ability, one worker drowns while the other reaches the bank. Six barriers failed and seven were missing or inadequate. The Underlying Causes sit in flood defences and dam procedures, competing goals in an emergency, a contractor management process so cumbersome that managers routinely bypass it, uncontrolled disused equipment, and the absence of any requirement, training or equipment for work on or near water.';
   c.meta.lessons = 'In a flood emergency, stop work on or near the water; protect people before equipment.\nA slow contractor process does not stop contractors being used: it pushes the work outside the process.\nWork on or near water needs a plan, life jackets, a rescue capability and people who have been trained, every time.\nDisused equipment left on site will be used: remove it or control it.';
   const N = (id, type, label, extra) => Object.assign({ id, type, label, notes: 'Facilitator answer: one reasonable model, not the only one.', evidence: '', verified: true }, extra || {});
   const add = c.nodes.push.bind(c.nodes);
@@ -38,7 +38,7 @@ module.exports = function damFull(C) {
   add(N('f_pc6', 'pc', 'The boat was on site and looked like the quickest way to the pumps', { scope: 'org' }));
   add(N('f_pc7', 'pc', 'Current and wind forces on the dam not assessed; no measurements of flow or wind', { scope: 'org' }));
   add(N('f_pc8', 'pc', 'Fear of being carried over the spillway wall', { scope: 'org' }));
-  add(N('f_pc9', 'pc', 'Workers misjudge the distance to the bank and cannot swim', { scope: 'org' }));
+  add(N('f_pc9', 'pc', 'Workers misjudge the distance to the bank; the worker who drowned could not swim', { scope: 'org' }));
   // ---- Underlying Causes
   add(N('f_uc1', 'uc', 'No catchment rainfall or inflow monitoring linked to the dam', { brf: 'DF' }));
   add(N('f_uc2', 'uc', 'Dam operating procedure has no flood trigger levels or response actions', { brf: 'PR' }));
