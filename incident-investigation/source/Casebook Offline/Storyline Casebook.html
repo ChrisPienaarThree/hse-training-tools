@@ -114,6 +114,7 @@ fieldset{border:none;padding:0;margin:0;}
 .case-header-bar h2{font-size:21px;margin-bottom:3px;}
 .case-header-bar .meta-line{font-size:12.5px;color:var(--ink-faint);display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
 .stage-shell{display:grid;grid-template-columns:230px 1fr;gap:26px;align-items:start;}
+.stage-shell>*{min-width:0;}
 @media(max-width:860px){.stage-shell{grid-template-columns:1fr;}}
 .stepper{display:flex;flex-direction:column;gap:3px;position:sticky;top:20px;}
 .stepper button{display:flex;align-items:center;gap:10px;text-align:left;background:transparent;border:1px solid transparent;border-radius:9px;padding:9px 10px;color:var(--ink-soft);font-size:13px;}
@@ -357,6 +358,33 @@ table.actions-table td{padding:8px;border-bottom:1px solid var(--border);vertica
 .dash-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);padding:8px;border-bottom:2px solid var(--border);}
 .dash-table td{padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
 
+/* evidence plan (ICAM PEEPO) and reference / training cases */
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:0 0 14px;flex-wrap:wrap;max-width:100%;}
+.seg button{border:none;background:var(--surface);color:var(--ink-soft);padding:8px 14px;font-size:13px;font-weight:600;}
+.seg button+button{border-left:1px solid var(--border);}
+.seg button.on{background:var(--teal-ink);color:#fff;}
+.seg .n{font-family:var(--font-mono);font-size:11px;opacity:.85;margin-left:4px;}
+.pl-actions{gap:8px;flex-wrap:wrap;margin:4px 0 6px;}
+.pl-stats{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin:14px 0 8px;}
+.pl-chips{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px;}
+.pl-chips button{border:1px solid var(--border);background:var(--surface);color:var(--ink-soft);border-radius:99px;padding:4px 11px;font-size:12px;}
+.pl-chips button.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.pl-h{font-size:15.5px;margin:20px 0 8px;}
+.pl-cat{margin:0 0 16px;}
+.pl-cat-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:6px;}
+.pl-cat-head h4{font-size:14px;margin:0;}
+.pl-cat-head p{font-size:12px;color:var(--ink-faint);margin:0;}
+.pl-letter{width:28px;height:28px;border-radius:7px;background:var(--teal-soft);color:var(--teal-ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;flex:none;}
+.pl-count{font-family:var(--font-mono);font-size:11px;color:var(--ink-faint);font-weight:500;}
+.pl-sub{font-size:11.5px;color:var(--ink-faint);margin-top:2px;}
+.pl-table td{vertical-align:top;}
+tr.pl-urgent td:first-child{box-shadow:inset 3px 0 0 var(--bad);}
+.pl-tips{margin:10px 0;font-size:12.5px;color:var(--ink-soft);}
+.pl-tips summary{cursor:pointer;font-weight:600;}
+.ref-strip.ref-cases{flex-direction:column;align-items:stretch;}
+.ref-card{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;}
+.ref-card strong{display:block;font-size:13.5px;}
+.ref-card span{font-size:12px;color:var(--ink-faint);}
 @media print{
   .topbar,.stepper,.stage-nav-btns,.no-print{display:none !important;}
   .stage-shell{grid-template-columns:1fr;}
@@ -849,6 +877,431 @@ function newCaseDefaults(){
   };
 }
 
+/* @@CBP-BEGIN =============================================================
+   EVIDENCE PLAN (ICAM PEEPO)
+   The investigator's free-text account (with assumptions and early
+   conclusions) becomes an evidence collection checklist grouped by the ICAM
+   PEEPO categories (People, Environment, Equipment, Procedures,
+   Organisation), a photography schedule and the statements still to test.
+   Claude writes it when this page can ask Claude; otherwise a rule-based
+   starter plan, or a copy/paste round trip to Claude, does the same job.
+   Stored as one document per case: cases/<id>/evidencePlan/main.
+   ========================================================================= */
+const CBP = (function(){
+  const CATS = [
+    {k:'people', l:'People', d:'Everyone involved, witnesses, supervisors and responders: interviews, statements, fitness for work, competence, hours worked.'},
+    {k:'environment', l:'Environment', d:'The scene and its conditions: positions, distances and measurements, weather, water, lighting, terrain, housekeeping.'},
+    {k:'equipment', l:'Equipment', d:'Plant, vehicles, tools, PPE, safety and rescue equipment, materials, and the data they record (logs, telemetry, CCTV, phones).'},
+    {k:'procedures', l:'Procedures', d:'What was written and what was done: procedures, work instructions, permits, risk assessments, plans and checklists.'},
+    {k:'organisation', l:'Organisation', d:'The systems behind the task: planning, contractor management, training, resourcing, communication, change, earlier incidents and audits.'}
+  ];
+  const CAT_KEYS = CATS.map(c=>c.k), CAT_NAME = Object.fromEntries(CATS.map(c=>[c.k, c.l]));
+  const ICAM_DEFAULT = { people:'actions', environment:'conditions', equipment:'defences', procedures:'defences', organisation:'organizational' };
+  const PRIORITY = ['Urgent','High','Normal'];
+  const METHODS = ['Preserve','Collect','Photograph','Measure','Interview','Request copy','Download','Test / analyse','Observe'];
+  const ITEM_STATUS = ['To collect','Collected','Not available','Not needed'];
+  const VIEWS = ['Overview','Mid-range','Close-up','Detail with scale','Elevated / aerial'];
+  const KINDS = ['Assumption','Conclusion','Open question'];
+  const TEST_STATUS = ['Untested','Supported','Refuted','Inconclusive'];
+  const PHOTO_TIPS = [
+    'Photograph before anything is moved; if something must be moved for safety, photograph it first and record who moved it.',
+    'Work from the outside in: overview from all sides, then mid-range, then close-ups of each item.',
+    'Put a scale (ruler or tape) and a photo ID card in every close-up; take a second close-up without them.',
+    'Keep the date and time setting correct on the camera or phone; note the time of the first photo.',
+    'Log every photo: number, subject, camera position and direction. Never delete or edit originals; work on copies.',
+    'Mark camera positions on the scene sketch, with a north arrow.'
+  ];
+
+  const uidp = p => (p||'') + Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-4);
+  const str = (v, max) => String(v==null?'':v).replace(/\s+/g,' ').trim().slice(0, max||600);
+  const pick = (v, list, dflt) => { const s = str(v,60).toLowerCase(); return list.find(x=>x.toLowerCase()===s) || list.find(x=>s && x.toLowerCase().startsWith(s.split(/[\s/]/)[0])) || dflt; };
+  function catKey(v){
+    const s = str(v,60).toLowerCase();
+    const k = CATS.find(c=> s===c.k || s===c.l.toLowerCase() || (s && (s.startsWith(c.k) || c.k.startsWith(s))));
+    if(k) return k.k;
+    if(/organi[sz]/.test(s)) return 'organisation';
+    if(/^(position|scene|place|site|weather)/.test(s)) return 'environment';
+    if(/^(parts?|electronic|data|plant|tool|ppe|vehicle)/.test(s)) return 'equipment';
+    if(/^(paper|document|record|procedure|permit|risk)/.test(s)) return 'procedures';
+    if(/(witness|interview|person|staff)/.test(s)) return 'people';
+    return 'environment';
+  }
+  function icamKey(v, cat){
+    const s = str(v,60).toLowerCase();
+    if(/defen/.test(s)) return 'defences';
+    if(/action|individual|team/.test(s)) return 'actions';
+    if(/condition|task|environment/.test(s)) return 'conditions';
+    if(/organi[sz]/.test(s)) return 'organizational';
+    return ICAM_DEFAULT[cat] || 'conditions';
+  }
+  const CAT_ORDER = Object.fromEntries(CAT_KEYS.map((k,i)=>[k,i]));
+
+  function blank(){ return { narrative:'', useChart:true, notes:'', source:'', generatedAt:'', items:[], photos:[], tests:[] }; }
+  function mkItem(o){ const cat = catKey(o.cat); return { id:uidp('pi'), cat, item:str(o.item,400), source:str(o.source,300), purpose:str(o.purpose,400), icam:icamKey(o.icam, cat), priority:pick(o.priority, PRIORITY, 'Normal'), method:pick(o.method, METHODS, 'Collect'), owner:str(o.owner,80), due:str(o.due,10), status:pick(o.status, ITEM_STATUS, 'To collect'), ref:str(o.ref,60), notes:str(o.notes,400) }; }
+  function mkPhoto(o){ return { id:uidp('pp'), subject:str(o.subject,300), position:str(o.position,300), view:pick(o.view, VIEWS, 'Overview'), purpose:str(o.purpose,400), taken:!!o.taken, ref:str(o.ref,60), notes:str(o.notes,300) }; }
+  function mkTest(o){ return { id:uidp('pt'), statement:str(o.statement,500), kind:pick(o.kind, KINDS, 'Assumption'), evidence:str(o.evidence,500), status:pick(o.status, TEST_STATUS, 'Untested'), node:str(o.node,90) }; }
+  const keepId = (made, x) => (x && typeof x.id==='string' && x.id) ? Object.assign(made, {id:x.id}) : made;
+  function sortItems(items){ return items.map((x,i)=>[x,i]).sort((a,b)=> (CAT_ORDER[a[0].cat]-CAT_ORDER[b[0].cat]) || (a[1]-b[1])).map(p=>p[0]); }
+  function normalise(e){
+    const src = (e && typeof e==='object') ? e : {};
+    const b = Object.assign(blank(), src);
+    b.items = sortItems((Array.isArray(src.items)?src.items:[]).filter(x=>x && x.item).map(x=>keepId(mkItem(x), x)));
+    b.photos = (Array.isArray(src.photos)?src.photos:[]).filter(x=>x && x.subject).map(x=>keepId(mkPhoto(x), x));
+    b.tests = (Array.isArray(src.tests)?src.tests:[]).filter(x=>x && x.statement).map(x=>keepId(mkTest(x), x));
+    b.narrative = String(src.narrative||'').slice(0, 20000);
+    b.notes = str(src.notes, 1500); b.source = str(src.source, 40); b.generatedAt = str(src.generatedAt, 40);
+    b.useChart = src.useChart !== false;
+    delete b.id; delete b._docId;
+    return b;
+  }
+  function hasContent(p){ return !!(p && (p.items.length || p.photos.length || p.tests.length)); }
+  function stats(p){ return { items:p.items.length, got:p.items.filter(x=>x.status==='Collected').length, urgentOpen:p.items.filter(x=>x.priority==='Urgent' && x.status==='To collect').length,
+    photos:p.photos.length, taken:p.photos.filter(x=>x.taken).length, tests:p.tests.length, tested:p.tests.filter(x=>x.status!=='Untested').length }; }
+  /* the register type a checklist item becomes when it is logged as evidence */
+  function evidenceType(it){
+    if(it.method==='Interview') return 'Witness Statement';
+    if(it.method==='Photograph') return 'Photograph / Video';
+    if(it.method==='Download') return 'Technical / Data Record';
+    if(it.method==='Request copy' || it.cat==='procedures' || it.cat==='organisation') return 'Documentary';
+    if(['Preserve','Collect','Measure','Test / analyse'].indexOf(it.method)>=0) return 'Physical Evidence';
+    return 'Other';
+  }
+
+  /* ---------- what Claude reads ------------------------------------------- */
+  /* ctx: {events, conditions, evidence} of the case; refs look like event:<id> / condition:<id> */
+  function chartLines(ctx){
+    const ev = (ctx.events||[]).slice(0,60).map(e=>`- [event:${e.id}] ${e.status==='presumptive'?'(presumptive) ':''}${str(e.time,20)?str(e.time,20)+' — ':''}${str(e.text,200)}`);
+    const cd = (ctx.conditions||[]).slice(0,60).map(c=>`- [condition:${c.id}] ${c.status==='presumptive'?'(presumptive) ':''}${str(c.text,200)}`);
+    return ev.concat(cd);
+  }
+  function prompt(c, plan, ctx){
+    const useChart = plan.useChart !== false;
+    const chart = useChart ? chartLines(ctx||{}) : [];
+    const logged = useChart ? (ctx && ctx.evidence || []).slice(0,60).map(e=>`- ${str(e.id,12)}: ${str(e.description,160)}`) : [];
+    return [
+      'You are an experienced workplace incident investigator who uses ICAM (Incident Cause Analysis Method). Write the evidence collection plan for the investigation below, organised by the ICAM PEEPO evidence categories.',
+      '',
+      'INCIDENT',
+      `Title: ${str(c.caseTitle,200)}`, `Date and time: ${str(c.dateOccurred,20)} ${str(c.timeOccurred,20)}`,
+      `Facility and location: ${str(c.facility,160)}${c.location?', '+str(c.location,160):''}`, `Incident type: ${str(c.incidentType,60)}; actual severity ${c.actualSeverity||1} of 5, potential severity ${c.potentialSeverity||1} of 5`,
+      c.initialDescription ? `Initial report: ${str(c.initialDescription,2500)}` : '',
+      c.refinedDescription ? `Refined description: ${str(c.refinedDescription,2500)}` : '',
+      c.personsInvolved ? `Persons involved: ${str(c.personsInvolved,600)}` : '',
+      '',
+      "INVESTIGATOR'S ACCOUNT (may include assumptions and early conclusions; treat them as things to test, not facts)",
+      String(plan.narrative||'').slice(0, 12000),
+      chart.length ? '\nECFA+ STORYLINE SO FAR (reference in brackets)\n' + chart.join('\n') : '',
+      logged.length ? '\nEVIDENCE ALREADY LOGGED (do not repeat)\n' + logged.join('\n') : '',
+      '',
+      'WHAT TO PRODUCE',
+      '1. items: the evidence to collect, specific to THIS incident (name the actual equipment, documents, people roles and places mentioned). Group by PEEPO category: people (interviews of those involved, witnesses, supervisors and responders; fitness, competence, hours worked), environment (the scene: positions, distances, measurements, weather, water, lighting, terrain), equipment (plant, vehicles, tools, PPE, safety and rescue equipment, and recorded data such as logs, telemetry, CCTV and phones), procedures (procedures, permits, risk assessments, plans and checklists: what was written and what was done), organisation (contractor management, planning, training system, resourcing, communication, change, earlier incidents and audits). For each item give the ICAM element it informs: "defences" (absent or failed defences), "actions" (individual or team actions), "conditions" (task and environmental conditions) or "organisational" (organisational factors). Mark perishable evidence priority "Urgent" (scene conditions, witness memory, CCTV that overwrites, weather, anything that will be repaired, cleaned or moved). Say where to find each item and why it matters (which question or assumption it tests). 15 to 40 items.',
+      '2. photos: a photography schedule in shooting order: overview shots from all sides first, then mid-range, then close-ups and details with a scale. Name the subject, the camera position and what the photo must show. 10 to 30 photos.',
+      '3. tests: every assumption, conclusion or uncertain point in the account, and every presumptive storyline element, as a statement to test, with the evidence that would confirm or refute it. Use kind "Assumption", "Conclusion" or "Open question". For a storyline element put its reference (for example "event:abc") in "node". Up to 20.',
+      '4. notes: 2 to 4 sentences of practical advice on preserving the scene and the order of collection for this incident.',
+      'Do not invent facts that are not in the information above; where something is unknown, say what to find out.',
+      '',
+      'Reply with only this JSON object:',
+      '{"items":[{"cat":"people|environment|equipment|procedures|organisation","item":"...","source":"where or from whom","purpose":"why / what it tests","icam":"defences|actions|conditions|organisational","priority":"Urgent|High|Normal","method":"Preserve|Collect|Photograph|Measure|Interview|Request copy|Download|Test / analyse|Observe"}],',
+      ' "photos":[{"subject":"...","position":"camera position / direction","view":"Overview|Mid-range|Close-up|Detail with scale|Elevated / aerial","purpose":"what it must show"}],',
+      ' "tests":[{"statement":"...","kind":"Assumption|Conclusion|Open question","evidence":"evidence that would confirm or refute it","node":"storyline reference or empty"}],',
+      ' "notes":"..."}'
+    ].filter(x=>x!=='').join('\n');
+  }
+  function parseText(t){
+    let s = String(t||'').trim();
+    const f = s.match(/```(?:json)?\s*([\s\S]*?)```/); if(f) s = f[1].trim();
+    const a = s.indexOf('{'), b = s.lastIndexOf('}');
+    if(a<0 || b<=a) throw new Error('No JSON object found in the answer.');
+    return JSON.parse(s.slice(a, b+1));
+  }
+  function fromAnswer(o, nodeRefs){
+    if(!o || typeof o!=='object' || Array.isArray(o)) throw new Error('The answer is not a plan object.');
+    const refs = new Set(nodeRefs||[]);
+    const items = sortItems((Array.isArray(o.items)?o.items:[]).filter(x=>x && x.item).slice(0,80).map(mkItem));
+    const photos = (Array.isArray(o.photos)?o.photos:[]).filter(x=>x && x.subject).slice(0,60).map(mkPhoto);
+    const tests = (Array.isArray(o.tests)?o.tests:[]).filter(x=>x && x.statement).slice(0,40).map(x=>{ const t = mkTest(x); if(!refs.has(t.node)) t.node=''; return t; });
+    if(!items.length && !photos.length && !tests.length) throw new Error('The answer holds no checklist items, photos or tests.');
+    return { items, photos, tests, notes:str(o.notes,1200) };
+  }
+
+  /* ---------- offline starter plan ------------------------------------------ */
+  /* rows: [cat, item, source, purpose, priority, method, icam?] */
+  const BASE = {
+    items: [
+      ['people','List of everyone involved, witnesses and first responders, with contact details and shift','Supervisor; access records','Nobody is missed for interview','Urgent','Collect','actions'],
+      ['people','Interview the injured or involved person(s) individually, as soon as they are fit','Involved persons','First-hand account of the sequence, and why their actions made sense to them at the time','Urgent','Interview','actions'],
+      ['people','Interview witnesses separately, before they compare accounts','Witnesses','Independent accounts of what happened','Urgent','Interview','actions'],
+      ['people','Interview the supervisor: how the task was planned, instructed and supervised','Supervisor on duty','Tests planning, instructions and supervision','High','Interview','organizational'],
+      ['people','Training, competence and appointment records of the people involved','Training department; HR','Were the people trained and competent for this task?','High','Request copy','organizational'],
+      ['people','Shift roster and hours worked by the people involved (last 7 days)','Time and attendance; HR','Tests fatigue as a human factor','Normal','Request copy','conditions'],
+      ['people','First-aid, medical and emergency response records','Clinic; first aider; emergency team','Confirms injury, time line and response','High','Request copy','defences'],
+      ['environment','Scene as found: barricade and keep it undisturbed until the investigation lead releases it','Incident scene','Positions and conditions change quickly once work resumes','Urgent','Preserve','conditions'],
+      ['environment','Measured sketch of the scene: positions of people, equipment, materials and distances, with a north arrow','Incident scene','Fixes the layout for the storyline','Urgent','Measure','conditions'],
+      ['environment','Conditions at the time: lighting, weather, noise, housekeeping, floor or ground surface','Incident scene; shift log','Tests whether workplace conditions contributed','Urgent','Observe','conditions'],
+      ['equipment','Equipment, tools and materials involved: quarantine, tag and record make, model and serial or asset numbers','Incident scene; workshop','Physical evidence of condition and failure','Urgent','Preserve','defences'],
+      ['equipment','PPE worn by the people involved: retain it and record its condition','Involved persons; clinic','Tests whether PPE was worn, suitable and in good condition','High','Collect','defences'],
+      ['equipment','CCTV footage covering the area and the time: secure a copy before it is overwritten','Security; control room','Independent record of the sequence','Urgent','Download','actions'],
+      ['equipment','Access control, radio and phone records around the time of the incident','Security; IT; control room','Fixes the time line and communications','High','Download','actions'],
+      ['procedures','Risk assessment / JSA / HIRA for the task','SHE office; work pack','Was the hazard identified and controlled?','High','Request copy','defences'],
+      ['procedures','Work permit, authorisation and isolation records for the task','Permit office; control room','Tests whether the permit and isolation defences were in place','High','Request copy','defences'],
+      ['procedures','Procedure or work instruction in force at the time (with version and date)','Document control','Was there a procedure, and was it followed and adequate?','High','Request copy','defences'],
+      ['organisation','Inspection and maintenance history of the equipment involved','Maintenance system; engineering','Tests equipment condition and maintenance management','High','Request copy','organizational'],
+      ['organisation','Previous incidents, near misses and audit findings for this task or area','SHE incident database','Shows whether the problem was known before','Normal','Request copy','organizational'],
+      ['organisation','How the task was planned and resourced, and any recent changes to people, plant or procedures','Planning; management of change register','Tests planning, resourcing and management of change','Normal','Request copy','organizational']
+    ],
+    photos: [
+      ['Overview of the scene from the first side (e.g. north)','At the edge of the barricaded area, facing the point of the event','Overview','The whole scene and its surroundings as found'],
+      ['Overview of the scene from the opposite side','Opposite the first overview','Overview','The scene from the other direction'],
+      ['Overview from the remaining two sides','Left and right of the first overview','Overview','Complete coverage; nothing hidden behind equipment'],
+      ['Access route to the point of the event','Along the route the people took','Mid-range','What the people saw on approach; obstructions, signs'],
+      ['Point of contact, injury or failure','1 to 3 m from the point','Mid-range','Relative positions of people, equipment and materials'],
+      ['Point of contact, injury or failure, with scale','Close up, square to the surface','Detail with scale','Marks, damage, residues; with a scale and photo ID card'],
+      ['Equipment involved and its ID / rating plate','Close up','Close-up','Make, model, serial or asset number, ratings'],
+      ['Controls, guards, isolation points and their state','At each control or isolation point','Close-up','Positions of switches, valves, locks and tags; guards fitted or not'],
+      ['Signs, barricades and warnings in the area','From where a worker would see them','Mid-range','Whether warnings were present and visible'],
+      ['Housekeeping, floor or ground surface','At working height and close to the surface','Mid-range','Slip/trip hazards, spills, obstructions'],
+      ['Lighting and visibility','From the worker\'s position, without flash, then with','Mid-range','Light levels and glare at the time'],
+      ['PPE involved','Laid out on a neutral background','Detail with scale','Type and condition of the PPE'],
+      ['Anything moved or changed before the investigation team arrived','Where it is now, and where it was','Mid-range','Record the change and who made it']
+    ]
+  };
+  const PACKS = [
+    { re:/\b(vehicle|truck|ldv|bakkie|car|bus|forklift|loader|haul|tipper|dump truck|trailer|roll ?over|collision|reversing|driver)\b/i,
+      items:[['equipment','Vehicle involved: quarantine; record tyres, brakes, steering, lights, seat belt and warning devices','Vehicle','Tests vehicle condition as a failed defence or condition','Urgent','Preserve','defences'],
+        ['equipment','Vehicle tracking / telemetry / dash camera data (speed, braking, location)','Fleet management; tracking provider','Fixes speed and manoeuvres before the event','Urgent','Download','actions'],
+        ['people','Driver licence, medical fitness, permit to operate and pre-use inspection checklist','HR; fleet office','Tests driver competence and fitness','High','Request copy','organizational'],
+        ['environment','Tyre marks, gouges, final positions and road or haul-road condition, with measurements','Road / haul road','Reconstructs the path and speed','Urgent','Measure','conditions']],
+      photos:[['Final position of the vehicle(s)','All four sides and elevated if possible','Overview','Rest positions relative to road edges and objects'],['Tyre marks and road surface','Along the path of travel','Detail with scale','Length and direction of marks; surface condition'],['Driver\'s view from the cab','Driver\'s seat, at eye height','Mid-range','Visibility and blind spots']] },
+    { re:/\b(conveyor|pulley|conveyor belt|belt conveyor|machine guard|guarding|nip ?point|rotating|machinery|machine|lathe|press|crusher|mill|pump|gearbox)\b/i,
+      items:[['equipment','Machine guards and safety devices: fitted, removed or bypassed; condition of interlocks and pull-wires','Machine','Tests the guarding defence','Urgent','Observe','defences'],
+        ['procedures','Isolation / lockout records: lock register, isolation certificate, test-for-dead','Control room; permit office','Tests whether energy was isolated and verified','Urgent','Request copy','defences'],
+        ['equipment','PLC, SCADA or alarm logs for start/stop and trip events around the time','Control system; engineering','Fixes when the machine moved','Urgent','Download','actions']],
+      photos:[['Guard positions and openings','At the nip point / danger zone','Close-up','Gaps, missing or opened guards'],['Isolation points, locks and tags','At each isolator','Close-up','Lock and tag placement and identity']] },
+    { re:/\b(isolat|lock ?out|loto|energ|electric|shock|arc|cable|switchgear|substation|live)\b/i,
+      items:[['procedures','Electrical isolation certificate, switching programme and test-for-dead record','Electrical control room','Tests the isolation defence','Urgent','Request copy','defences'],
+        ['equipment','Test instruments used: retain and check calibration','Electrician','Tests whether the test-for-dead was valid','High','Collect','defences']],
+      photos:[['Switchgear / isolator position and labelling','Front of the panel','Close-up','Switch positions, labels and locks']] },
+    { re:/\b(height|fall|fell|ladder|scaffold|roof|platform|harness|lanyard|edge|elevated|cherry ?picker|mewp)\b/i,
+      items:[['equipment','Fall-protection equipment: harness, lanyard, anchor point, ladder or scaffold; retain and tag','Scene; equipment store','Tests the fall-protection defence','Urgent','Preserve','defences'],
+        ['procedures','Scaffold tag / inspection register, fall-protection plan and ladder inspection records','Scaffold supervisor; SHE office','Tests inspection and planning','High','Request copy','defences'],
+        ['environment','Height of fall, landing surface and distances, measured','Scene','Severity and mechanism of the fall','Urgent','Measure','conditions']],
+      photos:[['Working position and edge from above','From the working platform','Mid-range','Edge protection and anchor points'],['Landing area','From the working position looking down, and at ground level','Overview','Height and landing surface']] },
+    { re:/\b(drown\w*|boat|swim\w*|flood\w*|spillway|overflow\w*|river|life ?jackets?|ring buoys?|on water|near water)\b/i,
+      items:[['environment','Survey of the water body: depths, water levels, flow and the positions of people, craft and banks, with distances','Survey team; design drawings','Distances, depth and flow cannot be estimated later','Urgent','Measure','conditions'],
+        ['environment','High-water and debris marks, and the flow at outlets or spillways at the time','Banks; walls; telemetry','Fixes the peak level and current; disappears as the water drops','Urgent','Measure','conditions'],
+        ['equipment','Boat or craft, lines and any life jackets, ring buoys or throw lines: quarantine and record condition and where they were kept','Scene; stores','Tests the flotation and rescue defences','Urgent','Preserve','defences'],
+        ['procedures','Site rule or standard for work on or near water, and the emergency plan for water rescue','SHE office; emergency coordinator','Was work on water controlled, and was rescue planned?','High','Request copy','defences'],
+        ['people','Swimming ability and water-safety, rescue and first-aid training of the people involved','Training records; interviews','Tests competence for work on water','High','Request copy','organizational'],
+        ['people','Post-mortem or medical findings on the cause of death or injury','Police; mortuary; clinic','Confirms drowning and any other factors','High','Request copy','conditions']],
+      photos:[['The whole water body from the highest point available','Elevated point or drone','Elevated / aerial','Positions of banks, outlets, craft and people'],['Distance from the last position in the water to the nearest bank','From the bank, with a person or pole for scale','Mid-range','The distance that had to be covered'],['Where life-saving equipment is (or is not) kept','At each access point to the water','Mid-range','Availability of rescue equipment']] },
+    { re:/\b(chemical|spill|leak|gas|fume|vapour|vapor|acid|caustic|toxic|h2s|ammonia|chlorine|hazchem|exposure)\b/i,
+      items:[['equipment','Samples of the substance involved, in suitable sealed containers, labelled','Scene; laboratory','Identifies the substance and concentration','Urgent','Collect','conditions'],
+        ['procedures','Safety data sheet (SDS) and the chemical register entry','SHE office','Hazards and required controls','High','Request copy','defences'],
+        ['equipment','Gas detector readings and logs (fixed and portable) around the time','Control room; gas detector','Measures the exposure','Urgent','Download','defences']],
+      photos:[['Source of the release and extent of the spill','Overview and close-up','Detail with scale','Size, flow direction and the leak point']] },
+    { re:/\b(fire|explosion|burn(s|t|ed)?|ignit\w*|flammable|hot work|welding|gas cutting|flare)\b/i,
+      items:[['procedures','Hot work permit, gas test records and fire watch log','Permit office','Tests the hot-work defences','Urgent','Request copy','defences'],
+        ['environment','Burn patterns and the probable point of origin; do not clean up','Scene','Identifies the ignition source','Urgent','Preserve','conditions']],
+      photos:[['Burn patterns from all sides','Around the fire area','Overview','Spread and point of origin'],['Possible ignition sources','Close up','Detail with scale','Condition of each possible source']] },
+    { re:/\b(crane|lifting|rigging|sling|shackle|suspended load|dropped load|load fell|hoist|chain block)\b/i,
+      items:[['equipment','Lifting gear (slings, shackles, hooks): retain and tag, record SWL markings','Scene','Tests rigging condition and selection','Urgent','Preserve','defences'],
+        ['procedures','Lift plan, crane load chart, and lifting gear inspection register','Lifting supervisor','Tests lift planning and inspection','High','Request copy','defences'],
+        ['people','Crane operator and rigger competence records','Training department','Tests competence for the lift','High','Request copy','organizational'],
+        ['equipment','Crane load-moment indicator / data logger records','Crane','Load and radius at the time','Urgent','Download','actions']],
+      photos:[['Crane set-up and outriggers','Around the crane','Overview','Set-up, ground conditions and radius'],['Rigging and SWL markings','Close up','Detail with scale','Condition and ratings of each item']] },
+    { re:/\b(hand|finger|cut|laceration|knife|grinder|tool|pinch|crush)\b/i,
+      items:[['equipment','The hand tool or power tool involved: condition, guards, and whether it was the right tool','Scene; tool store','Tests tool selection and condition','High','Collect','conditions']],
+      photos:[['Tool involved','On a neutral background','Detail with scale','Condition, guards and markings']] },
+    { re:/\b(slip\w*|tripp\w*|trip hazard|stair\w*|walkway|wet floor|oily|floor|uneven)\b/i,
+      items:[['environment','Floor or walkway condition: contamination, wear, level differences; measure them','Scene','Tests the walking surface as a condition','Urgent','Measure','conditions']],
+      photos:[['Walking surface at the point of the slip or trip','Low angle and close up','Detail with scale','Contamination, defects and level differences']] },
+    { re:/\b(contractor|sub-?contractor|vendor)\b/i,
+      items:[['organisation','Contract, scope of work, appointment, induction records and contractor safety file','Contractor management office','Was the work within the contract scope, and was the contractor managed?','High','Request copy','organizational']] },
+    { re:/\b(night|fatigue|tired|overtime|long shift|sleep)\b/i,
+      items:[['people','Hours of work and rest for the 14 days before the event','Time and attendance','Tests fatigue as a human factor','High','Request copy','conditions']] },
+    { re:/\b(alcohol|drug|substance|intoxicat|breathalys)\b/i,
+      items:[['people','Alcohol and drug test results taken after the event (with time of test)','Clinic; security','Tests impairment as a human factor','Urgent','Request copy','conditions']] },
+    { re:/\b(rain\w*|wind|storm|weather|heat|cold|lightning|dust|visibility|fog)\b/i,
+      items:[['environment','Weather data for the time and place (site station or weather service)','Site weather station; weather service','Tests weather as a workplace factor','High','Download','conditions']] },
+    { re:/\b(radio|communicat\w*|instruction|handover|toolbox|briefing|misunderst\w*|phoned|called)\b/i,
+      items:[['organisation','Shift handover notes, toolbox talk record, call records and the instructions given for the task','Supervisor; shift log','Tests communication','High','Request copy','organizational']] }
+  ];
+  const TEST_RE = /\b(assum\w*|believe\w*|probabl\w*|likely|seem\w*|appear\w*|i think|we think|possibl\w*|suspect\w*|might|may have|could have|concluded?|conclusion|therefore|caused by|because|due to|unclear|not sure|unknown)\b/i;
+  const ASSUME_RE = /\b(assum\w*|believe\w*|probabl\w*|likely|seem\w*|appear\w*|i think|we think|possibl\w*|suspect\w*|might|may have|could have)\b/i;
+  const CONC_RE = /\b(conclu\w*|therefore|caused by|because|due to|the cause)\b/i, OPEN_RE = /\?|\b(unclear|not sure|unknown|whether)\b/i;
+  const row = r => mkItem({cat:r[0], item:r[1], source:r[2], purpose:r[3], priority:r[4], method:r[5], icam:r[6]});
+
+  function starter(c, plan, ctx){
+    const narrative = plan.narrative || '';
+    const text = [narrative, c.initialDescription, c.refinedDescription, c.caseTitle, (ctx && ctx.events || []).map(e=>e.text).join(' ')].join(' ');
+    const items = BASE.items.map(row);
+    const photos = BASE.photos.map(r=>mkPhoto({subject:r[0], position:r[1], view:r[2], purpose:r[3]}));
+    const hit = PACKS.filter(p=>p.re.test(text));
+    hit.forEach(p=>{
+      (p.items||[]).forEach(r=>items.push(row(r)));
+      (p.photos||[]).forEach(r=>photos.splice(Math.max(0, photos.length-1), 0, mkPhoto({subject:r[0], position:r[1], view:r[2], purpose:r[3]})));
+    });
+    const pr = {Urgent:0, High:1, Normal:2};
+    items.sort((a,b)=> CAT_ORDER[a.cat]-CAT_ORDER[b.cat] || pr[a.priority]-pr[b.priority]);
+    const sentences = String(narrative).replace(/\s+/g,' ').split(/(?<=[.!?])\s+(?=[A-Z0-9"'(])/).map(s=>s.trim()).filter(s=>s.length>12);
+    const tests = sentences.filter(s=>TEST_RE.test(s)).slice(0,20).map(s=>mkTest({
+      statement:s, kind: OPEN_RE.test(s) ? 'Open question' : ASSUME_RE.test(s) ? 'Assumption' : CONC_RE.test(s) ? 'Conclusion' : 'Assumption',
+      evidence:'Find independent evidence (records, physical evidence, CCTV, a second witness) that confirms or rules this out.' }));
+    const pres = [].concat((ctx && ctx.events || []).filter(e=>e.status==='presumptive').map(e=>['event', e]), (ctx && ctx.conditions || []).filter(x=>x.status==='presumptive').map(x=>['condition', x]));
+    pres.slice(0,20).forEach(([t, n])=> tests.push(mkTest({ statement:(t==='event'?'Event: ':'Condition: ')+n.text, kind:'Assumption', node:t+':'+n.id,
+      evidence: 'Presumptive on the storyline. Find the evidence that proves it, or change it.' })));
+    return { items, photos, tests, notes:'Starter plan built on this device from standard ICAM PEEPO evidence lists' + (hit.length ? ' and '+hit.length+' incident-specific pack'+(hit.length>1?'s':'') : '') + '. Edit it to fit the incident: remove what does not apply and add what is specific to this case.' };
+  }
+
+  /* ---------- Excel workbook (.xlsx, hand-built, stored zip) ------------------ */
+  const XML_HEAD = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
+  const xe = s => String(s==null?'':s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const colL = n => { let s=''; n++; while(n){ const m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; };
+  // styles: 0 normal, 1 header, 2 body (wrap, border), 3 title, 4 label, 5 note (wrap), 6 urgent body, 7 centred body
+  const STYLES = XML_HEAD + '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
+    '<fonts count="5"><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font><font><b/><sz val="14"/><color rgb="FF1B2430"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><color rgb="FF7A2C22"/><name val="Calibri"/></font></fonts>' +
+    '<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF1D4A51"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF6E1DD"/><bgColor indexed="64"/></patternFill></fill></fills>' +
+    '<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFD3D8E0"/></left><right style="thin"><color rgb="FFD3D8E0"/></right><top style="thin"><color rgb="FFD3D8E0"/></top><bottom style="thin"><color rgb="FFD3D8E0"/></bottom><diagonal/></border></borders>' +
+    '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>' +
+    '<cellXfs count="8"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>' +
+    '<xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment vertical="center" wrapText="1"/></xf>' +
+    '<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf>' +
+    '<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>' +
+    '<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf>' +
+    '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf>' +
+    '<xf numFmtId="0" fontId="4" fillId="3" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf>' +
+    '<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="top" wrapText="1"/></xf>' +
+    '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  function cell(ref, v, s){
+    if(typeof v==='number') return `<c r="${ref}" s="${s}"><v>${v}</v></c>`;
+    if(v==null || v==='') return `<c r="${ref}" s="${s}"/>`;
+    return `<c r="${ref}" s="${s}" t="inlineStr"><is><t xml:space="preserve">${xe(v)}</t></is></c>`;
+  }
+  /* spec: {name, title, sub:[lines], cols:[{h, w, k(row,i)=>value, s?, list?:[]}], rows:[...]} */
+  function tableSheet(spec){
+    const top = [spec.title].concat(spec.sub||[]), hr = top.length+1, n = spec.cols.length, last = colL(n-1);
+    let rows = top.map((t,i)=>`<row r="${i+1}"${i===0?' ht="22" customHeight="1"':''}>${cell('A'+(i+1), t, i===0?3:5)}</row>`).join('');
+    rows += `<row r="${hr}" ht="28" customHeight="1">${spec.cols.map((c,j)=>cell(colL(j)+hr, c.h, 1)).join('')}</row>`;
+    spec.rows.forEach((r,i)=>{
+      const rn = hr+1+i, vals = spec.cols.map(c=>c.k(r,i));
+      const lines = Math.max(1, ...vals.map((v,j)=>Math.ceil(String(v==null?'':v).length / Math.max(4, spec.cols[j].w*1.15))));
+      rows += `<row r="${rn}" ht="${Math.min(160, 14*lines+2)}" customHeight="1">${vals.map((v,j)=>cell(colL(j)+rn, v, spec.cols[j].s ? spec.cols[j].s(r) : 2)).join('')}</row>`;
+    });
+    const lastRow = hr + Math.max(1, spec.rows.length);
+    const merges = top.map((t,i)=>`<mergeCell ref="A${i+1}:${last}${i+1}"/>`).join('');
+    const dv = spec.cols.map((c,j)=> c.list ? `<dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="${colL(j)}${hr+1}:${colL(j)}${hr+300}"><formula1>"${xe(c.list.join(','))}"</formula1></dataValidation>` : '').filter(Boolean);
+    return XML_HEAD + '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
+      '<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>' +
+      `<sheetViews><sheetView workbookViewId="0"><pane ySplit="${hr}" topLeftCell="A${hr+1}" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>` +
+      '<sheetFormatPr defaultRowHeight="14"/>' +
+      `<cols>${spec.cols.map((c,j)=>`<col min="${j+1}" max="${j+1}" width="${c.w}" customWidth="1"/>`).join('')}</cols>` +
+      `<sheetData>${rows}</sheetData>` +
+      `<autoFilter ref="A${hr}:${last}${lastRow}"/>` +
+      `<mergeCells count="${top.length}">${merges}</mergeCells>` +
+      (dv.length ? `<dataValidations count="${dv.length}">${dv.join('')}</dataValidations>` : '') +
+      '<pageMargins left="0.4" right="0.4" top="0.5" bottom="0.5" header="0.3" footer="0.3"/>' +
+      '<pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/>' +
+      `<headerFooter><oddFooter>${xe('&L'+spec.name+'&RPage &P of &N')}</oddFooter></headerFooter></worksheet>`;
+  }
+  function planSheet(c, p){
+    const s = stats(p);
+    const kv = [['Incident', c.caseTitle||''], ['Date and time', [c.dateOccurred, c.timeOccurred].filter(Boolean).join(' ')], ['Facility and location', [c.facility, c.location].filter(Boolean).join(', ')],
+      ['Incident type', c.incidentType||''], ['Severity', `Actual ${c.actualSeverity||1} · Potential ${c.potentialSeverity||1}`],
+      ['Plan prepared', p.generatedAt ? p.generatedAt.slice(0,10) + (p.source ? ' ('+p.source+')' : '') : ''],
+      ['Progress', `${s.got} of ${s.items} evidence items collected · ${s.taken} of ${s.photos} photos taken · ${s.tested} of ${s.tests} statements tested`]];
+    let r = 1, rows = `<row r="1" ht="22" customHeight="1">${cell('A1', 'ICAM evidence collection plan (PEEPO)', 3)}</row>`;
+    r = 3;
+    kv.forEach(([k,v])=>{ rows += `<row r="${r}">${cell('A'+r, k, 4)}${cell('B'+r, v, 5)}</row>`; r++; });
+    const block = (label, text)=>{
+      r++; rows += `<row r="${r}">${cell('A'+r, label, 4)}</row>`; r++;
+      const lines = Math.ceil(String(text||'').length/120) + String(text||'').split('\n').length;
+      rows += `<row r="${r}" ht="${Math.min(409, Math.max(15, 13.5*lines))}" customHeight="1">${cell('A'+r, text||'', 5)}</row>`; r++;
+    };
+    block("Investigator's account", p.narrative||'');
+    if(p.notes) block('Advice on preserving the scene and order of collection', p.notes);
+    block('PEEPO categories', CATS.map(x=>'• '+x.l+': '+x.d).join('\n'));
+    block('Photography good practice', PHOTO_TIPS.map(t=>'• '+t).join('\n'));
+    r++; rows += `<row r="${r}">${cell('A'+r, 'Prepared with the Istec Training Storyline Casebook. A planning aid: the investigation lead decides what is collected.', 5)}</row>`;
+    const merges = [], seen = new Set();
+    rows.replace(/<row r="(\d+)"[^>]*><c r="A\d+" s="5"/g, (x, n)=>{ if(!seen.has(n) && +n>9){ merges.push(`<mergeCell ref="A${n}:B${n}"/>`); seen.add(n); } return x; });
+    return XML_HEAD + '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><sheetViews><sheetView workbookViewId="0" showGridLines="0"/></sheetViews><sheetFormatPr defaultRowHeight="14"/>' +
+      '<cols><col min="1" max="1" width="28" customWidth="1"/><col min="2" max="2" width="90" customWidth="1"/></cols>' +
+      `<sheetData>${rows}</sheetData>` + (merges.length ? `<mergeCells count="${merges.length}">${merges.join('')}</mergeCells>` : '') +
+      '<pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="portrait" fitToWidth="1" fitToHeight="0"/></worksheet>';
+  }
+  const CRC = (()=>{ const t = new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = c&1 ? 0xEDB88320^(c>>>1) : c>>>1; t[n]=c>>>0; } return t; })();
+  const crc32 = b => { let c = 0xFFFFFFFF; for(let i=0;i<b.length;i++) c = CRC[(c^b[i])&0xFF]^(c>>>8); return (c^0xFFFFFFFF)>>>0; };
+  const enc = s => new TextEncoder().encode(s);
+  function zip(files){
+    const parts = [], cd = []; let off = 0;
+    const d = new Date(), time = (d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1), date = ((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate();
+    files.forEach(f=>{
+      const name = enc(f.name), data = typeof f.data==='string' ? enc(f.data) : f.data, crc = crc32(data);
+      const h = new DataView(new ArrayBuffer(30));
+      h.setUint32(0,0x04034b50,true); h.setUint16(4,20,true); h.setUint16(6,0x0800,true); h.setUint16(8,0,true); h.setUint16(10,time,true); h.setUint16(12,date,true);
+      h.setUint32(14,crc,true); h.setUint32(18,data.length,true); h.setUint32(22,data.length,true); h.setUint16(26,name.length,true); h.setUint16(28,0,true);
+      parts.push(new Uint8Array(h.buffer), name, data);
+      const c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0,0x02014b50,true); c.setUint16(4,20,true); c.setUint16(6,20,true); c.setUint16(8,0x0800,true); c.setUint16(10,0,true); c.setUint16(12,time,true); c.setUint16(14,date,true);
+      c.setUint32(16,crc,true); c.setUint32(20,data.length,true); c.setUint32(24,data.length,true); c.setUint16(28,name.length,true); c.setUint32(42,off,true);
+      cd.push(new Uint8Array(c.buffer), name);
+      off += 30 + name.length + data.length;
+    });
+    const cdSize = cd.reduce((a,b)=>a+b.length, 0);
+    const e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0,0x06054b50,true); e.setUint16(8,files.length,true); e.setUint16(10,files.length,true); e.setUint32(12,cdSize,true); e.setUint32(16,off,true);
+    const all = parts.concat(cd, [new Uint8Array(e.buffer)]);
+    const out = new Uint8Array(all.reduce((a,b)=>a+b.length, 0)); let q = 0; all.forEach(b=>{ out.set(b,q); q+=b.length; });
+    return out;
+  }
+  /* nodeName(ref) -> readable storyline element for the tests sheet; icamName(key) -> ICAM element name */
+  function xlsx(c, plan, nodeName, icamName){
+    const p = normalise(plan);
+    const caseLine = (c.caseTitle||'') + (c.dateOccurred ? ' · '+c.dateOccurred : '') + (c.facility ? ' · '+c.facility : '');
+    const urgent = r => r.priority==='Urgent' ? 6 : 2;
+    const icamList = ['defences','actions','conditions','organizational'].map(k=>icamName(k));
+    const sheets = [
+      { name:'Plan', xml:planSheet(c, p) },
+      { name:'Evidence checklist', xml:tableSheet({ name:'Evidence checklist', title:'Evidence collection checklist (ICAM PEEPO)', sub:[caseLine, 'Urgent = perishable: collect first. PEEPO: People, Environment, Equipment, Procedures, Organisation.'],
+        rows:p.items, cols:[
+          {h:'No.', w:5, k:(r,i)=>i+1, s:()=>7}, {h:'PEEPO category', w:14, k:r=>CAT_NAME[r.cat], list:CATS.map(x=>x.l)},
+          {h:'Evidence to collect', w:46, k:r=>r.item, s:urgent}, {h:'Where / from whom', w:26, k:r=>r.source}, {h:'Why (what it tests)', w:34, k:r=>r.purpose},
+          {h:'ICAM element it informs', w:22, k:r=>icamName(r.icam), list:icamList},
+          {h:'Priority', w:9, k:r=>r.priority, list:PRIORITY, s:urgent}, {h:'Method', w:13, k:r=>r.method, list:METHODS}, {h:'Owner', w:14, k:r=>r.owner},
+          {h:'Due', w:11, k:r=>r.due}, {h:'Status', w:12, k:r=>r.status, list:ITEM_STATUS}, {h:'Evidence ref', w:12, k:r=>r.ref}, {h:'Notes', w:28, k:r=>r.notes}] }) },
+      { name:'Photography schedule', xml:tableSheet({ name:'Photography schedule', title:'Photography schedule', sub:[caseLine, 'Shoot in this order: overviews first, then mid-range, then close-ups with a scale. Log every photo number against its line.'],
+        rows:p.photos, cols:[
+          {h:'Shot', w:6, k:(r,i)=>i+1, s:()=>7}, {h:'Subject', w:38, k:r=>r.subject}, {h:'Camera position / direction', w:34, k:r=>r.position},
+          {h:'View', w:15, k:r=>r.view, list:VIEWS}, {h:'What it must show', w:40, k:r=>r.purpose}, {h:'Taken', w:8, k:r=>r.taken?'Yes':'No', list:['Yes','No'], s:()=>7},
+          {h:'Photo no. / file', w:16, k:r=>r.ref}, {h:'Notes', w:26, k:r=>r.notes}] }) },
+      { name:'Statements to test', xml:tableSheet({ name:'Statements to test', title:'Assumptions and conclusions to test', sub:[caseLine, 'Nothing goes into the report as a fact until the evidence supports it.'],
+        rows:p.tests, cols:[
+          {h:'No.', w:5, k:(r,i)=>i+1, s:()=>7}, {h:'Statement', w:50, k:r=>r.statement}, {h:'Type', w:14, k:r=>r.kind, list:KINDS},
+          {h:'Evidence that would confirm or refute it', w:50, k:r=>r.evidence}, {h:'Storyline element', w:34, k:r=>nodeName(r.node)},
+          {h:'Status', w:13, k:r=>r.status, list:TEST_STATUS}] }) }
+    ];
+    const files = [
+      { name:'[Content_Types].xml', data: XML_HEAD + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+        sheets.map((s,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('') +
+        '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>' },
+      { name:'_rels/.rels', data: XML_HEAD + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>' },
+      { name:'docProps/core.xml', data: XML_HEAD + `<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>${xe('Evidence collection plan - '+(c.caseTitle||''))}</dc:title><dc:creator>Istec Training Storyline Casebook</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${new Date().toISOString().slice(0,19)}Z</dcterms:created></cp:coreProperties>` },
+      { name:'xl/workbook.xml', data: XML_HEAD + '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><bookViews><workbookView activeTab="1"/></bookViews><sheets>' +
+        sheets.map((s,i)=>`<sheet name="${xe(s.name)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('') + '</sheets><definedNames>' +
+        sheets.slice(1).map((s,i)=>{ const hr = 4, n = [13,8,6][i], rows = [p.items, p.photos, p.tests][i].length; return `<definedName name="_xlnm._FilterDatabase" localSheetId="${i+1}" hidden="1">'${xe(s.name)}'!$A$${hr}:$${colL(n-1)}$${hr+Math.max(1,rows)}</definedName><definedName name="_xlnm.Print_Titles" localSheetId="${i+1}">'${xe(s.name)}'!$${hr}:$${hr}</definedName>`; }).join('') +
+        '</definedNames></workbook>' },
+      { name:'xl/_rels/workbook.xml.rels', data: XML_HEAD + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        sheets.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('') +
+        `<Relationship Id="rId${sheets.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>` },
+      { name:'xl/styles.xml', data: STYLES }
+    ].concat(sheets.map((s,i)=>({ name:`xl/worksheets/sheet${i+1}.xml`, data:s.xml })));
+    return zip(files);
+  }
+
+  return { CATS, CAT_KEYS, CAT_NAME, PRIORITY, METHODS, ITEM_STATUS, VIEWS, KINDS, TEST_STATUS, PHOTO_TIPS, blank, normalise, hasContent, stats, evidenceType, mkItem, mkPhoto, mkTest, prompt, parseText, fromAnswer, starter, xlsx };
+})();
+/* @@CBP-END */
+
 /* ---------- reference / sample case (static, read-only, no db) ---------- */
 const SAMPLE = buildSampleCase();
 function buildSampleCase(){
@@ -948,6 +1401,141 @@ function buildSampleCase(){
   return c;
 }
 
+/* @@DAM-BEGIN ---------- training case CB-EX-02 (read-only, no db) ---------
+   Anonymised, based on a real event. Learners get the initial report, the
+   first evidence, the ICAM PEEPO evidence plan and the core storyline; they
+   add conditions, ICAM coding, causes and actions in a practice copy. The
+   full answer is facilitator material, kept out of the app. */
+function buildDamCase(){
+  const c = Object.assign({id:'sample-dam', isSample:true, training:true, ref:'CB-EX-02'}, newCaseDefaults());
+  c.caseTitle = 'Contractor worker drowned at an overflowing return-water dam (Training Case CB-EX-02)';
+  c.facility = 'Ridgeview Vanadium Mine (fictional), Mpumalanga'; c.location = 'North return-water dam and pump installation';
+  c.incidentType = 'Personal Injury'; c.dateOccurred = '2026-02-14'; c.timeOccurred = '15:40';
+  c.reportedBy = 'Control room operator (shift)'; c.reportedAt = '2026-02-14T15:48:00.000Z';
+  c.personsInvolved = 'Worker A, contractor (deceased); Worker B, contractor (in the boat, reached the bank, hospitalised); Worker C, contractor (held the line from the bank); contractor owner; engineering manager; control room operator.';
+  c.initialDescription = 'After heavy rain higher up in the catchment, the north return-water dam rose quickly and overflowed, and the pump installation at the dam was flooded. At the engineering manager\'s request, the owner of a civils contractor on site took three of his workers to help recover the pumps. Two workers went out on the dam in an old boat while the third held a line from the bank. The boat drifted towards the spillway and the two workers left it to swim to the bank. Worker B reached the bank; Worker A drowned. Police divers recovered his body at about 17:30.';
+  c.refinedDescription = '';
+  c.actualSeverity = 5; c.potentialSeverity = 5;
+  c.immediateActionsTaken = 'Emergency services and police called; dam access closed; all work at the dam stopped; Worker B taken to hospital; family informed through the contractor; scene to be held until the investigation team releases it.';
+  c.sceneSecured = true; c.accessLogStarted = false;
+  c.notificationsRequired = 'Fatality: regulator (DMRE Inspector of Mines) notified immediately; police inquest; insurers; contractor\'s compensation fund.';
+  c.status = 'investigating';
+  c.investigationTeam = [
+    {id:'t1', name:'Lead investigator (ICAM trained)', role:'Lead Investigator', customRole:'', organization:'Mine SHE department', contact:'', notes:'Independent of the engineering department'},
+    {id:'t2', name:'Engineering superintendent (not involved in the event)', role:'Technical Specialist / Engineer', customRole:'', organization:'Mine engineering', contact:'', notes:'Dam and pump knowledge'},
+    {id:'t3', name:'Contractor management officer', role:'Management Representative', customRole:'', organization:'Mine procurement', contact:'', notes:'Contractor process'},
+    {id:'t4', name:'Workforce safety representative', role:'Employee Representative', customRole:'', organization:'Mine', contact:'', notes:''}
+  ];
+  c.involvedPersons = [
+    {id:'p1', name:'Worker A (deceased)', role:'Injured Party', customRole:'', organization:'Civils contractor', contact:'', notes:'Was in the boat; could not swim (to be confirmed)'},
+    {id:'p2', name:'Worker B (survivor)', role:'Witness / Eyewitness', customRole:'', organization:'Civils contractor', contact:'', notes:'The only witness from the boat; in hospital, not yet interviewed'},
+    {id:'p3', name:'Worker C (shore attendant)', role:'Witness / Eyewitness', customRole:'', organization:'Civils contractor', contact:'', notes:'Held the line from the bank'},
+    {id:'p4', name:'Contractor owner', role:'Contractor', customRole:'', organization:'Civils contractor', contact:'', notes:'Agreed to the request; on the bank'},
+    {id:'p5', name:'Engineering manager', role:'Other', customRole:'Engineering manager (made the request)', organization:'Mine engineering', contact:'', notes:''},
+    {id:'p6', name:'Control room operator', role:'Equipment Operator', customRole:'', organization:'Mine', contact:'', notes:'On shift; reported the flooding'},
+    {id:'p7', name:'Police diver unit', role:'First Responder / Medic', customRole:'', organization:'SAPS', contact:'', notes:'Recovered the body'}
+  ];
+  c.evidence = [
+    {id:'EV-001', type:'Technical / Data Record', description:'Control room occurrence book: handwritten entries for the dam flooding (about 14:50) and the call to the engineering manager. No dam-level alarm entry.', source:'Control room', collectedBy:'Lead investigator', collectedAt:'2026-02-15', status:'Logged'},
+    {id:'EV-002', type:'Documentary', description:'Police recovery report: body recovered at about 17:30 "near the spillway approach". No measured position.', source:'SAPS', collectedBy:'Lead investigator', collectedAt:'2026-02-15', status:'Logged'},
+    {id:'EV-003', type:'Photograph / Video', description:'Six phone photos taken by a security officer about an hour after the event from the dam wall: water over the spillway, the boat caught against debris. No scale; two have no time stamp.', source:'Security officer\'s phone', collectedBy:'Lead investigator', collectedAt:'2026-02-15', status:'Logged'},
+    {id:'EV-004', type:'Technical / Data Record', description:'Plant rain gauge daily totals for 12 to 14 February (at the plant, not in the upper catchment).', source:'Plant weather station', collectedBy:'Engineering superintendent', collectedAt:'2026-02-15', status:'Logged'}
+  ];
+  c.events = [
+    {id:'d1', time:'13–14 Feb', text:'Heavy rain falls in the upper catchment of the north return-water dam.', status:'presumptive', evidenceIds:['EV-004'], lane:0, order:0, mergeTo:null},
+    {id:'d2', time:'~14:30', text:'Inflow raises the dam level quickly and the dam overflows at the spillway.', status:'presumptive', evidenceIds:['EV-003'], lane:0, order:1, mergeTo:null},
+    {id:'d3', time:'~14:50', text:'Control room operator sees the pump installation flooding and calls the engineering manager.', status:'presumptive', evidenceIds:['EV-001'], lane:0, order:2, mergeTo:null},
+    {id:'d4', time:'~15:00', text:'Engineering manager phones the contractor owner and asks him to help recover the pumps.', status:'presumptive', evidenceIds:[], lane:0, order:3, mergeTo:null},
+    {id:'d5', time:'~15:20', text:'Two contractor workers go out on the dam in an old boat; a third holds a line from the bank.', status:'presumptive', evidenceIds:[], lane:0, order:4, mergeTo:null},
+    {id:'d6', time:'~15:30', text:'Boat drifts towards the spillway and the line is pulled from the shore attendant\'s hands.', status:'presumptive', evidenceIds:[], lane:0, order:5, mergeTo:null},
+    {id:'d7', time:'~15:35', text:'Both workers leave the boat and try to swim to the bank.', status:'presumptive', evidenceIds:[], lane:0, order:6, mergeTo:null},
+    {id:'d8', time:'~15:40', text:'Worker B reaches the bank.', status:'presumptive', evidenceIds:[], lane:0, order:7, mergeTo:null},
+    {id:'d9', time:'~15:40', text:'Worker A goes under and drowns.', status:'proven', evidenceIds:['EV-002'], lane:0, order:8, mergeTo:null},
+    {id:'d10', time:'~17:30', text:'Police divers recover the body of Worker A.', status:'proven', evidenceIds:['EV-002'], lane:0, order:9, mergeTo:null}
+  ];
+  c.conditions = []; c.icamFactors = []; c.contributingFactors = []; c.rootCauses = []; c.keyLearnings = []; c.correctiveActions = [];
+  c.rootCause = { immediateCauses:'' };
+  const I = (cat, item, source, purpose, priority, method, icam) => ({cat, item, source, purpose, priority, method, icam});
+  const PH = (subject, position, view, purpose) => ({subject, position, view, purpose});
+  const TS = (statement, kind, evidence, node) => ({statement, kind, evidence, node:node||''});
+  const plan = CBP.normalise({
+    source:'Worked example', generatedAt:'2026-02-15T08:00:00.000Z', useChart:true,
+    narrative: 'On the afternoon of 14 February, after heavy rain higher up in the catchment, the north return-water dam rose fast and started to overflow. As far as I can tell the control room only noticed when the pump installation was already being flooded; I assume there was no warning from upstream. The engineering manager phoned the owner of the civils contractor who was on site for other work and asked him to help get the pumps out. I believe this was a one-off request in the emergency, but contractors here are often asked to do odd jobs outside their scope because the contractor process is slow.\n\nThe contractor owner brought three of his workers. Two of them went out in an old aluminium boat that had been lying behind the pump station for years; nobody I spoke to knows when it was last used or checked. The third worker stayed on the bank holding a rope tied to the boat. He says the current and the wind pushed the boat towards the spillway and the rope was pulled out of his hands. The two in the boat probably panicked when they saw they were heading for the overflow wall, and they went into the water to swim to the bank. Worker B made it to the bank; Worker A could not swim and drowned. I think they misjudged the distance to the bank, which looks like 15 to 20 m, and their overalls and safety boots would have dragged them down. Worker B was taken to hospital and has not been interviewed yet. There were no life jackets, ring buoys or throw lines at the dam. Nobody did a risk assessment or planned the job, and as far as we know none of them had any training for working on water, rescue or first aid for drowning.\n\nWhat we do not have yet: drawings of the dam with depths and levels, the spillway height, the positions of the boat and the people, the time line of the alarm and the phone calls, and the wind direction and speed at the time.',
+    notes: 'The scene changes fast once the dam level drops: survey the water line, the debris line and the boat position first. Secure the control room level records, phone records and any CCTV today. Interview Worker B, the shore attendant, the contractor owner and the engineering manager separately and as soon as possible, and fix the time line before anything else.',
+    items: [
+      I('people','Interview Worker B, the survivor (separately, as soon as medically fit, with support available)','Worker B; hospital','The only person who was in the boat: why they left it, what they could see, how he reached the bank','Urgent','Interview','actions'),
+      I('people','Interview Worker C, the shore attendant (separately, as soon as fit)','Worker C','Eyewitness from the bank to the drift and to the workers leaving the boat','Urgent','Interview','actions'),
+      I('people','Interview the contractor owner','Contractor owner','What was asked, what he agreed to, how the boat was chosen, what briefing he gave','Urgent','Interview','actions'),
+      I('people','Interview the engineering manager','Engineering manager','Why the request was made, what alternatives were considered, who else knew','Urgent','Interview','actions'),
+      I('people','Interview the control room operator(s) on shift','Control room','When the rising level and the flooding were first noticed and reported','Urgent','Interview','defences'),
+      I('people','Interview the recovery and emergency team and the first responders','Emergency team; security; SAPS','Response times, rescue equipment available, first aid given','High','Interview','defences'),
+      I('people','Post-mortem results and medical reports','SAPS; mortuary; hospital','Confirms the cause of death and any other factors','High','Request copy','conditions'),
+      I('people','Training records of the contractor owner and the three workers: water safety, rescue, first aid, swimming ability','Contractor; training department','Tests the account that nobody was trained or could swim','High','Request copy','organizational'),
+      I('environment','Surveyed plan and cross-section of the dam: depths, water levels, spillway crest height, pump station and the bank where the line was held','Survey team; dam design drawings','There are no drawings or measurements yet; needed for distances and the drift path','Urgent','Measure','conditions'),
+      I('environment','Flood debris line and high-water marks around the dam, spillway and pump station','Dam walls and banks','Fixes the peak level; disappears as the water drops','Urgent','Measure','conditions'),
+      I('environment','Positions where the boat was launched and found, where the line was held, where Worker B came ashore and where Worker A was recovered, with distances','Recovery team; Worker C; SAPS','Reconstructs the drift path and the swim distance (assumed 15 to 20 m)','Urgent','Measure','conditions'),
+      I('environment','Wind direction and speed, and the flow at the spillway at the time','Site weather station; weather service; pump records','Tests the account that current and wind pushed the boat','Urgent','Download','conditions'),
+      I('environment','Rainfall data for the upper catchment for the 24 hours before (weather service, upstream gauges)','Weather service; water authority','Tests the assumption that no upstream warning was available','High','Download','defences'),
+      I('environment','Photos or videos taken by anyone on site during the event, on phones','Witnesses; security; recovery team','May show positions, conditions and wind','High','Collect','conditions'),
+      I('equipment','The boat: quarantine it; record condition, leaks, oars or motor, capacity plate, rope attachment point','Recovery site','Was the boat fit for use? Was it ever inspected?','Urgent','Preserve','defences'),
+      I('equipment','The rope or line used from the bank: length, type, condition, how it was held or tied','Recovery site; Worker C','Tests whether the shore control could ever have held the boat','Urgent','Preserve','defences'),
+      I('equipment','Clothing, boots and PPE worn by both workers in the boat','SAPS; mortuary; Worker B','Tests the account that clothing and boots hampered swimming; compare survivor and deceased','High','Collect','defences'),
+      I('equipment','Any life jackets, ring buoys or throw lines anywhere on site, and where they are kept','Stores; emergency team','Was life-saving equipment available at all?','High','Observe','defences'),
+      I('equipment','Dam level, pump and alarm logs (SCADA / telemetry) for the day','Control room; engineering','Time line: when the level rose and when the alarm (if any) went off','Urgent','Download','defences'),
+      I('equipment','Phone and radio records of the calls between the control room, the engineering manager and the contractor owner','IT; mobile records; radio logs','Time line of the request and the response','Urgent','Download','actions'),
+      I('equipment','CCTV covering the dam, pump station or access road','Security','Independent record of the drift and the time line','Urgent','Download','actions'),
+      I('procedures','Dam operating manual or procedure, including flood trigger levels and the emergency plan for the dam','Engineering; document control','Was a flood response defined?','High','Request copy','defences'),
+      I('procedures','Any risk assessment, permit or job plan for the task, and the site rule for work on or near water','SHE office; permit office','Confirms that no pre-task risk assessment was done; was work on water controlled?','High','Request copy','defences'),
+      I('procedures','Site emergency plan: does it cover water rescue at the dams?','Emergency coordinator; SHE office','Was rescue from the water planned and resourced?','High','Request copy','defences'),
+      I('organisation','Contract, scope of work, site appointment and induction records of the contractor and the three workers','Contractor management office','Tests scope creep: was this work within the contract?','High','Request copy','organizational'),
+      I('organisation','Records of other jobs asked of contractors outside their scope in the last 12 months','Contractor management office; purchase orders; job cards','Tests the belief that scope creep is routine','Normal','Request copy','organizational'),
+      I('organisation','Contractor management procedure and how long onboarding and approval normally take','Contractor management office','Tests "the contractor process is slow"','Normal','Request copy','organizational'),
+      I('organisation','Asset or stores records for the old boat: when it came to site, last use, any inspection, who owns it','Stores; engineering','Why was an unused boat available for use?','Normal','Request copy','organizational'),
+      I('organisation','Previous incidents, near misses or audit findings for the dams, the pump station or work on water','SHE incident database','Was the risk known before?','Normal','Request copy','organizational')
+    ],
+    photos: [
+      PH('Overview of the whole dam from the highest point available','Elevated point above the dam (or drone)','Elevated / aerial','Dam, spillway, pump station, the bank where the line was held, and where the boat ended up'),
+      PH('Overview from the bank where the line was held, looking towards the spillway','At the shore attendant\'s position','Overview','What the shore attendant saw; distance to the spillway'),
+      PH('Overview from the spillway back towards the pump station','On the spillway side, safely back from the edge','Overview','The drift path in reverse'),
+      PH('Overview of the pump installation and the flooded equipment','From the access road','Overview','What the job was meant to recover'),
+      PH('Spillway crest and the drop on the downstream side','Beside the spillway, and from downstream','Mid-range','Height of the wall the workers feared going over'),
+      PH('Flood debris line and high-water marks, with a scale','At the pump station and on the dam wall','Detail with scale','Peak water level'),
+      PH('Where the line was held or tied on the bank','Close to the bank','Mid-range','Anchor point, ground conditions, footing for the attendant'),
+      PH('Distance from the boat\'s last position to the nearest bank (with a person or pole for scale)','From the bank','Mid-range','The swim distance the workers misjudged'),
+      PH('The boat as recovered, all four sides','Around the boat on land','Overview','General condition'),
+      PH('Boat details: capacity plate, hull damage or leaks, rope attachment, oars','Close up','Detail with scale','Fitness for use'),
+      PH('Rope or line used, laid out full length with a tape','On a clean surface','Detail with scale','Length, type and condition'),
+      PH('Where the boat was stored before the event','Behind the pump station','Mid-range','How accessible and uncontrolled it was'),
+      PH('Clothing, boots and PPE of the workers','On a neutral background','Detail with scale','Type and weight of clothing; any buoyancy'),
+      PH('Location of the nearest life-saving equipment (or its absence) at the dam','At the dam access points','Mid-range','Shows no ring buoy or throw line at the dam'),
+      PH('Signs and access control at the dam (warnings, fences, gates)','At each access point','Mid-range','Whether access to the water was controlled'),
+      PH('Weather station or wind indicator, and the sky and water surface conditions on the day after','At the weather station; across the dam','Mid-range','Supports the wind and current account')
+    ],
+    tests: [
+      TS('There was no early warning of the inflow from the upper catchment','Assumption','Weather service and upstream gauge data; control room log; any flood warning sent','event:d1'),
+      TS('The control room noticed the rising level only when the pumps were already flooding','Assumption','SCADA level and alarm log; control room interview; occurrence book (EV-001)','event:d3'),
+      TS('The request to the contractor was a one-off decision in the emergency','Conclusion','Engineering manager and contractor owner interviews; phone records','event:d4'),
+      TS('Contractors are routinely asked to do work outside their scope because the contractor process is slow','Assumption','Records of out-of-scope jobs; contractor management procedure and approval times; interviews with other contractors'),
+      TS('The boat had not been used or inspected for years','Assumption','Stores and asset records; boat condition; interviews'),
+      TS('The current and wind pushed the boat faster than the shore attendant could hold it','Assumption','Wind data; spillway flow; rope condition and anchor; Worker C interview; phone photos (EV-003)','event:d6'),
+      TS('The workers left the boat because they feared going over the spillway','Assumption','Worker B and Worker C accounts; position of the boat when found; any video','event:d7'),
+      TS('The swim distance to the bank was 15 to 20 m','Open question','Survey of the boat position and the bank'),
+      TS('Their clothing and boots hampered swimming','Assumption','Clothing and boots recovered; post-mortem; expert opinion'),
+      TS('Worker A could not swim; none of them had water-safety, rescue or first-aid training','Assumption','Training records; Worker B, contractor and family interviews','event:d9'),
+      TS('How Worker B reached the bank (swam, held on to the boat, was pulled out?)','Open question','Worker B and Worker C interviews; recovery team','event:d8'),
+      TS('No risk assessment, permit or job plan was made for the task','Conclusion','Permit office and SHE records; interviews'),
+      TS('No life jackets, ring buoys or throw lines were available at the dam','Conclusion','Site inspection; stores records; emergency team interview')
+    ]
+  });
+  plan.items.forEach((it,i)=>{ it.id = 'pi'+(i+1); });
+  plan.photos.forEach((it,i)=>{ it.id = 'pp'+(i+1); });
+  plan.tests.forEach((it,i)=>{ it.id = 'pt'+(i+1); });
+  c.evidencePlan = [Object.assign({id:'main'}, plan)];
+  return c;
+}
+/* @@DAM-END */
+const SAMPLES = { sample:SAMPLE, dam:buildDamCase() };
+
 /* ---------- app state ----------------------------------------------------*/
 const state = {
   screen:'dashboard',     // dashboard | caselist | case | sample
@@ -955,7 +1543,10 @@ const state = {
   stage:'initial',
   cases:[],               // case list summaries
   openCase:null,          // header doc of the currently open case
-  evidence:[], events:[], conditions:[], icamFactors:[], correctiveActions:[], contributingFactors:[], rootCauses:[], keyLearnings:[], photos:[], investigationTeam:[], involvedPersons:[], evidenceFiles:[], diagrams:[],
+  evidence:[], events:[], conditions:[], icamFactors:[], correctiveActions:[], contributingFactors:[], rootCauses:[], keyLearnings:[], photos:[], investigationTeam:[], involvedPersons:[], evidenceFiles:[], diagrams:[], evidencePlan:[],
+  sampleId:'sample',      // which read-only reference / training case is open
+  sampleHandle:null,      // Claude (the `sample` capability), when this page may ask Claude
+  plan:{ view:'register', busy:false, ctl:null, msg:'', err:'', ask:null, pending:null, paste:false, filter:'all', aiOff:false },  // Stage 2 evidence plan (UI only)
   chartView:'drawio',     // Stage 4: show the imported draw.io picture (when one exists) or the auto chart
   unsub:[],               // active onSnapshot unsubscribers for the open case
   unsubList:null,
@@ -968,7 +1559,7 @@ const state = {
 };
 function defaultFilters(){ return { dateFrom:null, dateTo:null, sevMin:1, sevMax:5, facility:'', status:'' }; }
 
-function activeCase(){ return state.screen==='sample' ? SAMPLE : state.openCase; }
+function activeCase(){ return state.screen==='sample' ? (SAMPLES[state.sampleId]||SAMPLE) : state.openCase; }
 function isReadOnly(){ return state.screen==='sample'; }
 function isTyping(){ const ae=document.activeElement; return ae && (ae.tagName==='INPUT'||ae.tagName==='TEXTAREA'); }
 function safeRerender(){ if(!isTyping()) renderStagePanel(); }
@@ -992,6 +1583,7 @@ function toastUndo(msg, undoFn){ showToast(msg, undoFn); }
 function describeDbError(e){ if(!e) return 'unknown error'; return (e.code||'error')+(e.message?(' \u2014 '+e.message):''); }
 function listenErr(e){ state.connStatus='off'; state.connError=e; render(); }
 (async function init(){
+  window.claude.use('sample').then(s=>{ state.sampleHandle = typeof s==='function' ? s : null; if(state.sampleHandle && state.stage==='evidence' && state.plan.view==='plan' && (state.screen==='case')) safeRerender(); }).catch(()=>{});
   try{ state.dbHandle = await window.claude.use('db'); }catch(e){ state.dbHandle=null; }
   try{ state.downloadsHandle = await window.claude.use('downloads'); }catch(e){ state.downloadsHandle=null; }
   if(state.dbHandle){
@@ -1053,7 +1645,9 @@ function unsubscribeCase(){ state.unsub.forEach(u=>{ try{u();}catch(e){} }); sta
 function goHome(screen){ unsubscribeCase(); state.openCase=null; state.screen=screen||'caselist'; render(); if(state.screen==='dashboard' && state.dbHandle) loadDashboardData(); }
 function openCase(id){
   unsubscribeCase();
-  state.evidence=[]; state.events=[]; state.conditions=[]; state.icamFactors=[]; state.correctiveActions=[]; state.contributingFactors=[]; state.rootCauses=[]; state.keyLearnings=[]; state.photos=[]; state.investigationTeam=[]; state.involvedPersons=[]; state.evidenceFiles=[]; state.diagrams=[]; state.chartView='drawio'; state.openCase=null; state.expandedFiles=new Set();
+  state.evidence=[]; state.events=[]; state.conditions=[]; state.icamFactors=[]; state.correctiveActions=[]; state.contributingFactors=[]; state.rootCauses=[]; state.keyLearnings=[]; state.photos=[]; state.investigationTeam=[]; state.involvedPersons=[]; state.evidenceFiles=[]; state.diagrams=[]; state.evidencePlan=[]; state.chartView='drawio'; state.openCase=null; state.expandedFiles=new Set();
+  if(state.plan.ctl) try{ state.plan.ctl.abort(); }catch(e){}
+  Object.assign(state.plan, { busy:false, ctl:null, msg:'', err:'', ask:null, pending:null, paste:false, filter:'all' });
   state.screen='case'; state.stage='initial'; render();
   let sawCaseOnce=false;
   state.unsub.push(caseDoc(id).onSnapshot(d=>{
@@ -1073,6 +1667,7 @@ function openCase(id){
   state.unsub.push(caseCol(id,'involvedPersons').onSnapshot(s=>{ state.involvedPersons = s.docs.map(d=>Object.assign({id:d.id}, d.data())); safeRerender(); }, listenErr));
   state.unsub.push(caseCol(id,'evidenceFiles').onSnapshot(s=>{ state.evidenceFiles = s.docs.map(d=>Object.assign({id:d.id}, d.data())); safeRerender(); }, listenErr));
   state.unsub.push(caseCol(id,'diagrams').onSnapshot(s=>{ state.diagrams = s.docs.map(d=>Object.assign({id:d.id}, d.data())); safeRerender(); }, listenErr));
+  state.unsub.push(caseCol(id,'evidencePlan').onSnapshot(s=>{ state.evidencePlan = s.docs.map(d=>Object.assign({id:d.id}, d.data())); safeRerender(); }, listenErr));
 }
 function closeCase(){ goHome(state.cameFrom||'caselist'); }
 
@@ -1089,8 +1684,11 @@ async function createCase(){
    links survive; evidence keeps its EV-tag in the id field like Stage 2. */
 const CASE_HEADER_FIELDS = ['caseTitle','facility','location','incidentType','dateOccurred','timeOccurred','reportedBy','reportedAt','personsInvolved','initialDescription','refinedDescription','actualSeverity','potentialSeverity','immediateActionsTaken','sceneSecured','accessLogStarted','notificationsRequired','status','rootCause'];
 async function importCasePackage(file, btn){
-  if(!state.dbHandle){ toast('The workspace is not ready yet — reload the page and try again.'); return; }
   let pkg; try{ pkg = JSON.parse(await file.text()); }catch(e){ toast('That file is not valid JSON.'); return; }
+  return importCasePackageData(pkg, btn);
+}
+async function importCasePackageData(pkg, btn){
+  if(!state.dbHandle){ toast('The workspace is not ready yet — reload the page and try again.'); return; }
   if(!pkg || pkg.format!=='storyline-casebook-case' || !pkg.case || typeof pkg.case!=='object'){ toast('That file is not a Storyline Casebook case package.'); return; }
   const label = btn ? btn.innerHTML : ''; if(btn){ btn.disabled = true; btn.textContent = 'Importing…'; }
   let caseId = null;
@@ -1113,6 +1711,7 @@ async function importCasePackage(file, btn){
     ['investigationTeam','involvedPersons'].forEach(n=> list(n).forEach(r=> writes.push(()=>caseCol(caseId,n).add(strip(r)))));
     list('photos').forEach((p,i)=>{ if(typeof p.dataUrl!=='string' || !/^data:image\//.test(p.dataUrl) || p.dataUrl.length>240000) return; const o = strip(p); o.order = typeof o.order==='number' ? o.order : i+1; o.uploadedAt = o.uploadedAt || nowISO(); writes.push(()=>caseCol(caseId,'photos').add(o)); });
     list('evidenceFiles').forEach(f=>{ if(typeof f.dataUrl==='string' && f.dataUrl.length<=240000) writes.push(()=>caseCol(caseId,'evidenceFiles').add(strip(f))); });
+    if(pkg.evidencePlan && typeof pkg.evidencePlan==='object' && !Array.isArray(pkg.evidencePlan)){ const pl = CBP.normalise(pkg.evidencePlan); writes.push(()=>caseCol(caseId,'evidencePlan').doc('main').set(pl)); }
     for(let i=0;i<writes.length;i+=8){ await Promise.all(writes.slice(i,i+8).map(w=>w())); if(btn) btn.textContent = `Importing… ${Math.min(writes.length,i+8)}/${writes.length}`; }
     touchCase(caseId);
     toast('Case imported: '+(header.caseTitle||'Untitled Investigation'));
@@ -1339,7 +1938,7 @@ function docSnapshotOnce(ref){
     });
   });
 }
-const CASE_SUBCOLLECTIONS = ['evidence','events','conditions','icamFactors','contributingFactors','rootCauses','keyLearnings','correctiveActions','photos','investigationTeam','involvedPersons','evidenceFiles','diagrams'];
+const CASE_SUBCOLLECTIONS = ['evidence','events','conditions','icamFactors','contributingFactors','rootCauses','keyLearnings','correctiveActions','photos','investigationTeam','involvedPersons','evidenceFiles','diagrams','evidencePlan'];
 async function fetchCaseFull(id){
   const [caseData, ...subResults] = await Promise.all([
     docSnapshotOnce(caseDoc(id)),
@@ -1535,9 +2134,10 @@ function caseListHTML(){
   ${state.dbHandle && state.cases.length>0 && rows.length===0 ? `<div class="empty-state"><h3 style="margin-bottom:6px;">No cases match these filters</h3><p>Widen the date range or clear a filter to see more investigations.</p></div>` : ''}
   ${state.adminMode ? `<div class="callout" style="margin-bottom:2px;"><strong>Admin Mode</strong>Deleting a case removes it and its entire record — evidence, storyline, ICAM analysis, causes and actions — from this workspace. You'll get a short window to undo immediately after.</div>` : ''}
   ${rows.length ? caseTableHTML(rows) : ''}
-  <div class="ref-strip">
-    <p>Need to see the whole pipeline in action first? The reference case below is a worked example — read-only, not a real investigation.</p>
-    <button class="btn ghost small" id="open-sample">View Reference Case</button>
+  <div class="ref-strip ref-cases">
+    <p>Need to see the method in action first? These cases are read-only examples, not real investigations.</p>
+    <div class="ref-card"><div><strong>Reference case: fall during pump maintenance</strong><span>A worked example through all eight stages.</span></div><button class="btn ghost small" id="open-sample">View Reference Case</button></div>
+    <div class="ref-card"><div><strong>Training case CB-EX-02: worker drowned at an overflowing dam</strong><span>Anonymised, based on a real event. The ICAM PEEPO evidence plan and the core storyline are given; you complete the analysis.</span></div><div class="row-actions"><button class="btn ghost small" id="open-sample-dam">View Training Case</button>${state.dbHandle?'<button class="btn small" id="copy-sample-dam">Make a practice copy</button>':''}</div></div>
   </div>`;
 }
 function caseTableHTML(rows){
@@ -1570,7 +2170,9 @@ function wireCaseList(){
   document.getElementById('new-case').onclick = createCase;
   const imp = document.getElementById('import-case'), impIn = document.getElementById('import-case-input');
   if(imp && impIn){ imp.onclick = ()=> impIn.click(); impIn.onchange = async ()=>{ const f = impIn.files && impIn.files[0]; impIn.value=''; if(f) await importCasePackage(f, imp); }; }
-  const s = document.getElementById('open-sample'); if(s) s.onclick = ()=>{ state.cameFrom='caselist'; state.screen='sample'; state.stage='initial'; render(); };
+  const s = document.getElementById('open-sample'); if(s) s.onclick = ()=>{ state.cameFrom='caselist'; state.sampleId='sample'; state.plan.view='register'; state.screen='sample'; state.stage='initial'; render(); };
+  const sd = document.getElementById('open-sample-dam'); if(sd) sd.onclick = ()=>{ state.cameFrom='caselist'; state.sampleId='dam'; state.plan.view='plan'; state.screen='sample'; state.stage='initial'; render(); };
+  const cd = document.getElementById('copy-sample-dam'); if(cd) cd.onclick = ()=> copyTrainingCase('dam', cd);
   document.querySelectorAll('[data-open]').forEach(b=>{ b.onclick=()=>{ state.cameFrom='caselist'; openCase(b.dataset.open); }; });
   document.querySelectorAll('[data-del-case]').forEach(b=>{ b.onclick=()=>{ state.confirmDeleteCase=b.dataset.delCase; render(); }; });
   document.querySelectorAll('[data-cancel-del]').forEach(b=>{ b.onclick=()=>{ state.confirmDeleteCase=null; render(); }; });
@@ -1820,6 +2422,7 @@ function stageShellHTML(){
       </div>
     </div>
   </div>
+  ${c.training && ro ? trainingBannerHTML(c) : ''}
   <div class="stage-shell">
     <div class="stepper">${STAGES.map(s=>`<button data-stage="${s.key}" class="${state.stage===s.key?'active':''}"><span class="n">${s.num}</span>${s.label}</button>`).join('')}</div>
     <div id="stage-panel">${stagePanelHTML(c, ro)}</div>
@@ -1827,6 +2430,8 @@ function stageShellHTML(){
 }
 function wireStageShell(){
   document.querySelectorAll('.stepper button[data-stage]').forEach(b=>{ b.onclick=()=>{ state.stage=b.dataset.stage; render(); }; });
+  const cp = document.getElementById('copy-training'); if(cp) cp.onclick = ()=> copyTrainingCase(state.sampleId, cp);
+  const tp = document.getElementById('training-plan'); if(tp) tp.onclick = ()=>{ state.stage='evidence'; state.plan.view='plan'; render(); };
   wireStagePanel();
 }
 function renderStagePanel(){
@@ -1963,7 +2568,11 @@ function nextEvidenceId(c){ const list = ro_list(c,'evidence'); let max=0; list.
 function evidenceHTML(c, ro){
   const list = ro_list(c,'evidence');
   const cols = ro ? 8 : 9;
+  if(state.plan.view==='plan') return `<div class="panel"><div class="panel-head"><div><h2>2. Evidence &amp; Data Collection</h2><p class="sub">Plan what to collect before it is lost, by ICAM PEEPO category, then log each item into the evidence register as it comes in.</p></div></div>
+  ${evidenceSegHTML(c)}${planViewHTML(c, ro)}
+  ${stageNavHTML()}</div>`;
   return `<div class="panel"><div class="panel-head"><div><h2>2. Evidence &amp; Data Collection</h2><p class="sub">Log every piece of evidence as it's gathered. Every item below can later be linked to the ECFA+ events and conditions it supports. Attach source files — statements, certificates, data extracts — directly to the record they support.</p></div></div>
+  ${evidenceSegHTML(c)}
   <div style="overflow-x:auto;">${list.length? `<table class="reg-table"><thead><tr><th>ID</th><th>Type</th><th>Description</th><th>Source</th><th>Collected By</th><th>Date</th><th>Status</th><th>Files</th>${ro?'':'<th></th>'}</tr></thead><tbody>
   ${list.map(e=>{
     const fileCount = ro_list(c,'evidenceFiles').filter(f=>f.evidenceId===e.id).length;
@@ -2039,6 +2648,8 @@ function wireEvidenceFiles(){
   });
 }
 function wireEvidence(){
+  document.querySelectorAll('[data-evview]').forEach(b=>{ b.onclick = ()=>{ state.plan.view = b.dataset.evview; renderStagePanel(); }; });
+  if(state.plan.view==='plan'){ wirePlan(); return; }
   wirePhotos();
   wireEvidenceFiles();
   if(isReadOnly()) return;
@@ -2055,6 +2666,289 @@ function wireEvidence(){
     const data=Object.assign({}, item); delete data._docId;
     await caseCol(c.id,'evidence').doc(item._docId).delete().catch(()=>{}); touchCase(c.id);
     toastUndo('Evidence removed.', async ()=>{ await caseCol(c.id,'evidence').doc(item._docId).set(data).catch(()=>{}); touchCase(c.id); });
+  }; });
+}
+
+function evidenceSegHTML(c){
+  const s = CBP.stats(planOf(c)), n = ro_list(c,'evidence').length, v = state.plan.view;
+  return `<div class="seg no-print" role="tablist"><button type="button" role="tab" class="${v==='plan'?'on':''}" data-evview="plan">Evidence plan (PEEPO)${s.items?` <span class="n">${s.got}/${s.items}</span>`:''}</button><button type="button" role="tab" class="${v!=='plan'?'on':''}" data-evview="register">Evidence register &amp; photos <span class="n">${n}</span></button></div>`;
+}
+function trainingBannerHTML(c){
+  return `<div class="callout teal no-print"><strong>Training case ${esc(c.ref||'')} — anonymised, based on a real event</strong>The initial report, the first four evidence items, the ICAM PEEPO evidence plan and the core storyline are given. Make a practice copy, then refine the description, add the conditions to the storyline, code the ICAM factors, and develop the root causes and corrective actions.
+    <div class="row-actions" style="margin-top:8px;">${state.dbHandle?`<button class="btn small primary" type="button" id="copy-training">Make a practice copy</button>`:''}<button class="btn ghost small" type="button" id="training-plan">Open the evidence plan</button></div></div>`;
+}
+/* A read-only reference / training case as a case package, so a practice copy goes through the normal import. */
+function samplePackage(c){
+  const clone = v => JSON.parse(JSON.stringify(v));
+  const pkg = { format:'storyline-casebook-case', version:1, source:'Training case '+(c.ref||'')+' (practice copy)', case:{} };
+  CASE_HEADER_FIELDS.forEach(k=>{ if(c[k]!==undefined) pkg.case[k] = clone(c[k]); });
+  pkg.case.caseTitle = String(c.caseTitle||'').replace(/\s*\((Training|Reference) Case[^)]*\)\s*$/,'') + ' (practice copy)';
+  pkg.case.status = 'investigating';
+  ['evidence','events','conditions','icamFactors','contributingFactors','rootCauses','keyLearnings','correctiveActions','investigationTeam','involvedPersons','photos','evidenceFiles'].forEach(n=>{ pkg[n] = clone(c[n]||[]); });
+  const plan = (c.evidencePlan||[]).find(x=>x.id==='main'); if(plan) pkg.evidencePlan = CBP.normalise(plan);
+  return pkg;
+}
+async function copyTrainingCase(id, btn){
+  const c = SAMPLES[id]; if(!c) return;
+  state.plan.view = 'plan';
+  await importCasePackageData(samplePackage(c), btn);
+}
+/* ---- Evidence plan (ICAM PEEPO) — the second view of Stage 2 ------------- */
+function planOf(c){ const d = (ro_list(c,'evidencePlan')||[]).find(x=>x.id==='main'); return CBP.normalise(d); }
+function planCtx(c){ return { events:ro_list(c,'events'), conditions:ro_list(c,'conditions'), evidence:ro_list(c,'evidence') }; }
+function planRefs(c){ return ro_list(c,'events').map(e=>'event:'+e.id).concat(ro_list(c,'conditions').map(x=>'condition:'+x.id)); }
+function planNodeName(c, ref){
+  const m = /^(event|condition):(.+)$/.exec(ref||''); if(!m) return '';
+  if(m[1]==='event'){ const e = ro_list(c,'events').find(x=>x.id===m[2]); return e ? `Event ${e.time||''} — ${e.text}` : '(event removed)'; }
+  const cd = ro_list(c,'conditions').find(x=>x.id===m[2]); return cd ? `Condition — ${cd.text}` : '(condition removed)';
+}
+function planAI(){ return !!state.sampleHandle && !state.plan.aiOff && !isReadOnly(); }
+/* Writes the whole plan document; quiet=true (typing) waits for a pause. */
+function planPut(c, plan, quiet){
+  const doc = CBP.normalise(plan); doc.updatedAt = nowISO();
+  state.evidencePlan = [Object.assign({id:'main'}, doc)];
+  if(!state.dbHandle) return;
+  debounce('plan-'+c.id, ()=>{ caseCol(c.id,'evidencePlan').doc('main').set(doc).then(()=>touchCase(c.id)).catch(()=>toast('Could not save the evidence plan.')); }, quiet?700:0);
+}
+function planSetMsg(msg, err){ state.plan.msg = msg||''; state.plan.err = err||''; const el = document.getElementById('pl-status'); if(el) el.outerHTML = planStatusHTML();
+  const stop = document.getElementById('pl-stop'); if(stop) stop.onclick = ()=>{ if(state.plan.ctl) state.plan.ctl.abort(); }; }
+function planStatusHTML(){
+  const P = state.plan;
+  if(!P.msg && !P.err) return '<div id="pl-status"></div>';
+  return `<div id="pl-status" class="callout ${P.err?'':'teal'}" style="margin:10px 0;">${P.err?'<strong>Not done</strong>':''}${esc(P.err||P.msg)}${P.busy?' <button class="btn ghost small" type="button" id="pl-stop">Stop</button>':''}</div>`;
+}
+const PRIO_CLASS = { Urgent:'bad', High:'presumptive', Normal:'' };
+function planViewHTML(c, ro){
+  const plan = planOf(c), P = state.plan, s = CBP.stats(plan), has = CBP.hasContent(plan), ai = planAI();
+  const f = P.filter || 'all';
+  const show = it => f==='all' || it.cat===f || (f==='urgent' && it.priority==='Urgent') || (f==='open' && it.status==='To collect');
+  const sel = (attr, id, list, cur) => `<select ${attr}="${esc(id)}" style="font-size:12px;padding:4px 6px;">${list.map(v=>`<option ${v===cur?'selected':''}>${esc(v)}</option>`).join('')}</select>`;
+  const num = {}; plan.items.forEach((it,i)=>{ num[it.id] = i+1; });
+  const itemRows = list => list.map(it=>`<tr class="${it.priority==='Urgent'&&it.status==='To collect'?'pl-urgent':''}">
+      <td class="mono" style="font-size:11px;">${num[it.id]}</td>
+      <td><strong>${esc(it.item)}</strong>${it.source?`<div class="pl-sub">Where: ${esc(it.source)}</div>`:''}${it.purpose?`<div class="pl-sub">Why: ${esc(it.purpose)}</div>`:''}${it.notes?`<div class="pl-sub">Note: ${esc(it.notes)}</div>`:''}</td>
+      <td><span class="code-cat-tag ${esc(it.icam)}">${esc(ICAM_CAT_SHORT[it.icam]||'')}</span></td>
+      <td>${it.priority?`<span class="chip ${PRIO_CLASS[it.priority]||''}">${esc(it.priority)}</span>`:''}</td>
+      <td style="font-size:12px;">${esc(it.method)}${it.owner?`<div class="pl-sub">${esc(it.owner)}${it.due?' · '+esc(it.due):''}</div>`:''}</td>
+      <td>${ro?esc(it.status):sel('data-pl-st', it.id, CBP.ITEM_STATUS, it.status)}${it.ref?` <span class="ev-tag">${esc(it.ref)}</span>`:''}</td>
+      ${ro?'':`<td><div class="row-actions">${it.ref?'':`<button class="btn ghost small" type="button" data-pl-log="${esc(it.id)}" title="Add this item to the evidence register as collected">Log &rarr;</button>`}<button class="iconbtn" data-pl-edit="item:${esc(it.id)}" title="Edit">&#9998;</button><button class="iconbtn" data-pl-del="item:${esc(it.id)}" title="Remove">&#10005;</button></div></td>`}
+    </tr>`).join('');
+  const checklist = CBP.CATS.map(cat=>{
+    const list = plan.items.filter(it=>it.cat===cat.k && show(it));
+    if(!list.length) return '';
+    return `<div class="pl-cat"><div class="pl-cat-head"><span class="pl-letter">${esc(cat.l.charAt(0))}</span><div><h4>${esc(cat.l)} <span class="pl-count">${plan.items.filter(it=>it.cat===cat.k&&it.status==='Collected').length}/${plan.items.filter(it=>it.cat===cat.k).length}</span></h4><p>${esc(cat.d)}</p></div></div>
+      <div style="overflow-x:auto;"><table class="reg-table pl-table"><thead><tr><th>No.</th><th>Evidence to collect</th><th>ICAM element</th><th>Priority</th><th>Method</th><th>Status</th>${ro?'':'<th></th>'}</tr></thead><tbody>${itemRows(list)}</tbody></table></div></div>`;
+  }).join('');
+  const photoRows = plan.photos.map((p,i)=>`<tr><td class="mono" style="font-size:11px;">${i+1}</td><td><strong>${esc(p.subject)}</strong>${p.notes?`<div class="pl-sub">Note: ${esc(p.notes)}</div>`:''}</td><td style="font-size:12px;">${esc(p.position)}</td><td style="font-size:12px;">${esc(p.view)}</td><td style="font-size:12px;">${esc(p.purpose)}</td>
+    <td>${ro?(p.taken?'Yes':'No'):`<input type="checkbox" data-pl-taken="${esc(p.id)}" ${p.taken?'checked':''} title="Taken">`}${p.ref?` <span class="ev-tag">${esc(p.ref)}</span>`:''}</td>
+    ${ro?'':`<td><div class="row-actions"><button class="iconbtn" data-pl-edit="photo:${esc(p.id)}" title="Edit">&#9998;</button><button class="iconbtn" data-pl-del="photo:${esc(p.id)}" title="Remove">&#10005;</button></div></td>`}</tr>`).join('');
+  const testRows = plan.tests.map((t,i)=>`<tr><td class="mono" style="font-size:11px;">${i+1}</td><td><strong>${esc(t.statement)}</strong>${t.node?`<div class="pl-sub">↳ ${esc(planNodeName(c, t.node).slice(0,90))}</div>`:''}</td><td style="font-size:12px;">${esc(t.kind)}</td><td style="font-size:12px;">${esc(t.evidence)}</td>
+    <td>${ro?esc(t.status):sel('data-pl-tst', t.id, CBP.TEST_STATUS, t.status)}</td>
+    ${ro?'':`<td><div class="row-actions"><button class="iconbtn" data-pl-edit="test:${esc(t.id)}" title="Edit">&#9998;</button><button class="iconbtn" data-pl-del="test:${esc(t.id)}" title="Remove">&#10005;</button></div></td>`}</tr>`).join('');
+  const chips = [['all','All'], ...CBP.CATS.map(x=>[x.k, x.l]), ['urgent','Urgent'], ['open','Still to collect']];
+  return `
+  <div class="callout teal"><strong>ICAM evidence plan — PEEPO</strong>Write down what you know so far, including your assumptions and early conclusions. ${ai?'Claude':'The starter plan'} turns it into an evidence checklist under <strong style="display:inline;font:inherit;text-transform:none;letter-spacing:0;">People, Environment, Equipment, Procedures and Organisation</strong>, a photography schedule and the statements you still have to test. Log each item into the evidence register as you collect it.</div>
+  ${ro ? `<div class="readonly-block"><h5>Investigator's account</h5>${plan.narrative?plan.narrative.split(/\n+/).map(p=>`<p>${esc(p)}</p>`).join(''):'<p>&mdash;</p>'}</div>` : `
+  <div class="field"><label>Investigator's account<span class="hint">What happened, what you think caused it, what you are not sure about. Mark assumptions ("I assume", "probably").</span></label><textarea id="pl-narrative" rows="8" placeholder="e.g. At about 10:20 the fitter was working on the conveyor tail pulley. I think the isolation was done at the wrong isolator, but I have not checked the lock register yet…">${esc(plan.narrative)}</textarea></div>
+  <label class="check-row" style="margin:-4px 0 10px;"><input type="checkbox" id="pl-usechart" ${plan.useChart?'checked':''}> Include the storyline and the evidence logged so far</label>`}
+  <div class="row-actions no-print pl-actions">
+    ${ro?'':`${ai?`<button class="btn small primary" type="button" id="pl-claude" ${P.busy?'disabled':''}>&#10022; Build plan with Claude</button>`:''}
+    <button class="btn small ${ai?'':'primary'}" type="button" id="pl-starter" ${P.busy?'disabled':''}>Build starter plan</button>
+    <button class="btn ghost small" type="button" id="pl-copy">Copy prompt for Claude</button>
+    <button class="btn ghost small" type="button" id="pl-paste-open">Paste Claude's answer</button>`}
+    ${ro?`<button class="btn ghost small" type="button" id="pl-copy">Copy prompt for Claude</button>`:''}
+    <button class="btn small" type="button" id="pl-xlsx" ${has?'':'disabled'}>&#8681; Export to Excel</button>
+    ${ro||!has?'':`<button class="btn ghost small" type="button" id="pl-clear">Clear plan</button>`}
+  </div>
+  ${planStatusHTML()}
+  ${P.ask && !ro ? `<div class="callout" style="margin:10px 0;"><strong>There is already a plan</strong>Replace it with the new one, or add the new items to it (items already in the plan are skipped)?
+    <div class="row-actions" style="margin-top:8px;"><button class="btn small primary" type="button" data-pl-mode="replace">Replace the plan</button><button class="btn small" type="button" data-pl-mode="add">Add to the plan</button><button class="btn ghost small" type="button" data-pl-mode="cancel">Cancel</button></div></div>` : ''}
+  ${P.paste && !ro ? `<div class="add-form" style="margin:10px 0;"><div class="add-form-title">Paste Claude's answer</div><p class="hint" style="margin:0 0 8px;">Copy the prompt, paste it into Claude (claude.ai or the Claude app), then paste the whole reply here.</p>
+    <textarea id="pl-paste" rows="6" style="width:100%;font-family:var(--font-mono);font-size:11.5px;" placeholder='{"items":[…], "photos":[…], "tests":[…], "notes":"…"}'></textarea>
+    <div class="row-actions" style="margin-top:8px;"><button class="btn small primary" type="button" id="pl-paste-use">Use this answer</button><button class="btn ghost small" type="button" id="pl-paste-cancel">Cancel</button></div></div>` : ''}
+  ${plan.notes ? `<div class="callout"><strong>Preserving the scene and order of collection</strong>${esc(plan.notes)}</div>` : ''}
+  ${has ? `<div id="pl-stats" class="pl-stats"><span><strong class="mono">${s.got}/${s.items}</strong> evidence items collected</span><span><strong class="mono">${s.urgentOpen}</strong> urgent still open</span><span><strong class="mono">${s.taken}/${s.photos}</strong> photos taken</span><span><strong class="mono">${s.tested}/${s.tests}</strong> statements tested</span>${plan.generatedAt?`<span class="pl-sub">Plan from ${esc(plan.generatedAt.slice(0,10))}${plan.source?' · '+esc(plan.source):''}</span>`:''}</div>
+  <div class="pl-chips no-print">${chips.map(([k,l])=>`<button type="button" class="${f===k?'on':''}" data-pl-filter="${k}">${esc(l)}</button>`).join('')}</div>
+  <h3 class="pl-h">Evidence checklist</h3>
+  ${checklist || '<p class="empty">No items match this filter.</p>'}` : (ro ? '' : `<div class="empty-state" style="margin-top:10px;"><p>No plan yet. Write the account above, then build the plan${ai?' with Claude':''} — or start from the standard PEEPO starter plan and edit it.</p></div>`)}
+  ${has || !ro ? `${ro?'':`<div class="row-actions no-print" style="margin:8px 0 0;"><button class="btn ghost small" type="button" data-pl-edit="item:">+ Add evidence item</button></div>`}
+  <h3 class="pl-h">Photography schedule</h3>
+  ${plan.photos.length?`<div style="overflow-x:auto;"><table class="reg-table pl-table"><thead><tr><th>Shot</th><th>Subject</th><th>Camera position</th><th>View</th><th>What it must show</th><th>Taken</th>${ro?'':'<th></th>'}</tr></thead><tbody>${photoRows}</tbody></table></div>`:'<p class="empty">No photographs planned yet.</p>'}
+  ${ro?'':`<div class="row-actions no-print" style="margin:8px 0 0;"><button class="btn ghost small" type="button" data-pl-edit="photo:">+ Add photo</button></div>`}
+  <details class="pl-tips"><summary>Photography good practice</summary><ul>${CBP.PHOTO_TIPS.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></details>
+  <h3 class="pl-h">Statements to test</h3>
+  <p class="sub" style="margin:-4px 0 8px;">Assumptions, conclusions and open questions from the account and the storyline. Nothing goes into the report as a fact until the evidence supports it.</p>
+  ${plan.tests.length?`<div style="overflow-x:auto;"><table class="reg-table pl-table"><thead><tr><th>No.</th><th>Statement</th><th>Type</th><th>Evidence that would confirm or refute it</th><th>Status</th>${ro?'':'<th></th>'}</tr></thead><tbody>${testRows}</tbody></table></div>`:'<p class="empty">No statements to test yet.</p>'}
+  ${ro?'':`<div class="row-actions no-print" style="margin:8px 0 0;"><button class="btn ghost small" type="button" data-pl-edit="test:">+ Add statement</button></div>`}` : ''}`;
+}
+
+function planEditHTML(c, kind, rec){
+  const opt = (list, cur, lab) => list.map(v=>`<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(lab?lab(v):v)}</option>`).join('');
+  const r = rec || {};
+  if(kind==='item') return `<h3 style="margin-bottom:12px;">${rec?'Edit':'Add'} evidence item</h3>
+    <div class="field-row"><div class="field"><label>PEEPO category</label><select id="pe-cat">${opt(CBP.CAT_KEYS, r.cat||'people', k=>CBP.CAT_NAME[k])}</select></div><div class="field"><label>ICAM element it informs</label><select id="pe-icam">${opt(ICAM_CATS, r.icam||'actions', k=>ICAM_LABELS[k])}</select></div></div>
+    <div class="field"><label>Evidence to collect</label><textarea id="pe-item" rows="2">${esc(r.item)}</textarea></div>
+    <div class="field-row"><div class="field"><label>Where / from whom</label><input id="pe-source" value="${esc(r.source)}"></div><div class="field"><label>Why (what it tests)</label><input id="pe-purpose" value="${esc(r.purpose)}"></div></div>
+    <div class="field-row three"><div class="field"><label>Priority</label><select id="pe-priority">${opt(CBP.PRIORITY, r.priority||'High')}</select></div><div class="field"><label>Method</label><select id="pe-method">${opt(CBP.METHODS, r.method||'Collect')}</select></div><div class="field"><label>Status</label><select id="pe-status">${opt(CBP.ITEM_STATUS, r.status||'To collect')}</select></div></div>
+    <div class="field-row three"><div class="field"><label>Owner</label><input id="pe-owner" value="${esc(r.owner)}"></div><div class="field"><label>Due</label><input id="pe-due" type="date" value="${esc(r.due)}"></div><div class="field"><label>Evidence ref</label><input id="pe-ref" value="${esc(r.ref)}" placeholder="EV-005"></div></div>
+    <div class="field"><label>Notes</label><input id="pe-notes" value="${esc(r.notes)}"></div>`;
+  if(kind==='photo') return `<h3 style="margin-bottom:12px;">${rec?'Edit':'Add'} photograph</h3>
+    <div class="field"><label>Subject</label><input id="pe-subject" value="${esc(r.subject)}"></div>
+    <div class="field-row"><div class="field"><label>Camera position / direction</label><input id="pe-position" value="${esc(r.position)}"></div><div class="field"><label>View</label><select id="pe-view">${opt(CBP.VIEWS, r.view||'Overview')}</select></div></div>
+    <div class="field"><label>What it must show</label><input id="pe-purpose" value="${esc(r.purpose)}"></div>
+    <div class="field-row"><div class="field"><label>Photo no. / file</label><input id="pe-ref" value="${esc(r.ref)}"></div><div class="field"><label>Notes</label><input id="pe-notes" value="${esc(r.notes)}"></div></div>
+    <label class="check-row"><input type="checkbox" id="pe-taken" ${r.taken?'checked':''}> Taken</label>`;
+  const refs = planRefs(c);
+  return `<h3 style="margin-bottom:12px;">${rec?'Edit':'Add'} statement to test</h3>
+    <div class="field"><label>Statement</label><textarea id="pe-statement" rows="2">${esc(r.statement)}</textarea></div>
+    <div class="field-row"><div class="field"><label>Type</label><select id="pe-kind">${opt(CBP.KINDS, r.kind||'Assumption')}</select></div><div class="field"><label>Status</label><select id="pe-tstatus">${opt(CBP.TEST_STATUS, r.status||'Untested')}</select></div></div>
+    <div class="field"><label>Evidence that would confirm or refute it</label><textarea id="pe-evidence" rows="2">${esc(r.evidence)}</textarea></div>
+    <div class="field"><label>Storyline element</label><select id="pe-node"><option value="">— none —</option>${refs.map(ref=>`<option value="${esc(ref)}" ${ref===r.node?'selected':''}>${esc(planNodeName(c, ref).slice(0,80))}</option>`).join('')}</select></div>`;
+}
+function openPlanEdit(c, kind, id){
+  const plan = planOf(c), key = {item:'items', photo:'photos', test:'tests'}[kind];
+  const rec = id ? plan[key].find(x=>x.id===id) : null;
+  if(id && !rec) return;
+  const el = document.createElement('div'); el.id='plan-modal'; el.className='modal-backdrop';
+  el.innerHTML = `<div class="modal-box"><div class="modal-close"><button class="iconbtn" type="button" id="pe-x" title="Close">&#10005;</button></div><div class="modal-inner">${planEditHTML(c, kind, rec)}${editSaveCancelHTML()}</div></div>`;
+  el.addEventListener('mousedown', e=>{ if(e.target===el) el.remove(); });
+  document.body.appendChild(el);
+  const close = ()=> el.remove();
+  document.getElementById('pe-x').onclick = close; document.getElementById('edit-cancel').onclick = close;
+  const v = id2 => { const x = document.getElementById(id2); return x ? x.value : ''; };
+  document.getElementById('edit-save').onclick = ()=>{
+    let o;
+    if(kind==='item'){ o = { cat:v('pe-cat'), icam:v('pe-icam'), item:v('pe-item'), source:v('pe-source'), purpose:v('pe-purpose'), priority:v('pe-priority'), method:v('pe-method'), status:v('pe-status'), owner:v('pe-owner'), due:v('pe-due'), ref:v('pe-ref'), notes:v('pe-notes') }; if(!o.item.trim()){ toast('Describe the evidence first.'); return; } o = CBP.mkItem(o); }
+    else if(kind==='photo'){ o = { subject:v('pe-subject'), position:v('pe-position'), view:v('pe-view'), purpose:v('pe-purpose'), ref:v('pe-ref'), notes:v('pe-notes'), taken:document.getElementById('pe-taken').checked }; if(!o.subject.trim()){ toast('Name the subject first.'); return; } o = CBP.mkPhoto(o); }
+    else { o = { statement:v('pe-statement'), kind:v('pe-kind'), status:v('pe-tstatus'), evidence:v('pe-evidence'), node:v('pe-node') }; if(!o.statement.trim()){ toast('Write the statement first.'); return; } o = CBP.mkTest(o); }
+    const p = planOf(c);
+    if(rec){ o.id = rec.id; p[key] = p[key].map(x=> x.id===rec.id ? o : x); } else p[key].push(o);
+    if(!p.generatedAt){ p.generatedAt = nowISO(); p.source = p.source || 'investigator'; }
+    planPut(c, p); close(); renderStagePanel();
+  };
+}
+/* part = {items, photos, tests, notes}; mode replace | add */
+function planApply(c, part, mode, source){
+  const p = planOf(c);
+  if(mode==='add'){
+    const seen = new Set(p.items.map(x=>x.item.toLowerCase())), seenP = new Set(p.photos.map(x=>x.subject.toLowerCase())), seenT = new Set(p.tests.map(x=>x.statement.toLowerCase()));
+    p.items = p.items.concat(part.items.filter(x=>!seen.has(x.item.toLowerCase())));
+    p.photos = p.photos.concat(part.photos.filter(x=>!seenP.has(x.subject.toLowerCase())));
+    p.tests = p.tests.concat(part.tests.filter(x=>!seenT.has(x.statement.toLowerCase())));
+    if(part.notes && p.notes.indexOf(part.notes)<0) p.notes = (p.notes ? p.notes+' ' : '') + part.notes;
+  } else { p.items = part.items; p.photos = part.photos; p.tests = part.tests; p.notes = part.notes||''; }
+  p.source = source; p.generatedAt = nowISO();
+  planPut(c, p);
+  state.plan.ask = null; state.plan.pending = null; state.plan.paste = false; state.plan.filter = 'all'; state.plan.err = '';
+  state.plan.msg = `${mode==='add'?'Added to the plan':'Plan ready'}: ${part.items.length} evidence items, ${part.photos.length} photos, ${part.tests.length} statements to test.${source==='Claude'?' Written by Claude: check every line against what you know before you use it.':''}`;
+  renderStagePanel();
+}
+function planOffer(c, part, source){
+  if(CBP.hasContent(planOf(c))){ state.plan.pending = {part, source}; state.plan.ask = true; state.plan.msg = ''; state.plan.err = ''; renderStagePanel(); return; }
+  planApply(c, part, 'replace', source);
+}
+const PLAN_FAIL = { rate_limited:'Claude is busy or your usage limit has been reached. Try again later.', invalid_json:"Claude's answer could not be read as a plan. Try again.", refused:'Claude declined this request. Rephrase the account and try again.',
+  empty_completion:'Claude returned nothing. Shorten the account and try again.', prompt_too_large:'The account is too long for one request. Shorten it and try again.', session_expired:'Your claude.ai session has expired. Sign in again and try again.' };
+async function planRunClaude(c){
+  const plan = planOf(c);
+  if(!planAI()){ planSetMsg('', 'Claude is not available in this view. Use Build starter plan, or Copy prompt for Claude and paste the answer back.'); return; }
+  if(plan.narrative.trim().length < 40){ planSetMsg('', 'Write a few sentences about the incident first: what happened, what you think caused it, and what you are not sure about.'); return; }
+  const sample = state.sampleHandle, ctl = new AbortController(), caseId = c.id, input = CBP.prompt(c, plan, planCtx(c));
+  Object.assign(state.plan, { busy:true, ctl, ask:null, err:'', msg:'Asking Claude… the first words can take up to a minute or two.' });
+  renderStagePanel();
+  const opts = { signal:ctl.signal, onText:({text})=>{ planSetMsg('Claude is writing the plan… '+(text.length/1000).toFixed(1)+'k characters'); } };
+  try{
+    const ans = typeof sample.json==='function' ? await sample.json(input, opts) : CBP.parseText((await sample(input, opts)).text);
+    state.plan.busy = false; state.plan.ctl = null;
+    const cur = activeCase(); if(!cur || cur.id!==caseId) return;
+    let part; try{ part = CBP.fromAnswer(ans, planRefs(cur)); }catch(e){ state.plan.msg=''; state.plan.err = "Claude's answer could not be read as a plan ("+e.message+') Try again.'; renderStagePanel(); return; }
+    planOffer(cur, part, 'Claude');
+  }catch(e){
+    state.plan.busy = false; state.plan.ctl = null;
+    const code = e && e.code;
+    if(['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].indexOf(code)>=0){ state.plan.aiOff = true; state.plan.msg=''; state.plan.err = 'Claude is not available to this page in your account, so it cannot write the plan here. Use Build starter plan, or Copy prompt for Claude and paste the answer back.'; }
+    else if(code==='cancelled'){ state.plan.err=''; state.plan.msg='Stopped. Nothing was changed.'; }
+    else { state.plan.msg=''; state.plan.err = PLAN_FAIL[code] || 'Something went wrong while asking Claude. Try again.'; }
+    const cur = activeCase(); if(cur && cur.id===caseId && state.stage==='evidence') renderStagePanel();
+  }
+}
+function showTextModal(title, sub, text){
+  const el = document.createElement('div'); el.id='text-modal'; el.className='modal-backdrop';
+  el.innerHTML = `<div class="modal-box"><div class="modal-close"><button class="iconbtn" type="button" id="text-modal-x" title="Close">&#10005;</button></div><div class="modal-inner"><h3 style="margin-bottom:6px;">${esc(title)}</h3><p class="sub" style="margin:0 0 10px;">${esc(sub)}</p><textarea id="text-modal-text" rows="14" style="width:100%;font-family:var(--font-mono);font-size:11px;"></textarea></div></div>`;
+  el.addEventListener('mousedown', e=>{ if(e.target===el) el.remove(); });
+  document.body.appendChild(el);
+  const ta = document.getElementById('text-modal-text'); ta.value = text; ta.focus(); ta.select();
+  document.getElementById('text-modal-x').onclick = ()=> el.remove();
+}
+function nextEvidenceNumber(c, plan){
+  let max = 0;
+  ro_list(c,'evidence').concat(plan.items.map(x=>({id:x.ref}))).forEach(e=>{ const m = /EV-(\d+)/.exec(e.id||''); if(m) max = Math.max(max, parseInt(m[1],10)); });
+  return 'EV-'+String(max+1).padStart(3,'0');
+}
+async function planLog(c, id, btn){
+  const plan = planOf(c), it = plan.items.find(x=>x.id===id); if(!it) return;
+  if(btn) btn.disabled = true;
+  const tag = nextEvidenceNumber(c, plan);
+  const rec = { evTag:tag, type:CBP.evidenceType(it), status:'Collected', description:it.item, source:it.source, collectedBy:it.owner, collectedAt:todayISO(), planItem:it.id };
+  try{ const ref = await caseCol(c.id,'evidence').add(rec); await ref.update({id:tag}); }
+  catch(e){ toast('Could not add it to the evidence register.'); if(btn) btn.disabled = false; return; }
+  const p = planOf(c), x = p.items.find(y=>y.id===id); if(x){ x.status = 'Collected'; x.ref = tag; }
+  planPut(c, p); touchCase(c.id); toast(tag+' added to the evidence register.'); renderStagePanel();
+}
+function wirePlan(){
+  const c = activeCase(); if(!c) return;
+  const ro = isReadOnly();
+  const on = (id, fn)=>{ const el = document.getElementById(id); if(el) el.onclick = fn; };
+  document.querySelectorAll('[data-pl-filter]').forEach(b=>{ b.onclick = ()=>{ state.plan.filter = b.dataset.plFilter; renderStagePanel(); }; });
+  on('pl-copy', async ()=>{
+    const cur = activeCase()||c, text = CBP.prompt(cur, planOf(cur), planCtx(cur));
+    try{ await navigator.clipboard.writeText(text); planSetMsg('Prompt copied. Paste it into Claude (claude.ai or the Claude app), then use Paste Claude\'s answer.'); }
+    catch(e){ showTextModal('Prompt for Claude', 'Select all, copy, and paste it into Claude. Then paste the reply back with Paste Claude\'s answer.', text); }
+  });
+  on('pl-xlsx', async ()=>{
+    if(!state.downloadsHandle){ toast('Downloads unavailable here.'); return; }
+    try{
+      const cur = activeCase()||c, bytes = CBP.xlsx(cur, planOf(cur), ref=>planNodeName(cur, ref), k=>ICAM_LABELS[k]||k);
+      await state.downloadsHandle.save({ filename: slugForFile(cur)+'-evidence-plan.xlsx', data: bytes });
+      toast('Evidence plan downloaded (.xlsx).');
+    }catch(e){ toast(e && e.code==='declined' ? 'Download cancelled.' : 'Download was not completed.'); }
+  });
+  if(ro) return;
+  const nar = document.getElementById('pl-narrative');
+  if(nar) nar.oninput = ()=>{ const p = planOf(c); p.narrative = nar.value; planPut(c, p, true); };
+  const use = document.getElementById('pl-usechart');
+  if(use) use.onchange = ()=>{ const p = planOf(c); p.useChart = use.checked; planPut(c, p); };
+  on('pl-claude', ()=> planRunClaude(activeCase()||c));
+  on('pl-stop', ()=>{ if(state.plan.ctl) state.plan.ctl.abort(); });
+  on('pl-starter', ()=>{ const cur = activeCase()||c; planOffer(cur, CBP.starter(cur, planOf(cur), planCtx(cur)), 'starter plan'); });
+  on('pl-paste-open', ()=>{ state.plan.paste = true; state.plan.ask = null; renderStagePanel(); const t = document.getElementById('pl-paste'); if(t) t.focus(); });
+  on('pl-paste-cancel', ()=>{ state.plan.paste = false; renderStagePanel(); });
+  on('pl-paste-use', ()=>{
+    const t = document.getElementById('pl-paste'); let part;
+    try{ part = CBP.fromAnswer(CBP.parseText(t ? t.value : ''), planRefs(c)); }
+    catch(e){ planSetMsg('', "That answer could not be read as a plan: "+e.message); return; }
+    state.plan.paste = false; planOffer(c, part, 'Claude (pasted)');
+  });
+  on('pl-clear', ()=>{
+    const before = planOf(c), p = planOf(c); p.items = []; p.photos = []; p.tests = []; p.notes = ''; p.source = ''; p.generatedAt = '';
+    planPut(c, p); state.plan.msg = ''; renderStagePanel();
+    toastUndo('Evidence plan cleared (your account is kept).', async ()=>{ planPut(c, before); renderStagePanel(); });
+  });
+  document.querySelectorAll('[data-pl-mode]').forEach(b=>{ b.onclick = ()=>{
+    const pend = state.plan.pending; state.plan.ask = null;
+    if(b.dataset.plMode==='cancel' || !pend){ state.plan.pending = null; state.plan.msg = 'Nothing was changed.'; renderStagePanel(); return; }
+    planApply(c, pend.part, b.dataset.plMode, pend.source);
+  }; });
+  document.querySelectorAll('[data-pl-st]').forEach(s=>{ s.onchange = ()=>{ const p = planOf(c), x = p.items.find(y=>y.id===s.dataset.plSt); if(x){ x.status = s.value; planPut(c, p); renderStagePanel(); } }; });
+  document.querySelectorAll('[data-pl-tst]').forEach(s=>{ s.onchange = ()=>{ const p = planOf(c), x = p.tests.find(y=>y.id===s.dataset.plTst); if(x){ x.status = s.value; planPut(c, p); renderStagePanel(); } }; });
+  document.querySelectorAll('[data-pl-taken]').forEach(s=>{ s.onchange = ()=>{ const p = planOf(c), x = p.photos.find(y=>y.id===s.dataset.plTaken); if(x){ x.taken = s.checked; planPut(c, p); renderStagePanel(); } }; });
+  document.querySelectorAll('[data-pl-log]').forEach(b=>{ b.onclick = ()=> planLog(c, b.dataset.plLog, b); });
+  document.querySelectorAll('[data-pl-edit]').forEach(b=>{ b.onclick = ()=>{ const [kind, id] = b.dataset.plEdit.split(':'); openPlanEdit(c, kind, id||null); }; });
+  document.querySelectorAll('[data-pl-del]').forEach(b=>{ b.onclick = ()=>{
+    const [kind, id] = b.dataset.plDel.split(':'), key = {item:'items', photo:'photos', test:'tests'}[kind];
+    const before = planOf(c), p = planOf(c); p[key] = p[key].filter(x=>x.id!==id);
+    planPut(c, p); renderStagePanel();
+    toastUndo({item:'Evidence item', photo:'Photograph', test:'Statement'}[kind]+' removed from the plan.', async ()=>{ planPut(c, before); renderStagePanel(); });
   }; });
 }
 

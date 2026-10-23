@@ -45,7 +45,7 @@ code { font-family: Menlo, Consolas, monospace; font-size: 9pt; background: #f1f
 
 <h2>4. Which tool when</h2>
 <table><tr><th>Tool</th><th>Use it to</th><th>Key outputs</th></tr>
-<tr><td>Storyline Casebook</td><td>Run the investigation file: initial report, evidence register with photos, ECFA+ storyline of events and conditions, ICAM coding, root causes, corrective actions.</td><td>Case report, draw.io storyline</td></tr>
+<tr><td>Storyline Casebook</td><td>Run the investigation file: initial report, evidence register with photos, ECFA+ storyline of events and conditions, ICAM coding, root causes, corrective actions.</td><td>Evidence plan (Excel: PEEPO checklist, photography schedule, statements to test), case report, draw.io storyline</td></tr>
 <tr><td>Tripod Beta Investigator</td><td>Model the incident as trios (Agent, Object, Event), place failed, missing and effective barriers, and trace each failure to Immediate Cause, Precondition and Underlying Cause (BRF).</td><td>Evidence plan (Excel checklist, photography schedule, assumptions to test), draft tree, Tripod tree, BRF profile, SMART actions, Word report, Casebook package</td></tr>
 <tr><td>RCA Fault Tree</td><td>Lay out every way the top event could occur, confirm or rule out each branch with evidence, and use optional probabilities to rank the open hypotheses.</td><td>Fault tree, credible causal combinations, P(cause | incident), Word report, Casebook package</td></tr></table>
 <p>Tripod Beta and the RCA Fault Tree both export a <b>Storyline Casebook package</b>. Import it in the Casebook (Import Case Package on the case list), so root causes and actions end up in one case file.</p>
@@ -53,6 +53,8 @@ code { font-family: Menlo, Consolas, monospace; font-size: 9pt; background: #f1f
 <h2 class="pb">5. Storyline Casebook</h2>
 <ul>
 <li>Cases follow eight stages: initial report, evidence, description, storyline, ICAM, root causes, corrective actions, report.</li>
+<li>Stage 2 has two views. <b>Evidence plan (PEEPO)</b>: write your account of the incident, including assumptions, and build a checklist under People, Environment, Equipment, Procedures and Organisation, a photography schedule and the statements to test (offline starter plan, or copy the prompt to Claude and paste the answer back). <b>Log →</b> moves a collected item into the evidence register. Export the plan to Excel.</li>
+<li>Training case <b>CB-EX-02</b> (worker drowned at an overflowing dam, anonymised) gives the evidence plan and the core storyline; make a practice copy and complete the ICAM analysis.</li>
 <li>The built-in sample case shows a complete investigation. The example workspace in <code>Examples</code> holds the Tripod Annex 8 vehicle roll-over imported as a Casebook case.</li>
 <li>Opening a workspace file replaces the cases in this browser with those in the file. Save the current workspace first if it holds work that is not in a file.</li>
 </ul>

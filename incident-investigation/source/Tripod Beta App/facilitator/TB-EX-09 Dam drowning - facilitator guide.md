@@ -4,7 +4,7 @@ A Tripod Beta training case built into the Tripod Beta Investigator. It is anony
 
 ## The case in brief
 
-After heavy rain higher up in the catchment, a mine's return-water dam rose fast and overflowed. The mine became aware too late, and the pump installation at the dam was flooding. The engineering manager asked the owner of a small contractor on site to help recover the pumps. The contractor and two workers, with no experience of work on water, used an old boat that had stood unused on site for years. A worker on the bank held a line, but the current and wind pushed the boat towards the overflow faster than he could hold it. Afraid of going over the wall, the two workers left the boat to swim to the bank. Neither could swim, they misjudged the distance, and their clothing and boots dragged them down. Both drowned. There was no pre-task risk assessment or job plan, no life jackets or rescue equipment, and no training for work on water, rescue or first aid for drowning.
+After heavy rain higher up in the catchment, a mine's return-water dam rose fast and overflowed. The mine became aware too late, and the pump installation at the dam was flooding. The engineering manager asked the owner of a small contractor on site to help recover the pumps. The contractor brought three workers with no experience of work on water. Two of them used an old boat that had stood unused on site for years while the third held a line from the bank, but the current and wind pushed the boat towards the overflow faster than he could hold it. Afraid of going over the wall, the two workers left the boat to swim to the bank. They misjudged the distance and their clothing and boots dragged them down. One reached the bank; the other, who could not swim, drowned. The survivor is the only witness from the boat. There was no pre-task risk assessment or job plan, no life jackets or rescue equipment, and no training for work on water, rescue or first aid for drowning.
 
 The evidence is deliberately sparse: there are no drawings of the dam, no measurements, no positions of the boat and the people, and no wind direction.
 
@@ -13,12 +13,12 @@ The evidence is deliberately sparse: there are no drawings of the dam, no measur
 Open **Cases ▸ Reference cases ▸ TB-EX-09** and choose **Make a practice copy**. The copy holds:
 
 - **Incident** tab: the description and a team.
-- **Evidence plan** tab: the investigator's account (with assumptions marked "I assume", "probably", "I think"), 27 evidence items, a 16-shot photography schedule and 12 statements to test. Learners can export it to Excel.
+- **Evidence plan** tab: the investigator's account (with assumptions marked "I assume", "probably", "I think"), 28 evidence items (the surviving worker's interview first), a 16-shot photography schedule and 13 statements to test. Learners can export it to Excel.
 - **Tripod tree** tab: the core diagram only, four trios:
   1. Heavy rainfall in the catchment + the dam and pump installation → **dam overflows; pump installation flooded** (Event-Agent)
   2. Overflowing dam + old boat with two workers → **boat drifts out of control towards the spillway** (Event-Agent)
   3. Drifting boat + the two workers → **workers leave the boat and enter the water** (Event-Object)
-  4. Deep, moving water + workers in the water → **both workers drown** (main event)
+  4. Deep, moving water + workers in the water → **one worker drowns; the other reaches the bank** (main event)
 
 The Rules check shows four "no barrier" warnings. That is the starting point.
 
@@ -27,7 +27,7 @@ The Rules check shows four "no barrier" warnings. That is the starting point.
 | Time | Activity |
 |---|---|
 | 10 min | Read the Incident tab and the investigator's account. Discuss: which statements are facts and which are assumptions? |
-| 15 min | Evidence plan: in groups, rank the five most urgent items and say why they are perishable. Add anything missing (e.g. the time the control room was first alerted). |
+| 15 min | Evidence plan: in groups, rank the five most urgent items and say why they are perishable. Add anything missing (e.g. the time the control room was first alerted, and when and how to interview the survivor). |
 | 30 min | Tree: in a practice copy, add the barriers on each trajectory, then the Immediate Cause, Preconditions and Underlying Causes (with BRF) for each Failed Barrier, and Underlying Causes for each Missing or Inadequate Barrier. Use the Rules check until it is clear of errors. |
 | 15 min | Compare with the facilitator answer (open the `.tripod.json` in the app, or show the report). |
 | 10 min | SMART actions for three of the Underlying Causes; discussion. |
@@ -70,7 +70,7 @@ BRF profile: PR 5, DF 3, TR 3, IG 1, OR 1, HK 1, DE 1 (plus DF on the early warn
 2. **Scope creep as a symptom.** A cumbersome contractor process does not stop managers using contractors; it pushes the work outside the process, without scope, competence or risk checks. The action is to fix the process (fast track with checks), not only to forbid the practice.
 3. **Barriers on the right trajectory.** Learners often put "life jackets" in trio 2. Ask: which Event would it have prevented? It protects the Object (the people in the water) in trio 4.
 4. **Missing or Failed?** "Early warning" is Missing if nobody was ever expected to provide it; if a procedure required someone to monitor upstream rain and they did not, it becomes a Failed Barrier with an Immediate Cause. Let the evidence decide.
-5. **Sparse evidence.** Which statements in the account can be tested with what is still available? What will be lost first (water line, phone videos, memory)? Mark tree elements **assumed** until confirmed.
+5. **Sparse evidence and the survivor.** The surviving worker is the only witness from the boat: interview him early, separately and with care (trauma, guilt, loss of a colleague). Which statements in the account can be tested with what is still available? What will be lost first (water line, phone videos, memory)? Mark tree elements **assumed** until confirmed.
 6. **People before equipment.** The first barrier that would have prevented everything after trio 1 is a stop-work rule for an overflowing dam.
 
 ## Files

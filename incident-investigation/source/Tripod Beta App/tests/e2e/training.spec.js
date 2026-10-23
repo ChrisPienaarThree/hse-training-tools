@@ -23,13 +23,13 @@ test('training case opens read only with the core diagram and a pre-filled evide
   expect(st).toEqual({ trios: 4, errs: 0, q2: 4 });
   await page.click('[data-act=tab][data-t=evidence]');
   await expect(page.locator('#ev-narrative')).toHaveValue(/I assume there was no warning from upstream/);
-  await expect(page.locator('#ev-stats')).toContainText('0/27');
+  await expect(page.locator('#ev-stats')).toContainText('0/28');
   await expect(page.locator('[data-act=evStarter]')).toHaveCount(0);          // read only
   // practice copy is editable and keeps the evidence plan
   await page.click('.banner [data-act=copyExample]');
   await expect(page.locator('.top .case-name')).toContainText('(practice copy)');
   const c = await page.evaluate(() => ({ ex: !!TBApp.S.c.example, ro: TBApp.S.readonly, items: TBApp.S.c.evidence.items.length, nodes: TBApp.S.c.nodes.length }));
-  expect(c).toEqual({ ex: false, ro: false, items: 27, nodes: 10 });
+  expect(c).toEqual({ ex: false, ro: false, items: 28, nodes: 10 });
   // the Annex 8 card still copies the Annex 8 case
   await page.click('[data-act=closeCase]');
   await page.click('[data-act=copyExample][data-id=example-annex8]');

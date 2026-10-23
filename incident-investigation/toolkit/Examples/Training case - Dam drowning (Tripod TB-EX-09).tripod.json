@@ -1,7 +1,7 @@
 {
  "format": "tripod-beta-case",
  "version": 1,
- "exportedAt": "2026-10-23T09:14:55.826Z",
+ "exportedAt": "2026-10-23T09:50:21.316Z",
  "app": "Istec Training Tripod Beta Investigator",
  "case": {
   "id": "example-dam-drowning",
@@ -9,7 +9,7 @@
   "version": 1,
   "exampleNote": "Training case (anonymised, based on a real event): the core diagram and evidence plan are given. Make a practice copy, then add the barriers, Immediate Causes, Preconditions, Underlying Causes and actions.",
   "meta": {
-   "title": "Two contractor workers drowned at an overflowing return-water dam",
+   "title": "Contractor worker drowned at an overflowing return-water dam",
    "ref": "TB-EX-09",
    "date": "2026-02-14",
    "time": "about 15:40",
@@ -21,7 +21,7 @@
    "potentialSeverity": 5,
    "status": "Draft",
    "practitioner": "",
-   "description": "After heavy rain higher up in the catchment, the mine's north return-water dam rose quickly and began to overflow. The mine became aware of the rising level too late, and the pump installation at the dam was being flooded. The engineering manager asked the owner of a small contracting company working on site to help save the pumps. The contractor and two of his workers, none of whom had done work on water before, took an old boat that had been stored on site unused for many years to reach the flooded equipment, with one person on the bank holding a line. The current and wind pushed the boat away faster than the shore attendant could hold it, and it drifted towards the high overflow. Afraid of being carried over the wall, the two workers left the boat to reach the bank. Neither could swim; they underestimated the distance to the dam side and their work clothes and boots hampered them. Both drowned. There was no pre-task risk assessment or job plan, no life jackets or rescue equipment at the dam, and the workers had no training for work on or near water, water rescue or first aid for drowning.",
+   "description": "After heavy rain higher up in the catchment, the mine's north return-water dam rose quickly and began to overflow. The mine became aware of the rising level too late, and the pump installation at the dam was being flooded. The engineering manager asked the owner of a small contracting company working on site to help save the pumps. The contractor brought three of his workers, none of whom had done work on water before. Two of them took an old boat that had been stored on site unused for many years to reach the flooded equipment, while the third held a line from the bank. The current and wind pushed the boat away faster than the shore attendant could hold it, and it drifted towards the high overflow. Afraid of being carried over the wall, the two workers left the boat to reach the bank. They underestimated the distance to the dam side and their work clothes and boots hampered them. One worker reached the bank; the other, who could not swim, drowned. There was no pre-task risk assessment or job plan, no life jackets or rescue equipment at the dam, and the workers had no training for work on or near water, water rescue or first aid for drowning.",
    "summary": "",
    "lessons": "",
    "reviewer": "",
@@ -130,7 +130,7 @@
    {
     "id": "d_e4",
     "type": "event",
-    "label": "Both workers drown",
+    "label": "One worker drowns; the other reaches the bank",
     "notes": "",
     "evidence": "",
     "verified": true,
@@ -201,7 +201,7 @@
    "useTree": true,
    "source": "Worked example",
    "generatedAt": "2026-02-15T08:00:00.000Z",
-   "narrative": "On the afternoon of 14 February, after heavy rain higher up in the catchment, the north return-water dam rose fast and started to overflow. As far as I can tell the control room only noticed when the pump installation was already being flooded; I assume there was no warning from upstream. The engineering manager phoned the owner of the civils contractor who was on site for other work and asked him to help get the pumps out. I believe this was a one-off request in the emergency, but contractors here are often asked to do odd jobs outside their scope because the contractor process is slow.\n\nThe contractor and two of his workers used an old aluminium boat that had been lying behind the pump station for years. Nobody I spoke to knows when it was last used or checked. One worker stayed on the bank holding a rope tied to the boat. The shore attendant says the current and the wind pushed the boat towards the spillway and the rope was pulled out of his hands. The two in the boat probably panicked when they saw they were heading for the overflow wall, and they went into the water to swim to the bank. Neither could swim. I think they misjudged the distance to the bank, which looks like 15 to 20 m, and their overalls and safety boots would have dragged them down. There were no life jackets, ring buoys or throw lines at the dam. Nobody did a risk assessment or planned the job, and as far as we know none of them had any training for working on water, rescue or first aid for drowning.\n\nWhat we do not have yet: drawings of the dam with depths and levels, the spillway height, the positions of the boat and the people, the time line of the alarm and the phone calls, and the wind direction and speed at the time.",
+   "narrative": "On the afternoon of 14 February, after heavy rain higher up in the catchment, the north return-water dam rose fast and started to overflow. As far as I can tell the control room only noticed when the pump installation was already being flooded; I assume there was no warning from upstream. The engineering manager phoned the owner of the civils contractor who was on site for other work and asked him to help get the pumps out. I believe this was a one-off request in the emergency, but contractors here are often asked to do odd jobs outside their scope because the contractor process is slow.\n\nThe contractor brought three of his workers. Two of them went out in an old aluminium boat that had been lying behind the pump station for years; nobody I spoke to knows when it was last used or checked. The third worker stayed on the bank holding a rope tied to the boat. The shore attendant says the current and the wind pushed the boat towards the spillway and the rope was pulled out of his hands. The two in the boat probably panicked when they saw they were heading for the overflow wall, and they went into the water to swim to the bank. One of them made it to the bank; the other could not swim and drowned. I think they misjudged the distance to the bank, which looks like 15 to 20 m, and their overalls and safety boots would have dragged them down. The surviving worker was taken to hospital and has not been interviewed yet. There were no life jackets, ring buoys or throw lines at the dam. Nobody did a risk assessment or planned the job, and as far as we know none of them had any training for working on water, rescue or first aid for drowning.\n\nWhat we do not have yet: drawings of the dam with depths and levels, the spillway height, the positions of the boat and the people, the time line of the alarm and the phone calls, and the wind direction and speed at the time.",
    "notes": "The scene changes fast once the dam level drops: survey the water line, the debris line and the boat position first. Secure the control room level records, phone records and any CCTV today. Interview the shore attendant, the contractor owner and the engineering manager separately and as soon as possible, and record the time line before anything else.",
    "items": [
     {
@@ -236,7 +236,7 @@
      "ref": "",
      "notes": "",
      "cat": "position",
-     "item": "Position where the boat was found, where the line was held, and where each worker was recovered, with distances",
+     "item": "Position where the boat was found, where the line was held, and where the surviving worker came ashore and where the deceased was recovered, with distances",
      "source": "Recovery team; shore attendant; police",
      "purpose": "Reconstructs the drift path and the swim distance (assumed 15 to 20 m)",
      "priority": "Urgent",
@@ -262,9 +262,22 @@
      "ref": "",
      "notes": "",
      "cat": "people",
+     "item": "Interview the surviving worker (separately, as soon as medically fit)",
+     "source": "Surviving worker; hospital",
+     "purpose": "The only person who was in the boat: why they left it, what they could see, how he reached the bank",
+     "priority": "Urgent",
+     "method": "Interview",
+     "status": "To collect"
+    },
+    {
+     "owner": "",
+     "due": "",
+     "ref": "",
+     "notes": "",
+     "cat": "people",
      "item": "Interview the shore attendant (separately, as soon as fit)",
      "source": "Shore attendant",
-     "purpose": "Only eyewitness to the drift and to the workers leaving the boat",
+     "purpose": "Eyewitness from the bank to the drift and to the workers leaving the boat",
      "priority": "Urgent",
      "method": "Interview",
      "status": "To collect"
@@ -366,9 +379,9 @@
      "ref": "",
      "notes": "",
      "cat": "parts",
-     "item": "Clothing, boots and PPE worn by the two workers",
+     "item": "Clothing, boots and PPE worn by both workers in the boat",
      "source": "SAPS; mortuary; family",
-     "purpose": "Tests the account that PPE hampered swimming",
+     "purpose": "Tests the account that PPE hampered swimming; compare survivor and deceased",
      "priority": "High",
      "method": "Collect",
      "status": "To collect"
@@ -748,7 +761,7 @@
     {
      "statement": "The workers left the boat because they feared going over the spillway",
      "kind": "Assumption",
-     "evidence": "Shore attendant account; position of the boat when found; any video",
+     "evidence": "Surviving worker and shore attendant accounts; position of the boat when found; any video",
      "status": "Untested",
      "node": "d_eo3"
     },
@@ -767,9 +780,16 @@
      "node": ""
     },
     {
-     "statement": "Neither worker could swim and none had water-safety, rescue or first-aid training",
+     "statement": "The worker who drowned could not swim; none of them had water-safety, rescue or first-aid training",
      "kind": "Assumption",
-     "evidence": "Training records; contractor and family interviews",
+     "evidence": "Training records; surviving worker, contractor and family interviews",
+     "status": "Untested",
+     "node": ""
+    },
+    {
+     "statement": "How the surviving worker reached the bank (swam, held the boat, was pulled out?)",
+     "kind": "Open question",
+     "evidence": "Surviving worker and shore attendant interviews; recovery team",
      "status": "Untested",
      "node": ""
     },
@@ -790,6 +810,6 @@
    ]
   },
   "log": [],
-  "updatedAt": "2026-10-23T09:14:55.826Z"
+  "updatedAt": "2026-10-23T09:50:21.316Z"
  }
 }
