@@ -37,3 +37,13 @@ The investigation tools are built from `incident-investigation/source/`:
 - Tests: `npx playwright test` in each app folder (needs Node.js and Playwright)
 
 The simulators and the other tools are single-file or plain HTML/CSS/JS and need no build step.
+
+## Licence
+
+- **Software** (the HTML, CSS and JavaScript of the apps): MIT licence, see [`LICENSE`](LICENSE).
+- **Documents and content** (guides, instructions, worked examples, workbooks, scenario data): Creative Commons Attribution 4.0 (CC BY 4.0), see [`LICENSE-DOCS.md`](LICENSE-DOCS.md). Credit: *"Based on material by Chris Pienaar, licensed under CC BY 4.0."*
+- **Third-party components** keep their own licences: see [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) where present.
+
+Copyright (c) 2026 Chris Pienaar. The models and data are illustrative training material, not design tools, and are provided without warranty.
+
+**Excluded:** client material (`hazard-register/`, `process-safety-toolkit/Examples/Steel Works Gas Network PHA/`) and the Tripod Beta User Guide Annex 8 vehicle roll-over example are **not licensed**: all rights remain with their owners. See [`LICENSE-DOCS.md`](LICENSE-DOCS.md) for the full list.
