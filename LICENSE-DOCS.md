@@ -19,14 +19,10 @@ warranty, as section 5 of the licence below states.
 
 Official licence: https://creativecommons.org/licenses/by/4.0/
 
-## Not licensed: excluded material
+## Names and trademarks
 
-The following material is **not** covered by the MIT licence or by CC BY 4.0. It is included for reference
-only and all rights remain with its owners. You may not copy, adapt or redistribute it under these licences.
-
-- `hazard-register/` (the whole folder): the hazard data is derived from a client's equipment inventory.
-- Names and trademarks of companies, sites, methods and standards bodies (for example Tripod
-  Beta, ICAM, ISO) belong to their owners and are used only to refer to them.
+Names and trademarks of companies, sites, methods and standards bodies (for example Tripod Beta, ICAM, ISO)
+belong to their owners and are used only to refer to them. They are not licensed here.
 
 ---
 

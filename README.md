@@ -48,4 +48,3 @@ The simulations and the other tools are single-file or plain HTML/CSS/JS and nee
 
 Copyright (c) 2026 Chris Pienaar. The models and data are illustrative training material, not design tools, and are provided without warranty.
 
-**Excluded:** client material (`hazard-register/`) is **not licensed**: all rights remain with their owners. See [`LICENSE-DOCS.md`](LICENSE-DOCS.md) for the full list.
