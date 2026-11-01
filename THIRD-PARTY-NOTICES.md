@@ -258,3 +258,8 @@ freely, subject to the following restrictions:
   misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 ```
+
+## Fonts: Barlow Condensed, IBM Plex Sans, IBM Plex Mono
+
+Bundled in `process-safety-toolkit/_launch/fonts/` for offline use by the toolkit's Launch Centre, under the
+SIL Open Font License 1.1. The licence texts are `OFL-Barlow.txt` and `OFL-IBMPlex.txt` in that folder.
