@@ -1,6 +1,6 @@
 # HSE Training Tools
 
-Offline, browser-based simulators and working tools for engineering, incident-investigation and
+Offline, browser-based simulations, games, quizzes and working tools for HSE, incident-investigation and
 process-safety training. No installation, no server, no internet connection needed: open the HTML
 file in Chrome, Edge, Safari or Firefox.
 
@@ -9,34 +9,36 @@ If GitHub Pages is switched on for this repository, the same page is the site's 
 
 | Folder | What's in it | Open |
 |---|---|---|
-| `mechanical-engineering-simulators/` | 27 simulators (pumps, compressors, hydraulics, vibration, bearings, gears, heat exchangers, tanks, cranes…) | `index.html` |
 | `ai-in-hse-simulations/` | 23 simulations for the "Integrating AI in Workplace Safety Practices" course | `index.html` |
-| `incident-investigation/toolkit/` | Tripod Beta Investigator, RCA Fault Tree, Storyline Casebook, guides and examples | `START HERE.html` |
 | `incident-investigation/falling-billet-game/` | The Falling Billet investigation game and facilitator guide | `The Falling Billet.html` |
 | `incident-investigation/lead-investigator-quiz/` | Live quiz for the 21-module Lead Incident Investigator course | the `.html` file |
-| `incident-investigation/source/` | Build sources and tests for the investigation tools (Python build scripts, Playwright tests) | see each `README` |
-| `process-safety-toolkit/` | HAZOP Study Manager, Bow Tie, Event Tree, Fault Tree & PFD calculator, workbooks, guides, PHA/HAZOP quiz | `START HERE.html` |
+| `incident-investigation/source/` | Build sources and tests for the game and the quiz | see each `README` |
+| `pha-hazop-quiz/` | Live quiz on the PHA / HAZOP learner manuals | the `.html` file |
 | `hazard-register/` | Hazard Register | `Hazard Register.html` |
-| `rotating-equipment-quality-planner/` | Rotating Equipment Quality Planner with Excel template and user guide | the `.html` file |
+
+### Moved to their own repositories
+
+| Collection | Site | Repository |
+|---|---|---|
+| Mechanical Engineering Simulators | https://chrispienaarthree.github.io/mech-engineering-simulators/ | [mech-engineering-simulators](https://github.com/ChrisPienaarThree/mech-engineering-simulators) |
+| Incident Investigation Toolkit | https://chrispienaarthree.github.io/investigation-toolkit/ | [investigation-toolkit](https://github.com/ChrisPienaarThree/investigation-toolkit) |
+| Process Safety Analysis Toolkit | https://chrispienaarthree.github.io/process-safety-toolkit/ | [process-safety-toolkit](https://github.com/ChrisPienaarThree/process-safety-toolkit) |
+| Rotating Equipment Quality Planner | https://chrispienaarthree.github.io/rotating-equipment-quality-planner/ | [rotating-equipment-quality-planner](https://github.com/ChrisPienaarThree/rotating-equipment-quality-planner) |
 
 ## Using the tools offline
 
 1. Download the repository (**Code → Download ZIP**) and unzip it.
-2. Open `index.html`, or a toolkit's `START HERE.html`.
-3. On Windows you can also use the `Start … .cmd` launchers; on a Mac, the `.command` launchers.
+2. Open `index.html`, or the tool's HTML file.
 
 Saved work (cases, studies, registers) is stored in the browser or exported as files you choose;
 nothing is sent anywhere.
 
 ## Rebuilding from source
 
-The investigation tools are built from `incident-investigation/source/`:
+- `incident-investigation/source/Billet Investigation Game/`: `python3 build.py`; tests with `npx playwright test` (needs Node.js and Playwright)
+- `incident-investigation/source/Lead Investigator Quiz/`: `python3 build_quiz.py`
 
-- `Tripod Beta App/`, `RCA Fault Tree App/`, `Casebook Offline/`, `Billet Investigation Game/`: `python3 build.py`
-- `_kit_build/build_kit.py` reassembles the toolkit folder
-- Tests: `npx playwright test` in each app folder (needs Node.js and Playwright)
-
-The simulators and the other tools are single-file or plain HTML/CSS/JS and need no build step.
+The simulations and the other tools are single-file or plain HTML/CSS/JS and need no build step.
 
 ## Licence
 
@@ -46,4 +48,4 @@ The simulators and the other tools are single-file or plain HTML/CSS/JS and need
 
 Copyright (c) 2026 Chris Pienaar. The models and data are illustrative training material, not design tools, and are provided without warranty.
 
-**Excluded:** client material (`hazard-register/`, `process-safety-toolkit/Examples/Steel Works Gas Network PHA/`) and the Tripod Beta User Guide Annex 8 vehicle roll-over example are **not licensed**: all rights remain with their owners. See [`LICENSE-DOCS.md`](LICENSE-DOCS.md) for the full list.
+**Excluded:** client material (`hazard-register/`) is **not licensed**: all rights remain with their owners. See [`LICENSE-DOCS.md`](LICENSE-DOCS.md) for the full list.

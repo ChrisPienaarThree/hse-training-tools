@@ -25,14 +25,8 @@ The following material is **not** covered by the MIT licence or by CC BY 4.0. It
 only and all rights remain with its owners. You may not copy, adapt or redistribute it under these licences.
 
 - `hazard-register/` (the whole folder): the hazard data is derived from a client's equipment inventory.
-- `process-safety-toolkit/Examples/Steel Works Gas Network PHA/` (the whole folder): a worked example from a client course.
-- The **vehicle roll-over worked example from Annex 8 of the Tripod Beta User Guide** (rights belong to its
-  publisher), wherever it appears: the example files named "Vehicle roll-over (Tripod Annex 8)" and
-  "tb-ex-08-driver-injured-in-vehicle-roll-over…", and the same example where it is embedded in the Tripod Beta
-  Investigator, `content.js`, the Casebook examples, the kit dashboard, quick guide and test files. The rest
-  of those files is licensed as stated above.
 - Names and trademarks of companies, sites, methods and standards bodies (for example Tripod
-  Beta, ICAM, ASME, API, ISO) belong to their owners and are used only to refer to them.
+  Beta, ICAM, ISO) belong to their owners and are used only to refer to them.
 
 ---
 
