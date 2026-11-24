@@ -11,8 +11,7 @@ If GitHub Pages is switched on for this repository, the same page is the site's 
 |---|---|---|
 | `ai-in-hse-simulations/` | 23 simulations for the "Integrating AI in Workplace Safety Practices" course | `index.html` |
 | `incident-investigation/falling-billet-game/` | The Falling Billet investigation game and facilitator guide | `The Falling Billet.html` |
-| `incident-investigation/lead-investigator-quiz/` | Live quiz for the 21-module Lead Incident Investigator course | the `.html` file |
-| `incident-investigation/source/` | Build sources and tests for the game and the quiz | see each `README` |
+| `incident-investigation/source/` | Build sources and tests for the game | see the `README` |
 | `pha-hazop-quiz/` | Live quiz on the PHA / HAZOP learner manuals | the `.html` file |
 | `hazard-register/` | Hazard Register | `Hazard Register.html` |
 
@@ -36,7 +35,6 @@ nothing is sent anywhere.
 ## Rebuilding from source
 
 - `incident-investigation/source/Billet Investigation Game/`: `python3 build.py`; tests with `npx playwright test` (needs Node.js and Playwright)
-- `incident-investigation/source/Lead Investigator Quiz/`: `python3 build_quiz.py`
 
 The simulations and the other tools are single-file or plain HTML/CSS/JS and need no build step.
 
